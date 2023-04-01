@@ -1,0 +1,101 @@
+﻿@model Models.Request
+
+@{
+    Layout = "~/Views/Shared/_Layouts/_SiteForPrint.cshtml";
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+
+    List<Infrastructure.PageMessage> PageMessageList = ViewBag.PageMessages;
+
+    string url = System.Configuration.ConfigurationSettings.AppSettings["IVOReferrUrl"].ToString();
+}
+
+<style>
+    .BorderStyle {
+        border-color: green;
+        border-style: solid;
+        border-width: 1px;
+    }
+</style>
+@{
+    <div class="row">
+        <div class="panel" style="font-family: BYekan, Tahoma; border:solid; border-width:1px;">
+            <img src="~/Content/Images/PrintHeader.png" class="col-md-12" style="margin-top:5px;" />
+            <div class="panel-body" style="text-align:center;">
+                @Html.HiddenFor(model => model.Id)
+                @{
+                    string strDataValue = Infrastructure.Utility.ConvertToShamciDate(Model.Bank_ShamsiDate)
+                        + " - " + Model.Bank_RealTransactionDateTime.Value.ToShortTimeString();
+
+                    string strCustomerCardNumber = Infrastructure.Utility.ConvertToCardNumber(Model.Bank_CustomerCardNumber);
+
+                    string strRequestType = Model.SubSystem.Name;
+                }
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color:lightblue; width:980px;" class="BorderStyle">
+                        <span>اطلاعات درخواست</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.Bank_CustomerCardNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.Bank_BankReciptNumber)</td>
+                        <td>@Html.DisplayNameFor(model => model.Bank_TraceNo)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.Bank_ShamsiDate)</td>
+                        <td>@Html.DisplayNameFor(model => model.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.AmountPaid)</td>
+                        <td>@Html.DisplayNameFor(model => model.Bank_RefrenceNumber)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@strCustomerCardNumber</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.Bank_BankReciptNumber)</td>
+                        <td>@Html.DisplayFor(model => model.Bank_TraceNo)</td>
+                        <td class="BorderStyle">@strDataValue</td>
+                        <td>@Html.DisplayFor(model => model.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.AmountPaid)</td>
+                        <td>@Html.DisplayFor(model => model.Bank_RefrenceNumber)</td>
+                    </tr>
+                </table>
+
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color: lightblue; width:980px;" class="BorderStyle">
+                        <span>اطلاعات پرداخت</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.DepositNumber)</td>
+                        <td>@Html.DisplayName("تاریخ پرداخت")</td>
+                        <td>@Html.DisplayName("شماره مرجع پرداخت")</td>
+                        <td>@Html.DisplayName("وضعیت پرداخت")</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => model.AmountPaid)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.DepositNumber)</td>
+                        <td>@Html.DisplayFor(model => model.Bank_ShamsiDate)</td>
+                        <td>@Html.DisplayFor(model => model.Bank_BankReciptNumber)</td>
+                        @if (Model.Bank_AppStatusDescription == "NO_ERROR")
+                        {
+                            <td><span class="alert-success">@Html.DisplayName("پرداخت موفق")</span></td>
+                        }
+                        else
+                        {
+                            <td><span class="alert-danger">@Html.DisplayName("پرداخت ناموفق")</span></td>
+                        }
+                    </tr>
+                </table>
+
+                <br />
+                <br />
+            </div>
+            <div class="panel-footer">
+                <br />
+                <img src="~/Content/Images/PrintFooter.png" class="col-md-12" />
+                <br />
+            </div>
+        </div>
+    </div>
+}
+
+

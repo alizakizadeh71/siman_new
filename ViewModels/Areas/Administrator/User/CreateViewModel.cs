@@ -1,0 +1,75 @@
+﻿using System;
+using System.Linq;
+using System.Data.Entity;
+
+namespace ViewModels.Areas.Administrator.User
+{
+    public class CreateViewModel : System.Object
+    {
+        public CreateViewModel()
+        { }
+
+        #region Province
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.Province)]
+        #endregion
+        public Guid Province { get; set; }
+        
+        #region City
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.City)]
+        #endregion
+        public Guid City { get; set; }
+
+        #region Role
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.Role)]
+        #endregion
+        public Guid Role { get; set; }
+
+        #region NationalCode
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.NationalCode)]
+        #endregion
+        public string NationalCode { get; set; }
+
+        #region BirthDay
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.BirthDay)]
+        #endregion
+        public DateTime? BirthDay { get; set; }
+
+        #region FullName
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.FullName)]
+        #endregion
+        public string FullName { get; set; }
+
+        #region UserName
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.UserName)]
+        #endregion
+        public string UserName { get; set; }
+
+        #region Password
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.Password)]
+        #endregion
+        public string Password { get; set; }
+
+        #region IsApprovallicense
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.IsApprovallicense)]
+        #endregion
+        public bool IsApprovallicense { get; set; }
+    }
+}

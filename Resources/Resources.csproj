@@ -1,0 +1,1252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2D564AEC-1B7C-4399-A067-A025C31F1BB5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Resources</RootNamespace>
+    <AssemblyName>Resources</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="SmartStringResources, Version=1.2.0.0, Culture=neutral, PublicKeyToken=3c7758f6073f4aba, processorArchitecture=MSIL">
+      <HintPath>..\packages\SmartStringResources.1.2.0\lib\net40\SmartStringResources.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Action.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Action.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Action.tt.cs">
+      <DependentUpon>Action.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Buttons.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Buttons.tt.cs">
+      <DependentUpon>Buttons.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Caption.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Caption.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Caption.tt.cs">
+      <DependentUpon>Caption.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\AccessTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccessTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\AccessTypes.tt.cs">
+      <DependentUpon>AccessTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\CurrencyUnits.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CurrencyUnits.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\CurrencyUnits.tt.cs">
+      <DependentUpon>CurrencyUnits.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\EnumTypesList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnumTypesList.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\EnumTypesList.tt.cs">
+      <DependentUpon>EnumTypesList.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\FileTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\FileTypes.tt.cs">
+      <DependentUpon>FileTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\LogTypes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\LogTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\LogTypes.tt.cs">
+      <DependentUpon>LogTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\PageMessageTypes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PageMessageTypes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\PageMessageTypes.tt.cs">
+      <DependentUpon>PageMessageTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\RequestStates.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequestStates.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\RequestStates.tt.cs">
+      <DependentUpon>RequestStates.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\Roles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Roles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\Roles.tt.cs">
+      <DependentUpon>Roles.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\ServicesResponse.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServicesResponse.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\ServicesResponse.tt.cs">
+      <DependentUpon>ServicesResponse.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\SubSystems.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubSystems.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\SubSystems.tt.cs">
+      <DependentUpon>SubSystems.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\APIMessage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>APIMessage.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Message\APIMessage.tt.cs">
+      <DependentUpon>APIMessage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\Global.Designer.cs">
+      <DependentUpon>Global.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Message\Global.tt.cs">
+      <DependentUpon>Global.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\HeadOfFactor.Designer.cs">
+      <DependentUpon>HeadOfFactor.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Message\HeadOfFactor.tt.cs">
+      <DependentUpon>HeadOfFactor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\Request.Designer.cs">
+      <DependentUpon>Request.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Message\Request.tt.cs">
+      <DependentUpon>Request.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\User.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>User.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Message\User.tt.cs">
+      <DependentUpon>User.tt</DependentUpon>
+    </Compile>
+    <Compile Include="General.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>General.resx</DependentUpon>
+    </Compile>
+    <Compile Include="General.tt.cs">
+      <DependentUpon>General.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AccountNumberManage.Designer.cs">
+      <DependentUpon>AccountNumberManage.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\AccountNumberManage.tt.cs">
+      <DependentUpon>AccountNumberManage.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Bank.Designer.cs">
+      <DependentUpon>Bank.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\Bank.tt.cs">
+      <DependentUpon>Bank.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Cement.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cement.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Cement.tt.cs">
+      <DependentUpon>Cement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CentralBank.Designer.cs">
+      <DependentUpon>CentralBank.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Model\BankAccount.Designer.cs">
+      <DependentUpon>BankAccount.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\BankAccount.tt.cs">
+      <DependentUpon>BankAccount.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\CentralBank.tt.cs">
+      <DependentUpon>CentralBank.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Certain.Designer.cs">
+      <DependentUpon>Certain.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\Certain.tt.cs">
+      <DependentUpon>Certain.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\City.Designer.cs">
+      <DependentUpon>City.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\City.tt.cs">
+      <DependentUpon>City.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\CurrencyUnit.Designer.cs">
+      <DependentUpon>CurrencyUnit.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\DetailOfFactor.Designer.cs">
+      <DependentUpon>DetailOfFactor.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\DetailOfFactor.tt.cs">
+      <DependentUpon>DetailOfFactor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ExecutableCode.Designer.cs">
+      <DependentUpon>ExecutableCode.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\ExecutableCode.tt.cs">
+      <DependentUpon>ExecutableCode.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\HeadLine.Designer.cs">
+      <DependentUpon>HeadLine.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\HeadLine.tt.cs">
+      <DependentUpon>HeadLine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HeadOfFactor.Designer.cs">
+      <DependentUpon>HeadOfFactor.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\HeadOfFactor.tt.cs">
+      <DependentUpon>HeadOfFactor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\IncomeRow.Designer.cs">
+      <DependentUpon>IncomeRow.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\IncomeRow.tt.cs">
+      <DependentUpon>IncomeRow.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Payment.Designer.cs">
+      <DependentUpon>Payment.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\Payment.tt.cs">
+      <DependentUpon>Payment.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Request.Designer.cs">
+      <DependentUpon>Request.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\Request.tt.cs">
+      <DependentUpon>Request.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\ServiceTariff.Designer.cs">
+      <DependentUpon>ServiceTariff.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\ServiceTariff.tt.cs">
+      <DependentUpon>ServiceTariff.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SubHeadLine.Designer.cs">
+      <DependentUpon>SubHeadLine.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\SubHeadLine.tt.cs">
+      <DependentUpon>SubHeadLine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SubSystem.Designer.cs">
+      <DependentUpon>SubSystem.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\SubSystem.tt.cs">
+      <DependentUpon>SubSystem.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Unit.Designer.cs">
+      <DependentUpon>Unit.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\Unit.tt.cs">
+      <DependentUpon>Unit.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\User.Designer.cs">
+      <DependentUpon>User.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\User.tt.cs">
+      <DependentUpon>User.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OPS\Button.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Button.resx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Button.tt.cs">
+      <DependentUpon>Button.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\CaptchaImage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CaptchaImage.resx</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\CaptchaImage.tt.cs">
+      <DependentUpon>CaptchaImage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controller.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Controller.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Controller.tt.cs">
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OPS\Caption.Designer.cs">
+      <DependentUpon>Caption.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="OPS\Caption.tt.cs">
+      <DependentUpon>Caption.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Net\MailMessage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MailMessage.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Net\MailMessage.tt.cs">
+      <DependentUpon>MailMessage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AccountNumberManage.Designer.cs">
+      <DependentUpon>AccountNumberManage.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\AccountNumberManage.tt.cs">
+      <DependentUpon>AccountNumberManage.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Bank.Designer.cs">
+      <DependentUpon>Bank.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\Bank.tt.cs">
+      <DependentUpon>Bank.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\BankAccount.Designer.cs">
+      <DependentUpon>BankAccount.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\BankAccount.tt.cs">
+      <DependentUpon>BankAccount.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Certain.Designer.cs">
+      <DependentUpon>Certain.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\Certain.tt.cs">
+      <DependentUpon>Certain.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\ChangePassword.Designer.cs">
+      <DependentUpon>ChangePassword.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\ChangePassword.tt.cs">
+      <DependentUpon>ChangePassword.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\CurrencyUnit.Designer.cs">
+      <DependentUpon>CurrencyUnit.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\CurrencyUnit.tt.cs">
+      <DependentUpon>CurrencyUnit.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\ExecutableCode.Designer.cs">
+      <DependentUpon>ExecutableCode.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\ExecutableCode.tt.cs">
+      <DependentUpon>ExecutableCode.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\IncomeRow.Designer.cs">
+      <DependentUpon>IncomeRow.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\IncomeRow.tt.cs">
+      <DependentUpon>IncomeRow.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\SubSystem.Designer.cs">
+      <DependentUpon>SubSystem.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\SubSystem.tt.cs">
+      <DependentUpon>SubSystem.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Unit.Designer.cs">
+      <DependentUpon>Unit.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\Unit.tt.cs">
+      <DependentUpon>Unit.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\User.Designer.cs">
+      <DependentUpon>User.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ViewModel\User.tt.cs">
+      <DependentUpon>User.tt</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Buttons.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Buttons.txt</LastGenOutput>
+    </None>
+    <None Include="Caption.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Caption.txt</LastGenOutput>
+    </None>
+    <None Include="Enum\AccessTypes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AccessTypes.txt</LastGenOutput>
+    </None>
+    <None Include="Enum\CurrencyUnits.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CurrencyUnits.txt</LastGenOutput>
+    </None>
+    <None Include="Enum\EnumTypesList.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EnumTypesList.txt</LastGenOutput>
+    </None>
+    <None Include="Enum\FileTypes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FileTypes.txt</LastGenOutput>
+    </None>
+    <None Include="Enum\LogTypes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LogTypes.cs</LastGenOutput>
+    </None>
+    <None Include="Enum\PageMessageTypes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PageMessageTypes.txt</LastGenOutput>
+    </None>
+    <None Include="Enum\RequestStates.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RequestStates.txt</LastGenOutput>
+    </None>
+    <None Include="Enum\Roles.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Roles.txt</LastGenOutput>
+    </None>
+    <None Include="Enum\ServicesResponse.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ServicesResponse.txt</LastGenOutput>
+    </None>
+    <None Include="Enum\SubSystems.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SubSystems.txt</LastGenOutput>
+    </None>
+    <None Include="Message\APIMessage.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>APIMessage.txt</LastGenOutput>
+    </None>
+    <None Include="Message\Global.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Global.txt</LastGenOutput>
+    </None>
+    <None Include="Message\Request.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Request.txt</LastGenOutput>
+    </None>
+    <None Include="Message\User.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>User.txt</LastGenOutput>
+    </None>
+    <None Include="General.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>General.txt</LastGenOutput>
+    </None>
+    <None Include="Action.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Action.txt</LastGenOutput>
+    </None>
+    <None Include="Model\AccountNumberManage.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AccountNumberManage.txt</LastGenOutput>
+    </None>
+    <None Include="Model\City.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>City.txt</LastGenOutput>
+    </None>
+    <None Include="Model\CurrencyUnit.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CurrencyUnit.txt</LastGenOutput>
+    </None>
+    <None Include="Model\DetailOfFactor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DetailOfFactor.txt</LastGenOutput>
+    </None>
+    <None Include="Model\HeadLine.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HeadLine.txt</LastGenOutput>
+    </None>
+    <None Include="Model\HeadOfFactor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HeadOfFactor.txt</LastGenOutput>
+    </None>
+    <None Include="Model\Payment.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Payment.txt</LastGenOutput>
+    </None>
+    <None Include="Model\Request.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Request.txt</LastGenOutput>
+    </None>
+    <None Include="Model\ServiceTariff.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ServiceTariff.txt</LastGenOutput>
+    </None>
+    <None Include="Model\SubHeadLine.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SubHeadLine.txt</LastGenOutput>
+    </None>
+    <None Include="Model\SubSystem.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SubSystem.txt</LastGenOutput>
+    </None>
+    <None Include="Model\User.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>User.txt</LastGenOutput>
+    </None>
+    <None Include="OPS\Button.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Button.txt</LastGenOutput>
+    </None>
+    <None Include="OPS\CaptchaImage.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CaptchaImage.txt</LastGenOutput>
+    </None>
+    <None Include="Controller.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Controller.txt</LastGenOutput>
+    </None>
+    <None Include="OPS\Caption.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Caption.txt</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Utility\Net\MailMessage.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MailMessage.txt</LastGenOutput>
+    </None>
+    <None Include="ViewModel\AccountNumberManage.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AccountNumberManage.txt</LastGenOutput>
+    </None>
+    <None Include="ViewModel\ChangePassword.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChangePassword.txt</LastGenOutput>
+    </None>
+    <None Include="ViewModel\CurrencyUnit.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CurrencyUnit.txt</LastGenOutput>
+    </None>
+    <None Include="ViewModel\SubSystem.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SubSystem.txt</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Buttons.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Buttons.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Caption.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Caption.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\AccessTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccessTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\CurrencyUnits.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CurrencyUnits.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\EnumTypesList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnumTypesList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\FileTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\LogTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\PageMessageTypes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PageMessageTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\RequestStates.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestStates.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\Roles.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Roles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\ServicesResponse.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ServicesResponse.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\SubSystems.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubSystems.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Message\APIMessage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>APIMessage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Message\Global.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Global.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Message\HeadOfFactor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HeadOfFactor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Message\Request.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Request.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Message\User.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>User.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>General.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Action.resx">
+      <LastGenOutput>Action.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\AccountNumberManage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountNumberManage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\Bank.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Bank.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\Cement.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Cement.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\CentralBank.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CentralBank.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\BankAccount.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BankAccount.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\Certain.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Certain.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\City.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>City.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\CurrencyUnit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CurrencyUnit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\DetailOfFactor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailOfFactor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\ExecutableCode.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExecutableCode.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\HeadLine.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HeadLine.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\HeadOfFactor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HeadOfFactor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\IncomeRow.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IncomeRow.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\Payment.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Payment.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\Request.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Request.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\ServiceTariff.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ServiceTariff.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\SubHeadLine.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubHeadLine.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\SubSystem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubSystem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\Unit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Unit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\User.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>User.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OPS\Button.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Button.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OPS\CaptchaImage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CaptchaImage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Controller.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OPS\Caption.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Caption.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utility\Net\MailMessage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MailMessage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\AccountNumberManage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountNumberManage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\Bank.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Bank.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\BankAccount.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BankAccount.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\Certain.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Certain.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\ChangePassword.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangePassword.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\CurrencyUnit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CurrencyUnit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\ExecutableCode.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExecutableCode.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\IncomeRow.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IncomeRow.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\SubSystem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SubSystem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\Unit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Unit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\User.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>User.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Action.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Action.tt</DependentUpon>
+    </Content>
+    <Content Include="Buttons.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Buttons.tt</DependentUpon>
+    </Content>
+    <Content Include="Caption.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Caption.tt</DependentUpon>
+    </Content>
+    <Content Include="Enum\AccessTypes.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccessTypes.tt</DependentUpon>
+    </Content>
+    <Content Include="Enum\CurrencyUnits.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CurrencyUnits.tt</DependentUpon>
+    </Content>
+    <Content Include="Enum\EnumTypesList.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnumTypesList.tt</DependentUpon>
+    </Content>
+    <Content Include="Enum\FileTypes.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileTypes.tt</DependentUpon>
+    </Content>
+    <Content Include="Enum\PageMessageTypes.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PageMessageTypes.tt</DependentUpon>
+    </Content>
+    <Content Include="Enum\RequestStates.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RequestStates.tt</DependentUpon>
+    </Content>
+    <Content Include="Enum\Roles.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Roles.tt</DependentUpon>
+    </Content>
+    <Content Include="Enum\ServicesResponse.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServicesResponse.tt</DependentUpon>
+    </Content>
+    <Content Include="Enum\SubSystems.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubSystems.tt</DependentUpon>
+    </Content>
+    <Content Include="Message\APIMessage.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>APIMessage.tt</DependentUpon>
+    </Content>
+    <Content Include="Message\Global.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Global.tt</DependentUpon>
+    </Content>
+    <Content Include="Model\Cement.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cement.tt</DependentUpon>
+    </Content>
+    <Content Include="Model\Cement.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Cement.txt</LastGenOutput>
+    </Content>
+    <Content Include="Model\CentralBank.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CentralBank.txt</LastGenOutput>
+    </Content>
+    <Content Include="Model\CentralBank.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CentralBank.tt</DependentUpon>
+    </Content>
+    <Content Include="Model\Request.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Request.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewModel\AccountNumberManage.txt">
+      <DependentUpon>AccountNumberManage.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\Bank.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Bank.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\Bank.txt">
+      <DependentUpon>Bank.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\BankAccount.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BankAccount.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\BankAccount.txt">
+      <DependentUpon>BankAccount.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\Certain.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Certain.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\Certain.txt">
+      <DependentUpon>Certain.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\ChangePassword.txt">
+      <DependentUpon>ChangePassword.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\CurrencyUnit.txt">
+      <DependentUpon>CurrencyUnit.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\ExecutableCode.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ExecutableCode.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\ExecutableCode.txt">
+      <DependentUpon>ExecutableCode.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\IncomeRow.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IncomeRow.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\IncomeRow.txt">
+      <DependentUpon>IncomeRow.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\SubSystem.txt">
+      <DependentUpon>SubSystem.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\Unit.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Unit.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\Unit.txt">
+      <DependentUpon>Unit.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\User.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>User.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\User.txt">
+      <DependentUpon>User.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <None Include="Message\HeadOfFactor.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HeadOfFactor.txt</LastGenOutput>
+    </None>
+    <Content Include="Message\HeadOfFactor.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HeadOfFactor.tt</DependentUpon>
+    </Content>
+    <Content Include="Message\Request.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Request.tt</DependentUpon>
+    </Content>
+    <Content Include="Message\User.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>User.tt</DependentUpon>
+    </Content>
+    <Content Include="General.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>General.tt</DependentUpon>
+    </Content>
+    <Content Include="Model\AccountNumberManage.txt">
+      <DependentUpon>AccountNumberManage.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\Bank.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Bank.txt</LastGenOutput>
+    </Content>
+    <Content Include="Model\Bank.txt">
+      <DependentUpon>Bank.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\BankAccount.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BankAccount.txt</LastGenOutput>
+    </Content>
+    <Content Include="Model\BankAccount.txt">
+      <DependentUpon>BankAccount.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\Certain.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Certain.txt</LastGenOutput>
+    </Content>
+    <Content Include="Model\Certain.txt">
+      <DependentUpon>Certain.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\City.txt">
+      <DependentUpon>City.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\CurrencyUnit.txt">
+      <DependentUpon>CurrencyUnit.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\DetailOfFactor.txt">
+      <DependentUpon>DetailOfFactor.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\ExecutableCode.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ExecutableCode.txt</LastGenOutput>
+    </Content>
+    <Content Include="Model\ExecutableCode.txt">
+      <DependentUpon>ExecutableCode.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\HeadLine.txt">
+      <DependentUpon>HeadLine.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\HeadOfFactor.txt">
+      <DependentUpon>HeadOfFactor.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\IncomeRow.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IncomeRow.txt</LastGenOutput>
+    </Content>
+    <Content Include="Model\IncomeRow.txt">
+      <DependentUpon>IncomeRow.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\Payment.txt">
+      <DependentUpon>Payment.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\ServiceTariff.txt">
+      <DependentUpon>ServiceTariff.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\SubHeadLine.txt">
+      <DependentUpon>SubHeadLine.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\SubSystem.txt">
+      <DependentUpon>SubSystem.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\Unit.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Unit.txt</LastGenOutput>
+    </Content>
+    <Content Include="Model\Unit.txt">
+      <DependentUpon>Unit.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="Model\User.txt">
+      <DependentUpon>User.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="OPS\Button.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Button.tt</DependentUpon>
+    </Content>
+    <Content Include="OPS\CaptchaImage.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CaptchaImage.tt</DependentUpon>
+    </Content>
+    <Content Include="Controller.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Controller.tt</DependentUpon>
+    </Content>
+    <Content Include="OPS\Caption.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Caption.tt</DependentUpon>
+    </Content>
+    <Content Include="Utility\Net\MailMessage.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MailMessage.tt</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

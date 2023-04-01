@@ -1,0 +1,59 @@
+﻿@model ViewModels.Areas.Administrator.ServiceTariff.DetailViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.ServiceTariff.EntitiesName);
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @strTitle
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <
+            <dt>@Html.DisplayNameFor(model => model.SubHeadLine)</dt>
+            <dd>@Html.DisplayFor(model => model.SubHeadLine)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.BankAccount)</dt>
+            <dd>@Html.DisplayFor(model => model.BankAccount)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Unit)</dt>
+            <dd>@Html.DisplayFor(model => model.Unit)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.RCode)</dt>
+            <dd>@Html.DisplayFor(model => model.RCode)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.VCode)</dt>
+            <dd>@Html.DisplayFor(model => model.VCode)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Amount)</dt>
+            <dd>@Html.DisplayFor(model => model.Amount)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.InsertDateTime)</dt>
+            <dd>@Html.DisplayFor(model => model.InsertDateTime)</dd>
+        </dl>
+    </div>
+    <div class="panel-footer">
+        @*@if (Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("BA4C5D09-258F-4287-B093-9C8CF2865EBA") ||// غلامی *@
+        @if (Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("BA4C5D09-258F-4287-B093-9C8CF2865EBB") ||  // کمرای
+             Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("84879792-772E-11EA-9132-0050568D5B96") ||  // بزمونه
+             Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("F2C863BA-D829-4B4F-AA35-0036287CE8FD")  // pap-ict.ir
+             )
+        {
+            @Html.ActionLink(Resources.Action.Edit, MVC.Administrator.ServiceTariff.Edit(Model.Id), new { @class = "btn btn-primary" })
+        }
+        @*@Html.ActionLink(Resources.Action.Delete, MVC.Administrator.ServiceTariff.Delete(Model.Id), new { @class = "btn btn-danger" })*@
+        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.ServiceTariff.Index(), new { @class = "btn btn-default" })
+
+        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+           href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+        <br />
+        <br />
+    </div>
+</div>
+

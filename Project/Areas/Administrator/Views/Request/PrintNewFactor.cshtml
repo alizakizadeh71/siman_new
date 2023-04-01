@@ -1,0 +1,120 @@
+﻿@model Models.Request
+
+@{
+    Layout = "~/Views/Shared/_Layouts/_SiteForPrint.cshtml";
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+
+    List<Infrastructure.PageMessage> PageMessageList = ViewBag.PageMessages;
+
+    string url = System.Configuration.ConfigurationSettings.AppSettings["IVOReferrUrl"].ToString();
+}
+
+<style>
+    .BorderStyle {
+        border-color: green;
+        border-style: solid;
+        border-width: 1px;
+    }
+</style>
+@{
+    <div class="row">
+        <div class="panel panel-info" style="font-family: BYekan, Tahoma;">
+            <div class="panel-heading ">
+                <div style="margin-right:5%">
+                    <img src="~/Content/Images/ivo-logo2.png"/>
+                </div>
+
+                    <center style="margin-top:-2%">
+                        <b>
+                            گواھی اخذ تعرفه دامپزشکی کشور
+                        </b>
+                    </center>
+
+                <div style="margin-right:70%; margin-top:-5%">
+                    @Html.DisplayNameFor(model => model.InvoiceNumber) : @Html.DisplayFor(model => model.InvoiceNumber)
+                    <br />
+                    @Html.DisplayNameFor(model => model.InvoiceDate) :  @Html.DisplayFor(model => model.InvoiceDate)
+                </div>
+            </div>
+            <div class="panel-body">
+                @Html.HiddenFor(model => model.Id)
+                @*@{
+                    string RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, Model.RequestState);
+                }*@
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color:lightblue; width:864px;" class="BorderStyle">
+                        <span>@*گواھی اخذ تعرفه خدمات دامپزشکی*@</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>نام شرکت/شخص</td>
+                        <td class="BorderStyle">شناسه ملی/کد ملی</td>
+                        <td>@Html.DisplayNameFor(model => model.RecordNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.SubSystem)</td>
+
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => model.CompanyName)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.CompanyNationalCode)</td>
+                        <td>@Html.DisplayFor(model => model.RecordNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.SubSystem.Name)</td>
+
+
+
+                    </tr>
+                </table>
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
+                        <span>اطلاعات کالا</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.ServiceTariff)</td>
+                        <td class="BorderStyle">شرح خدمت</td>
+                        <td>@Html.DisplayNameFor(model => model.CurrencyValue)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.CurrencyRation)</td>
+                        <td>@Html.DisplayNameFor(model => model.BaseCurrencyValue)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@ViewBag.ServiceTariff</td>
+                        <td class="BorderStyle">@ViewBag.CommodityDescription</td>
+                        <td >@Html.DisplayFor(model => model.CurrencyValue)</td>
+                        <td class="BorderStyle">@ViewBag.CurrencyRation</td>
+                        <td >@ViewBag.BaseCurrencyValue</td>
+                    </tr>
+                </table>
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
+                        <span>اطلاعات پرداخت</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.Bank_TraceNo)</td>
+                        <td>@Html.DisplayNameFor(model => model.Bank_ShamsiDate)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.DepositNumber)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => model.AmountPaid)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.Bank_TraceNo)</td>
+                        <td>@Html.DisplayFor(model => model.Bank_ShamsiDate)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.DepositNumber)</td>
+                    </tr>
+                </table>
+                <br />
+                <div style="margin-right:70%">
+                    اداره درآمد سازمان دامپزشکی کشور
+                </div>
+            </div>
+            <div class="panel-footer">
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+}
+
+

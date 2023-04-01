@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetAddressByPostalCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="postalcode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAddressByPostalCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAddressByPostalCodeResult" type="tns:IranStandardAddress" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="IranStandardAddress">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TraceID" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Province" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TownShip" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Zone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Village" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LocalityType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LocalityName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LocalityCode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubLocality" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Street" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Street2" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="HouseNumber" type="s:double" />
+          <s:element minOccurs="0" maxOccurs="1" name="Floor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SideFloor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BuildingName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAddressByPostalCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAddressByPostalCode" />
+  </wsdl:message>
+  <wsdl:message name="GetAddressByPostalCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAddressByPostalCodeResponse" />
+  </wsdl:message>
+  <wsdl:portType name="postServicesSoap">
+    <wsdl:operation name="GetAddressByPostalCode">
+      <wsdl:input message="tns:GetAddressByPostalCodeSoapIn" />
+      <wsdl:output message="tns:GetAddressByPostalCodeSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="postServicesSoap" type="tns:postServicesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAddressByPostalCode">
+      <soap:operation soapAction="http://tempuri.org/GetAddressByPostalCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="postServicesSoap12" type="tns:postServicesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAddressByPostalCode">
+      <soap12:operation soapAction="http://tempuri.org/GetAddressByPostalCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="postServices">
+    <wsdl:port name="postServicesSoap" binding="tns:postServicesSoap">
+      <soap:address location="http://10.7.1.40/GetPostinfo/postServices.asmx" />
+    </wsdl:port>
+    <wsdl:port name="postServicesSoap12" binding="tns:postServicesSoap12">
+      <soap12:address location="http://10.7.1.40/GetPostinfo/postServices.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

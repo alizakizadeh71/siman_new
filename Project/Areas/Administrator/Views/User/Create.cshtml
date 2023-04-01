@@ -1,0 +1,233 @@
+﻿@model ViewModels.Areas.Administrator.User.CreateViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.Create,
+        Resources.Model.User.EntitiesName);
+}
+
+
+
+@using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                پیام های سیستمی
+            </div>
+            <div class="panel-body">
+                @Html.Raw(ViewBag.PageMessages)
+            </div>
+        </div>
+    }
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="panel-body">
+            <br />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Role, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.Role, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Role)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Province, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.Province, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChange()" })
+                    @Html.ValidationMessageFor(model => model.Province)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6" id="DivCityId">
+                    @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.City)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NationalCode, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.NationalCode, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.NationalCode)
+                </div>
+            </div>
+
+
+
+            @*<div class="form-group" style="font-family:'B Nazanin';font-size:large">
+                @Html.LabelFor(m => m.NationalCode, htmlAttributes: new { @class = "control-label col-md-2 required" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.NationalCode, new
+                           {
+                               htmlAttributes = new
+                               {
+                                   @class = "form-control",
+                                   @minlength = "10",
+                                   @maxlength = "10",
+                                   @type = "text",
+                                   @id = "OnlyNumbers",
+                                   @onkeypress = "return AllowNumbersOnly(event)"
+                               }
+                           })
+                    @Html.ValidationMessageFor(m => m.NationalCode, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BirthDay, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.BirthDay, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.BirthDay)
+                    <input id="checkPersonValidationByNationalCode" type="button" style="width:100px" value="احراز هویت" class="btn-info" title="با فشردن این دکمه، کاربر با استفاده از شناسه ملی و تاریخ تولد احراز هویت شده و نام و نام خانوادگی پر میشوند." />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FullName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.FullName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsApprovallicense, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.CheckBoxFor(model => model.IsApprovallicense, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.IsApprovallicense)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <input type="submit" value="@Resources.Buttons.Create" class="btn btn-primary" />
+                    @*<input type="submit" value="@Resources.Buttons.Reset" class="btn btn-primary" />*@
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-footer">
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.User.Index(), new { @class = "btn btn-default col-md-2" })
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    function onChange() {
+        $.ajax({
+            url: '/Administrator/Request/GetCities',
+            type: 'post',
+            data: { provinceId: $("#Province").val() },
+            success: function (data) {
+
+                $("#DivCityId").empty();
+
+                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, city) {
+                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivCityId").append(select);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+
+        $('#FullName').prop('readonly', true);
+
+
+        $('#BirthDay').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true,
+        });
+
+        $("#checkPersonValidationByNationalCode").click(function () {
+            checkPersonValidation();
+        });
+    });
+
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
+    function checkPersonValidation() {
+
+        var NationalCode = $("#NationalCode").val();
+        var birthDate = $("#BirthDay").val().replace(/\//g, '');
+        debugger;
+        jQuery.ajax({
+            url: "/Administrator/User/CheckPersonValidation",
+            data: { 'NationalCode': NationalCode, 'birthDate': birthDate },
+            type: 'GET',
+            dataType: "json",
+            success: function (result) {
+                if (result.success == true) {
+                    debugger;
+                    $("#FullName").val(result.personInfo.firstName);
+                }
+                else {
+                    alert(result.CodeMessage);
+                }
+            }
+        });
+    };
+
+
+
+
+
+
+
+
+
+
+
+</script>

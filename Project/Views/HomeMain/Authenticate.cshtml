@@ -1,0 +1,242 @@
+﻿@model ViewModels.Areas.Administrator.User.AuthenticateViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    .control-label {
+        text-align: right !important;
+    }
+</style>
+<div id="Load" class="row" style="background-image: url('../../Files/Authenticate.jpg'); background-size: cover;">
+
+    <section id="loginFrom" class="col-md-6 col-md-offset-0 panel-info">
+
+        <h4 class="panel-heading" style="text-align:center">لطفا اطلاعات درخواستی این قسمت را به صورت دقیق وارد نمایید</h4>
+        <div class="form-horizontal" , role="form">
+            @using (Html.BeginForm("Authenticate", "User", routeValues: new { Area = "Administrator" }, method: FormMethod.Get))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NationalCode, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.NationalCode, new { @class = "form-control col-md-6" })
+                        @Html.ValidationMessageFor(model => model.NationalCode)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BirthDay, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.BirthDay, new { @class = "form-control col-md-6" })
+                        @Html.ValidationMessageFor(model => model.BirthDay)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdentityCertificateSerial, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.IdentityCertificateSerial, new { @class = "form-control col-md-6" })
+                        @Html.ValidationMessageFor(model => model.IdentityCertificateSerial)
+                    </div>
+                    <a style="color:blue ;" href="~/Files/Serial.jpg">راهنما سریال کارت ملی</a>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PostalCode, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.PostalCode, new { @class = "form-control col-md-6" })
+                        @Html.ValidationMessageFor(model => model.PostalCode)
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        <input id="Authentication" type="button" style="width:100px" value="احراز هویت" class="btn-info" title="با فشردن این دکمه، کاربر با استفاده از شناسه ملی، تاریخ تولد، سریال کارت ملی و کد پستی احراز هویت می شود." />
+                    </div>
+                </div>
+
+            }
+            </div>
+
+        @using (Html.BeginForm("Continue_Authenticate", "HomeMain", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary(true)
+            <div class="form-group row">
+                <div class="col-md-offset-3">
+                    <input style="margin-top:18% ; width:280px ; font-weight:bold " class="btn btn-primary" type="submit" id="submit" title="با فشردن این دکمه بدون اینکه احراز هویت شما انجام شود شما وارد سامانه خواهید شد" value=' انصراف موقت از مراحل استعلام و ورود به سامانه ' />
+                </div>
+            </div>
+        }
+
+    </section>
+
+
+    <section id="loginFrom" class="col-md-6 col-md-offset-0 panel-info">
+        <h4 class="panel-heading" style="text-align:center">پس از احراز هویت اطلاعات احراز شده در این قسمت قابل مشاهده خواهد بود</h4>
+        <hr />
+
+
+        @using (Html.BeginForm("Authenticate", "User", routeValues: new { Area = "Administrator", @class = "form-horizontal", role = "form" }, method: FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.NationalCode2)
+            @Html.HiddenFor(model => model.BirthDay2)
+            @Html.HiddenFor(model => model.IdentityCertificateSerial2)
+            @Html.HiddenFor(model => model.PostalCode2)
+            @Html.HiddenFor(model => model.Image)
+            <div class="form-group">
+                @Html.LabelFor(model => model.FullName, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control col-md-9" })
+                    @Html.ValidationMessageFor(model => model.FullName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control col-md-9" })
+                    @Html.ValidationMessageFor(model => model.Address)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <img class="col-md-offset-1" src="~/Files/loading2.gif" style=" width:100% ; height:100%" id="LoadingImage">
+                    <input style="margin-top:100% ; width:280px ; font-weight:bold " class="btn btn-success" type="submit" id="submit2" title="با فشردن این دکمه اطلاعات احراز شده شما در سیستم ثبت خواهد شد" value=' ذخیره اطلاعات استعلام شده و ورود به سامانه ' />
+                </div>
+                <div class="col-md-6">
+                    <img class="col-md-offset-1" src="" style=" width:225px ; height: 300px" id="PersonImage">
+                </div>
+
+            </div>
+
+            @*<div class="form-group row">
+                    <div class="col-md-offset-3">
+                        <input type="submit" title="با فشردن این دکمه اطلاعات احراز شده شما در سیستم ثبت خواهد شد" value=' ادامه - ورود به سامانه ' class="btn btn-default" />
+                    </div>
+                </div>*@
+        }
+
+    </section>
+</div>
+<script type="text/javascript">
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
+    $(document).ready(function () {
+        LoadPage()
+        $('#FullName').prop('readonly', true);
+        $('#Address').prop('readonly', true);
+        $('#BirthDay').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true,
+        });
+
+        $("#Authentication").click(function () {
+            LoadPage()
+            $('#LoadingImage').show();
+            $('#submit').attr('disabled', true);
+            $('#Authentication').attr('disabled', true);
+            checkPersonValidation();
+        });
+    });
+
+    function LoadPage() {
+        $('#submit2').hide();
+        $('#submit2').attr('disabled', true);
+        $('#LoadingImage').hide();
+        $('#submit').attr('disabled', false);
+        $('#Authentication').attr('disabled', false);
+        $('#FullName').val('');
+        $('#Address').val('');
+    }
+
+    function checkPersonValidation() {
+
+        var NationalCode = $("#NationalCode").val();
+        var birthDate = $("#BirthDay").val().replace(/\//g, '');
+        debugger;
+        jQuery.ajax({
+            url: "/Administrator/User/CheckPersonValidation",
+            data: { 'NationalCode': NationalCode, 'birthDate': birthDate },
+            type: 'GET',
+            dataType: "json",
+            success: function (result) {
+                if (result.success == true) {
+                    debugger;
+                    $("#FullName").val(result.personInfo.firstName);
+                    $("#NationalCode2").val($("#NationalCode").val());
+                    $("#BirthDay2").val($("#BirthDay").val());
+                    checkPostalCodeValidation();
+                }
+                else {
+                    LoadPage()
+                    alert(result.CodeMessage);
+                }
+            }
+        });
+    };
+
+    function GetPersonImage() {
+        var NationalCode = $("#NationalCode").val();
+        var IdentityCertificateSerial = $("#IdentityCertificateSerial").val();
+        debugger;
+        jQuery.ajax({
+            url: "/Administrator/User/GetPersonImage",
+            data: { 'NationalCode': NationalCode, 'IdentityCertificateSerial': IdentityCertificateSerial },
+            type: 'GET',
+            dataType: "json",
+            success: function (result) {
+                if (result.success == true) {
+                    $("#Image").val(result.image);
+                    $("#IdentityCertificateSerial2").val($("#IdentityCertificateSerial").val());
+                    $('#PersonImage').prop('src', result.image);
+
+                    $('#submit2').prop('disabled', false);
+                    $('#submit2').show(true);
+                    $('#LoadingImage').hide();
+                    $('#submit').attr('disabled', false);
+                    $('#Authentication').attr('disabled', false);
+                }
+                else {
+                    LoadPage()
+                    alert(result.CodeMessage);
+                }
+            }
+        });
+    };
+
+    function checkPostalCodeValidation() {
+        var PostalCode = $("#PostalCode").val();
+        jQuery.ajax({
+            url: "/Administrator/User/CheckPostalCodeValidation",
+            data: { 'PostalCode': PostalCode },
+            type: 'GET',
+            dataType: "json",
+            success: function (result) {
+                if (result.success == true) {
+                    var address = result.postInfo.Province + " - " + result.postInfo.TownShip + " - " + result.postInfo.SubLocality
+                        + " - " + result.postInfo.Street + " - " + result.postInfo.Street2 + " - پلاک " + result.postInfo.HouseNumber
+                        + " - طبقه " + result.postInfo.Floor;
+                    $("#Address").val(address);
+                    $("#PostalCode2").val($("#PostalCode").val());
+                    GetPersonImage();
+                }
+                else {
+                    LoadPage()
+                    alert(result.CodeMessage);
+                }
+            }
+        });
+    };
+</script>

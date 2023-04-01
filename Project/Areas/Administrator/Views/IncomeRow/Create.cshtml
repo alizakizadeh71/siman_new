@@ -1,0 +1,64 @@
+﻿@model ViewModels.Areas.Administrator.IncomeRow.CreateViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.Create,
+        Resources.Model.IncomeRow.EntitiesName);
+}
+
+@using (Html.BeginForm("Create", "IncomeRow", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                پیام های سیستمی
+            </div>
+            <div class="panel-body">
+                @Html.Raw(ViewBag.PageMessages)
+            </div>
+        </div>
+    }
+    
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Code, new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.Code)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <input type="submit" value="@Resources.Buttons.Create" class="btn btn-primary" />
+                    <input type="submit" value="@Resources.Buttons.Reset" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-footer">
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.IncomeRow.Index(), new { @class = "btn btn-default col-md-2" })
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
+        </div>
+    </div>
+}

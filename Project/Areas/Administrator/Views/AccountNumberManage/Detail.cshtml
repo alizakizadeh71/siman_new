@@ -1,0 +1,43 @@
+﻿@model ViewModels.Areas.Administrator.AccountNumberManage.DetailViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.ViewModel.AccountNumberManage.EntitiesName);
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @strTitle
+    </div>
+    
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.SubSystem)</dt>
+            <dd>@Html.DisplayFor(model => model.SubSystem)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Province)</dt>
+            <dd>@Html.DisplayFor(model => model.Province)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.AccountNumber)</dt>
+            <dd>@Html.DisplayFor(model => model.AccountNumber)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.InsertDateTime)</dt>
+            <dd>@Html.DisplayFor(model => model.InsertDateTime)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.UpdateDateTime)</dt>
+            <dd>@Html.DisplayFor(model => model.UpdateDateTime)</dd>
+
+        </dl>
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink(Resources.Action.Edit, MVC.Administrator.AccountNumberManage.Edit(Model.Id), new { @class = "btn btn-primary" })
+        @Html.ActionLink(Resources.Action.Delete, MVC.Administrator.AccountNumberManage.Delete(Model.Id), new { @class = "btn btn-danger" })
+        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.AccountNumberManage.Index(), new { @class = "btn btn-default" })
+
+        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+           href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+        <br />
+        <br />
+    </div>
+</div>
+

@@ -1,0 +1,63 @@
+﻿// Updated on 1393/08/26
+
+INSTALL-PACKAGE Microsoft.AspNet.Mvc
+
+INSTALL-PACKAGE ENTITYFRAMEWORK
+INSTALL-PACKAGE SqlServerCompact
+INSTALL-PACKAGE EntityFramework.SqlServerCompact
+
+INSTALL-PACKAGE Newtonsoft.Json
+INSTALL-PACKAGE Microsoft.AspNet.Web.Optimization
+
+INSTALL-PACKAGE JQuery
+INSTALL-PACKAGE jQuery.Validation.Unobtrusive
+
+INSTALL-PACKAGE Bootstrap
+
+INSTALL-PACKAGE AngularJS
+INSTALL-PACKAGE Angular.UI.Bootstrap
+
+INSTALL-PACKAGE Modernizr
+
+INSTALL-PACKAGE Elmah
+INSTALL-PACKAGE T4MVC
+INSTALL-PACKAGE AutoMapper
+
+INSTALL-PACKAGE TinyMCE
+INSTALL-PACKAGE DotNetZip
+INSTALL-PACKAGE CaptchaMvc.Mvc5
+INSTALL-PACKAGE SyntaxHighlighter
+INSTALL-PACKAGE DocumentFormat.OpenXml
+
+Dtx نصب در پروژه
+INSTALL-PACKAGE System.Linq.Dynamic
+
+Resources نصب در پروژه
+INSTALL-PACKAGE SmartStringResources
+
+ديگر نمی خواهيم
+INSTALL-PACKAGE KendoUIWeb
+INSTALL-PACKAGE jQuery.UI.Combined
+INSTALL-PACKAGE jQuery.Ajax.Unobtrusive
+
+References:
+
+System
+System.Web
+System.Web.Services
+System.Xml
+System.Drawing
+Microsfot.CSharp
+
+اين پايينی ظاهرا لازم نيست
+
+System.EnterpriseServices
+
+برای راه اندازی صرفا
+KendoUIWeb
+
+INSTALL-PACKAGE JQUERY
+INSTALL-PACKAGE jQuery.UI.Combined
+INSTALL-PACKAGE Newtonsoft.Json
+INSTALL-PACKAGE Twitter.Bootstrap
+INSTALL-PACKAGE KendoUIWeb

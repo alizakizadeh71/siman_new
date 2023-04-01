@@ -1,0 +1,14 @@
+﻿<br />
+<br />
+<br />
+@{
+    var ListInvoice = ViewBag.request as List<int>;
+    foreach (var item in ListInvoice)
+    {
+
+        @Html.ActionLink("چاپ فاکتور پرداخت به شماره: " + item, MVC.Administrator.Request.PrintNewFactor(item), new { @class = "btn btn-info", @style = "margin-right:100px;" })
+        @*<a style="color:#4e6cff ; font-weight:bold" href="/Administrator/Request/PrintNewFactor/@item"> دریافت شماره فاکتور @item</a>*@
+        <br />
+        <br />
+    }
+}

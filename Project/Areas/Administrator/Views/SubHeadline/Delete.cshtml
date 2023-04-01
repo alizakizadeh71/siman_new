@@ -1,0 +1,54 @@
+﻿@model ViewModels.Areas.Administrator.SubHeadLine.DetailViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.DeleteOf,
+        Resources.Model.SubHeadLine.EntitiesName);
+}
+@if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+{
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            پیام های سیستمی
+        </div>
+        <div class="panel-body">
+            @Html.Raw(ViewBag.PageMessages)
+        </div>
+    </div>
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @strTitle
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.Name)</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Code)</dt>
+            <dd>@Html.DisplayFor(model => model.Code)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.InsertDateTime)</dt>
+            <dd>@Html.DisplayFor(model => model.InsertDateTime)</dd>
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(excludePropertyErrors: true)
+
+            <div class="form-actions no-color">
+                <input type="submit" value="@Resources.Buttons.Delete" class="btn btn-danger" />
+            </div>
+        }
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink(Resources.Action.Edit, MVC.Administrator.SubHeadLine.Edit(Model.Id), new { @class = "btn btn-primary" })
+        @Html.ActionLink(Resources.Action.Details, MVC.Administrator.SubHeadLine.Detail(Model.Id), new { @class = "btn btn-primary" })
+        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.SubHeadLine.Index(), new { @class = "btn btn-default" })
+
+        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+           href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+        <br />
+        <br />
+    </div>
+</div>

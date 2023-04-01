@@ -1,0 +1,164 @@
+﻿@model ViewModels.Areas.Administrator.HeadOfFactor.EditViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.Edit,
+        Resources.Model.HeadOfFactor.EntitiesName);
+}
+
+@using (Html.BeginForm("Edit", "HeadOfFactor", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.HeadLine, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.HeadLine, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeHeadLine()" })
+                    @Html.ValidationMessageFor(model => model.HeadLine)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SubHeadLine, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6" id="DivSubHeadLineId">
+                    @Html.DropDownListFor(model => model.SubHeadLine, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SubHeadLine)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Province, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.Province, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
+                    @Html.ValidationMessageFor(model => model.Province)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6" id="DivCityId">
+                    @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.City)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.CompanyName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyNationalCode, new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.CompanyNationalCode, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.CompanyNationalCode)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CellPhoneNumber, new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.CellPhoneNumber, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.CellPhoneNumber)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("پیام های سیستمی ", new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                   @Html.Raw(ViewBag.MessageList)
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <input type="submit" value="@Resources.Buttons.Save" class="btn btn-success" />
+                    <input type="submit" value="@Resources.Buttons.Reset" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-footer">
+            @Html.ActionLink(Resources.Action.Details, MVC.Administrator.HeadOfFactor.Details(Model.Id), new { @class = "btn btn-primary " })
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.HeadOfFactor.Index(), new { @class = "btn btn-default" })
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+               href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    function onChangeProvince() {
+        $.ajax({
+            url: '/Administrator/HeadOfFactor/GetCities',
+            type: 'post',
+            data: { provinceId: $("#Province").val() },
+            success: function (data) {
+
+                $("#DivCityId").empty();
+
+                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, city) {
+                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivCityId").append(select);
+            }
+        });
+    }
+
+
+    function onChangeHeadLine() {
+        $.ajax({
+            url: '/Administrator/HeadOfFactor/GetSubHeadLines',
+            type: 'post',
+            data: { HeadLineId: $("#HeadLine").val() },
+            success: function (data) {
+
+                $("#DivSubHeadLineId").empty();
+
+                var select = $("<select class='form-control' id='SubHeadLine' name='SubHeadLine' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, subHeadLine) {
+                    var option = ('<option value="' + subHeadLine.Id + '"> ' + subHeadLine.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivSubHeadLineId").append(select);
+            }
+        });
+    }
+
+</script>

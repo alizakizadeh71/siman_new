@@ -1,0 +1,369 @@
+﻿@model ViewModels.Areas.Administrator.ServiceTariff.IndexViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.ListOf,
+        Resources.Model.ServiceTariff.EntitiesName
+        );
+
+    string strCreate =
+    string.Format("{0} {1}",
+    Resources.Action.CreateOf,
+    Resources.Model.ServiceTariff.EntitiesName
+    );
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#SearchPanelHeader").click(function () {
+            $("#SearchPanelBody").toggle(1000);
+        });
+        //*********************************
+        var varDataSource =
+            new kendo.data.DataSource({
+
+                pageSize: 10,
+
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                serverAggregates: false,
+
+                transport: {
+                    read: {
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Administrator/ServiceTariff/GetServiceTariffs",
+                        data: { serviceTarifId: $('#').val() }
+                    },
+                },
+
+                schema: {
+                    data: function (e) {
+                        return (e.Data);
+                    },
+                    total: function (e) {
+                        return (e.Total);
+                    },
+                },
+            });
+
+        //*********************************
+        //*********************************
+        //*********************************
+
+        $("div#grid").kendoGrid({
+            sortable: {
+                mode: "multiple",
+                allowUnsort: true,
+            },
+
+            pageable: {
+                info: true,
+                input: true,
+                refresh: true,
+                numeric: true,
+                buttonCount: 5,
+                previousNext: true,
+                pageSize: [5, 10, 25, 50, 100],
+                messages: {
+                    morePages: "صفحات بیشتر",
+                    page: "شماره صفحه",
+                }
+            },
+
+            groupable: true,
+            filterable: true,
+            scrollable: false,
+            reorderable: true,
+
+            columnMenu: {
+                columns: true,
+                sortable: true,
+                filterable: true,
+                messages: {
+                    lock: "قفل شده",
+                    unlock: "قفل نشده",
+                }
+            },
+
+            navigatable: true,
+            selectable: "multiple row",
+
+            dataSource: varDataSource,
+
+            dataBinding: function () {
+                rowNumber =
+					(this.dataSource.page() - 1) * this.dataSource.pageSize();
+            },
+
+            // **************************************************
+
+            columns:
+                [
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "50px",
+                        titel: "#",
+                        template: "#= ++rowNumber #",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "90px",
+                        title: "",
+                        template: function (dataItem) {
+
+                            var strTemplate = "";
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/ServiceTariff/Detail/'
+								+ dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></a> | ';
+
+
+						    @*@if ((Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("BA4C5D09-258F-4287-B093-9C8CF2865EBA")) // غلامی*@
+						    @if ((Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("BA4C5D09-258F-4287-B093-9C8CF2865EBB")) // کمرای
+                            || (Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("84879792-772E-11EA-9132-0050568D5B96")) // بزمونه
+                            || (Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("F2C863BA-D829-4B4F-AA35-0036287CE8FD")) // PAP
+
+                            )
+
+                            {
+                                <text>
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/ServiceTariff/Edit/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a>  ';
+
+                               </text>
+
+                            }
+
+                            @*strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/ServiceTariff/Delete/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/delete.png"/></a> | ';*@
+                            return (strTemplate);
+                        },
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.ServiceTariff.SubHeadLine",
+                        field: "@Resources.Model.Strings.ServiceTariffKeys.SubHeadLine",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.ServiceTariff.BankAccount",
+                        field: "@Resources.Model.Strings.ServiceTariffKeys.BankAccount",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.ServiceTariff.Name",
+                        field: "@Resources.Model.Strings.ServiceTariffKeys.Name",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.ServiceTariff.Unit",
+                        field: "@Resources.Model.Strings.ServiceTariffKeys.Unit",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.ServiceTariff.RCode",
+                        field: "@Resources.Model.Strings.ServiceTariffKeys.RCode",
+
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.ServiceTariff.Amount",
+                        field: "@Resources.Model.Strings.ServiceTariffKeys.Amount",
+                    },
+                ]
+        });
+
+        $("button#btnSearch").click(function () {
+
+            var varDataSource =
+                new kendo.data.DataSource({
+
+                    pageSize: 10,
+
+                    serverPaging: true,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    serverAggregates: false,
+
+                    transport: {
+                        read: {
+                            type: "POST",
+                            dataType: "json",
+                            url: "/Administrator/ServiceTariff/GetServiceTariffs",
+                            data: {
+
+                                ServiceTariffs: function () {
+                                    return ($("select#ServiceTariffs").val());
+                                },
+
+                                //Province: function () {
+                                //    return ($("select#Province").val());
+                                //},
+
+                                //City: function () {
+                                //    return ($("select#City").val());
+                                //},
+
+                            },
+                        },
+                    },
+
+                    requestStart: function (e) {
+                        $("button#btnSearch").hide();
+                    },
+
+                    requestEnd: function (e) {
+                        $("button#btnSearch").show();
+                    },
+
+                    schema: {
+                        data: function (e) {
+                            return (e.Data);
+                        },
+                        total: function (e) {
+                            return (e.Total);
+                        },
+                    },
+                });
+
+            // **************************************************
+            // **************************************************
+
+            var varGrid =
+                $('div#grid').data("kendoGrid");
+
+            varGrid.setDataSource(varDataSource);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+        //var varGrid =
+        //    $('div#grid').data("kendoGrid");
+
+        //varGrid.setDataSource(varDataSource);
+
+    })
+</script>
+
+
+
+
+
+<section id="Requests" class="form-horizontal" role="form">
+    <div class="panel panel-info">
+        <div class="panel-heading" id="SearchPanelHeader">
+            جستجو ( کلیک کنید...!)
+        </div>
+        <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
+            <div class="col col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ServiceTariffs, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @*@Html.DropDownListFor(model => model.ServiceTariffs, null,
+                            Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })*@
+                        @Html.EditorFor(x => x.ServiceTariffs, MVC.Shared.Views.EditorTemplates.DropDownSearchOption)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-8">
+                    <button type="button" id="btnSearch" name="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section id="SubHeadLines" class="form-horizontal" role="form">
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="col-md-12 panel-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+                       href="/Administrator/ServiceTariff/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+
+                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+                       href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+
+                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)" style="float:left"
+                       onclick="location.href='@Url.Action("Download", "ServiceTariff")'">
+                        <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/ExcelMini.png' />
+                    </a>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div style="" data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+               href="/Administrator/ServiceTariff/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)" style="float:left"
+               onclick="location.href='@Url.Action("Download", "ServiceTariff")'">
+                <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/ExcelMini.png' />
+            </a>
+
+            <br />
+            <br />
+        </div>
+    </div>
+</section>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService">
+      <s:element name="BillPaymentRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestData" type="tns:ClientBillPaymentRequestData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ClientBillPaymentRequestData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ClientPaymentRequestDataBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="BillId" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PayId" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ClientPaymentRequestDataBase">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="CallBackUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AdditionalData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Originator" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BillPaymentRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BillPaymentRequestResult" type="tns:ClientBillPaymentResponseData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ClientBillPaymentResponseData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ClientPaymentResponseDataBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ClientPaymentResponseDataBase">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Token" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:short" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BatchBillPaymentRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="requestData" type="tns:ClientBatchBillPaymentRequestData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ClientBatchBillPaymentRequestData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="CallBackUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BillItems" type="tns:ArrayOfClientBatchBillPaymentRequestDataItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfClientBatchBillPaymentRequestDataItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ClientBatchBillPaymentRequestDataItem" nillable="true" type="tns:ClientBatchBillPaymentRequestDataItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ClientBatchBillPaymentRequestDataItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="BillId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PayId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="AdditionalData" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BatchBillPaymentRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BatchBillPaymentRequestResult" type="tns:ClientBatchBillPaymentResponseData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ClientBatchBillPaymentResponseData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ResponseDataViewModelBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TotalAmount" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="BatchToken" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="BillItems" type="tns:ArrayOfClientBatchBillPaymentResponseDataItem" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ResponseDataViewModelBase">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:short" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfClientBatchBillPaymentResponseDataItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ClientBatchBillPaymentResponseDataItem" nillable="true" type="tns:ClientBatchBillPaymentResponseDataItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ClientBatchBillPaymentResponseDataItem">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ClientPaymentResponseDataBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="OrganizationName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="BillId" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PayId" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="OrderId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="LoginAccount" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetBatchBillInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="batchToken" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBatchBillInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBatchBillInfoResult" type="tns:ArrayOfClientBatchBillPaymentInfoResponseData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfClientBatchBillPaymentInfoResponseData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ClientBatchBillPaymentInfoResponseData" nillable="true" type="tns:ClientBatchBillPaymentInfoResponseData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ClientBatchBillPaymentInfoResponseData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="BillId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PayId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="OrderId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Token" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="BatchToken" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="RequestDateTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="TerminalNo" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RRN" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="billType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetBillInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="billId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="payId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBillInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBillInfoResult" type="tns:ClientBillInfoResponseData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ClientBillInfoResponseData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="BillType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UtilityCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubUtilityCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CompanyName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:short" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RequestDateTime" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetBillInfoData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="token" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBillInfoDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBillInfoDataResult" type="tns:ClientBillInfoResponseData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BillPaymentRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:BillPaymentRequest" />
+  </wsdl:message>
+  <wsdl:message name="BillPaymentRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:BillPaymentRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="BatchBillPaymentRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:BatchBillPaymentRequest" />
+  </wsdl:message>
+  <wsdl:message name="BatchBillPaymentRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:BatchBillPaymentRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBatchBillInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBatchBillInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetBatchBillInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBatchBillInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBillInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBillInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetBillInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBillInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBillInfoDataSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBillInfoData" />
+  </wsdl:message>
+  <wsdl:message name="GetBillInfoDataSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBillInfoDataResponse" />
+  </wsdl:message>
+  <wsdl:portType name="BillServiceSoap">
+    <wsdl:operation name="BillPaymentRequest">
+      <wsdl:input message="tns:BillPaymentRequestSoapIn" />
+      <wsdl:output message="tns:BillPaymentRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BatchBillPaymentRequest">
+      <wsdl:input message="tns:BatchBillPaymentRequestSoapIn" />
+      <wsdl:output message="tns:BatchBillPaymentRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBatchBillInfo">
+      <wsdl:input message="tns:GetBatchBillInfoSoapIn" />
+      <wsdl:output message="tns:GetBatchBillInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBillInfo">
+      <wsdl:input message="tns:GetBillInfoSoapIn" />
+      <wsdl:output message="tns:GetBillInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBillInfoData">
+      <wsdl:input message="tns:GetBillInfoDataSoapIn" />
+      <wsdl:output message="tns:GetBillInfoDataSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BillServiceSoap" type="tns:BillServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BillPaymentRequest">
+      <soap:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/BillPaymentRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BatchBillPaymentRequest">
+      <soap:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/BatchBillPaymentRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBatchBillInfo">
+      <soap:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/GetBatchBillInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBillInfo">
+      <soap:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/GetBillInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBillInfoData">
+      <soap:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/GetBillInfoData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BillServiceSoap12" type="tns:BillServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BillPaymentRequest">
+      <soap12:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/BillPaymentRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BatchBillPaymentRequest">
+      <soap12:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/BatchBillPaymentRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBatchBillInfo">
+      <soap12:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/GetBatchBillInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBillInfo">
+      <soap12:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/GetBillInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBillInfoData">
+      <soap12:operation soapAction="https://pec.Shaparak.ir/NewIPGServices/Bill/BillService/GetBillInfoData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BillService">
+    <wsdl:port name="BillServiceSoap" binding="tns:BillServiceSoap">
+      <soap:address location="https://pec.shaparak.ir/NewIPGServices/Bill/BillService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="BillServiceSoap12" binding="tns:BillServiceSoap12">
+      <soap12:address location="https://pec.shaparak.ir/NewIPGServices/Bill/BillService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

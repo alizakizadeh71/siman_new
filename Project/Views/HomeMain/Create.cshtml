@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create New Temp</h2>
+<form onsubmit="return submitTemp()">
+    <input type="text" name="Name" id="Name" />
+    <input type="submit" value="Create Temp" />
+</form>
+<h1 id="msg"> </h1>
+<script type="text/javascript">
+    //1: have form - get values from form send to API as json
+    //2: use form values
+    function submitTemp() {
+        $.ajax({
+            url: '/api/Temp',
+            type: 'Post',
+            dataType:'json',
+            success: function (newTemp) {
+                var msg = 'new Temp Id=' + newTemp.ID;
+                $('#msg').text(msg);
+            }
+        });
+        return false;
+    }
+</script>
+

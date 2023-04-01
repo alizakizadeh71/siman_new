@@ -1,0 +1,4 @@
+﻿@model System.DateTime?
+@using Infrastructure
+		@Html.TextBox("", String.Format("{0:yyyy/mm/dd}", Model.HasValue&&Model.Value.Year>100 ? Html.DisplayDateTime(Model.Value, false) : Html.Raw("")),
+																   new { @class = "datepicker form-control" })

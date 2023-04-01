@@ -1,0 +1,249 @@
+﻿@*@using Infrastructure
+
+@helper DisplayAdministratorControlPanelMenu()
+{
+	<ul class="nav navbar-nav">
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.MenuItems.AdministratorControlPanel<b class="caret"></b></a>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_Dashboard,
+						MVC.Administrator.Dashboard.Index())
+				</li>
+				<li class="divider"></li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_User,
+						MVC.Administrator.User.Index())
+				</li>
+				<li>
+					@Html.ActionLink(Models.Resources.Role.EntitiesName,
+						MVC.Administrator.Role.Index())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_Group,
+						MVC.Administrator.Group.Index())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_HttpReferer,
+						MVC.Administrator.HttpReferer.Index())
+				</li>
+				<li class="divider"></li>
+				<li>
+					@Html.ActionLink(Resources.Actions.OnlineUsers,
+						MVC.Administrator.UserLoginLog.DisplayOnlineUsers())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Actions.UserLoginLogs,
+						MVC.Administrator.UserLoginLog.Index())
+				</li>
+				<li class="divider"></li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_ProjectArea,
+						MVC.Administrator.ProjectArea.Index())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_LocalizedTemplates,
+						MVC.Administrator.LocalizedTemplates.Index())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_AccessType,
+						MVC.Administrator.AccessType.Index())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_Culture,
+						MVC.Administrator.Culture.Index())
+				<li class="divider"></li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_WebDownloader,
+						MVC.Administrator.WebDownloader.Download())
+				</li>
+				<li class="divider"></li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_GlobalApplicationSettings,
+						MVC.Administrator.GlobalApplicationSettings.Edit())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_ApplicationSettings,
+						MVC.Administrator.ApplicationSettings.Edit())
+				</li>
+			</ul>
+		</li>
+	</ul>
+}
+
+@helper DisplayCmsControlPanelMenu()
+{
+	<ul class="nav navbar-nav">
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.MenuItems.CmsControlPanel<b class="caret"></b></a>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					@Html.ActionLink(Models.Resources.Cms.SubSystemSettings.EntityName,
+						MVC.Cms.SubSystemSettings.Edit())
+				</li>
+				<li class="divider"></li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Cms_Tag,
+						MVC.Cms.Tag.Index())
+				</li>
+				<li class="divider"></li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Cms_Page,
+						MVC.Cms.Page.Index())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Cms_Layout,
+						MVC.Cms.Layout.Index())
+				</li>
+				<li class="divider"></li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Cms_Post,
+						MVC.Cms.Post.Index())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Cms_PostCategory,
+						MVC.Cms.PostCategory.Index())
+				</li>
+			</ul>
+		</li>
+	</ul>
+}
+
+@helper DisplayProgrammerControlPanelMenu()
+{
+	<ul class="nav navbar-nav">
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">اطلاعات مسترديتا<b class="caret"></b></a>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					@Html.ActionLink(Models.Resources.Gender.EntitiesName,
+						MVC.Administrator.Gender.Index())
+				</li>
+				<li>
+					@Html.ActionLink("کشورها، استان‌ها، شهرها",
+						MVC.Administrator.Country.Index())
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	<ul class="nav navbar-nav">
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.MenuItems.ProgrammerControlPanel<b class="caret"></b></a>
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					@Html.ActionLink(Resources.MenuItems.SendingEmailControlPanel,
+						MVC.Administrator.MailSettings.Index())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Actions.Sync,
+						MVC.Administrator.Programmer.SyncAreasControllersActionsWithSourceCode())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_FileManager,
+						MVC.Administrator.FileManager.List())
+				</li>
+				<li>
+					@Html.ActionLink(Resources.Controllers.Administrator_ApplicationLog,
+						MVC.Administrator.ApplicationLog.Edit())
+				</li>
+
+				@if (Models.Utility.IsDatabaseSqlServerCompactEdition == false)
+				{
+					<li>
+						@Html.ActionLink(Resources.Actions.BackupDatabase,
+							MVC.Administrator.Programmer.BackupDatabase())
+					</li>
+				}
+			</ul>
+		</li>
+	</ul>
+}
+
+@helper DisplayMenu()
+{
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<ul class="nav navbar-nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.MenuItems.UserControlPanel<b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu">
+						<li>
+							@Html.ActionLink(Resources.Actions.UploadResume,
+								MVC.Account.UploadResume())
+						</li>
+						<li>
+							@Html.ActionLink(Resources.Actions.UploadAvatar,
+								MVC.Account.UploadAvatar())
+						</li>
+
+						<li>
+							@Html.ActionLink(Resources.Actions.ChangePassword,
+								MVC.Account.ChangePassword())
+						</li>
+
+						<li>
+							@Html.ActionLink(Resources.Actions.DisplayProfile,
+								MVC.Account.Profile(Infrastructure.Sessions.AuthenticatedUser.Id))
+						</li>
+
+						<li>
+							@Html.ActionLink(Resources.Actions.UpdateProfile,
+								MVC.Account.UpdateProfile())
+						</li>
+
+						<li class="divider"></li>
+
+						<li>
+							@Html.ActionLink(Resources.Actions.DisplayUserLoginLogs,
+								MVC.Administrator.UserLoginLog.DisplayUserLoginLogs(Infrastructure.Sessions.AuthenticatedUser.Id))
+						</li>
+
+						@if ((Infrastructure.ApplicationSettings.Instance.IsSmsServiceEnabled) &&
+							(Infrastructure.Sessions.AuthenticatedUser.IsCellPhoneNumberVerified == false))
+						{
+							<li class="divider"></li>
+							<li>
+								@Html.ActionLink(Resources.Actions.VerifyUserCellPhoneNumber,
+									MVC.Account.VerifyUserCellPhoneNumber())
+							</li>
+							<li>
+								@Html.ActionLink(Resources.Actions.SendAgainCellPhoneVerificationKey,
+									MVC.Account.SendAgainCellPhoneVerificationKey())
+							</li>
+						}
+
+						<li class="divider"></li>
+						<li>
+							@Html.ActionLink(Resources.Actions.TerminateAccount,
+								MVC.Account.TerminateAccount())
+						</li>
+					</ul>
+				</li>
+			</ul>
+
+			@if (Infrastructure.Sessions.AuthenticatedUser.Role != Models.Enums.Roles.User)
+			{
+				@DisplayAdministratorControlPanelMenu()
+			}
+
+			@if (Infrastructure.Sessions.AuthenticatedUser.Role != Models.Enums.Roles.User)
+			{
+				if (Infrastructure.ApplicationSettings.Instance.IsCmsEnabled)
+				{
+					@DisplayCmsControlPanelMenu()
+				}
+			}
+
+			@if (Infrastructure.Sessions.AuthenticatedUser.Role == Models.Enums.Roles.Programmer)
+			{
+				@DisplayProgrammerControlPanelMenu()
+			}
+		</div>
+	</nav>
+}
+
+@if (Infrastructure.AuthenticatedUser.IsAuthenticated)
+{
+	@DisplayMenu()
+}*@

@@ -1,0 +1,388 @@
+﻿@model ViewModels.Areas.Administrator.User.SearchViewModel
+
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.ListOf,
+        Resources.Model.User.EntitiesName);
+
+    string strCreate =
+        string.Format("{0} {1}",
+        Resources.Action.CreateOf,
+        Resources.Model.User.EntityName
+    );
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#SearchPanelHeader").click(function () {
+            $("#SearchPanelBody").toggle(1000);
+        });
+
+        //*********************************
+        var varDataSource =
+            new kendo.data.DataSource({
+
+                pageSize: 10,
+
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                serverAggregates: false,
+
+                transport: {
+                    read: {
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Administrator/User/GetUsers",
+                    },
+                },
+
+                schema: {
+                    data: function (e) {
+                        return (e.Data);
+                    },
+                    total: function (e) {
+                        return (e.Total);
+                    },
+                },
+            });
+
+        //*********************************
+        //*********************************
+        //*********************************
+
+        $("div#grid").kendoGrid({
+            sortable: {
+                mode: "multiple",
+                allowUnsort: true,
+            },
+
+            pageable: {
+                info: true,
+                input: true,
+                refresh: true,
+                numeric: true,
+                buttonCount: 5,
+                previousNext: true,
+                pageSize: [5, 10, 25, 50, 100],
+                messages: {
+                    morePages: "صفحات بیشتر",
+                    page: "شماره صفحه",
+                }
+            },
+
+            groupable: true,
+            filterable: true,
+            scrollable: false,
+            reorderable: true,
+
+            columnMenu: {
+                columns: true,
+                filterable: true,
+                messages: {
+                    lock: "قفل شده",
+                    unlock: "قفل نشده",
+                }
+            },
+
+            navigatable: true,
+            selectable: "multiple row",
+
+            dataSource: varDataSource,
+
+            dataBinding: function () {
+                rowNumber =
+					(this.dataSource.page() - 1) * this.dataSource.pageSize();
+            },
+
+            // **************************************************
+
+            columns:
+                [
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "20px",
+                        titel: "#",
+                        template: "#= ++rowNumber #",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "120px",
+                        title: "",
+                        template: function (dataItem) {
+
+                            var strTemplate = "";
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/User/Detail/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></a> | ';
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/User/Edit/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a> | ';
+
+                            @*strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/User/Delete/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/delete.png"/></a> | ';*@
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ChangePassword)" href="/Administrator/User/ChangePassword/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/Password.png"/></a> ';
+
+                            return (strTemplate);
+                        },
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.UserName",
+                        field: "@Resources.Model.Strings.UserKeys.UserName",
+                        width: "140px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.FullName",
+                        field: "@Resources.Model.Strings.UserKeys.FullName",
+                        width: "240px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.Role",
+                        field: "@Resources.Model.Strings.UserKeys.Role",
+                        width: "160px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.Province",
+                        field: "@Resources.Model.Strings.UserKeys.Province",
+                        width: "130px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.City",
+                        field: "@Resources.Model.Strings.UserKeys.City",
+                        width: "150px",
+                    },
+                    {
+                        hidden: false,
+                        width: "90px",
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.IsActive",
+                        field: "@Resources.Model.Strings.UserKeys.IsActive",
+                        template: '<input type="checkbox" #= @Resources.Model.Strings.UserKeys.IsActive ? checked="checked" : "" # disabled="disabled" ></input>'
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        width: "140px",
+                        lockable: true,
+                        title: "@Resources.Model.User.IsApprovallicense",
+                        field: "@Resources.Model.Strings.UserKeys.IsApprovallicense",
+                        template: '<input type="checkbox" #= @Resources.Model.Strings.UserKeys.IsApprovallicense ? checked="checked" : "" # disabled="disabled" ></input>'
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        width: "140px",
+                        lockable: true,
+                        title: "@Resources.Model.User.Authenticate",
+                        field: "@Resources.Model.Strings.UserKeys.Authenticate",
+                        template: '<input type="checkbox" #= @Resources.Model.Strings.UserKeys.Authenticate ? checked="checked" : "" # disabled="disabled" ></input>'
+                    },
+                ]
+        });
+
+        // **************************************************
+        // **************************************************
+
+        $("button#btnSearch").click(function () {
+
+            var varDataSource =
+                new kendo.data.DataSource({
+
+                    pageSize: 10,
+
+                    serverPaging: true,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    serverAggregates: false,
+
+                    transport: {
+                        read: {
+                            type: "POST",
+                            dataType: "json",
+                            url: "/Administrator/User/Search",
+                            data: {
+                                Province: function () {
+                                    return ($("select#Province").val());
+                                },
+                                //City: function () {
+                                //    return ($("select#City").val());
+                                //},
+                                Role: function () {
+                                    return ($("select#Role").val());
+                                },
+                                FullName: function () {
+                                    return ($("input#FullName").val());
+                                },
+                                UserName: function () {
+                                    return ($("input#UserName").val());
+                                },
+                            },
+                        },
+                    },
+
+                    requestStart: function (e) {
+                        $("button#btnSearch").hide();
+                    },
+
+                    requestEnd: function (e) {
+                        $("button#btnSearch").show();
+                    },
+
+                    schema: {
+                        data: function (e) {
+                            return (e.Data);
+                        },
+                        total: function (e) {
+                            return (e.Total);
+                        },
+                    },
+                });
+
+            // **************************************************
+            // **************************************************
+
+            var varGrid =
+                $('div#grid').data("kendoGrid");
+
+            varGrid.setDataSource(varDataSource);
+        });
+    })
+
+</script>
+
+<section id="Requests" class="form-horizontal" role="form">
+    <div class="panel panel-info">
+        <div class="panel-heading" id="SearchPanelHeader">
+            جستجو ( کلیک کنید...!)
+        </div>
+        <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
+            <div class="col col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.DropDownListFor(model => model.Province, null,
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.City, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-6" id="DivCityId">
+                        @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.City)
+                    </div>
+                </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Role, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.DropDownListFor(model => model.Role, null,
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FullName, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UserName, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-8">
+                    <button type="button" id="btnSearch" name="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="col-md-12 panel-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+                       href="/Administrator/User/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+
+                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+                       href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+                </div>
+                <br />
+                <div class="row">
+                    <div style="" data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+               href="/Administrator/User/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+
+            <br />
+            <br />
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    function onChange() {
+        $.ajax({
+            url: '/Administrator/Request/GetCities',
+            type: 'post',
+            data: { provinceId: $("#Province").val() },
+            success: function (data) {
+
+                $("#DivCityId").empty();
+
+                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, city) {
+                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivCityId").append(select);
+            }
+        });
+    }
+</script>
+

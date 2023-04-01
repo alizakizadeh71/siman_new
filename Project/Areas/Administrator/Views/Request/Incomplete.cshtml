@@ -1,0 +1,109 @@
+﻿@model ViewModels.Areas.Administrator.Request.EditViewModel
+@{
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+}
+
+
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(true)
+
+@if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            پیام های سیستمی
+        </div>
+        <div class="panel-body">
+            @Html.Raw(ViewBag.PageMessages)
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="panel panel-info">
+        <div class="panel-heading"> <h4>@strTitel</h4></div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.Id)
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.CompanyName)</dt>
+                <dd>@Html.DisplayFor(model => model.CompanyName)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CompanyNationalCode)</dt>
+                <dd>@Html.DisplayFor(model => model.CompanyNationalCode)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.SubSystem)</dt>
+                <dd>@Html.DisplayFor(model => model.SubSystem)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RecordNumber)</dt>
+                <dd>@Html.DisplayFor(model => model.RecordNumber)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RecordDate)</dt>
+                <dd>@Html.DisplayFor(model => model.RecordDate)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
+                <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.InvoiceDate)</dt>
+                <dd>@Html.DisplayFor(model => model.InvoiceDate)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.BaseCurrencyValue)</dt>
+                <dd>@Html.DisplayFor(model => model.BaseCurrencyValue)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CurrencyValue)</dt>
+                <dd>@Html.DisplayFor(model => model.CurrencyValue)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CurrencyRation)</dt>
+                <dd>@Html.DisplayFor(model => model.CurrencyRation)</dd>
+                <br />
+                @{
+                    if (Model.RequestStateCode < (int)Enums.RequestStates.Payment)
+                    {
+                        <dt>@Html.DisplayNameFor(model => model.AmountPaid)</dt>
+                        <dd class="label-danger">@Html.DisplayFor(model => model.AmountPaid) <span>@Resources.OPS.Caption.Rial</span></dd>
+                        <br />
+                        <dt>@Html.DisplayNameFor(model => model.Bank_TraceNo)</dt>
+                        <dd class="label-warning">@Html.DisplayFor(model => model.Bank_TraceNo)</dd>
+                        <br />
+                        <dt>@Html.DisplayNameFor(model => model.Bank_ShamsiDate)</dt>
+                        <dd class="label-warning">@Html.DisplayFor(model => model.Bank_ShamsiDate)</dd>
+                    }
+
+                    else
+                    {
+                        <dt>@Html.DisplayNameFor(model => model.AmountPaid)</dt>
+                        <dd class="label-success">@Html.DisplayFor(model => model.AmountPaid) <span>@Resources.OPS.Caption.Rial</span></dd>
+                        <br />
+                        <dt>@Html.DisplayNameFor(model => model.Bank_TraceNo)</dt>
+                        <dd class="label-success">@Html.DisplayFor(model => model.Bank_TraceNo)</dd>
+                        <br />
+                        <dt>@Html.DisplayNameFor(model => model.Bank_ShamsiDate)</dt>
+                        <dd class="label-success">@Html.DisplayFor(model => model.Bank_ShamsiDate)</dd>
+                    }
+                }
+
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RequestState)</dt>
+                <dd>@Html.DisplayFor(model => model.RequestState)</dd>
+
+                <br />
+            </dl>
+        </div>
+        <div class="panel-footer">
+            <div class="container">
+                <div class="col-md-11" style="margin-right:15px;">
+
+                    @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.Request.Index(), new { @class = "btn btn-default" })
+
+                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                       href="/HomeMain/Main/" style="float:left;">
+                        <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

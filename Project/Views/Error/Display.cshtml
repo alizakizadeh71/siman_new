@@ -1,0 +1,19 @@
+﻿@{
+    string strMessage = ViewBag.Message;
+    string strTitle = Resources.Action.GlobalError;
+}
+
+<div class="col-md-12 panel panel-danger">
+    <div class="panel-heading">
+        <h2>@strTitle</h2>
+    </div>
+    <div class="panel-body">
+        <br />
+        @strMessage
+    </div>
+    <div class="panel-footer">
+        <br />
+        <br />
+    </div>
+</div>
+

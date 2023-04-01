@@ -1,0 +1,192 @@
+﻿@using Infrastructure.Helpers
+@using Resources
+@model IEnumerable<ViewModels.IComboboxItem>
+@{
+   string strTitle =
+       string.Format("{0} {1}",
+   Resources.Action.Index, "گزارشات پویا");
+
+   ViewBag.Title = strTitle;
+}
+
+<link href="~/Content/css/bootstrap-rtl.css" rel="stylesheet" />
+<link href="~/Content/kendo/2014.2.716/kendo.common-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/kendo/2014.2.716/kendo.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/kendo/2014.2.716/kendo.rtl.min.css" rel="stylesheet" />
+
+<script src="~/Scripts/kendo/2014.2.716/kendo.all.min.js"></script>
+<script src="~/Scripts/kendo/2014.2.716/cultures/kendo.culture.fa-IR.min.js"></script>
+<script src="~/Scripts/kendo/kendo.fa-IR.js"></script>
+<script src="~/Scripts/kendo/2014.2.716/kendo.all.min.js"></script>
+<script src="~/Scripts/kendo/2014.2.716/cultures/kendo.culture.fa-IR.min.js"></script>
+<script src="~/Scripts/kendo/kendo.fa-IR.js"></script>
+<script src="~/Scripts/kendo/cultures/moment.min.js" type="text/javascript"></script>
+<script src="~/Scripts/kendo/cultures/moment-jalaali.js" type="text/javascript"></script>
+
+
+<style scoped>
+    #organizer {
+        /*width: 300px;*/
+        margin: 0 auto;
+        padding: 47px 0 0 0;
+        background: url('../../content/web/panelbar/orgHead.png') transparent no-repeat 0 0;
+    }
+
+    #bottom {
+        /*width: 300px;*/
+        height: 90px;
+        background: url('../../content/web/panelbar/orgFoot.png') transparent no-repeat 0 0;
+    }
+
+    .teamMate:after {
+        content: ".";
+        display: block;
+        height: 0;
+        line-height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .teamMate h2 {
+        font-size: 1.4em;
+        font-weight: normal;
+        padding-top: 20px;
+    }
+
+    .teamMate p {
+        margin: 5px 0;
+    }
+
+    .teamMate img {
+        float: left;
+        margin: 5px 15px 5px 5px;
+        border: 1px solid #ccc;
+    }
+</style>
+<div class="col-md-12">
+    <section class="panel">
+        <div class="panel-body">
+            <div id="" class=" ui-widget ">
+                <div class="ui-widget-header ui-corner-top" style="padding-right:10px;">فهرست گزارشات پویا</div><div class=" ui-widget-content ui-corner-bottom">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div id="example" class="k-content">
+                                <div id="organizer">
+                                    <ul id="panelbar">
+                                        @if (Model != null)
+                                        {
+                                            foreach (var report in Model)
+                                            {
+                                            <li class="k-state-active">
+                                                <span class="k-link" onclick="getParamReport('@report.Id')">@report.Name</span>
+                                                <div id="content@(report.Id)" style="padding: 10px;">
+                                                </div>
+                                            </li>
+                                            }
+                                        }
+                                    </ul>
+                                    <div id="bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="panelDataId"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+@section scripts{
+    <script>
+		var arraypop = [];
+		$(document).ready(function () {
+		    $("[data-toggle='tooltip']").tooltip();
+		    $(window).on("resize", function () {
+		        kendo.resize($("*.kendo-wrapper"));
+		    });
+
+			$("#panelbar").kendoPanelBar({
+				expandMode: "single"
+			});
+		});
+
+		function getParamReport(reportId) {
+			if (arraypop.indexOf(reportId) != -1) {
+				return;
+			}
+			$("#content" + reportId).empty();
+			jQuery.ajax({
+				url: "@Url.Action(MVC.Administrator.ReportBuilder.GetParamReport())",
+				data:
+				{
+					reportId: reportId
+				},
+				type: 'Post',
+				//dataType: "json",
+				success: function (result) {
+				    $("#content" + reportId).empty();
+				    arraypop.push(reportId);
+					$("#content" + reportId).append(result);
+
+				},beforeSend: function (e) {
+					kendo.ui.progress($("#customerSettingsLoading"), true);
+				}
+			});
+		}
+
+		function getDataReport(reportId)
+		{
+		    var $this = $('#getDataReport');
+		    $this.button('loading');
+			$("#panelDataId").empty();
+				jQuery.ajax({
+					url: "@Url.Action(MVC.Administrator.ReportBuilder.IndexDataReport())",
+					data: $("#form" + reportId).serialize(),
+					type: 'Post',
+					//dataType: "json",
+					success: function (result) {
+					    $this.button('reset');
+					    $("#panelDataId").empty();
+						$("#panelDataId").append(result);
+					},beforeSend: function (e) {
+						kendo.ui.progress($("#customerSettingsLoading"), true);
+				}
+			});
+        }
+
+        function exportToExcel(reportId) {
+            var $this = $('#load');
+            $this.button('loading');
+           // $("#downExel").empty();
+            $.ajax({
+                type: 'Post',
+                url: "@Url.Action(MVC.Administrator.ReportBuilder.ExportToExcel())",
+                dataType: 'json',
+                data:  $("#form" + reportId).serialize(),
+                @*data: {
+                    reportId: '@reportId',
+                    formCollection:'@dictionary',
+                    totalPage:'@ViewBag.TotalPage',
+
+                },*@
+                success: function (data) {
+                    $this.button('reset');
+                    $("#downExel").empty();
+                    $("#downExel").append('<a class="btn btn-success" href="/temp/Export.xlsx" title="دانلود فایل"><i class="fa fa-cloud-upload"></i>دانلود فایل</a >');
+                },
+                error: function (ex) {
+                    alert('error');
+                }
+                , beforeSend: function (e) {
+                    kendo.ui.progress($("#customerSettingsLoading"), true);
+                }
+            });
+        };
+
+
+    </script>
+}

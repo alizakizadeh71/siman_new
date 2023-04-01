@@ -1,0 +1,44 @@
+﻿@model ViewModels.Areas.Administrator.BankAccount.DetailViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.BankAccount.EntitiesName);
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @strTitle
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.AccountTitel)</dt>
+            <dd>@Html.DisplayFor(model => model.AccountTitel)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.AccountNumber)</dt>
+            <dd>@Html.DisplayFor(model => model.AccountNumber)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.IncomeRow)</dt>
+            <dd>@Html.DisplayFor(model => model.IncomeRow)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.ExecutableCode)</dt>
+            <dd>@Html.DisplayFor(model => model.ExecutableCode)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Certain)</dt>
+            <dd>@Html.DisplayFor(model => model.Certain)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Bank)</dt>
+            <dd>@Html.DisplayFor(model => model.Bank)</dd>
+        </dl>
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink(Resources.Action.Edit, MVC.Administrator.BankAccount.Edit(Model.Id), new { @class = "btn btn-primary" })
+        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.BankAccount.Index(), new { @class = "btn btn-default" })
+
+        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+           href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+        <br />
+        <br />
+    </div>
+</div>
+

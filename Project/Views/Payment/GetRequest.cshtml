@@ -1,0 +1,159 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layouts/_SiteEmptyLayout.cshtml";
+}
+@model ViewModels.Areas.Administrator.Request.DisplayViewModel
+@{
+    //string strTitel =
+    //    string.Format("{0} {1}",
+    //    Resources.Action.DetailsOf,
+    //    Resources.Model.Request.EntityName);
+
+
+    string FormBodyHtmlString = ViewBag.FormBody;
+
+
+    var redirectUrl = ViewBag.redirectUrl;
+
+    <style>
+        li {
+            list-style-image: url('../../Content/Icon/tick16.png');
+            /* OR */
+            /*list-style-type: '👉';*/
+            padding-inline-start: 1ch;
+            border-bottom: dashed 1px #d6d6d6;
+            padding: 5px 0;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="panel panel-info">
+        <center class="panel-heading" style="background-color: #213e76"><h4 style="color:white">@Resources.General.ApplicationName</h4></center>
+        <div class="panel-body" style="font-family:'IRAN Sans'">
+            <div class="col-md-12" style="background-color: #f4f4f4; box-sizing: border-box; font-size:16px">
+                <ul>
+                    <li>
+                        بسمه تعالی
+                        با توجه به این که روز شنبه مورخ 22/02/97 دریافت تعرفه‌ها و عوارض در این سامانه با صدور شناسه واریز در درگاه بانک
+                        مرکزی انجام خواهد شد لذا تأیید پرداخت تا اطلاع ثانوی پس از یک روزکاری از سوی امور مالی سازمان انجام خواهد شد.
+                        پیگیری امور مالی از بانک مرکزی جهت صحت حسابهای سازمان و دستگاههای pos شناسه واریزدار
+                    </li>
+                    <li>
+                        قابل توجه واریزکنندگان عوارض و تعرفه خدمات دامپزشکی:
+                        کلیه حساب های در آمدی سازمانی در بانک مرکزی جمهوری اسلامی ایران متمرکز شده اند
+                        و هیچ حساب واسط و بانک واسطی برای اخذ تعرفه های خدمات وجود ندارند.
+                        از واریز به حسابهای واسط (به ویژه نزد بانک ملی ایران)جدا پرهیز شود.
+                        _ امور مالی سازمان دامپزشکی کشور_
+                    </li>
+                    <li>
+                        ماده 49 – وجوهي كه بدون مجوز و يا زائد
+                        بر ميزان مقرر وصول شود اعم از اينكه منشاء اين دريافت اضافي اشتباه پرداخت كننده يا مأمور وصول و يا
+                        عدم انطباق مبلغ وصولي با مورد باشد و يا اينكه تحقق اضافه دريافتي بر اثر رسيدگي دستگاه ذيربط و يا
+                        مقامات قضائي حاصل شود بايد از محل درآمد عمومي بنحويكه در اداء حق ذينفع تأخيري صورت نگيرد رد شود .
+                        تبصره 1:  درمورد اضافه دريافتي از صاحبان كالا بعنوان حقوق و عوارض گمركي مقررات مربوط اجراء ميشود.
+                        تبصره 2: به مطالبات اشخاص بابت اضافه پرداختي آنان خسارت تأخير تأديه تعلق نمي گيرد .
+                    </li>
+                    @*<li>
+                            با توجه به محدودیت اعمال شده از سوی بانک ها برای مبالغ کمتر از 10 هزار ریال، منحصرا از کارت های کشاورزی یا ملی استفاده نمایید
+                        </li>*@
+                </ul>
+            </div>
+
+            @Html.HiddenFor(model => model.Id)
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.DepositNumber)</dt>
+                <dd style="background-color:#d1f1f3">
+                    @Html.DisplayFor(model => model.DepositNumber)
+                    @Html.ActionLink("چاپ شناسه واریز", MVC.Administrator.Request.PrintDepositNumber(Model.InvoiceNumber), new { @class = "btn btn-info", @style = "margin-right:100px;" })
+                </dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CompanyName)</dt>
+                <dd>@Html.DisplayFor(model => model.CompanyName)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CompanyNationalCode)</dt>
+                <dd>@Html.DisplayFor(model => model.CompanyNationalCode)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.SubSystem)</dt>
+                <dd>@Html.DisplayFor(model => model.SubSystem)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RecordNumber)</dt>
+                <dd>@Html.DisplayFor(model => model.RecordNumber)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RecordDate)</dt>
+                <dd>@Html.DisplayFor(model => model.RecordDate)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
+                <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.InvoiceDate)</dt>
+                <dd>@Html.DisplayFor(model => model.InvoiceDate)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CurrencyValue)</dt>
+                <dd>@Html.DisplayFor(model => model.CurrencyValue)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CurrencyCode)</dt>
+                <dd>@Html.DisplayFor(model => model.CurrencyCode)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.AmountPaid)</dt>
+                <dd class="label-danger">@Html.DisplayFor(model => model.AmountPaid) <span>@Resources.OPS.Caption.Rial</span></dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RequestState)</dt>
+                @if (Model.RequestState != "تایید پرداخت")
+                {
+                    var RequestState = Model.RequestState;
+                    if (RequestState == "پرداخت انجام شده است")
+                    {
+                        RequestState = RequestState + " - (در انتظار تایید پرداخت) ";
+                    }
+                    <dd class="label-info">@Html.DisplayFor(model => RequestState)</dd>
+                }
+                else
+                {
+                    <dd class="label-success">@Html.DisplayFor(model => model.RequestState)</dd>
+                }
+
+                <br />
+            </dl>
+        </div>
+        @if (ViewBag.paymentstatus == 0)
+        {
+            if (Model.AmountPaid != 10000)
+            {
+                <input class="btn btn-success" type="button" value="پرداخت" onclick="parent.location='@redirectUrl'" />
+            }
+            else
+            {
+                <input type="checkbox" onclick="Enable_btnPayment()" id="Check_btnPayment">
+                <label for="vehicle1">با عنایت به محدودیت در انجام تراکنش های کمتر از ۱۰,۰۰۰ ریال ، موافقت خود را با افزایش مبلغ پرداخت تا ۱۰,۰۰۰ ریال اعلام می نمایم</label><br>
+                <input class="btn btn-success" type="button" disabled="disabled" id="btnPayment" value="پرداخت" onclick="parent.location='@redirectUrl'" />
+            }
+        }
+
+
+
+        else if (ViewBag.paymentstatus > 0 || ViewBag.paymentstatus < 0)
+        {
+            <p style="background-color:#d1f1f3">
+                دقایقی بعد دوباره تلاش کنید، کد خطا بانک :   @ViewBag.paymentstatus
+            </p>
+        }
+        <div class="panel-footer">
+            @Html.Raw(FormBodyHtmlString)
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function Enable_btnPayment() {
+            debugger;
+            var yes = document.getElementById("Check_btnPayment");
+            if (yes.checked == true) {
+                $('#btnPayment').prop('disabled', false);
+            }
+            else {
+                $('#btnPayment').prop('disabled', 'disabled');
+            }
+        }
+    </script>
+}

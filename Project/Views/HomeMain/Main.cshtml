@@ -1,0 +1,396 @@
+﻿@{
+    ViewBag.Title = Resources.Strings.ActionKeys.UserControlPanel;
+}
+
+<div class="jumbotron" style="margin-top: 0px; min-height: 500px;">
+
+    <div class="row">
+        @{
+            switch (Infrastructure.Sessions.AuthenticatedUser.Role)
+            {
+                case Enums.Roles.Programmer:
+                    {
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=1" style="padding-top:20px;">
+                                <span style="float:right;">ماده پنج نظارت شرعی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3 col-md-offset-1" href="/Administrator/HeadOfFactor/Create?Code=5" style="padding-top:20px;">
+                                <span style="float:right;">خدمات دامپزشکی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=3" style="padding-top:20px;">
+                                <span style="float:right;">سایر درآمدها</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/Request/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/Financial/Index2/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Report</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=23" style="padding-top:20px;">
+                                <span style="float:right;">عوارض دارو واکسن</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                        </div>
+
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-danger col-md-3" href="/Administrator/SubSystem/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.SubSystem</span><img style="float:left; margin-top:-20px;" src='../../../Content/Icon/SubSystem.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/AccountNumberManage/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.AccountNumberManage</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/AccountNumber.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3" href="/Administrator/User/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.UserManagment</span><img style="float: left; margin-top: -12px;" src='../../../Content/Icon/UserSetting.png' />
+                            </a>
+                        </div>
+
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/User/AccessManagement/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.AccessManagement</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/UserSetting.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/HeadLine/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.HeadLine</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Office.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3" href="/Administrator/SubHeadLine/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.SubHeadLine</span><img style="float: left; margin-top: -12px;" src='../../../Content/Icon/OfficeService.png' />
+                            </a>
+                        </div>
+
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-warning col-md-3" href="/Administrator/Bank/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Bank</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Setting.png' />
+                            </a>
+
+                            <a class="btn btn-warning col-md-3 col-md-offset-1" href="/Administrator/ExecutableCode/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.ExecutableCode</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Setting.png' />
+                            </a>
+
+                            <a class="btn btn-warning col-md-3" href="/Administrator/IncomeRow/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.IncomeRow</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Setting.png' />
+                            </a>
+                        </div>
+
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-warning col-md-3" href="/Administrator/Certain/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Certain</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Setting.png' />
+                            </a>
+
+                            <a class="btn btn-warning col-md-3 col-md-offset-1" href="/Administrator/BankAccount/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.BankAccount</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Setting.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3" href="/Administrator/ServiceTariff/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.ServiceTariff</span><img style="float: left; margin-top: -12px;" src='../../../Content/Icon/OfficeService.png' />
+                            </a>
+                        </div>
+
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.HeadOfFactor</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/ReportBuilder/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.ReportBuilder</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-danger col-md-3" href="/Administrator/CurrencyUnit/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.CurrencyUnit</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Currency.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary col-md-3" href="/Administrator/CentralBank/Index/" style="padding-top:20px;">
+                                <span style="float:right;">شناسه بانک مرکزی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+                        </div>
+
+                        break;
+                    }
+
+                case Enums.Roles.Reporter:
+                    {
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/Financial/Index2/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Report</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                        </div>
+                        break;
+                    }
+
+                case Enums.Roles.Fava:
+                    {
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/Request/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+                        </div>
+                        break;
+                    }
+
+                case Enums.Roles.SoperAdmin:
+                    {
+                        <div>
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=23" style="padding-top:20px;">
+                                <span style="float:right;">عوارض دارو واکسن</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+
+                            <a class="btn btn-primary col-md-3 col-md-offset-1" href="/Administrator/HeadOfFactor/Create?Code=5" style="padding-top:20px;">
+                                <span style="float:right;">خدمات دامپزشکی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=3" style="padding-top:20px;">
+                                <span style="float:right;">سایر درآمدها</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/Request/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/Financial/Index2/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Report</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3" href="/Administrator/CurrencyUnit/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.CurrencyUnit</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Currency.png' />
+                            </a>
+                        </div>
+
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-danger col-md-3" href="/Administrator/AccountNumberManage/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.AccountNumberManage</span><img style="float:left; margin-top:-20px;" src='../../../Content/Icon/SubSystem.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/User/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.UserManagment</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/AccountNumber.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3" href="/Administrator/ServiceTariff/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.ServiceTariff</span><img style="float: left; margin-top: -12px;" src='../../../Content/Icon/OfficeService.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.HeadOfFactor</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+                        </div>
+                        break;
+                    }
+
+                case Enums.Roles.WebServiceUser:
+                    {
+                        break;
+                    }
+
+                case Enums.Roles.MaliAdminGholami:
+                    {
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=1" style="padding-top:20px;">
+                                <span style="float:right;">ماده پنج نظارت شرعی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3 col-md-offset-1" href="/Administrator/HeadOfFactor/Create?Code=5" style="padding-top:20px;">
+                                <span style="float:right;">خدمات دامپزشکی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=3" style="padding-top:20px;">
+                                <span style="float:right;">سایر درآمدها</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/Request/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/Financial/Index2/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Report</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=23" style="padding-top:20px;">
+                                <span style="float:right;">عوارض دارو واکسن</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                        </div>
+
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-danger col-md-3" href="/Administrator/AccountNumberManage/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.AccountNumberManage</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/AccountNumber.png' />
+                            </a>
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/User/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.UserManagment</span><img style="float: left; margin-top: -12px;" src='../../../Content/Icon/UserSetting.png' />
+                            </a>
+                            <a class="btn btn-danger col-md-3" href="/Administrator/ServiceTariff/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.ServiceTariff</span><img style="float: left; margin-top: -12px;" src='../../../Content/Icon/OfficeService.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.HeadOfFactor</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/CurrencyUnit/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.CurrencyUnit</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Currency.png' />
+                            </a>
+                        </div>
+                        break;
+                    }
+
+                case Enums.Roles.MaliExpert00:
+                    {
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=1" style="padding-top:20px;">
+                                <span style="float:right;">ماده پنج نظارت شرعی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3 col-md-offset-1" href="/Administrator/HeadOfFactor/Create?Code=5" style="padding-top:20px;">
+                                <span style="float:right;">خدمات دامپزشکی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3 " href="/Administrator/HeadOfFactor/Create?Code=23" style="padding-top:20px;">
+                                <span style="float:right;">عوارض دارو واکسن</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/Request/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/Financial/Index2/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Report</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=3" style="padding-top:20px;">
+                                <span style="float:right;">سایر درآمدها</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.HeadOfFactor</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+                            @if ((Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("8C69C0F3-C1B9-11E5-9D1B-0050568D5B96")) ||// میثم عباسعلی
+                                (Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("84879792-772E-11EA-9132-0050568D5B96"))// Bazmoone
+                                )
+                            {
+                                <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/ServiceTariff/Index/" style="padding-top:20px;">
+                                    <span style="float:right;">@Resources.Action.ServiceTariff</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/OfficeService.png' />
+                                </a>
+                                <a class="btn btn-danger col-md-3" href="/Administrator/CurrencyUnit/Index/" style="padding-top:20px;">
+                                    <span style="float:right;">@Resources.Action.CurrencyUnit</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Currency.png' />
+                                </a>
+
+                                @*<a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=23" style="padding-top:20px;">
+                                        <span style="float:right;">عوارض دارو واکسن</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                                    </a>*@
+                            }
+                        </div>
+                        @*<div class="row" style="margin-bottom:15px;">
+                                <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Index/" style="padding-top:20px;">
+                                    <span style="float:right;">@Resources.Action.HeadOfFactor</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                                </a>
+                            </div>*@
+                        break;
+                    }
+
+                case Enums.Roles.MaliExpert01:
+                    {
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/Financial/Index2/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Report</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.HeadOfFactor</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+                        </div>
+                        break;
+                    }
+
+                case Enums.Roles.ProvinceExpert00:
+                    {
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=1" style="padding-top:20px;">
+                                <span style="float:right;">ماده پنج نظارت شرعی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3 col-md-offset-1" href="/Administrator/HeadOfFactor/Create?Code=5" style="padding-top:20px;">
+                                <span style="float:right;">خدمات دامپزشکی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=3" style="padding-top:20px;">
+                                <span style="float:right;">سایر درآمدها</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/Request/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/Financial/Index2/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Report</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.HeadOfFactor</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/ServiceTariff/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.ServiceTariff</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/OfficeService.png' />
+                            </a>
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/User/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.UserManagment</span><img style="float: left; margin-top: -12px;" src='../../../Content/Icon/UserSetting.png' />
+                            </a>
+                        </div>
+                        break;
+                    }
+
+                case Enums.Roles.ProvinceExpert01:
+                    {
+
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/Request/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+
+                            <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/Financial/Index2/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.Report</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.HeadOfFactor</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-info col-md-3" href="/Administrator/ServiceTariff/Index/" style="padding-top:20px;">
+                                <span style="float:right;">@Resources.Action.ServiceTariff</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/OfficeService.png' />
+                            </a>
+                        </div>
+                        break;
+                    }
+
+
+                case Enums.Roles.ExporterOFInvoice:
+                    {
+                        {
+                            <div class="row" style="margin-bottom:15px;">
+                                <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=1" style="padding-top:20px;">
+                                    <span style="float:right;">ماده پنج نظارت شرعی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                                </a>
+
+                                <a class="btn btn-primary col-md-3 col-md-offset-1" href="/Administrator/HeadOfFactor/Create?Code=5" style="padding-top:20px;">
+                                    <span style="float:right;">خدمات دامپزشکی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                                </a>
+
+                                <a class="btn btn-primary col-md-3" href="/Administrator/HeadOfFactor/Create?Code=3" style="padding-top:20px;">
+                                    <span style="float:right;">سایر درآمدها</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Factor.png' />
+                                </a>
+                            </div>
+                            <div class="row" style="margin-bottom:15px;">
+                                <a class="btn btn-info col-md-3" href="/Administrator/Request/Index/" style="padding-top:20px;">
+                                    <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                                </a>
+                                <a class="btn btn-danger col-md-3 col-md-offset-1" href="/Administrator/HeadOfFactor/Index/" style="padding-top:20px;">
+                                    <span style="float:right;">@Resources.Action.HeadOfFactor</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                                </a>
+                            </div>
+                            break;
+                        }
+                    }
+            }
+        }
+        </d>
+
+    </div>

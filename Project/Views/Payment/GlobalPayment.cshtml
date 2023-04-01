@@ -1,0 +1,92 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layouts/_SiteEmptyLayout.cshtml";
+}
+@model ViewModels.Areas.Administrator.Request.DisplayViewModel
+@{
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+
+    string FormBodyHtmlString = ViewBag.FormBody;
+}
+
+<div class="row">
+    <div class="panel panel-info">
+        <div class="panel-heading"><h4>@strTitel</h4></div>
+        <div class="panel-body">
+            <div class="col-md-12 alert-warning" style="text-align:center">
+                    <span>
+                        بسمه تعالی
+                    </span>
+                    <br />
+                    <span style="text-justify:auto">
+                        با توجه به این که روز شنبه مورخ 22/02/97 دریافت تعرفه‌ها و عوارض در این سامانه با صدور شناسه واریز در درگاه بانک 
+                    </span>
+                    <br />
+                    <span>
+                        مرکزی انجام خواهد شد لذا تأیید پرداخت تا اطلاع ثانوی پس از یک روزکاری از سوی امور مالی سازمان انجام خواهد شد. 
+                    </span>
+                    <br />
+                    <span>
+                       پیگیری امور مالی از بانک مرکزی جهت صحت حسابهای سازمان و دستگاههای pos شناسه واریزدار
+                    </span>
+            </div>
+            <br />
+            <br />
+            <div class="col-md-12 alert-danger">
+                <span>ماده 49 – وجوهي كه بدون مجوز و يا زائد بر ميزان مقرر وصول شود اعم از اينكه منشاء اين دريافت اضافي اشتباه پرداخت كننده يا مأمور وصول و يا عدم انطباق مبلغ وصولي با مورد باشد و يا اينكه تحقق اضافه دريافتي بر اثر رسيدگي دستگاه ذيربط و يا مقامات قضائي حاصل شود بايد از محل درآمد عمومي بنحويكه در اداء حق ذينفع تأخيري صورت نگيرد رد شود .</span>
+                <br />
+                <span>تبصره 1: </span><span> درمورد اضافه دريافتي از صاحبان كالا بعنوان حقوق و عوارض گمركي مقررات مربوط اجراء ميشود. </span>
+                <br />
+                <span>تبصره 2: </span><span> به مطالبات اشخاص بابت اضافه پرداختي آنان خسارت تأخير تأديه تعلق نمي گيرد . </span>
+                <br />
+            </div>
+            @Html.HiddenFor(model => model.Id)
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.DepositNumber)</dt>
+                <dd style="background-color:#d1f1f3">
+                    @Html.DisplayFor(model => model.DepositNumber)
+                    @Html.ActionLink("چاپ شناسه واریز", MVC.Payment.PrintDepositNumberNew(Model.InvoiceNumber), new { @class = "btn btn-info", @style = "margin-right:100px;" })
+                </dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CompanyName)</dt>
+                <dd>@Html.DisplayFor(model => model.CompanyName)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CompanyNationalCode)</dt>
+                <dd>@Html.DisplayFor(model => model.CompanyNationalCode)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.SubSystem)</dt>
+                <dd>@Html.DisplayFor(model => model.SubSystem)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RecordNumber)</dt>
+                <dd>@Html.DisplayFor(model => model.RecordNumber)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RecordDate)</dt>
+                <dd>@Html.DisplayFor(model => model.RecordDate)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
+                <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.InvoiceDate)</dt>
+                <dd>@Html.DisplayFor(model => model.InvoiceDate)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CurrencyValue)</dt>
+                <dd>@Html.DisplayFor(model => model.CurrencyValue)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CurrencyCode)</dt>
+                <dd>@Html.DisplayFor(model => model.CurrencyCode)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.AmountPaid)</dt>
+                <dd class="label-danger">@Html.DisplayFor(model => model.AmountPaid) <span>@Resources.OPS.Caption.Rial</span></dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RequestState)</dt>
+                <dd>@Html.DisplayFor(model => model.RequestState)</dd>
+                <br />
+            </dl>
+        </div>
+        <div class="panel-footer">
+            @Html.Raw(FormBodyHtmlString)
+        </div>
+    </div>
+</div>

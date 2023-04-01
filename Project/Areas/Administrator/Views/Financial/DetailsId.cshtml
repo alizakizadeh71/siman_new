@@ -1,0 +1,50 @@
+﻿@model Models.Request
+@{
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+}
+
+<div class="row">
+    <div class="panel panel-info">
+        <div class="panel-heading"> <h4>@strTitel</h4></div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.Id)
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.CompanyName)</dt>
+                <dd>@Html.DisplayFor(model => model.CompanyName)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CompanyNationalCode)</dt>
+                <dd>@Html.DisplayFor(model => model.CompanyNationalCode)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.SubSystem)</dt>
+                <dd>@Html.DisplayFor(model => model.SubSystem.Name)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RecordNumber)</dt>
+                <dd>@Html.DisplayFor(model => model.RecordNumber)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RecordDate)</dt>
+                <dd>@Html.DisplayFor(model => model.RecordDate)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
+                <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.InvoiceDate)</dt>
+                <dd>@Html.Label("InvoiceDate", new Infrastructure.Calander(Model.InvoiceDate).Persion())</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.CellPhoneNumber)</dt>
+                <dd>@Html.DisplayFor(model => model.CellPhoneNumber)</dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.AmountPaid)</dt>
+                <dd class="label-danger">@Html.DisplayFor(model => model.AmountPaid) <span>@Resources.OPS.Caption.Rial</span></dd>
+                <br />
+                <dt>@Html.DisplayNameFor(model => model.RequestState)</dt>
+                <dd>@Html.Label("RequestState", Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, Model.RequestState))</dd>
+                <br />
+            </dl>
+        </div>
+        <div class="panel-footer">
+        </div>
+    </div>
+</div>

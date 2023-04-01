@@ -1,0 +1,68 @@
+﻿@model ViewModels.Areas.Administrator.User.DisplayViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.User.EntitiesName);
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @strTitle
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.Role)</dt>
+            <dd>@Html.DisplayFor(model => model.Role)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Province)</dt>
+            <dd>@Html.DisplayFor(model => model.Province)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.City)</dt>
+            <dd>@Html.DisplayFor(model => model.City)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.UserName)</dt>
+            <dd>@Html.DisplayFor(model => model.UserName)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.FullName)</dt>
+            <dd>@Html.DisplayFor(model => model.FullName)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Province)</dt>
+            <dd>@Html.DisplayFor(model => model.Province)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.IsActive)</dt>
+            <dd>@Html.DisplayFor(model => model.Active)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.IsApprovallicense)</dt>
+            <dd>@Html.DisplayFor(model => model.Approvallicense)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Authenticate)</dt>
+            <dd>@Html.DisplayFor(model => model.Authenticate)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.NationalCode)</dt>
+            <dd>@Html.DisplayFor(model => model.NationalCode)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.BirthDay)</dt>
+            <dd>@Html.DisplayFor(model => model.BirthDay)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Address)</dt>
+            <dd>@Html.DisplayFor(model => model.Address)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Image)</dt>
+            <dd>
+                <img class="col-md-offset-1" src="@Model.Image" style=" width:225px ; height: 300px" id="PersonImage">
+            </dd>
+            @*<dd>@Html.CheckBoxFor(model => model.IsActive)</dd>*@
+        </dl>
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink(Resources.Action.Edit, MVC.Administrator.User.Edit(Model.Id), new { @class = "btn btn-primary" })
+        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.User.Index(), new { @class = "btn btn-default" })
+
+        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+           href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+        <br />
+        <br />
+    </div>
+</div>
+

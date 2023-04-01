@@ -1,0 +1,244 @@
+﻿@model ViewModels.Areas.Administrator.DetailOfFactor.IndexViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.ListOf,
+        Resources.Model.DetailOfFactor.EntitiesName
+        );
+
+    string strCreate =
+    string.Format("{0} {1}",
+    Resources.Action.CreateOf,
+    Resources.Model.DetailOfFactor.EntitiesName
+    );
+
+    var HeadOfFactorId = ViewBag.HeadOfFactor;
+    //System.Guid HeadOfFactorId = new Guid();
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#SaveFactor").click(function () {
+            $('#SaveFactor').attr('disabled', true);
+        })
+
+        //*********************************
+        var varDataSource =
+            new kendo.data.DataSource({
+
+                pageSize: 10,
+
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                serverAggregates: false,
+
+                transport: {
+                    read: {
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Administrator/DetailOfFactor/GetDetailOfFactors?headoffactorid=@HeadOfFactorId",
+                    },
+                },
+
+                schema: {
+                    data: function (e) {
+                        return (e.Data);
+                    },
+                    total: function (e) {
+                        return (e.Total);
+                    },
+                },
+            });
+
+        //*********************************
+        //*********************************
+        //*********************************
+
+        $("div#grid").kendoGrid({
+            sortable: {
+                mode: "multiple",
+                allowUnsort: true,
+            },
+
+            pageable: {
+                info: true,
+                input: true,
+                refresh: true,
+                numeric: true,
+                buttonCount: 5,
+                previousNext: true,
+                pageSize: [5, 10, 25, 50, 100],
+                messages: {
+                    morePages: "صفحات بیشتر",
+                    page: "شماره صفحه",
+                }
+            },
+
+            groupable: true,
+            filterable: true,
+            scrollable: false,
+            reorderable: true,
+
+            columnMenu: {
+                columns: true,
+                sortable: true,
+                filterable: true,
+                messages: {
+                    lock: "قفل شده",
+                    unlock: "قفل نشده",
+                }
+            },
+
+            navigatable: true,
+            selectable: "multiple row",
+
+            dataSource: varDataSource,
+
+            dataBinding: function () {
+                rowNumber =
+					(this.dataSource.page() - 1) * this.dataSource.pageSize();
+            },
+
+            // **************************************************
+
+            columns:
+                [
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "50px",
+                        titel: "#",
+                        template: "#= ++rowNumber #",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "200px",
+                        title: "",
+                        template: function (dataItem) {
+
+                            var strTemplate = "";
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/DetailOfFactor/Details/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></a> | ';
+                            @if (ViewBag.BtnShow == false)
+                            {
+                                <text>
+                                    strTemplate +=
+                                        '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/DetailOfFactor/Edit/'
+                                        + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a> | ';
+
+                                    strTemplate +=
+                                        '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/DetailOfFactor/Delete/'
+                                        + dataItem.Id + '"><img src="../../../Content/Icon/delete.png"/></a> | ';
+                                </text>
+                            }
+
+                            return (strTemplate);
+                        },
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.DetailOfFactor.ServiceTariff",
+                        field: "@Resources.Model.Strings.DetailOfFactorKeys.ServiceTariff",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.DetailOfFactor.CommodityDescription",
+                        field: "@Resources.Model.Strings.DetailOfFactorKeys.CommodityDescription",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.DetailOfFactor.CommodityCount",
+                        field: "@Resources.Model.Strings.DetailOfFactorKeys.CommodityCount",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.DetailOfFactor.PricePerUnit",
+                        field: "@Resources.Model.Strings.DetailOfFactorKeys.PricePerUnit",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.Model.DetailOfFactor.TotalPrice",
+                        field: "@Resources.Model.Strings.DetailOfFactorKeys.TotalPrice",
+                    },
+                ]
+        });
+
+        var varGrid =
+            $('div#grid').data("kendoGrid");
+
+        varGrid.setDataSource(varDataSource);
+    })
+</script>
+
+<section id="DetailOfFactors" class="form-horizontal" role="form">
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            اطلاعات اولیه فاکتور  -  @strTitle
+        </div>
+        <div class="col-md-12 panel-body">
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.HeadLine)</dt>
+                <dd>@Html.DisplayFor(model => model.HeadLine)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.SubHeadLine)</dt>
+                <dd>@Html.DisplayFor(model => model.SubHeadLine)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.CompanyName)</dt>
+                <dd>@Html.DisplayFor(model => model.CompanyName)</dd>
+            </dl>
+
+            <div class="col-md-12">
+                <div class="row">
+                    @if (ViewBag.BtnShow == false)
+                    {
+                        <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+                           href="/Administrator/DetailOfFactor/Create?headoffactorid=@HeadOfFactorId"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+                    }
+                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+                       href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+                </div>
+                <br />
+                <div class="row">
+                    <div style="" data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            @if (ViewBag.BtnShow == false)
+            {
+                <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+                   href="/Administrator/DetailOfFactor/Create?headoffactorid=@HeadOfFactorId"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+
+                <a class="btn btn-danger col-md-3 col-md-offset-2" data-toggle="tooltip" data-placement="top" 
+                   title="@(Resources.Action.FinalApprove)" style="float:right;" id="SaveFactor"
+                   href="/Administrator/DetailOfFactor/PrintFactor?headoffactorid=@HeadOfFactorId">
+                    <span style="float:right;">@Resources.Action.FinalApprove</span><img style="float:left;" src='../../../Content/Icon/Create.png' />
+                </a>
+            }
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+
+            <br />
+            <br />
+        </div>
+    </div>
+</section>

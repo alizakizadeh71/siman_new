@@ -1,0 +1,149 @@
+﻿@model Models.Request
+
+@{
+    Layout = "~/Views/Shared/_Layouts/_SiteEmptyLayout.cshtml";
+
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+
+    List<Infrastructure.PageMessage> PageMessageList = ViewBag.PageMessages;
+    string url = string.Empty;
+
+    #region Get PaymentState;
+    string PaymentMassage = "پرداخت ناموفق";
+    bool PaymentSuccess = Convert.ToBoolean(ViewBag.IsSuccess);
+
+    if (PaymentSuccess)
+    {
+        PaymentMassage = "پرداخت موفق";
+    }
+    #endregion
+
+    #region Set Site URL
+    if (Model.SubSystem.Code == (int)Enums.SubSystems.Drug_Import && Model.CurrencyCode == (int)Enums.CurrencyUnits.Rails)
+    {
+        url = "#";
+    }
+
+    if (Model.SubSystem.Code == (int)Enums.SubSystems.Drug_Import && Model.CurrencyCode != (int)Enums.CurrencyUnits.Rails)
+    {
+        url = "http://d.ivo.ir/UsersImports/ApprovePayment.aspx?Id=" + Model.InvoiceNumber.ToString(); ;
+    }
+    else if (Model.SubSystem.Code == (int)Enums.SubSystems.Drug_Clearance)
+    {
+        url = "http://d.ivo.ir/UsersClearance/ApprovePayment.aspx?Id=" + Model.InvoiceNumber.ToString();
+    }
+    else if (Model.SubSystem.Code >= (int)Enums.SubSystems.Quarantine_Import && Model.SubSystem.Code < (int)Enums.SubSystems.Certificate)
+    {
+        if (Model.Bank_AppStatusDescription != null && Model.Bank_AppStatusDescription == "NO_ERROR")
+        { url = Model.URLAddress + "?Id=" + Model.InvoiceNumber.ToString() + "&BankReciptNumber=" + Model.Bank_BankReciptNumber; }
+
+        else
+        { url = Model.URLAddress + "?Id=" + Model.InvoiceNumber.ToString() + "&BankReciptNumber=-1"; }
+    }
+    #endregion
+}
+<style>
+    .BorderStyle {
+        border-color: green;
+        border-style: solid;
+        border-width: 1px;
+    }
+</style>
+@{
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                رسید خرید اینترنتی
+                <br />
+            </div>
+            <div class="panel-body" id="PrintPage">
+                @Html.HiddenFor(model => model.Id)
+                @{
+                    string strDataValue = Model.Bank_ShamsiDate;
+
+                    string strCustomerCardNumber = Infrastructure.Utility.ConvertToCardNumber(Model.Bank_CustomerCardNumber);
+
+                    string strRequestType = Model.SubSystem.Name;
+                }
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color:lightblue" class="BorderStyle">
+                        <span>اطلاعات تراکنش</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.Bank_CustomerCardNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.Bank_BankReciptNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.Bank_ShamsiDate)</td>
+                        <td>@Html.DisplayNameFor(model => model.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.AmountPaid)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.RequestState)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@strCustomerCardNumber</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.Bank_BankReciptNumber)</td>
+                        <td class="BorderStyle">@strDataValue</td>
+                        <td>@Html.DisplayFor(model => model.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.AmountPaid)</td>
+                        @if (PaymentSuccess)
+                        {<td class="BorderStyle"><span class="alert-success">@PaymentMassage</span></td>}
+                        else
+                        {<td class="BorderStyle"><span class="alert-danger">@PaymentMassage</span></td>}
+                    </tr>
+                </table>
+
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color:lightblue" class="BorderStyle">
+                        <span>اطلاعات درخواست</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.CompanyName)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.SubSystem)</td>
+                        <td>@Html.DisplayNameFor(model => model.CommodityType)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.TotalValue)</td>
+                        <td>@Html.DisplayNameFor(model => model.CommodityUnit)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.RecordNumber)</td>
+                        <td>@Html.DisplayNameFor(model => model.RecordDate)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => model.CompanyName)</td>
+                        <td class="BorderStyle">@strRequestType</td>
+                        <td>@Html.DisplayFor(model => model.CommodityType)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.TotalValue)</td>
+                        <td>@Html.DisplayFor(model => model.CommodityUnit)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.RecordNumber)</td>
+                        <td>@Html.DisplayFor(model => model.RecordDate)</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <div class="col-md-2">
+                    @Html.ActionLink("دریافت فایل جهت ارائه به سازمان", MVC.Payment.PrintFinalPayment(Model.InvoiceNumber), new { @class = "btn btn-success" })
+                </div>
+                @{
+                    if (PaymentSuccess)
+                    {
+                        <div class="col-md-2">
+                            <a href='@url' class="btn btn-danger">تکمیل فرایند پرداخت</a>
+                        </div>
+                    }
+
+                    else
+                    {
+                        <div class="col-md-8">
+                            <a href='#' class="btn btn-danger">پرداخت ناموفق بوده و از طرف بانک پاسخ مناسب دریافت نشد</a>
+                        </div>
+                    }
+                }
+
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+}
+
+

@@ -1,0 +1,220 @@
+﻿@model ViewModels.Areas.Administrator.CurrencyUnit.IndexViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.ListOf,
+        Resources.Model.CurrencyUnit.EntitiesName
+        );
+
+    string strCreate =
+    string.Format("{0} {1}",
+    Resources.Action.CreateOf,
+    Resources.Model.CurrencyUnit.EntitiesName
+    );
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        //*********************************
+        var varDataSource =
+            new kendo.data.DataSource({
+
+                pageSize: 10,
+
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                serverAggregates: false,
+
+                transport: {
+                    read: {
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Administrator/CurrencyUnit/GetCurrencyUnits",
+                    },
+                },
+
+                schema: {
+                    data: function (e) {
+                        return (e.Data);
+                    },
+                    total: function (e) {
+                        return (e.Total);
+                    },
+                },
+            });
+
+        //*********************************
+        //*********************************
+        //*********************************
+
+        $("div#grid").kendoGrid({
+            sortable: {
+                mode: "multiple",
+                allowUnsort: true,
+            },
+
+            pageable: {
+                info: true,
+                input: true,
+                refresh: true,
+                numeric: true,
+                buttonCount: 5,
+                previousNext: true,
+                pageSize: [5, 10, 25, 50, 100],
+                messages: {
+                    morePages: "صفحات بیشتر",
+                    page: "شماره صفحه",
+                }
+            },
+
+            groupable: true,
+            filterable: true,
+            scrollable: false,
+            reorderable: true,
+
+            columnMenu: {
+                columns: true,
+                sortable: true,
+                filterable: true,
+                messages: {
+                    lock: "قفل شده",
+                    unlock: "قفل نشده",
+                }
+            },
+
+            navigatable: true,
+            selectable: "multiple row",
+
+            dataSource: varDataSource,
+
+            dataBinding: function () {
+                rowNumber =
+					(this.dataSource.page() - 1) * this.dataSource.pageSize();
+            },
+
+            // **************************************************
+
+            columns:
+                [
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "50px",
+                        titel: "#",
+                        template: "#= ++rowNumber #",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "90px",
+                        title: "",
+                        template: function (dataItem) {
+
+                            var strTemplate = "";
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/CurrencyUnit/Detail/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></a> | ';
+                            @*@if (Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("BA4C5D09-258F-4287-B093-9C8CF2865EBA")) // غلامی*@
+                                @if (Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("BA4C5D09-258F-4287-B093-9C8CF2865EBB") ||  // کمرای
+                                    Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("84879792-772E-11EA-9132-0050568D5B96") ||  // بزمونه
+                                    Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("F2C863BA-D829-4B4F-AA35-0036287CE8FD")  // pap-ict.ir
+                                    )
+							{
+                                <text>
+                                         strTemplate +=
+                                            '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/CurrencyUnit/Edit/'
+                                            + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a>  ';
+                               </text>
+                            }
+
+                            @*strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/CurrencyUnit/Delete/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/delete.png"/></a> | ';*@
+                            return (strTemplate);
+                        },
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.CurrencyUnit.Name",
+                        field: "@Resources.ViewModel.Strings.CurrencyUnitKeys.Name",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.CurrencyUnit.Code",
+                        field: "@Resources.ViewModel.Strings.CurrencyUnitKeys.Code",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.CurrencyUnit.Ratio",
+                        field: "@Resources.ViewModel.Strings.CurrencyUnitKeys.Ratio",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.CurrencyUnit.InsertDateTime",
+                        field: "@Resources.ViewModel.Strings.CurrencyUnitKeys.InsertDateTime",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.CurrencyUnit.ExpireDateTime",
+                        field: "@Resources.ViewModel.Strings.CurrencyUnitKeys.ExpireDateTime",
+                    },
+                ]
+        });
+
+        var varGrid =
+            $('div#grid').data("kendoGrid");
+
+        varGrid.setDataSource(varDataSource);
+    })
+</script>
+
+<section id="CurrencyUnits" class="form-horizontal" role="form">
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="col-md-12 panel-body">
+            <div class="col-md-12">
+                <div class="row">
+                    @*<a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+                       href="/Administrator/CurrencyUnit/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>*@
+
+                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+                       href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+                </div>
+                <br />
+                <div class="row">
+                    <div style="" data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            @*<a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+               href="/Administrator/CurrencyUnit/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>*@
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+
+            <br />
+            <br />
+        </div>
+    </div>
+</section>

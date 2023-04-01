@@ -1,0 +1,3 @@
+﻿@model System.DateTime?
+@using Infrastructure
+@Html.Label("", String.Format("{0:yyyy/mm/dd}", Model.HasValue && Model.Value.Year > 100 ? Html.DisplayDateTime(Model.Value, true) : Html.Raw("-----")))

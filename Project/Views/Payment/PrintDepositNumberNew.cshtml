@@ -1,0 +1,89 @@
+﻿@model Models.Request
+
+@{
+    Layout = "~/Views/Shared/_Layouts/_SiteForPrint.cshtml";
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+
+    List<Infrastructure.PageMessage> PageMessageList = ViewBag.PageMessages;
+
+    string url = System.Configuration.ConfigurationSettings.AppSettings["IVOReferrUrl"].ToString();
+}
+
+<style>
+    .BorderStyle {
+        border-color: green;
+        border-style: solid;
+        border-width: 1px;
+    }
+</style>
+@{
+    <div class="row">
+        <div class="panel panel-info" style="font-family: BYekan, Tahoma;">
+            <div class="panel-heading">
+                چاپ شناسه واریز
+                <br />
+            </div>
+            <div class="panel-body">
+                @Html.HiddenFor(model => model.Id)
+                @{
+                    string RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates ,Model.RequestState);
+                }
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color:lightblue; width:850px;" class="BorderStyle">
+                        <span>اطلاعات درخواست</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.CompanyName)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.CompanyNationalCode)</td>
+                        <td>@Html.DisplayNameFor(model => model.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.RecordNumber)</td>
+                        <td>@Html.DisplayNameFor(model => model.CommodityType)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.TotalValue)</td>
+                        <td>@Html.DisplayNameFor(model => model.CommodityUnit)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => model.CompanyName)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.CompanyNationalCode)</td>
+                        <td>@Html.DisplayFor(model => model.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.RecordNumber)</td>
+                        <td>@Html.DisplayFor(model => model.CommodityType)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.TotalValue)</td>
+                        <td>@Html.DisplayFor(model => model.CommodityUnit)</td>
+                    </tr>
+                </table>
+
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color: lightblue; width:850px;" class="BorderStyle">
+                        <span>اطلاعات پرداخت</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.DepositNumber)</td>
+                        <td>@Html.DisplayNameFor(model => model.RequestState)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => model.AmountPaid)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.DepositNumber)</td>
+                        <td>@RequestState</td>
+                    </tr>
+                </table>
+
+                <br />
+                <div class="col-md-12" style="text-align:center;">
+                    <img src="@ViewBag.BarCodeImage" />
+                </div>
+            </div>
+            <div class="panel-footer">
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+}
+
+

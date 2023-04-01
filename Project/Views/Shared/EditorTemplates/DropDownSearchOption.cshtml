@@ -1,0 +1,59 @@
+﻿@using Infrastructure.Helpers
+@{
+    string PropertyName = ViewData.TemplateInfo.HtmlFieldPrefix;
+
+    string PropertyNameId = PropertyName.Replace('.', '_');
+
+    IEnumerable<ViewModels.IComboboxItemGuid> ComboboxItem = ViewData[PropertyNameId] 
+        as IEnumerable<ViewModels.IComboboxItemGuid> ??
+        new List<ViewModels.IComboboxItemGuid>();
+
+    IList<SelectListItem> lstModel = new List<SelectListItem>();
+    if (ComboboxItem != null)
+    {
+        foreach (var item in ComboboxItem)
+        {
+            lstModel.Add(new SelectListItem
+            {
+                Selected = ViewData.Model == item.Id,
+                Text = item.Name,
+                Value = item.Id.ToString()
+            });
+        }
+
+        lstModel.Insert(0, new SelectListItem
+        {
+            Text = " از لیست انتخاب نمایید",
+            Value = string.Empty
+        });
+    }
+    string relSearch = string.Empty;
+
+    if (lstModel.Count > 0)
+    {
+        relSearch = "chosen";
+    }
+
+    var validAttribs = new string[] {"style", "class", "checked", "@class","placeholder",
+"classname","id", "required", "value", "disabled", "readonly",
+"accesskey", "lang", "tabindex",  "onblur", "onfocus",
+"onclick", "onchange", "ondblclick", "onmousedown", "onmousemove",
+"onmouseout", "onmouseover", "onmouseup", "onselect"};
+
+    var attribs = new Dictionary<string, object> { { "class", "form-control" }, { "data-rel", relSearch } };
+    foreach (var item in ViewData)
+    {
+        //if (item.Key.ToLower().IndexOf("data_") == 0 || item.Key.ToLower().IndexOf("aria_") == 0)
+        //{
+        //	attribs.Add(item.Key.Replace('_', '-'), item.Value);
+        //}
+        if (validAttribs.Contains(item.Key.ToLower()))
+        {
+            attribs.Add(item.Key, item.Value);
+        }
+    }
+}
+<div class="@PropertyNameId">
+    @Html.DropDownListFor(x => x, lstModel, attribs)
+</div>
+

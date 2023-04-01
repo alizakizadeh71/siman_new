@@ -1,0 +1,43 @@
+﻿@{
+    if (Infrastructure.AuthenticatedUser.IsAuthenticated)
+    {
+        string strDisplayName = Infrastructure.Sessions.AuthenticatedUser.FullName;
+
+        if (string.IsNullOrWhiteSpace(strDisplayName) == false)
+        {
+            strDisplayName = strDisplayName.Trim();
+        }
+        else
+        {
+            //strDisplayName =Infrastructure.Sessions.AuthenticatedUser.EmailAddress;
+        }
+        <li>
+            <a style="color:#56ff00 ;" href="https://ops.ivo.ir/PCPOSFile.zip">فایل PCPOS</a>
+            @*<a style="color:#73dfa9" href="https://ops.ivo.ir/PCPOSFile.zip">فایل PCPOS </a>*@
+        </li>
+        <li>
+            <a style="color:#56ff00 ; font-weight:bold" href="https://ops.ivo.ir/OpsHelp.pdf">فایل راهنما</a>
+        </li>
+        <li>
+            @Html.ActionLink(Resources.Action.UserControlPanel, MVC.HomeMain.Main(), new { style = "color:white;background-color: #428BCA;" })
+        </li>
+        <li>
+            @Html.ActionLink(strDisplayName, MVC.Account.ChangePassword(), new { style = "color:white;" })
+        </li>
+        <li>
+            @Html.ActionLink(Resources.Action.Logout, MVC.Account.Logout(), new { style = "color:white;" })
+        </li>
+    }
+    else
+    {
+        <li>
+            @Html.ActionLink(Resources.Action.Login, MVC.Account.Login(), new { style = "color:white;" })
+        </li>
+
+        @*<li>
+                @Html.ActionLink(Resources.Action.Register,
+                    MVC.Account.Register(),
+                    Infrastructure.Enums.ActionLinksTypes.SimpleLink, new { style = "color:white;" })
+            </li>*@
+    }
+}

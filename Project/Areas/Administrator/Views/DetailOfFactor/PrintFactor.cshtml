@@ -1,0 +1,121 @@
+﻿@model List<Models.DetailOfFactor>
+
+@{
+    Layout = "~/Views/Shared/_Layouts/_SiteForPrint.cshtml";
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.HeadOfFactor.EntityName);
+    string RequestState = string.Empty;
+    Models.HeadOfFactor HeadOfFactor = ViewBag.headRow;
+}
+
+<style>
+    .BorderStyle {
+        border-color: green;
+        border-style: solid;
+        border-width: 1px;
+    }
+</style>
+@{
+    <div class="row">
+        <div class="panel panel-info" style="font-family: BYekan, Tahoma;">
+            <div class="panel-heading">
+                چاپ شناسه واریز
+                <br />
+            </div>
+            <div class="panel-body">
+                @*@{
+                    if (HeadOfFactor.Request != null)
+                    {
+                        RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, HeadOfFactor.Request.RequestState);
+                    }
+                }*@
+                <p>
+                    @ViewBag.Message
+
+                </p>
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color:lightblue; width:850px;" class="BorderStyle">
+                        <span>اطلاعات درخواست</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => HeadOfFactor.CompanyName)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => HeadOfFactor.InvoiceDate)</td>
+                        <td>@Html.DisplayNameFor(model => HeadOfFactor.Request.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => HeadOfFactor.Request.RecordNumber)</td>
+                        <td>@Html.DisplayNameFor(model => HeadOfFactor.Province)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => HeadOfFactor.City)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => HeadOfFactor.CompanyName)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => HeadOfFactor.InvoiceDate)</td>
+                        <td>@Html.DisplayFor(model => HeadOfFactor.Request.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => HeadOfFactor.Request.RecordNumber)</td>
+                        <td>@Html.DisplayFor(model => HeadOfFactor.Province.Name)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => HeadOfFactor.City.Name)</td>
+                    </tr>
+                </table>
+
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color: lightblue; width:850px;" class="BorderStyle">
+                        <span>اقلام فاکتور</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.FirstOrDefault().ServiceTariff.Name)</td>
+
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.FirstOrDefault().ServiceTariff.Amount)</td>
+                        <td>@Html.DisplayNameFor(model => model.FirstOrDefault().CommodityDescription)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.FirstOrDefault().CommodityCount)</td>
+                        <td>@Html.DisplayName("مبلغ کل")</td>
+                    </tr>
+                    @{
+                        if (Model != null)
+                        {
+                            for (int i = 0; i < Model.Count; i++)
+                            {
+                                var tttotal = Model[i].CommodityCount * Model[i].ServiceTariff.Amount;
+                                <tr class="BorderStyle">
+                                    <td>@Html.DisplayFor(model => model[i].ServiceTariff.Name)</td>
+                                    <td class="BorderStyle">@Html.DisplayFor(model => model[i].ServiceTariff.Amount)</td>
+                                    <td>@Html.DisplayFor(model => model[i].CommodityDescription)</td>
+                                    <td class="BorderStyle">@Html.DisplayFor(model => model[i].CommodityCount)</td>
+                                    <td>@tttotal</td>
+                                </tr>
+                            }
+                        }
+                    }
+
+                </table>
+
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color: lightblue; width:850px;" class="BorderStyle">
+                        <span>اطلاعات پرداخت</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => HeadOfFactor.Request.AmountPaid)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => HeadOfFactor.Request.DepositNumber)</td>
+                        <td>@Html.DisplayNameFor(model => HeadOfFactor.Request.RequestState)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => HeadOfFactor.Request.AmountPaid)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => HeadOfFactor.Request.DepositNumber)</td>
+                        <td>
+                            @RequestState
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="panel-footer">
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+}
+
+

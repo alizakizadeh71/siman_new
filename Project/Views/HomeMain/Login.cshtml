@@ -1,0 +1,107 @@
+﻿
+@model ViewModels.Account.LoginViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<img src="~/Content/Images/Baner.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%; z-index: -10; border: solid; border-width: 7px; border-color: #e1e1e1; -webkit-box-shadow: 0 7px 2px #777; -moz-box-shadow: 0 7px 2px #777; box-shadow: 0 7px 2px #777;" class="img-responsive">
+<br />
+<div class="row">
+    <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
+
+        <h4 class="panel-heading" style="text-align:center">برای ورود به سیستم از نام کاربری اختصاصی خود استفاده نمایید.</h4>
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "col-md-3 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, new { @class = "col-md-3 control-label" })
+                <div class="col-md-8">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Captcha, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    <img class="col-md-4" alt="Captcha" id="imgcpatcha" src="@Url.Action("CaptchaImage", "Account")" style="" />
+                    <div class="col-md-3 btn btn-info" id="refresh">
+                        <span>@Resources.OPS.Button.Refresh</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-8">
+                    @Html.TextBoxFor(model => model.Captcha, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="text-center">
+                    <input type="submit" value='ورود ادمین به سامانه' class="btn btn-success" />
+                </div>
+            </div>
+        }
+    </section>
+
+</div>
+
+<script>
+    function vmsblink(selector) {
+        $(selector).fadeOut(500, function () {
+            $(this).fadeIn(500, function () {
+                vmsblink(this);
+            });
+        });
+    }
+    vmsblink('blink');
+</script>
+
+<script type="text/javascript">
+    $("button#btnSearch").click(function () {
+        alert('ddfdf');
+    });
+
+    $.ajax({
+        url: '/api/Temp',
+        success: function (data) {
+            var list = $("#Temps");
+            for (var i = 0; i < data.length; i++) {
+                var temp = data[i];
+                list.append('<li id="' + temp.Id + '">' + temp.Name + '</li>');
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+    $(function () {
+        $('#refresh').click(function () {
+            $.ajax({
+                url: '@Url.Action("CaptchaImage", "Account")',
+                type: "GET",
+                data: ""
+            })
+            .done(function (functionResult) {
+                $("#imgcpatcha").attr("src", "/Account/CaptchaImage?" + functionResult);
+            });
+        });
+    });
+</script>

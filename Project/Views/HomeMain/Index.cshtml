@@ -1,0 +1,317 @@
+﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<img src="~/Content/Images/Baner.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%; z-index: -10; border: solid; border-width: 7px; border-color: #e1e1e1; -webkit-box-shadow: 0 7px 2px #777; -moz-box-shadow: 0 7px 2px #777; box-shadow: 0 7px 2px #777;" class="img-responsive">
+<br />
+
+<div class="row">
+    <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
+
+        <h4 class="panel-heading" style="text-align:center">برای محاسبه قیمت و خرید اطلاعات را تکمیل نمایید</h4>
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductName, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.ProductName, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
+                    @Html.ValidationMessageFor(model => model.ProductName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductType, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6" id="DivProductTypeId">
+                    @Html.DropDownListFor(model => model.ProductType, null,
+                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
+                    @Html.ValidationMessageFor(model => model.ProductType)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PackageType, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6" id="DivPackageTypeId">
+                    @Html.DropDownListFor(model => model.PackageType, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PackageType)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6" id="DivFactoryNameId">
+                    @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FactoryName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6" id="DivTonnageId">
+                    @Html.DropDownListFor(model => model.Tonnage, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Tonnage)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Province, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.Province, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
+                    @Html.ValidationMessageFor(model => model.Province)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6" id="DivCityId">
+                    @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.City)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6" id="DivCityId">
+                    @Html.DropDownListFor(model => model.Village, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Village)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
+                    @Html.ValidationMessageFor(model => model.BuyerMobile)
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="text-center">
+                    <input type="submit" value='محاسبه قیمت' class="btn btn-success" />
+                </div>
+            </div>
+        }
+    </section>
+    <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
+        <h4 class="panel-heading" style="text-align:center ; color:brown"> <blink>اطلاعیه مهم </blink></h4>
+        <hr />
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+
+                <div class="item active" style="font-size:22px">
+                    <p style="color:darkslateblue">
+                        قابل توجه پیمان کاران
+                    </p>
+                    <p>
+                        تحویل فوری سیمان در محل
+                    </p>
+                    <br />
+
+                </div>
+
+                <div class="item" style="font-size:22px">
+                    <p style="color:green">
+                        قابل توجه مصالح فروشان
+                    </p>
+                    <p>
+                        تخفیف ویژه برای شما
+                    </p>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <hr />
+
+    </section>
+</div>
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; -webkit-box-shadow: 0 4px 2px #777; -moz-box-shadow: 0 4px 2px #777; box-shadow: 0 4px 2px #777;">
+            <img src="~/Content/Images/Guid.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%;" class="img-responsive" />
+            <hr />
+            <div class="caption">
+                <h4 style="margin-top:-20px;">راهنما کاربران</h4>
+                <p>...</p>
+                <br />
+                <br />
+                <p>
+                    <a class="btn btn-default" href="/HomeMain/UserGuid">ادامه مطلب ...</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; -webkit-box-shadow: 0 4px 2px #777; -moz-box-shadow: 0 4px 2px #777; box-shadow: 0 4px 2px #777;">
+            <img src="~/Content/Images/Recepe.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%;" class="img-responsive" />
+            <hr />
+            <div class="caption">
+                <h4 style="margin-top:-20px;">دستورالعمل ها</h4>
+                <p>...</p>
+                <br />
+                <br />
+                <p>
+                    <a class="btn btn-default" href="#">ادامه مطلب ...</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; -webkit-box-shadow: 0 4px 2px #777; -moz-box-shadow: 0 4px 2px #777; box-shadow: 0 4px 2px #777;">
+            <img src="~/Content/Images/ops.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%;" class="img-responsive" />
+            <hr />
+            <div class="caption">
+                <h4 style="margin-top:-20px;">انواع سیمان</h4>
+                <p>...</p>
+                <br />
+                <br />
+                <p>
+                    <a class="btn btn-default" href="#">ادامه مطلب ...</a>
+                    @*@Html.ActionLink("212121212121212", MVC.Payment.MerchantCommit2());*@
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<img src="http://d.ivo.ir/Files/Clearance/3087.jpg" />*@
+
+
+<script>
+    function vmsblink(selector) {
+        $(selector).fadeOut(500, function () {
+            $(this).fadeIn(500, function () {
+                vmsblink(this);
+            });
+        });
+    }
+    vmsblink('blink');
+</script>
+
+<script type="text/javascript">
+    $("button#btnSearch").click(function () {
+        alert('ddfdf');
+    });
+
+    $.ajax({
+        url: '/api/Temp',
+        success: function (data) {
+            var list = $("#Temps");
+            for (var i = 0; i < data.length; i++) {
+                var temp = data[i];
+                list.append('<li id="' + temp.Id + '">' + temp.Name + '</li>');
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+    $(function () {
+        $('#refresh').click(function () {
+            $.ajax({
+                url: '@Url.Action("CaptchaImage", "Account")',
+                type: "GET",
+                data: ""
+            })
+            .done(function (functionResult) {
+                $("#imgcpatcha").attr("src", "/Account/CaptchaImage?" + functionResult);
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('select>option:eq(1)').prop('selected', true);
+        onChangeProductName();
+    });
+    function onChangeProvince() {
+        $.ajax({
+            url: '/Administrator/HeadOfFactor/GetCities',
+            type: 'post',
+            data: { provinceId: $("#Province").val() },
+            success: function (data) {
+
+                $("#DivCityId").empty();
+
+                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, city) {
+                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivCityId").append(select);
+            }
+        });
+    }
+
+
+    function onChangeProductName() {
+        $.ajax({
+            url: '/Administrator/Cement/GetProductType',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivProductTypeId").empty();
+
+                var select = $("<select class='form-control' id='ProductType' name='ProductType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, ProductType) {
+                    var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivProductTypeId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#ProductType>option:eq(1)').prop('selected', true);
+                onChangeProductType();
+            }
+        });
+    }
+    
+    function onChangeProductType() {
+        $.ajax({
+            url: '/Administrator/Cement/GetPackageType',
+            type: 'post',
+            data: { PackageTypeId: $("#ProductType").val() },
+            success: function (data) {
+
+                $("#DivPackageTypeId").empty();
+
+                var select = $("<select class='form-control' id='PackageType' name='PackageType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, PackageType) {
+                    var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivPackageTypeId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#PackageType>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
+</script>

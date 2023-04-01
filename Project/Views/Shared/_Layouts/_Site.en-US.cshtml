@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Resources.General.ApplicationName</title>
+    
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/css/bootstrap-rtl.css" rel="stylesheet" />
+
+    <link href="~/Content/kendo/lastVersion/kendo.common-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo/lastVersion/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo/lastVersion/kendo.rtl.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(@Resources.General.ApplicationName, MVC.HomeMain.Index(), new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink(Resources.Action.Home, MVC.HomeMain.Index())</li>
+                    <li>@Html.ActionLink(Resources.Action.About, MVC.HomeMain.About())</li>
+                    <li>@Html.ActionLink(Resources.Action.Contact, MVC.HomeMain.Contact())</li>
+                    @*<li>@Html.Partial("_PartialDisplayMenu")</li>*@
+                    <li>@Html.Partial("_PartialLogin")</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div style="margin-top:30px;">
+            @RenderBody()
+        </div>
+        <hr />
+        <footer style="text-align:center;">
+            <p>&copy; @Resources.General.ApplicationName - 1401</p>
+            <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=222749&amp;Code=1LCxBmF4GkaMf5rXC2BA"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=222749&amp;Code=1LCxBmF4GkaMf5rXC2BA" alt="" style="cursor:pointer" id="1LCxBmF4GkaMf5rXC2BA"></a>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/kendo/lastVersion/cultures/kendo.culture.fa-IR.min.js"></script>
+    <script src="~/Scripts/kendo/kendo.fa-IR.js"></script>
+    <script src="~/Scripts/kendo/lastVersion/kendo.all.min.js"></script>
+
+    <script src="~/Scripts/jquery.ui.datepicker-cc.js"></script>
+    <script src="~/Scripts/calendar.js"></script>
+    <script src="~/Scripts/jquery.ui.datepicker-cc-fa.js"></script>
+
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                dateFormat: 'yy/mm/dd',
+                autoSize: true,
+                showyear: true,
+                changeYear: true
+            }).css('z-index', 99999999999999);
+        });
+
+        window.addEventListener("submit", function (e) {
+            var form = e.target;
+            if (form.getAttribute("enctype") === "multipart/form-data") {
+                if (form.dataset.ajax) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    var xhr = new XMLHttpRequest();
+                    xhr.open(form.method, form.action);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            if (form.dataset.ajaxUpdate) {
+                                var updateTarget = document.querySelector(form.dataset.ajaxUpdate);
+                                if (updateTarget) {
+                                    updateTarget.innerHTML = xhr.responseText;
+                                }
+                            }
+                        }
+                    };
+                    xhr.send(new FormData(form));
+                }
+            }
+        }, true);
+
+    </script>
+</body>
+</html>

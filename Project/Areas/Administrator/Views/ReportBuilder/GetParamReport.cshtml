@@ -1,0 +1,56 @@
+﻿@using Infrastructure.Helpers
+
+@model IEnumerable<ViewModels.Areas.Administrator.ReportGenerator.ReportParameter>
+<form id="form@(ViewBag.ReportId)">
+	@Html.Hidden("reportId", (System.Guid)ViewBag.ReportId)
+	@if (Model != null)
+	{
+		foreach (var item in Model)
+		{
+			<div class="row">
+				<div class="col-md-2">
+					<label class="control-label">
+						@item.DisplayName
+					</label>
+				</div>
+				<div class="col-md-7">
+					@switch (item.DataType)
+					{
+						case Enums.DataType.String:
+							@Html.TextBox(item.Name,"", new { @class = "form-control", @type = "text" })
+							break;
+						case Enums.DataType.Int:
+							@Html.TextBox(item.Name,"", new { @class = "form-control", @type = "number" })
+							break;
+						case Enums.DataType.Date:
+							@Html.TextBox(item.Name,"",new { @class = "datepicker form-control", @type = "text" })
+							break;
+					}
+				</div>
+			</div>
+			<div class="row"><hr /></div>
+		}
+
+		<div class="panel-footer">
+			<div class="form-group">
+				<div class="col-md-10 col-md-offset-6">
+					<a class="btn btn-large btn-success col-md-4" onclick="getDataReport('@ViewBag.ReportId')" id="getDataReport">
+						گزارش
+					</a>
+				</div>
+				<br />
+			</div>
+		</div>
+	}
+</form>
+<script>
+	$('.datepicker').datepicker({
+		dateFormat: 'yy/mm/dd',
+		autoSize: true,
+		showyear: true,
+		changeYear: true,
+		changeMonth: true,
+		yearRange: 'c-100:c+100',
+		showButtonPanel: true
+	});
+</script>

@@ -1,0 +1,38 @@
+﻿namespace Enums
+{
+    public enum Provinces : int
+    {
+        Global = 01,
+        Azarbayjan_Sharghi = 41,
+        Azarbyjan_Gharbi = 44,
+        Ardabil = 45,
+        Esfahan = 31,
+        Alborz = 26,
+        Ilam = 84,
+        Boshehr = 77,
+        Tehran = 21,
+        ChaharmahalBakhtiari = 38,
+        Khorasan_Jonobi = 56,
+        Khorasan_Razavi = 51,
+        Khorasan_Shomali = 58,
+        Khozestan = 61,
+        Zanjan = 24,
+        Semnan = 23,
+        SistanoBalochestan = 54,
+        Fars = 71,
+        Ghazvin = 28,
+        Qom = 25,
+        Kordestan = 87,
+        Kerman = 34,
+        Kermanshah = 83,
+        KohkiloyeoBoyerahmad = 74,
+        Golestan = 17,
+        Gilan = 13,
+        Lorstan = 66,
+        Mazandaran = 11,
+        Markazi = 86,
+        Hormozgan = 76,
+        Hamedan = 81,
+        Yazd = 35,
+    }
+}

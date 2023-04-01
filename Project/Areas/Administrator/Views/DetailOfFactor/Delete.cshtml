@@ -1,0 +1,50 @@
+﻿@model ViewModels.Areas.Administrator.DetailOfFactor.DisplayViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.DeleteOf,
+        Resources.Model.DetailOfFactor.EntitiesName);
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @strTitle
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.HeadOfFactor)</dt>
+            <dd>@Html.DisplayFor(model => model.HeadOfFactor)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.ServiceTariff)</dt>
+            <dd>@Html.DisplayFor(model => model.ServiceTariff)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.CommodityDescription)</dt>
+            <dd>@Html.DisplayFor(model => model.CommodityDescription)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.CommodityCount)</dt>
+            <dd>@Html.DisplayFor(model => model.CommodityCount)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+            <dd>@Html.DisplayFor(model => model.Description)</dd>
+            <br />
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(excludePropertyErrors: true)
+
+            <div class="form-actions no-color">
+                <input type="submit" value="@Resources.Buttons.Delete" class="btn btn-danger" />
+            </div>
+        }
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink(Resources.Action.Details, MVC.Administrator.DetailOfFactor.Details(Model.Id), new { @class = "btn btn-primary" })
+        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.DetailOfFactor.Index(Model.Id), new { @class = "btn btn-default" })
+
+        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+           href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+        <br />
+        <br />
+    </div>
+</div>

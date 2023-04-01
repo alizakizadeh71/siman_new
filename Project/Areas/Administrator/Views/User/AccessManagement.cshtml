@@ -1,0 +1,25 @@
+﻿@{
+    string strTitle = Resources.Action.AccessManagement;
+    ViewBag.Title = strTitle;
+    string message = ViewBag.Message;
+}
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h2> @strTitle</h2>
+    </div>
+    <div class="panel-body">
+        <h2 class="label-success"> @message</h2>
+            <br />
+            <br />
+        </div>
+
+        <div class="panel-footer">
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+               href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
+        </div>
+
+    </div>

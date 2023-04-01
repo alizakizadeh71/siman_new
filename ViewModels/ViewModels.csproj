@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7A01F539-3EF7-45C6-B01D-60A460BC72FB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ViewModels</RootNamespace>
+    <AssemblyName>ViewModels</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\ChangePasswordViewModel.cs" />
+    <Compile Include="Account\LoginViewModel.cs" />
+    <Compile Include="Areas\Administrator\AccountNumberManage\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\AccountNumberManage\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\AccountNumberManage\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\AccountNumberManage\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\AccountNumberManage\SearchViewModel.cs" />
+    <Compile Include="Areas\Administrator\BankAccount\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\BankAccount\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\BankAccount\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\BankAccount\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\BankAccount\SearchViewModel.cs" />
+    <Compile Include="Areas\Administrator\Bank\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\Bank\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\Bank\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\Bank\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\Cement\CementViewModel.cs" />
+    <Compile Include="Areas\Administrator\CentralBank\bankTransactionViewModel.cs" />
+    <Compile Include="Areas\Administrator\Certain\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\Certain\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\Certain\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\Certain\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\CurrencyUnit\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\CurrencyUnit\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\CurrencyUnit\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\CurrencyUnit\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\DetailOfFactor\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\DetailOfFactor\DisplayViewModel.cs" />
+    <Compile Include="Areas\Administrator\DetailOfFactor\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\DetailOfFactor\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\ExecutableCode\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\ExecutableCode\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\ExecutableCode\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\ExecutableCode\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\Headline\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\Headline\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\Headline\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\Headline\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\HeadOfFactor\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\HeadOfFactor\DisplayViewModel.cs" />
+    <Compile Include="Areas\Administrator\HeadOfFactor\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\HeadOfFactor\IndexFinancialViewModel.cs" />
+    <Compile Include="Areas\Administrator\HeadOfFactor\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\HeadOfFactor\SearchViewModel.cs" />
+    <Compile Include="Areas\Administrator\IncomeRow\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\IncomeRow\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\IncomeRow\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\IncomeRow\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\ReportGenerator\ReportColumnInfo.cs" />
+    <Compile Include="Areas\Administrator\ReportGenerator\ReportingResult.cs" />
+    <Compile Include="Areas\Administrator\ReportGenerator\ReportParameter.cs" />
+    <Compile Include="Areas\Administrator\ReportGenerator\ReportParameterValue.cs" />
+    <Compile Include="Areas\Administrator\Request\DisplayViewModel.cs" />
+    <Compile Include="Areas\Administrator\Request\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\Request\IndexFinancialViewModel.cs" />
+    <Compile Include="Areas\Administrator\Request\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\Request\SearchViewModel.cs" />
+    <Compile Include="Areas\Administrator\Request\UpAmountPaidViewModel.cs" />
+    <Compile Include="Areas\Administrator\ServiceTariff\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\ServiceTariff\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\ServiceTariff\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\ServiceTariff\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\SubHeadline\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\SubHeadline\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\SubHeadline\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\SubHeadline\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\Subsystem\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\Subsystem\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\Subsystem\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\Subsystem\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\Unit\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\Unit\DetailViewModel.cs" />
+    <Compile Include="Areas\Administrator\Unit\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\Unit\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\User\Authenticate.cs" />
+    <Compile Include="Areas\Administrator\User\ChangePasswordViewModel.cs" />
+    <Compile Include="Areas\Administrator\User\CreateViewModel.cs" />
+    <Compile Include="Areas\Administrator\User\DisplayViewModel.cs" />
+    <Compile Include="Areas\Administrator\User\EditViewModel.cs" />
+    <Compile Include="Areas\Administrator\User\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\User\SearchViewModel.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="IComboboxItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Enum\Enums.csproj">
+      <Project>{38be8832-8735-4f01-9813-ae3a2168a1e2}</Project>
+      <Name>Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{2d564aec-1b7c-4399-a067-a025c31f1bb5}</Project>
+      <Name>Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utilities.csproj">
+      <Project>{78fa154e-8772-4fc7-9c73-cc2e32baa91d}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

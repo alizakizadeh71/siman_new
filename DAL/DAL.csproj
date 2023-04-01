@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8813E9E3-F825-44C3-8B8B-9DED8F914043}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DAL</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="SmartStringResources, Version=1.2.0.0, Culture=neutral, PublicKeyToken=3c7758f6073f4aba, processorArchitecture=MSIL">
+      <HintPath>..\packages\SmartStringResources.1.2.0\lib\net40\SmartStringResources.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccessTypeRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AccountNumberManageLogRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AccountNumberManageRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AccountNumberRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BankAccountRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BankRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CertainRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CityRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Class\Verhoeff.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommodityInSubSystemRepository.cs" />
+    <Compile Include="CommodityRepository.cs" />
+    <Compile Include="CurrencyUnitLogRepository .cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CurrencyUnitRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DetailOfFactorRepository.cs" />
+    <Compile Include="ErrorLogRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExecutableCodeRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FactorMessageRepository.cs" />
+    <Compile Include="FileRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IPackageTypeRepository.cs" />
+    <Compile Include="IProductTypeRepository.cs" />
+    <Compile Include="IProductNameRepository.cs" />
+    <Compile Include="PackageTypeRepository.cs" />
+    <Compile Include="ProductTypeRepository.cs" />
+    <Compile Include="ProductNameRepository.cs" />
+    <Compile Include="HeadlineRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HeadOfFactorRepository.cs" />
+    <Compile Include="IAccessTypeRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IAccountNumberManageLogRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IAccountNumberManageRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IAccountNumberRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IBankAccountRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IBankRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ICertainRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ICityRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ICommodityInSubSystemRepository.cs" />
+    <Compile Include="ICommodityRepository.cs" />
+    <Compile Include="ICurrencyUnitLogRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ICurrencyUnitRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IDetailOfFactorRepository.cs" />
+    <Compile Include="IErrorLogRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IExecutableCodeRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IFactorMessageRepository.cs" />
+    <Compile Include="IFileRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IHeadlineRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IHeadOfFactorRepository.cs" />
+    <Compile Include="IIncomeRowRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IMessageRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IncomeRowRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IPaymentDetailRepository.cs" />
+    <Compile Include="IPaymentHeaderRepository.cs" />
+    <Compile Include="IProjectActionRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IProvinceRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRequestRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IRoleRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IServiceTariffInSubSystemRepository.cs" />
+    <Compile Include="IServiceTariffRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ISubHeadlineRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ISubSystemRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IUnitOfWork.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IUnitRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IUserLoginLogRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IUserRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MessageRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PaymentDetailRepository.cs" />
+    <Compile Include="PaymentHeaderRepository.cs" />
+    <Compile Include="ProjectActionRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProvinceRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RequestRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RoleRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceTariffInSubSystemRepository.cs" />
+    <Compile Include="ServiceTariffRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SubHeadlineRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SubSystemRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnitOfWork.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnitRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserLoginLogRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Enum\Enums.csproj">
+      <Project>{38be8832-8735-4f01-9813-ae3a2168a1e2}</Project>
+      <Name>Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Models.csproj">
+      <Project>{659e3cb3-9993-4ae5-9016-3fd2c5435066}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{2d564aec-1b7c-4399-a067-a025c31f1bb5}</Project>
+      <Name>Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utilities.csproj">
+      <Project>{78fa154e-8772-4fc7-9c73-cc2e32baa91d}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

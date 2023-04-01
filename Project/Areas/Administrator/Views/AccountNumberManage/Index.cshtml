@@ -1,0 +1,322 @@
+﻿@model ViewModels.Areas.Administrator.AccountNumberManage.SearchViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.ListOf,
+        Resources.ViewModel.AccountNumberManage.EntitiesName
+        );
+
+    string strCreate =
+    string.Format("{0} {1}",
+    Resources.Action.CreateOf,
+    Resources.ViewModel.AccountNumberManage.EntitiesName
+    );
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#SearchPanelHeader").click(function () {
+            $("#SearchPanelBody").toggle(1000);
+        });
+
+        //*********************************
+        var varDataSource =
+            new kendo.data.DataSource({
+
+                pageSize: 10,
+
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                serverAggregates: false,
+
+                transport: {
+                    read: {
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Administrator/AccountNumberManage/GetAccountNumberManages",
+                    },
+                },
+
+                schema: {
+                    data: function (e) {
+                        return (e.Data);
+                    },
+                    total: function (e) {
+                        return (e.Total);
+                    },
+                },
+            });
+
+        //*********************************
+        //*********************************
+        //*********************************
+
+        $("div#grid").kendoGrid({
+            sortable: {
+                mode: "multiple",
+                allowUnsort: true,
+            },
+
+            pageable: {
+                info: true,
+                input: true,
+                refresh: true,
+                numeric: true,
+                buttonCount: 5,
+                previousNext: true,
+                pageSize: [5, 10, 25, 50, 100],
+                messages: {
+                    morePages: "صفحات بیشتر",
+                    page: "شماره صفحه",
+                }
+            },
+
+            groupable: true,
+            filterable: true,
+            scrollable: false,
+            reorderable: true,
+
+            columnMenu: {
+                columns: true,
+                sortable: true,
+                filterable: true,
+                messages: {
+                    lock: "قفل شده",
+                    unlock: "قفل نشده",
+                }
+            },
+
+            navigatable: true,
+            selectable: "multiple row",
+
+            dataSource: varDataSource,
+
+            dataBinding: function () {
+                rowNumber =
+					(this.dataSource.page() - 1) * this.dataSource.pageSize();
+            },
+
+            // **************************************************
+
+            columns:
+                [
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "50px",
+                        titel: "#",
+                        template: "#= ++rowNumber #",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "120px",
+                        title: "",
+                        template: function (dataItem) {
+
+                            var strTemplate = "";
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/AccountNumberManage/Detail/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></a> | ';
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/AccountNumberManage/Edit/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a> | ';
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/AccountNumberManage/Delete/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/delete.png"/></a>';
+                            return (strTemplate);
+                        },
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.AccountNumberManage.SubSystem",
+                        field: "@Resources.ViewModel.Strings.AccountNumberManageKeys.SubSystem",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.AccountNumberManage.Province",
+                        field: "@Resources.ViewModel.Strings.AccountNumberManageKeys.Province",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.AccountNumberManage.AccountNumber",
+                        field: "@Resources.ViewModel.Strings.AccountNumberManageKeys.AccountNumber",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.AccountNumberManage.InsertDateTime",
+                        field: "@Resources.ViewModel.Strings.AccountNumberManageKeys.InsertDateTime",
+                    },
+                    {
+                        hidden: false,
+                        locked: false,
+                        lockable: true,
+                        title: "@Resources.ViewModel.AccountNumberManage.UpdateDateTime",
+                        field: "@Resources.ViewModel.Strings.AccountNumberManageKeys.UpdateDateTime",
+                    },
+                ]
+        });
+
+
+        $("button#btnSearch").click(function () {
+
+            //SubSystem = $("input#SubSystem").val();
+            //alert(SubSystem);
+            //
+            //Province = $("input#Province").val();
+            //alert(Province);
+            //
+            //AccountNumber = $("input#AccountNumber").val();
+            //alert(AccountNumber);
+
+            var varDataSource =
+                new kendo.data.DataSource({
+
+                    pageSize: 10,
+
+                    serverPaging: true,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    serverAggregates: false,
+
+                    transport: {
+                        read: {
+                            type: "POST",
+                            dataType: "json",
+                            url: "/Administrator/AccountNumberManage/Search",
+                            data: {
+                                SubSystem: function () {
+                                    return ($("input#SubSystem").val());
+                                },
+                                Province: function () {
+                                    return ($("input#Province").val());
+                                },
+                                AccountNumber: function () {
+                                    return ($("input#AccountNumber").val());
+                                },
+                            },
+                        },
+                    },
+
+                    requestStart: function (e) {
+                        $("button#btnSearch").hide();
+                    },
+
+                    requestEnd: function (e) {
+                        $("button#btnSearch").show();
+                    },
+
+                    schema: {
+                        data: function (e) {
+                            return (e.Data);
+                        },
+                        total: function (e) {
+                            return (e.Total);
+                        },
+                    },
+                });
+
+            var varGrid =
+                $('div#grid').data("kendoGrid");
+
+            varGrid.setDataSource(varDataSource);
+            // **************************************************
+            // **************************************************
+
+        });
+
+    })
+</script>
+
+<section id="AccountNumberManages" class="form-horizontal" role="form">
+    <div class="panel panel-info">
+        <div class="panel-heading" id="SearchPanelHeader">
+            جستجو ( کلیک کنید...!)
+        </div>
+        <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
+
+            <div class="col col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SubSystem, new { @class = "col-md-3 control-label", @style = "font-weight:normal;" })
+                    <div class="col col-md-9">
+                        @Html.TextBoxFor(model => model.SubSystem, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Province, new { @class = "col-md-3 control-label", @style = "font-weight:normal;" })
+                    <div class="col col-md-9">
+                        @Html.TextBoxFor(model => model.Province, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AccountNumber, new { @class = "col-md-3 control-label", @style = "font-weight:normal;" })
+                    <div class="col col-md-9">
+                        @Html.TextBoxFor(model => model.AccountNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="button" id="btnSearch" name="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">جستجو</button>
+                    @*<input type="button" id="btnSearch" value="@Resources.INN.Button.Search" class="btn btn-primary" />*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="col-md-12 panel-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+                       href="/Administrator/AccountNumberManage/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+
+                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+                       href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+                </div>
+                <br />
+                <div class="row">
+                    <div style="" data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+               href="/Administrator/AccountNumberManage/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+
+            <br />
+            <br />
+        </div>
+    </div>
+</section>

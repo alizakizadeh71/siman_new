@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.ws.ipg.bis.misc.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="IpgWebServiceExporterService" targetNamespace="http://service.ws.ipg.bis.misc.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service.ws.ipg.bis.misc.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="detailReportTransaction" type="tns:detailReportTransaction" />
+      <xs:element name="detailReportTransactionResponse" type="tns:detailReportTransactionResponse" />
+      <xs:element name="login" type="tns:login" />
+      <xs:element name="loginResponse" type="tns:loginResponse" />
+      <xs:element name="logout" type="tns:logout" />
+      <xs:element name="logoutResponse" type="tns:logoutResponse" />
+      <xs:element name="reportTransaction" type="tns:reportTransaction" />
+      <xs:element name="reportTransactionResponse" type="tns:reportTransactionResponse" />
+      <xs:element name="verifyTransaction" type="tns:verifyTransaction" />
+      <xs:element name="verifyTransactionResponse" type="tns:verifyTransactionResponse" />
+      <xs:complexType name="logout">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="wsContext" type="tns:wsContext" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="wsContext">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="value" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="logoutResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="detailReportTransaction">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="wsContext" type="tns:wsContext" />
+          <xs:element minOccurs="0" name="mainTransactionId" type="xs:long" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="detailReportTransactionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="return" type="tns:detailReportResponseResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="detailReportResponseResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="amount" type="xs:decimal" />
+          <xs:element name="id" type="xs:long" />
+          <xs:element minOccurs="0" name="mainTransactionId" type="xs:long" />
+          <xs:element minOccurs="0" name="referenceCode" type="xs:string" />
+          <xs:element minOccurs="0" name="requestIdentifier" type="xs:string" />
+          <xs:element minOccurs="0" name="reverseType" type="tns:reverseType" />
+          <xs:element minOccurs="0" name="time" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="reportTransaction">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="wsContext" type="tns:wsContext" />
+          <xs:element minOccurs="0" name="reportRequestDTO" type="tns:reportRequestDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="reportRequestDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="amountMax" type="xs:decimal" />
+          <xs:element minOccurs="0" name="amountMin" type="xs:decimal" />
+          <xs:element minOccurs="0" name="length" type="xs:int" />
+          <xs:element minOccurs="0" name="offset" type="xs:int" />
+          <xs:element minOccurs="0" name="orderField" type="tns:orderField" />
+          <xs:element minOccurs="0" name="orderType" type="tns:orderType" />
+          <xs:element minOccurs="0" name="referenceCode" type="xs:string" />
+          <xs:element minOccurs="0" name="requestIdentifier" type="xs:string" />
+          <xs:element minOccurs="0" name="timeMax" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="timeMin" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="transactionState" type="tns:transactionState" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="reportTransactionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:reportTransactionResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="reportTransactionResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="count" type="xs:long" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="reportResponseResults" nillable="true" type="tns:reportResponseResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="reportResponseResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="amount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="depositIdentifier" type="xs:string" />
+          <xs:element name="id" type="xs:long" />
+          <xs:element minOccurs="0" name="numberOfReverse" type="xs:int" />
+          <xs:element minOccurs="0" name="referenceCode" type="xs:string" />
+          <xs:element minOccurs="0" name="requestIdentifier" type="xs:string" />
+          <xs:element minOccurs="0" name="time" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="transactionState" type="tns:transactionState" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="login">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="username" type="xs:string" />
+          <xs:element minOccurs="0" name="password" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="loginResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verifyTransaction">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="wsContext" type="tns:wsContext" />
+          <xs:element minOccurs="0" name="verifyRequestDTO" type="tns:verifyRequestDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verifyRequestDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="referenceCodes" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verifyTransactionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:verifyResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verifyResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="results" nillable="true" type="tns:verifyResponseResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verifyResponseResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="amount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="referenceCode" type="xs:string" />
+          <xs:element minOccurs="0" name="verificationError" type="tns:verificationError" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="reverseType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CUSTOM_REVERSED" />
+          <xs:enumeration value="SYSTEM_REVERSED" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="orderField">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="TRANSACTION_TIME" />
+          <xs:enumeration value="AMOUNT" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="orderType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ASC" />
+          <xs:enumeration value="DESC" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="transactionState">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="SUCCESS" />
+          <xs:enumeration value="NOT_VERIFIED" />
+          <xs:enumeration value="REVERSED" />
+          <xs:enumeration value="FAILED" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="verificationError">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NO_ERROR" />
+          <xs:enumeration value="INVALID_REF_NUM" />
+          <xs:enumeration value="INVALID_PROVIDER_IDENTIFIER" />
+          <xs:enumeration value="REQUEST_IS_ALREADY_REVERSED" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="InvalidSessionException" type="tns:InvalidSessionException" />
+      <xs:complexType name="InvalidSessionException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="InvalidTransactionIdException" type="tns:InvalidTransactionIdException" />
+      <xs:complexType name="InvalidTransactionIdException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="InvalidCredentialException" type="tns:InvalidCredentialException" />
+      <xs:complexType name="InvalidCredentialException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SystemMalFunctionException" type="tns:SystemMalFunctionException" />
+      <xs:complexType name="SystemMalFunctionException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ValidationException" type="tns:ValidationException" />
+      <xs:complexType name="ValidationException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="BlockUserException" type="tns:BlockUserException" />
+      <xs:complexType name="BlockUserException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="detailReportTransaction">
+    <wsdl:part name="parameters" element="tns:detailReportTransaction" />
+  </wsdl:message>
+  <wsdl:message name="InvalidSessionException">
+    <wsdl:part name="InvalidSessionException" element="tns:InvalidSessionException" />
+  </wsdl:message>
+  <wsdl:message name="logout">
+    <wsdl:part name="parameters" element="tns:logout" />
+  </wsdl:message>
+  <wsdl:message name="SystemMalFunctionException">
+    <wsdl:part name="SystemMalFunctionException" element="tns:SystemMalFunctionException" />
+  </wsdl:message>
+  <wsdl:message name="detailReportTransactionResponse">
+    <wsdl:part name="parameters" element="tns:detailReportTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvalidCredentialException">
+    <wsdl:part name="InvalidCredentialException" element="tns:InvalidCredentialException" />
+  </wsdl:message>
+  <wsdl:message name="verifyTransactionResponse">
+    <wsdl:part name="parameters" element="tns:verifyTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="logoutResponse">
+    <wsdl:part name="parameters" element="tns:logoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="InvalidTransactionIdException">
+    <wsdl:part name="InvalidTransactionIdException" element="tns:InvalidTransactionIdException" />
+  </wsdl:message>
+  <wsdl:message name="verifyTransaction">
+    <wsdl:part name="parameters" element="tns:verifyTransaction" />
+  </wsdl:message>
+  <wsdl:message name="login">
+    <wsdl:part name="parameters" element="tns:login" />
+  </wsdl:message>
+  <wsdl:message name="ValidationException">
+    <wsdl:part name="ValidationException" element="tns:ValidationException" />
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part name="parameters" element="tns:loginResponse" />
+  </wsdl:message>
+  <wsdl:message name="reportTransactionResponse">
+    <wsdl:part name="parameters" element="tns:reportTransactionResponse" />
+  </wsdl:message>
+  <wsdl:message name="reportTransaction">
+    <wsdl:part name="parameters" element="tns:reportTransaction" />
+  </wsdl:message>
+  <wsdl:message name="BlockUserException">
+    <wsdl:part name="BlockUserException" element="tns:BlockUserException" />
+  </wsdl:message>
+  <wsdl:portType name="IPGService">
+    <wsdl:operation name="logout">
+      <wsdl:input name="logout" message="tns:logout" />
+      <wsdl:output name="logoutResponse" message="tns:logoutResponse" />
+      <wsdl:fault name="InvalidSessionException" message="tns:InvalidSessionException" />
+    </wsdl:operation>
+    <wsdl:operation name="detailReportTransaction">
+      <wsdl:input name="detailReportTransaction" message="tns:detailReportTransaction" />
+      <wsdl:output name="detailReportTransactionResponse" message="tns:detailReportTransactionResponse" />
+      <wsdl:fault name="InvalidSessionException" message="tns:InvalidSessionException" />
+      <wsdl:fault name="SystemMalFunctionException" message="tns:SystemMalFunctionException" />
+      <wsdl:fault name="InvalidTransactionIdException" message="tns:InvalidTransactionIdException" />
+      <wsdl:fault name="InvalidCredentialException" message="tns:InvalidCredentialException" />
+    </wsdl:operation>
+    <wsdl:operation name="reportTransaction">
+      <wsdl:input name="reportTransaction" message="tns:reportTransaction" />
+      <wsdl:output name="reportTransactionResponse" message="tns:reportTransactionResponse" />
+      <wsdl:fault name="InvalidSessionException" message="tns:InvalidSessionException" />
+      <wsdl:fault name="ValidationException" message="tns:ValidationException" />
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input name="login" message="tns:login" />
+      <wsdl:output name="loginResponse" message="tns:loginResponse" />
+      <wsdl:fault name="SystemMalFunctionException" message="tns:SystemMalFunctionException" />
+      <wsdl:fault name="BlockUserException" message="tns:BlockUserException" />
+      <wsdl:fault name="InvalidCredentialException" message="tns:InvalidCredentialException" />
+    </wsdl:operation>
+    <wsdl:operation name="verifyTransaction">
+      <wsdl:input name="verifyTransaction" message="tns:verifyTransaction" />
+      <wsdl:output name="verifyTransactionResponse" message="tns:verifyTransactionResponse" />
+      <wsdl:fault name="InvalidSessionException" message="tns:InvalidSessionException" />
+      <wsdl:fault name="ValidationException" message="tns:ValidationException" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IpgWebServiceExporterServiceSoapBinding" type="tns:IPGService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="logout">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="logout">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="logoutResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidSessionException">
+        <soap:fault use="literal" name="InvalidSessionException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="detailReportTransaction">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="detailReportTransaction">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="detailReportTransactionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidSessionException">
+        <soap:fault use="literal" name="InvalidSessionException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="SystemMalFunctionException">
+        <soap:fault use="literal" name="SystemMalFunctionException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidTransactionIdException">
+        <soap:fault use="literal" name="InvalidTransactionIdException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCredentialException">
+        <soap:fault use="literal" name="InvalidCredentialException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="login">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SystemMalFunctionException">
+        <soap:fault use="literal" name="SystemMalFunctionException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="BlockUserException">
+        <soap:fault use="literal" name="BlockUserException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCredentialException">
+        <soap:fault use="literal" name="InvalidCredentialException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="reportTransaction">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="reportTransaction">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="reportTransactionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidSessionException">
+        <soap:fault use="literal" name="InvalidSessionException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationException">
+        <soap:fault use="literal" name="ValidationException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="verifyTransaction">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="verifyTransaction">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="verifyTransactionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidSessionException">
+        <soap:fault use="literal" name="InvalidSessionException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="ValidationException">
+        <soap:fault use="literal" name="ValidationException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IpgWebServiceExporterService">
+    <wsdl:port name="IPGServicePort" binding="tns:IpgWebServiceExporterServiceSoapBinding">
+      <soap:address location="https://ipg.cbinasim.ir:8443/ipgapp/services/IPGService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

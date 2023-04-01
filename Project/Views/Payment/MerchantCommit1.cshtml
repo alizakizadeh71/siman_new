@@ -1,0 +1,107 @@
+﻿@model Models.Request
+
+@{
+    Layout = "~/Views/Shared/_Layouts/_SiteEmptyLayout.cshtml";
+    
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+
+    List<Infrastructure.PageMessage> PageMessageList = ViewBag.PageMessages;
+
+    string url = System.Configuration.ConfigurationSettings.AppSettings["IVOReferrUrl"].ToString();
+}
+<style>
+    .BorderStyle {
+        border-color: green;
+        border-style: solid;
+        border-width: 1px;
+    }
+</style>
+@{
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                رسید خرید اینترنتی
+                <br />
+            </div>
+            <div class="panel-body" id="PrintPage">
+                @Html.HiddenFor(model => model.Id)
+                @{
+                    string strDataValue 
+                        = Infrastructure.Utility.ConvertToShamciDate(Model.Bank_ShamsiDate)
+                        + " - " 
+                        + Model.Bank_RealTransactionDateTime.Value.ToShortTimeString();
+
+                    string strCustomerCardNumber = Infrastructure.Utility.ConvertToCardNumber(Model.Bank_CustomerCardNumber);
+                    string strRequestType = Model.SubSystem.Name;
+                }
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color:lightblue" class="BorderStyle">
+                        <span>اطلاعات تراکنش</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.Bank_CustomerCardNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.Bank_BankReciptNumber)</td>
+                        <td>@Html.DisplayNameFor(model => model.Bank_TraceNo)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.Bank_ShamsiDate)</td>
+                        <td>@Html.DisplayNameFor(model => model.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.AmountPaid)</td>
+                        <td>@Html.DisplayNameFor(model => model.Bank_RefrenceNumber)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@strCustomerCardNumber</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.Bank_BankReciptNumber)</td>
+                        <td>@Html.DisplayFor(model => model.Bank_TraceNo)</td>
+                        <td class="BorderStyle">@strDataValue</td>
+                        <td>@Html.DisplayFor(model => model.InvoiceNumber)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.AmountPaid)</td>
+                        <td>@Html.DisplayFor(model => model.Bank_RefrenceNumber)</td>
+                    </tr>
+                </table>
+
+                <br />
+                <table class="col-md-12 BorderStyle">
+                    <caption style="background-color:lightblue" class="BorderStyle">
+                        <span>اطلاعات درخواست</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayNameFor(model => model.CompanyName)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.SubSystem)</td>
+                        <td>@Html.DisplayNameFor(model => model.CommodityType)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.TotalValue)</td>
+                        <td>@Html.DisplayNameFor(model => model.CommodityUnit)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.RecordNumber)</td>
+                        <td>@Html.DisplayNameFor(model => model.RecordDate)</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => model.CompanyName)</td>
+                        <td class="BorderStyle">@strRequestType</td>
+                        <td>@Html.DisplayFor(model => model.CommodityType)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.TotalValue)</td>
+                        <td>@Html.DisplayFor(model => model.CommodityUnit)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.RecordNumber)</td>
+                        <td>@Html.DisplayFor(model => model.RecordDate)</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer">
+                @*<div class="col-md-1">
+                    @Html.ActionLink("چاپ", MVC.Payment.MerchantCommitFile(Model.InvoiceNumber), new { @class = "btn btn-success" })
+                </div>*@
+                <div class="col-md-2">
+                    @Html.ActionLink("دریافت فایل", MVC.Payment.MerchantCommitFile(Model.InvoiceNumber), new { @class = "btn btn-success" })
+                </div>
+                <div class="col-md-2">
+                    <a href='@url' class="btn btn-danger" >تکمیل فرایند پرداخت</a>
+                </div>
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+}
+
+

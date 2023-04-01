@@ -1,0 +1,135 @@
+﻿@using Infrastructure.Helpers
+@{
+	string strTitle =
+		string.Format("{0} {1}",
+		Resources.Action.Index, "نوع");
+
+	ViewBag.Title = strTitle;
+
+	var reportId = (System.Guid)ViewBag.ReportId;
+
+	var reportParameterValues = ViewBag.ReportParameterValues as List<ViewModels.Areas.Administrator.ReportGenerator.ReportParameterValue>;
+
+	//var dictionary = Infrastructure.Utility.GetConvertParamValues(reportParameterValues);
+
+	//dictionary["reportId"] = reportId;
+	//dictionary["totalPage"] = ViewBag.TotalPage;
+	var fieldcolumns = ViewBag.Fieldcolumns as Dictionary<string,string>;
+}
+
+@using (Html.BeginForm())
+{
+
+<div class="row">
+    <div style="padding-right:30px;padding-left:20px;">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        نتیجه گزارش
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-primary btn-lg" onclick="exportToExcel('@reportId')" id="load"
+                                            data-loading-text="<i class='fa fa-spinner fa-spin '></i> در حال پردازش">انتقال به اکسل</button>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2">
+                                    <div id="downExel"></div>
+                                </div>
+                                <div class="col-md-6"></div>
+                            </div>
+                        </div>
+                            <div id="grid" class="k-content k-rtl grid" style="font-size: 8pt"></div>
+                        </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var varDataSource =
+       new kendo.data.DataSource({
+           pageSize: 10,
+           serverPaging: true,
+           serverSorting: true,
+           serverGrouping: false,
+           transport: {
+               read: {
+                   type: "POST",
+                   dataType: "json",
+                   url: "/Administrator/ReportBuilder/GetDataReports",
+                   //data: $("#form" + '@reportId').serialize(),
+                   data: {
+                      reportId: '@reportId',
+                      formCollection: '@reportParameterValues',
+                      totalPage:'@ViewBag.TotalPage',
+                   }
+               },
+           },
+               schema: {
+                   data: function (e) {
+                       return (e.Items);
+                   },
+                   total: function (e) {
+                       return (e.TotalCount);
+                   }
+               },
+           });
+
+        $("div#grid").kendoGrid({
+            sortable: true,
+            pageable: {
+                previousNext: true, // default true
+                numeric: true, // default true
+                // buttonCount: 5, // default 10
+                refresh: true, // default false
+                input: true, // default false
+                pageSizes: [10,100,2000], // default false
+
+            },
+            resizable: true,
+            groupable: true,
+            filterable: true,
+            scrollable: true,
+            reorderable: true,
+            columnMenu: true,
+            selectable: "row",
+         //   EnableCustomBinding: true,
+            dataSource: varDataSource,
+
+            columns:
+            [
+
+              @foreach (var fieldcolumn in fieldcolumns)
+            {
+                            <text>
+                            {
+                                editable: true,
+                                filterable: false,
+                                hidden: false,
+                                locked: false,
+                                lockable: true,
+                                width: "130px",
+                                title: "@fieldcolumn.Key",
+                                field: '@fieldcolumn.Value',
+                            },
+                    </text>
+					},
+            ]
+        });
+
+    });
+  @*@Html.TempExportToExcel()*@
+
+
+
+</script>

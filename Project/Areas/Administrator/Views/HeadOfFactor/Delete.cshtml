@@ -1,0 +1,68 @@
+﻿@model ViewModels.Areas.Administrator.HeadOfFactor.DisplayViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.DeleteOf,
+        Resources.Model.HeadOfFactor.EntitiesName);
+}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @strTitle
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.HeadLine)</dt>
+            <dd>@Html.DisplayFor(model => model.HeadLine)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.SubHeadLine)</dt>
+            <dd>@Html.DisplayFor(model => model.SubHeadLine)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.CompanyName)</dt>
+            <dd>@Html.DisplayFor(model => model.CompanyName)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Province)</dt>
+            <dd>@Html.DisplayFor(model => model.Province)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.City)</dt>
+            <dd>@Html.DisplayFor(model => model.City)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.CompanyNationalCode)</dt>
+            <dd>@Html.DisplayFor(model => model.CompanyNationalCode)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
+            <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.InvoiceDate)</dt>
+            <dd>@Html.DisplayFor(model => model.InvoiceDate)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.Description)</dt>
+            <dd>@Html.DisplayFor(model => model.Description)</dd>
+
+            <dt>@Html.DisplayNameFor(model => model.CellPhoneNumber)</dt>
+            <dd>@Html.DisplayFor(model => model.CellPhoneNumber)</dd>
+
+            <dt>@Html.DisplayName("پیام های سیستمی ")</dt>
+            <dd>@Html.Raw(ViewBag.MessageList)</dd>
+            <br />
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(excludePropertyErrors: true)
+
+            <div class="form-actions no-color">
+                <input type="submit" value="@Resources.Buttons.Delete" class="btn btn-danger" />
+            </div>
+        }
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink(Resources.Action.Details, MVC.Administrator.HeadOfFactor.Details(Model.Id), new { @class = "btn btn-primary" })
+        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.HeadOfFactor.Index(), new { @class = "btn btn-default" })
+
+        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+           href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+        <br />
+        <br />
+    </div>
+</div>

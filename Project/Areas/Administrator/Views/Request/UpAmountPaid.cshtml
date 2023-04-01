@@ -1,0 +1,289 @@
+﻿@model ViewModels.Areas.Administrator.Request.UpAmountPaidViewModel
+@{
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+}
+
+
+<script type="text/javascript">
+
+
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
+    function Comma(Num) {
+        Num += '';
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        x = Num.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1))
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        return x1 + x2;
+    }
+
+
+    function submitform() {
+        debugger;
+        var number = $("#AmountPaid").val();
+        //for (var i = 0; i < number.split(',').length; i++) {
+        //    number=number.replace(',', '');
+        //}
+        number = number.replace(/,/g, '');
+        $("#AmountPaid").val(number);
+        $("#form").submit();
+    }
+
+
+    $(document).ready(function () {
+        $("#AmountPaid").val(Comma($("#AmountPaid").val()));
+    })
+
+
+    function ViewFile() {
+        $.ajax({
+            url: '/Administrator/Request/ViewFiles',
+            type: 'post',
+            data: { Id: $("#Id").val() },
+            success: function (data) {
+                $("#ModalFooter ul").empty();
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].FileAddress.toLowerCase().indexOf(".pdf") >= 0) {
+                        $("#ModalFooter ul").append('<li class="col-md-3"><a href="javascript:;" onclick="ViewMasterFile(\'' + data[i].FileAddress + '\')" class="thumbnail"><img src="' + data[i].FileAddress + '" alt="' + data[i].Name + '"></a></li>')
+                    }
+
+                    else {
+                        $("#ModalFooter ul").append('<li class="col-md-3"><a href="javascript:;" onclick="ViewMasterFile(\'' + data[i].FileAddress + '\')" class="thumbnail"><img src="' + data[i].FileAddress + '" alt="' + data[i].Name + '"></a></li>')
+                    }
+                }
+            }
+        });
+    }
+
+    function ViewIncomplete() {
+        if (confirm('Are you sure ?'))
+        {
+            $.ajax({
+                url: '/Administrator/Request/Incomplete',
+                type: 'Get',
+                data: { RecordNumber: @Model.RecordNumber,SystemMessage: $("#SystemMessage").val() },
+                success: function (data) {
+                    alert('su');
+                    //location.replace("~/Administrator/Request/Incomplete");
+                }
+            });
+        }
+    }
+
+    function ViewMasterFile(href) {
+
+        if (href.toLowerCase().indexOf(".pdf") >= 0) {
+            var iframe = '<object type="application/pdf" data="' + href + '" width="100%" height="500">No Support</object>';
+            $("#ModelBody").empty();
+            $("#ModelBody").append(iframe)
+        }
+
+        else {
+            var iframe = '<object type="application/jpg" data="' + href + '" width="100%" height="500">No Support</object>';
+            $("#ModelBody").empty();
+            $("#ModelBody").append(iframe)
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm("UpAmountPaid", "Request", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                پیام های سیستمی
+            </div>
+            <div class="panel-body">
+                @Html.Raw(ViewBag.PageMessages)
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading"> <h4>@strTitel</h4></div>
+            <div class="panel-body">
+                @Html.HiddenFor(model => model.Id)
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.CompanyName)</dt>
+                    <dd>@Html.DisplayFor(model => model.CompanyName)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.CompanyNationalCode)</dt>
+                    <dd>@Html.DisplayFor(model => model.CompanyNationalCode)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.SubSystem)</dt>
+                    <dd>@Html.DisplayFor(model => model.SubSystem)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.RecordNumber)</dt>
+                    <dd>@Html.DisplayFor(model => model.RecordNumber)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.RecordDate)</dt>
+                    <dd>@Html.DisplayFor(model => model.RecordDate)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
+                    <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.InvoiceDate)</dt>
+                    <dd>@Html.DisplayFor(model => model.InvoiceDate)</dd>
+
+                    @{
+                        if (Model.RequestStateCode == (int)Enums.RequestStates.InitialRequet)
+                        {
+                            <br />
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AmountPaid, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.AmountPaid, new { @class = "form-control col-md-6 AddCamma", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
+                                    @Html.ValidationMessageFor(model => model.AmountPaid)
+                                </div>
+                            </div>
+                        }
+
+                        else if (Model.RequestStateCode == (int)Enums.RequestStates.PaymentOrder)
+                        {
+                            <br />
+                            <dt>@Html.DisplayNameFor(model => model.AmountPaid)</dt>
+                            <dd class="label-success">@Html.DisplayFor(model => model.AmountPaid) <span>@Resources.OPS.Caption.Rial</span></dd>
+                            <br />
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Bank_TraceNo, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Bank_TraceNo, new { @class = "form-control panel-danger col-md-6" })
+                                    @Html.ValidationMessageFor(model => model.Bank_TraceNo)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("شماره مرجع", new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Bank_RefrenceNumber, new { @class = "form-control panel-danger col-md-6" })
+                                    @Html.ValidationMessageFor(model => model.Bank_RefrenceNumber)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Bank_ShamsiDate, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(model => model.Bank_ShamsiDate, new { @class = "form-control panel-danger col-md-6" })
+                                    @Html.ValidationMessageFor(model => model.Bank_ShamsiDate)
+                                </div>
+                            </div>
+                        }
+
+                        else
+                        {
+                            <br />
+                            <dt>@Html.DisplayNameFor(model => model.AmountPaid)</dt>
+                            <dd class="label-success">@Html.DisplayFor(model => model.AmountPaid) <span>@Resources.OPS.Caption.Rial</span></dd>
+                            <br />
+                            <dt>@Html.DisplayNameFor(model => model.Bank_TraceNo)</dt>
+                            <dd class="label-success">@Html.DisplayFor(model => model.Bank_TraceNo)</dd>
+                            <br />
+                            <dt>@Html.DisplayName("شماره مرجع")</dt>
+                            <dd class="label-success">@Html.DisplayFor(model => model.Bank_RefrenceNumber)</dd>
+                            <br />
+                            <dt>@Html.DisplayNameFor(model => model.Bank_ShamsiDate)</dt>
+                            <dd class="label-success">@Html.DisplayFor(model => model.Bank_ShamsiDate)</dd>
+                        }
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SystemMessage, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.SystemMessage, new { @class = "form-control panel-danger col-md-6" })
+                                @Html.ValidationMessageFor(model => model.SystemMessage)
+                            </div>
+                        </div>
+                    }
+
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.RequestState)</dt>
+                    <dd>@Html.DisplayFor(model => model.RequestState)</dd>
+                    @*<br />
+        <div class="form-group">
+            @Html.Label("توضیحات", new { @class = "col-md-2 control-label" })
+            <div class="col-md-9">
+                @Html.Raw(Model.Description)
+            </div>
+        </div>*@
+                    <br />
+                    <div class="form-group">
+                        @Html.Label("گردش کار درخواست", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.Raw(ViewBag.MessageList)
+                        </div>
+                    </div>
+                    <br />
+                </dl>
+            </div>
+            <div class="panel-footer">
+                <div class="container">
+                    <div class="col-md-11" style="margin-right:15px;">
+                        @{
+                            if (Model.RequestStateCode == (int)Enums.RequestStates.InitialRequet)
+                            {
+                                <input type="submit" onclick="submitform()" name="submit" value="@Resources.Action.ManulOrder" class="btn btn-success col-md-2" style="margin-left:5px;" />
+                            }
+                            
+                            if (Model.RequestStateCode == (int)Enums.RequestStates.PaymentOrder)
+                            {
+                                <input type="submit" name="submit" value="@Resources.Action.ManulPayment" class="btn btn-success col-md-3" style="margin-left:5px;" />
+                            }
+                        }
+                        <button onclick="ViewFile()" type="button" class="btn btn-primary col-md-2" data-toggle="modal" data-target="#myModal" style="margin-left:5px;">
+                            مشاهده مدارک
+                        </button>
+
+                        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.Request.Index(), new { @class = "btn btn-default" })
+
+                        @*@{
+                            if (Model.RequestStateCode < (int)Enums.RequestStates.Payment)
+                            {
+                                <input type="submit" name="submit" value="@Resources.Action.Incomplete" class="btn btn-danger col-md-2" style="margin-left:5px;" />
+                            }
+                        }*@
+
+                        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                           href="/HomeMain/Main/" style="float:left;">
+                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div id="ModelBody" class="modal-body">
+                ...
+            </div>
+            <div id="ModalFooter" class="modal-footer">
+                <div class="row">
+                    <ul class="list-inline"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
