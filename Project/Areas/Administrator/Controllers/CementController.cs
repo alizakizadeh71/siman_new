@@ -435,9 +435,12 @@ namespace OPS.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// دریافت اطلاعات نوع کالا با استفاده از نام کالا
+        /// </summary>
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: true)]
-        public virtual ActionResult GetProductType(System.Guid ProductNameId)
+        public virtual ActionResult GetProductType(System.Guid ProductNameId) 
         {
             try
             {
@@ -448,7 +451,7 @@ namespace OPS.Areas.Administrator.Controllers
                      Name = x.Name,
                      Id = x.Id
                  })
-                 .OrderBy(x => x.Name)
+                 .OrderByDescending(x => x.Name)
                  .ToList()
                  ;
 
@@ -463,15 +466,82 @@ namespace OPS.Areas.Administrator.Controllers
                 return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
             }
         }
-        
+
+        /// <summary>
+        /// دریافت اطلاعات نوع بسته بندی با استفاده از نوع کالا
+        /// </summary>
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: true)]
-        public virtual ActionResult GetPackageType(System.Guid PackageTypeId)
+        public virtual ActionResult GetPackageType(System.Guid ProductTypeId)
         {
             try
             {
                 var cities =
-                 UnitOfWork.PackageTypeRepository.GetByProductTypeId(PackageTypeId)
+                 UnitOfWork.PackageTypeRepository.GetByProductTypeId(ProductTypeId)
+                 .Select(x => new
+                 {
+                     Name = x.Name,
+                     Id = x.Id
+                 })
+                 .OrderByDescending(x => x.Name)
+                 .ToList()
+                 ;
+
+                return Json
+                    (data: cities,
+                    behavior: System.Web.Mvc.JsonRequestBehavior.AllowGet);
+            }
+
+            catch (Exception ex)
+            {
+                Utilities.Net.LogHandler.Report(GetType(), null, ex);
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
+            }
+        }
+
+        /// <summary>
+        /// دریافت اطلاعات کارخانه با استفاده از نام کالا
+        /// </summary>
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: true)]
+        public virtual ActionResult GetFactoryName(System.Guid ProductNameId)
+        {
+            try
+            {
+                var cities =
+                 UnitOfWork.FactoryNameRepository.GetByProductNameId(ProductNameId)
+                 .Select(x => new
+                 {
+                     Name = x.Name,
+                     Id = x.Id
+                 })
+                 .OrderByDescending(x => x.Name)
+                 .ToList()
+                 ;
+
+                return Json
+                    (data: cities,
+                    behavior: System.Web.Mvc.JsonRequestBehavior.AllowGet);
+            }
+
+            catch (Exception ex)
+            {
+                Utilities.Net.LogHandler.Report(GetType(), null, ex);
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
+            }
+        }
+
+        /// <summary>
+        /// دریافت اطلاعات تناژ با استفاده از نوع بسته بندی
+        /// </summary>
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: true)]
+        public virtual ActionResult GetTonnage(System.Guid PackageTypeId)
+        {
+            try
+            {
+                var cities =
+                 UnitOfWork.tonnageRepository.GetByPackageTypeId(PackageTypeId)
                  .Select(x => new
                  {
                      Name = x.Name,
@@ -492,6 +562,5 @@ namespace OPS.Areas.Administrator.Controllers
                 return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
             }
         }
-
     }
 }

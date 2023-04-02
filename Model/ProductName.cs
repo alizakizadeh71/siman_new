@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System.Collections.Generic;
+
+namespace Models
 {
     /// <summary>
     /// نام کالا 
@@ -25,5 +27,6 @@
         public string Code { get; set; }
 
         public virtual System.Collections.Generic.IList<ProductType> ProductTypes { get; set; }
+        public virtual System.Collections.Generic.IList<FactoryName> FactoryNames { get; set; }
     }
 }

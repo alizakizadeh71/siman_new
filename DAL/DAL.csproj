@@ -120,10 +120,14 @@
     <Compile Include="FileRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ITonnageRepository.cs" />
     <Compile Include="IPackageTypeRepository.cs" />
+    <Compile Include="IFactoryNameRepository.cs" />
     <Compile Include="IProductTypeRepository.cs" />
     <Compile Include="IProductNameRepository.cs" />
+    <Compile Include="TonnageRepository.cs" />
     <Compile Include="PackageTypeRepository.cs" />
+    <Compile Include="FactoryNameRepository.cs" />
     <Compile Include="ProductTypeRepository.cs" />
     <Compile Include="ProductNameRepository.cs" />
     <Compile Include="HeadlineRepository.cs">

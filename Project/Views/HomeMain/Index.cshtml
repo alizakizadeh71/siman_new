@@ -36,7 +36,8 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.PackageType, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6" id="DivPackageTypeId">
-                    @Html.DropDownListFor(model => model.PackageType, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.PackageType, null,
+                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangePackageType()" })
                     @Html.ValidationMessageFor(model => model.PackageType)
                 </div>
             </div>
@@ -284,16 +285,41 @@
                 $("#DivProductTypeId").append(select);
                 // baraye az ghabl entekhab shodane item
                 $('#ProductType>option:eq(1)').prop('selected', true);
+            }
+        });
+
+        $.ajax({
+            url: '/Administrator/Cement/GetFactoryName',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivFactoryNameId").empty();
+
+                var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, FactoryName) {
+                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivFactoryNameId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#FactoryName>option:eq(1)').prop('selected', true);
                 onChangeProductType();
             }
         });
+
     }
-    
+
     function onChangeProductType() {
+        debugger;
         $.ajax({
             url: '/Administrator/Cement/GetPackageType',
             type: 'post',
-            data: { PackageTypeId: $("#ProductType").val() },
+            data: { ProductTypeId: $("#ProductType").val() },
             success: function (data) {
 
                 $("#DivPackageTypeId").empty();
@@ -310,6 +336,33 @@
                 $("#DivPackageTypeId").append(select);
                 // baraye az ghabl entekhab shodane item
                 $('#PackageType>option:eq(1)').prop('selected', true);
+                onChangePackageType();
+            }
+        });
+    }
+
+    function onChangePackageType() {
+        debugger;
+        $.ajax({
+            url: '/Administrator/Cement/GetTonnage',
+            type: 'post',
+            data: { PackageTypeId: $("#PackageType").val() },
+            success: function (data) {
+
+                $("#DivTonnageId").empty();
+
+                var select = $("<select class='form-control' id='Tonnage' name='Tonnage' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, Tonnage) {
+                    var option = ('<option value="' + Tonnage.Id + '"> ' + Tonnage.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivTonnageId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#Tonnage>option:eq(1)').prop('selected', true);
             }
         });
     }

@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System.Collections.Generic;
+
+namespace Models
 {
     /// <summary>
     /// نوع بسته بندی
@@ -33,6 +35,6 @@
         public virtual ProductType ProductType { get; set; }
 
         public System.Guid ProductTypeId { get; set; }
-
+        public virtual System.Collections.Generic.IList<Tonnage> Tonnages { get; set; }
     }
 }

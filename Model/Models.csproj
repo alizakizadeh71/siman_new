@@ -119,6 +119,8 @@
     </Compile>
     <Compile Include="Message.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="FactoryName.cs" />
+    <Compile Include="Tonnage.cs" />
     <Compile Include="PackageType.cs" />
     <Compile Include="PaymentDetail.cs" />
     <Compile Include="PaymentHeader.cs" />

@@ -20,7 +20,7 @@ namespace OPS.Controllers
         public virtual ActionResult Index()
         {
             var varHeadLines = UnitOfWork.ProductNameRepository.Get().ToList();
-            ViewData["ProductName"] = new System.Web.Mvc.SelectList(varHeadLines, "Id", "Name", null).OrderBy(x => x.Value);
+            ViewData["ProductName"] = new System.Web.Mvc.SelectList(varHeadLines, "Id", "Name", null).OrderByDescending(x => x.Text);
 
             var varProductTypes = new List<Models.ProductType>();
             ViewData["ProductType"] = new System.Web.Mvc.SelectList(varProductTypes, "Id", "Name", null).OrderBy(x => x.Text);

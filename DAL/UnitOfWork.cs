@@ -296,6 +296,32 @@
                 return (_PackageTypeRepository);
             }
         }
+        
+        private IFactoryNameRepository _FactoryNameRepository;
+        public IFactoryNameRepository FactoryNameRepository
+        {
+            get
+            {
+                if (_FactoryNameRepository == null)
+                {
+                    _FactoryNameRepository = new FactoryNameRepository(DatabaseContext);
+                }
+                return (_FactoryNameRepository);
+            }
+        }
+        
+        private ITonnageRepository _tonnageRepository;
+        public ITonnageRepository tonnageRepository
+        {
+            get
+            {
+                if (_tonnageRepository == null)
+                {
+                    _tonnageRepository = new TonnageRepository(DatabaseContext);
+                }
+                return (_tonnageRepository);
+            }
+        }
 
 
         private ICurrencyUnitLogRepository _CurrencyUnitLogRepository;

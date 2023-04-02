@@ -92,6 +92,18 @@ namespace OPS.Areas.Administrator.Controllers
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.GetPackageType);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult GetFactoryName()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.GetFactoryName);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult GetTonnage()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.GetTonnage);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public CementController Actions { get { return MVC.Administrator.Cement; } }
@@ -118,6 +130,8 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string GetCities = "GetCities";
             public readonly string GetProductType = "GetProductType";
             public readonly string GetPackageType = "GetPackageType";
+            public readonly string GetFactoryName = "GetFactoryName";
+            public readonly string GetTonnage = "GetTonnage";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -133,6 +147,8 @@ namespace OPS.Areas.Administrator.Controllers
             public const string GetCities = "GetCities";
             public const string GetProductType = "GetProductType";
             public const string GetPackageType = "GetPackageType";
+            public const string GetFactoryName = "GetFactoryName";
+            public const string GetTonnage = "GetTonnage";
         }
 
 
@@ -199,6 +215,22 @@ namespace OPS.Areas.Administrator.Controllers
         public ActionParamsClass_GetPackageType GetPackageTypeParams { get { return s_params_GetPackageType; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_GetPackageType
+        {
+            public readonly string ProductTypeId = "ProductTypeId";
+        }
+        static readonly ActionParamsClass_GetFactoryName s_params_GetFactoryName = new ActionParamsClass_GetFactoryName();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_GetFactoryName GetFactoryNameParams { get { return s_params_GetFactoryName; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_GetFactoryName
+        {
+            public readonly string ProductNameId = "ProductNameId";
+        }
+        static readonly ActionParamsClass_GetTonnage s_params_GetTonnage = new ActionParamsClass_GetTonnage();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_GetTonnage GetTonnageParams { get { return s_params_GetTonnage; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_GetTonnage
         {
             public readonly string PackageTypeId = "PackageTypeId";
         }
@@ -296,9 +328,23 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult GetPackageType(System.Guid PackageTypeId)
+        public override System.Web.Mvc.ActionResult GetPackageType(System.Guid ProductTypeId)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GetPackageType);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "ProductTypeId", ProductTypeId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult GetFactoryName(System.Guid ProductNameId)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GetFactoryName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "ProductNameId", ProductNameId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult GetTonnage(System.Guid PackageTypeId)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GetTonnage);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "PackageTypeId", PackageTypeId);
             return callInfo;
         }
