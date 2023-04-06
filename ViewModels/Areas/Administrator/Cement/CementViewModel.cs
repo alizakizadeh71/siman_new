@@ -73,5 +73,12 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.BuyerMobile)]
         #endregion
         public string BuyerMobile { get; set; }
+
+        #region Address
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.Address)]
+        #endregion
+        public string Address { get; set; }
     }
 }

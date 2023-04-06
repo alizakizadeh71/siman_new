@@ -61,6 +61,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آدرس دقیق.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to موبایل خریدار.
         /// </summary>
         public static string BuyerMobile {

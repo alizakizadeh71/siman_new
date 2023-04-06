@@ -9,11 +9,20 @@
     <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
 
         <h4 class="panel-heading" style="text-align:center">برای محاسبه قیمت و خرید اطلاعات را تکمیل نمایید</h4>
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("Index", "HomeMain", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()
             <hr />
             @Html.ValidationSummary(true)
+
+            if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+            {
+                <div class="panel panel-info">
+                    <div style="color:red" class="panel-body">
+                        @Html.Raw(ViewBag.PageMessages)
+                    </div>
+                </div>
+            }
 
             <div class="form-group">
                 @Html.LabelFor(model => model.ProductName, new { @class = "col-md-3 control-label" })
@@ -75,13 +84,13 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6" id="DivCityId">
                     @Html.DropDownListFor(model => model.Village, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Village)
                 </div>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" })
@@ -91,7 +100,13 @@
                 </div>
             </div>
 
-
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Address)
+                </div>
+            </div>
 
             <div class="form-group">
                 <div class="text-center">
@@ -237,8 +252,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('select>option:eq(1)').prop('selected', true);
-        onChangeProductName();
+        //$('select>option:eq(1)').prop('selected', true);
+        //onChangeProductName();
     });
     function onChangeProvince() {
         $.ajax({
@@ -259,6 +274,7 @@
                 })
 
                 $("#DivCityId").append(select);
+                $('#City>option:eq(1)').prop('selected', true);
             }
         });
     }
@@ -273,17 +289,19 @@
 
                 $("#DivProductTypeId").empty();
 
-                var select = $("<select class='form-control' id='ProductType' name='ProductType' data-rel='chosen'>");
+                var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
-
                 $.each(data, function (i, ProductType) {
                     var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
+                    /// baraye inke avalin id baraye loade Select badi estefade shavad
+                    if (i == 0) {
+                        onChangeProductType(ProductType.Id);
+                    }
                     select.append(option);
                 })
 
                 $("#DivProductTypeId").append(select);
-                // baraye az ghabl entekhab shodane item
                 $('#ProductType>option:eq(1)').prop('selected', true);
             }
         });
@@ -308,23 +326,24 @@
                 $("#DivFactoryNameId").append(select);
                 // baraye az ghabl entekhab shodane item
                 $('#FactoryName>option:eq(1)').prop('selected', true);
-                onChangeProductType();
             }
         });
-
     }
 
-    function onChangeProductType() {
+    function onChangeProductType(ProductTypee) {
         debugger;
+        if (ProductTypee == undefined) { /// baraye inke dafe aval az loade safhe bekhoone
+            ProductTypee = $("#ProductType").val();
+        }
         $.ajax({
             url: '/Administrator/Cement/GetPackageType',
             type: 'post',
-            data: { ProductTypeId: $("#ProductType").val() },
+            data: { ProductTypeId: ProductTypee },
             success: function (data) {
 
                 $("#DivPackageTypeId").empty();
 
-                var select = $("<select class='form-control' id='PackageType' name='PackageType' data-rel='chosen'>");
+                var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
 

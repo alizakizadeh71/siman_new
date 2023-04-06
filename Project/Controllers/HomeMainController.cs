@@ -19,25 +19,97 @@ namespace OPS.Controllers
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual ActionResult Index()
         {
-            var varHeadLines = UnitOfWork.ProductNameRepository.Get().ToList();
-            ViewData["ProductName"] = new System.Web.Mvc.SelectList(varHeadLines, "Id", "Name", null).OrderByDescending(x => x.Text);
-
-            var varProductTypes = new List<Models.ProductType>();
-            ViewData["ProductType"] = new System.Web.Mvc.SelectList(varProductTypes, "Id", "Name", null).OrderBy(x => x.Text);
-            ViewData["PackageType"] = new System.Web.Mvc.SelectList(varProductTypes, "Id", "Name", null).OrderBy(x => x.Text);
-            ViewData["FactoryName"] = new System.Web.Mvc.SelectList(varProductTypes, "Id", "Name", null).OrderBy(x => x.Text);
-            ViewData["Tonnage"] = new System.Web.Mvc.SelectList(varProductTypes, "Id", "Name", null).OrderBy(x => x.Text);
-            ViewData["Village"] = new System.Web.Mvc.SelectList(varProductTypes, "Id", "Name", null).OrderBy(x => x.Text);
-
-            var varProvinces = UnitOfWork.ProvinceRepository.Get().ToList();
-            ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null).OrderBy(x => x.Text);
-
-            var varCities = new List<Models.City>();
-            ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null).OrderBy(x => x.Text);
-
-            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+            ViewBag.PageMessages = null;
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel
+            {
+                ProductName = new Guid("c26a5f77-5a78-4dd6-9f0a-0b647c9f7195"),
+                ProductType = new Guid("5f6f25ba-4ee7-4b56-8bdf-fefc3e390b0d"),
+                PackageType = new Guid("167fd28a-fdec-4385-866f-e8c08dbfd8a6"),
+                FactoryName = new Guid("4ad543c7-8af2-4832-917b-88d17758a9e1"),
+                Tonnage = new Guid("bf031e9a-6d4e-400f-a98e-e86ed3b954c9"),
+                Province = new Guid("c9cea679-6de8-11e5-8295-c0f8daba7555"),
+                City = new Guid("92f077e9-bd95-4756-bc78-ec8537c75d07"),
+            };
+            ViewData(cementViewModel);
             return View(cementViewModel);
         }
+
+        private void ViewData(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
+            base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", cementViewModel.ProductName).OrderByDescending(x => x.Text);
+
+            var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
+            base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", cementViewModel.ProductType).OrderByDescending(x => x.Text); /// تیپ یک
+
+            var PackageType = UnitOfWork.PackageTypeRepository.GetByProductTypeId(cementViewModel.ProductType).ToList(); /// تیپ یک
+            base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", cementViewModel.PackageType).OrderByDescending(x => x.Text); /// کیسه
+
+            var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
+            base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", cementViewModel.FactoryName).OrderBy(x => x.Text); /// ممتازان کرمان
+
+            var Tonnage = UnitOfWork.tonnageRepository.GetByPackageTypeId(cementViewModel.PackageType).ToList(); /// کیسه
+            base.ViewData["Tonnage"] = new System.Web.Mvc.SelectList(Tonnage, "Id", "Name", cementViewModel.Tonnage).OrderBy(x => x.Text); /// 12 تن
+
+            var Province = UnitOfWork.ProvinceRepository.Get().ToList();
+            base.ViewData["Province"] = new System.Web.Mvc.SelectList(Province, "Id", "Name", cementViewModel.Province).OrderBy(x => x.Text);
+
+            var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList(); /// کرمان
+            base.ViewData["City"] = new System.Web.Mvc.SelectList(City, "Id", "Name", cementViewModel.City).OrderBy(x => x.Text); /// کوهبنان
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
+        public virtual System.Web.Mvc.ActionResult Index(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            ViewBag.PageMessages = null;
+            if (ModelState.IsValid)
+            {
+                //Models.AccountNumberManage oAccountNumberManage = new Models.AccountNumberManage();
+                //{
+                //    oAccountNumberManage.SubSystemId = accountnumbermanage.SubSystem;
+                //    oAccountNumberManage.IsActived = true;
+                //    oAccountNumberManage.IsDeleted = false;
+                //    oAccountNumberManage.IsSystem = false;
+                //    oAccountNumberManage.IsVerified = true;
+                //    oAccountNumberManage.ProvinceId = accountnumbermanage.Province;
+                //    oAccountNumberManage.AccountNumberId = accountnumbermanage.AccountNumber;
+                //    oAccountNumberManage.InsertDateTime = DateTime.Now;
+                //    oAccountNumberManage.UpdateDateTime = DateTime.Now;
+
+                //    UnitOfWork.AccountNumberManageRepository.Insert(oAccountNumberManage);
+                //    UnitOfWork.Save();
+
+                //    #region DropDownList
+                //    var varSubSystem = UnitOfWork.SubSystemRepository.Get().ToList();
+                //    ViewBag.SubSystem = new System.Web.Mvc.SelectList(varSubSystem, "Id", "Name", oAccountNumberManage.SubSystem);
+
+                //    var varProvince = UnitOfWork.ProvinceRepository.Get().ToList();
+                //    ViewBag.Province = new System.Web.Mvc.SelectList(varProvince, "Id", "Name", oAccountNumberManage.Province);
+
+                //    var varAccountNumber = UnitOfWork.AccountNumberRepository.Get().ToList();
+                //    ViewBag.AccountNumber = new System.Web.Mvc.SelectList(varAccountNumber, "Id", "Name", oAccountNumberManage.AccountNumber);
+                //    #endregion
+
+
+                ViewBag.PageMessages = " مبلغ پرداختی 1000 تومان ";
+                //}
+            }
+            ViewData(cementViewModel);
+            return View(cementViewModel);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]

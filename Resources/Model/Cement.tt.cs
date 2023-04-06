@@ -22,6 +22,16 @@ namespace Resources.Model.Strings {
     public class Cement {
         
         /// <summary>
+        ///   Looks up a localized string similar to: آدرس دقیق
+        /// </summary>
+        public static string Address([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.Address;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("Address", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: موبایل خریدار
         /// </summary>
         public static string BuyerMobile([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -121,6 +131,11 @@ namespace Resources.Model.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("SmartStringResources", "1.2.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public class CementKeys {
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: آدرس دقیق
+        /// </summary>
+        public const string Address = "Address";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: موبایل خریدار
