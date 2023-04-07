@@ -70,26 +70,26 @@ namespace OPS.Controllers
                 {
                     long AmountPaid = 1100; /// محاسبه مبلغ
                     Models.User oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
-                    //Models.FactorCement oFactorCement = new Models.FactorCement()
-                    //{
-                    //    ProductNameId = cementViewModel.ProductName,
-                    //    ProductTypeId = cementViewModel.ProductType,
-                    //    PackageTypeId = cementViewModel.PackageType,
-                    //    FactoryNameId = cementViewModel.FactoryName,
-                    //    TonnageId = cementViewModel.Tonnage,
-                    //    ProvinceId = cementViewModel.Province,
-                    //    CityId = cementViewModel.City,
-                    //    BuyerMobile = cementViewModel.BuyerMobile,
-                    //    Address = cementViewModel.Address,
-                    //    AmountPaid = AmountPaid,
-                    //    Description = cementViewModel.Description,
-                    //    RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),
-                    //    UserIPAddress = Request.UserHostAddress,
-                    //    Browser = Request.Browser.Type, // مدل و ورژن مرورگر
-                    //    URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
-                    //    UserId = oUser.Id,
-                    //};
-                    //UnitOfWork.FactorCementRepository.Insert(oFactorCement);
+                    Models.FactorCement oFactorCement = new Models.FactorCement()
+                    {
+                        ProductNameId = cementViewModel.ProductName,
+                        ProductTypeId = cementViewModel.ProductType,
+                        PackageTypeId = cementViewModel.PackageType,
+                        FactoryNameId = cementViewModel.FactoryName,
+                        TonnageId = cementViewModel.Tonnage,
+                        ProvinceId = cementViewModel.Province,
+                        CityId = cementViewModel.City,
+                        BuyerMobile = cementViewModel.BuyerMobile,
+                        Address = cementViewModel.Address,
+                        AmountPaid = AmountPaid,
+                        Description = cementViewModel.Description,
+                        RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),
+                        UserIPAddress = Request.UserHostAddress,
+                        Browser = Request.Browser.Type, // مدل و ورژن مرورگر
+                        URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
+                        UserId = oUser.Id,
+                    };
+                    UnitOfWork.FactorCementRepository.Insert(oFactorCement);
                     ViewBag.PageMessages = " مبلغ پرداختی " + AmountPaid + " تومان ";
                 }
             }

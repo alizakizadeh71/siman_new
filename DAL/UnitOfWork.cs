@@ -489,19 +489,19 @@
                 return (_RequestRepository);
             }
         }
-        
-        //private IFactorCementRepository _FactorCementRepository;
-        //public IFactorCementRepository FactorCementRepository
-        //{
-        //    get
-        //    {
-        //        if (_FactorCementRepository == null)
-        //        {
-        //            _FactorCementRepository = new FactorCementRepository(DatabaseContext);
-        //        }
-        //        return (_FactorCementRepository);
-        //    }
-        //}
+
+        private IFactorCementRepository _FactorCementRepository;
+        public IFactorCementRepository FactorCementRepository
+        {
+            get
+            {
+                if (_FactorCementRepository == null)
+                {
+                    _FactorCementRepository = new FactorCementRepository(DatabaseContext);
+                }
+                return (_FactorCementRepository);
+            }
+        }
 
 
         private IRoleRepository _RoleRepository;
