@@ -58,7 +58,7 @@ namespace ViewModels.Areas.Administrator.Cement
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.City)]
         #endregion
-        public Guid? City { get; set; }
+        public Guid City { get; set; }
 
         #region Village
         [System.ComponentModel.DataAnnotations.Display
@@ -80,5 +80,6 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.Address)]
         #endregion
         public string Address { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -120,6 +120,7 @@
     <Compile Include="FileRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IRequestRepository.cs" />
     <Compile Include="ITonnageRepository.cs" />
     <Compile Include="IPackageTypeRepository.cs" />
     <Compile Include="IFactoryNameRepository.cs" />
@@ -199,9 +200,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IRequestRepository.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IRoleRepository.cs">

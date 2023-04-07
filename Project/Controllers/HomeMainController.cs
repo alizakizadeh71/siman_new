@@ -62,54 +62,44 @@ namespace OPS.Controllers
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
         public virtual System.Web.Mvc.ActionResult Index(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
-            ViewBag.PageMessages = null;
-            if (ModelState.IsValid)
+            try
             {
-                //Models.AccountNumberManage oAccountNumberManage = new Models.AccountNumberManage();
-                //{
-                //    oAccountNumberManage.SubSystemId = accountnumbermanage.SubSystem;
-                //    oAccountNumberManage.IsActived = true;
-                //    oAccountNumberManage.IsDeleted = false;
-                //    oAccountNumberManage.IsSystem = false;
-                //    oAccountNumberManage.IsVerified = true;
-                //    oAccountNumberManage.ProvinceId = accountnumbermanage.Province;
-                //    oAccountNumberManage.AccountNumberId = accountnumbermanage.AccountNumber;
-                //    oAccountNumberManage.InsertDateTime = DateTime.Now;
-                //    oAccountNumberManage.UpdateDateTime = DateTime.Now;
+                ViewBag.PageMessages = null;
 
-                //    UnitOfWork.AccountNumberManageRepository.Insert(oAccountNumberManage);
-                //    UnitOfWork.Save();
-
-                //    #region DropDownList
-                //    var varSubSystem = UnitOfWork.SubSystemRepository.Get().ToList();
-                //    ViewBag.SubSystem = new System.Web.Mvc.SelectList(varSubSystem, "Id", "Name", oAccountNumberManage.SubSystem);
-
-                //    var varProvince = UnitOfWork.ProvinceRepository.Get().ToList();
-                //    ViewBag.Province = new System.Web.Mvc.SelectList(varProvince, "Id", "Name", oAccountNumberManage.Province);
-
-                //    var varAccountNumber = UnitOfWork.AccountNumberRepository.Get().ToList();
-                //    ViewBag.AccountNumber = new System.Web.Mvc.SelectList(varAccountNumber, "Id", "Name", oAccountNumberManage.AccountNumber);
-                //    #endregion
-
-
-                ViewBag.PageMessages = " مبلغ پرداختی 1000 تومان ";
-                //}
+                if (ModelState.IsValid)
+                {
+                    long AmountPaid = 1100; /// محاسبه مبلغ
+                    Models.User oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
+                    //Models.FactorCement oFactorCement = new Models.FactorCement()
+                    //{
+                    //    ProductNameId = cementViewModel.ProductName,
+                    //    ProductTypeId = cementViewModel.ProductType,
+                    //    PackageTypeId = cementViewModel.PackageType,
+                    //    FactoryNameId = cementViewModel.FactoryName,
+                    //    TonnageId = cementViewModel.Tonnage,
+                    //    ProvinceId = cementViewModel.Province,
+                    //    CityId = cementViewModel.City,
+                    //    BuyerMobile = cementViewModel.BuyerMobile,
+                    //    Address = cementViewModel.Address,
+                    //    AmountPaid = AmountPaid,
+                    //    Description = cementViewModel.Description,
+                    //    RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),
+                    //    UserIPAddress = Request.UserHostAddress,
+                    //    Browser = Request.Browser.Type, // مدل و ورژن مرورگر
+                    //    URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
+                    //    UserId = oUser.Id,
+                    //};
+                    //UnitOfWork.FactorCementRepository.Insert(oFactorCement); // شناسه واریز
+                    ViewBag.PageMessages = " مبلغ پرداختی " + AmountPaid + " تومان ";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.PageMessages = " خطا " + ex.Message;
             }
             ViewData(cementViewModel);
             return View(cementViewModel);
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]

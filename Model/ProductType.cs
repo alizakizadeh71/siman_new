@@ -37,5 +37,6 @@ namespace Models
         public System.Guid ProductNameId { get; set; }
 
         public virtual System.Collections.Generic.IList<PackageType> PackageTypes { get; set; }
+        //public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
     }
 }

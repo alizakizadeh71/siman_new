@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System.Collections.Generic;
+
+namespace Models
 {
     /// <summary>
     /// تناژ
@@ -33,6 +35,6 @@
         public virtual PackageType PackageType { get; set; }
 
         public System.Guid PackageTypeId { get; set; }
-
+        //public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
     }
 }

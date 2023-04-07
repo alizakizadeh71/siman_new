@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System.Collections.Generic;
+
+namespace Models
 {
     public class Province : BaseExtendedEntity
 	{
@@ -28,8 +30,9 @@
         public virtual System.Collections.Generic.IList<City> Cities { get; set; }
         public virtual System.Collections.Generic.IList<AccountNumberManage> AccountNumberManages { get; set; }
         public virtual System.Collections.Generic.IList<Request> Requests { get; set; }
+        //public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
         public virtual System.Collections.Generic.IList<HeadOfFactor> HeadOfFactors { get; set; }
         public virtual System.Collections.Generic.IList<AccountNumber> AccountNumbers { get; set; }
         public virtual System.Collections.Generic.IList<User> Users { get; set; }
-	}
+    }
 }

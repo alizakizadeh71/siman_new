@@ -107,6 +107,9 @@
     <Compile Include="ExecutableCode.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FactorCement.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FactorMessage.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Headline.cs">

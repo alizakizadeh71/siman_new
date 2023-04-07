@@ -52,7 +52,8 @@
         public System.Data.Entity.DbSet<UserLoginLog> UserLoginLogs { get; set; }
         public System.Data.Entity.DbSet<ProductName> ProductNames{ get; set; }
         public System.Data.Entity.DbSet<ProductType> ProductTypes{ get; set; }
-        //public System.Data.Entity.DbSet<PackageType> PackageTypes{ get; set; }
+        //public System.Data.Entity.DbSet<FactorCement> factorCements{ get; set; }
+        public System.Data.Entity.DbSet<PackageType> PackageTypes{ get; set; }
 
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {
@@ -94,7 +95,10 @@
             modelBuilder.Configurations.Add(new UserLoginLog.Configuration());
             modelBuilder.Configurations.Add(new ProductName.Configuration());
             modelBuilder.Configurations.Add(new ProductType.Configuration());
-            //modelBuilder.Configurations.Add(new PackageType.Configuration());
+            modelBuilder.Configurations.Add(new PackageType.Configuration());
+            modelBuilder.Configurations.Add(new FactoryName.Configuration());
+            modelBuilder.Configurations.Add(new Tonnage.Configuration());
+            //modelBuilder.Configurations.Add(new FactorCement.Configuration());
         }
 
         public System.Data.Entity.DbSet<Models.City> Cities { get; set; }

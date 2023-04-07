@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+
 namespace Models
 {
     public class User : BaseExtendedEntity
@@ -75,6 +77,6 @@ namespace Models
         public virtual System.Collections.Generic.IList<FactorMessage> FactorMessages { get; set; }
         public virtual System.Collections.Generic.IList<UserLoginLog> UserLoginLogs { get; set; }
         public virtual System.Collections.Generic.IList<CurrencyUnit> CurrencyUnits { get; set; }
-
+        public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
     }
 }
