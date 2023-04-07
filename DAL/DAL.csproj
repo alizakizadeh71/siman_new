@@ -116,10 +116,12 @@
     <Compile Include="ExecutableCodeRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FactorCementRepository.cs" />
     <Compile Include="FactorMessageRepository.cs" />
     <Compile Include="FileRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IFactorCementRepository.cs" />
     <Compile Include="IRequestRepository.cs" />
     <Compile Include="ITonnageRepository.cs" />
     <Compile Include="IPackageTypeRepository.cs" />

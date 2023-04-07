@@ -32,25 +32,11 @@ namespace DAL
             }
         }
 
-        public override void Insert(Models.FactorCement factorCement)
+        public void Insertdata(Models.FactorCement factorCement)
         {
             try
             {
-                DatabaseContext.factorCements.Add(factorCement);
-                DatabaseContext.SaveChanges();
-            }
-
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public override void Update(Models.FactorCement factorCement)
-        {
-            try
-            {
-                DatabaseContext.Entry(factorCement).State = System.Data.Entity.EntityState.Modified;
+                DatabaseContext.FactorCements.Add(factorCement);
                 DatabaseContext.SaveChanges();
             }
 

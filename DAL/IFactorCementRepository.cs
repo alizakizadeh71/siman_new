@@ -6,9 +6,7 @@ namespace DAL
 	{
         System.Linq.IQueryable<Models.FactorCement> Get(Models.User user);
 
-        void Insert(Models.FactorCement factorCement);
-
-        void Update(Models.FactorCement factorCement);
+        void Insertdata(Models.FactorCement factorCement);
 
     }
 }

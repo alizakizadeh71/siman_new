@@ -89,7 +89,7 @@ namespace OPS.Controllers
                     //    URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
                     //    UserId = oUser.Id,
                     //};
-                    //UnitOfWork.FactorCementRepository.Insert(oFactorCement); // شناسه واریز
+                    //UnitOfWork.FactorCementRepository.Insert(oFactorCement);
                     ViewBag.PageMessages = " مبلغ پرداختی " + AmountPaid + " تومان ";
                 }
             }
