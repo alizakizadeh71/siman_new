@@ -24,43 +24,43 @@ namespace Models
                      .WillCascadeOnDelete(false)
                      ;
 
-                //HasOptional(current => current.ProductName)
-                //    .WithMany(productName => productName.FactorCements)
-                //    .HasForeignKey(current => current.ProductNameId)
-                //    .WillCascadeOnDelete(false)
-                //    ;
+                HasRequired(current => current.ProductName)
+                    .WithMany(productName => productName.FactorCements)
+                    .HasForeignKey(current => current.ProductNameId)
+                    .WillCascadeOnDelete(false)
+                    ;
 
-                //HasOptional(current => current.ProductType)
-                //    .WithMany(productType => productType.FactorCements)
-                //    .HasForeignKey(current => current.ProductTypeId)
-                //    .WillCascadeOnDelete(false)
-                //    ;
-
-
-                //HasOptional(current => current.PackageType)
-                //    .WithMany(packageType => packageType.FactorCements)
-                //    .HasForeignKey(current => current.PackageType)
-                //    .WillCascadeOnDelete(false)
-                //    ;
-
-                //HasOptional(current => current.FactoryName)
-                //    .WithMany(factoryName => factoryName.FactorCements)
-                //    .HasForeignKey(current => current.FactoryNameId)
-                //    .WillCascadeOnDelete(false)
-                //    ;
-
-                //HasOptional(current => current.Tonnage)
-                //    .WithMany(tonnage => tonnage.FactorCements)
-                //    .HasForeignKey(current => current.TonnageId)
-                //    .WillCascadeOnDelete(false)
-                //    ;
+                HasRequired(current => current.ProductType)
+                    .WithMany(productType => productType.FactorCements)
+                    .HasForeignKey(current => current.ProductTypeId)
+                    .WillCascadeOnDelete(false)
+                    ;
 
 
-                //HasRequired(current => current.Province)
-                //    .WithMany(user => user.FactorCements)
-                //    .HasForeignKey(current => current.ProvinceId)
-                //    .WillCascadeOnDelete(false)
-                //    ;
+                HasRequired(current => current.PackageType)
+                    .WithMany(packageType => packageType.FactorCements)
+                    .HasForeignKey(current => current.PackageType)
+                    .WillCascadeOnDelete(false)
+                    ;
+
+                HasRequired(current => current.FactoryName)
+                    .WithMany(factoryName => factoryName.FactorCements)
+                    .HasForeignKey(current => current.FactoryNameId)
+                    .WillCascadeOnDelete(false)
+                    ;
+
+                HasRequired(current => current.Tonnage)
+                    .WithMany(tonnage => tonnage.FactorCements)
+                    .HasForeignKey(current => current.TonnageId)
+                    .WillCascadeOnDelete(false)
+                    ;
+
+
+                HasOptional(current => current.Province)
+                    .WithMany(user => user.FactorCements)
+                    .HasForeignKey(current => current.ProvinceId)
+                    .WillCascadeOnDelete(true)
+                    ;
 
                 HasRequired(current => current.City)
                     .WithMany(user => user.FactorCements)
@@ -103,7 +103,7 @@ namespace Models
              Name = Resources.Model.Strings.CementKeys.ProductName)]
         #endregion
         public Guid ProductNameId { get; set; }
-        //public virtual ProductName ProductName { get; set; }
+        public virtual ProductName ProductName { get; set; }
 
         #region ProductType
         [System.ComponentModel.DataAnnotations.Display
@@ -111,7 +111,7 @@ namespace Models
              Name = Resources.Model.Strings.CementKeys.ProductType)]
         #endregion
         public Guid ProductTypeId { get; set; }
-        //public virtual ProductType ProductType { get; set; }
+        public virtual ProductType ProductType { get; set; }
 
 
         #region PackageType
@@ -120,7 +120,7 @@ namespace Models
              Name = Resources.Model.Strings.CementKeys.PackageType)]
         #endregion
         public Guid PackageTypeId { get; set; }
-        //public virtual PackageType PackageType { get; set; }
+        public virtual PackageType PackageType { get; set; }
 
         #region FactoryName
         [System.ComponentModel.DataAnnotations.Display
@@ -128,7 +128,7 @@ namespace Models
              Name = Resources.Model.Strings.CementKeys.FactoryName)]
         #endregion
         public Guid FactoryNameId { get; set; }
-        //public virtual FactoryName FactoryName { get; set; }
+        public virtual FactoryName FactoryName { get; set; }
 
         #region Tonnage
         [System.ComponentModel.DataAnnotations.Display
@@ -136,15 +136,15 @@ namespace Models
              Name = Resources.Model.Strings.CementKeys.Tonnage)]
         #endregion
         public Guid TonnageId { get; set; }
-        //public virtual Tonnage Tonnage { get; set; }
+        public virtual Tonnage Tonnage { get; set; }
 
         #region Province
         [System.ComponentModel.DataAnnotations.Display
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.Province)]
         #endregion
-        public Guid ProvinceId { get; set; }
-        //public virtual Province Province { get; set; }
+        public Guid? ProvinceId { get; set; }
+        public virtual Province Province { get; set; }
 
         #region City
         [System.ComponentModel.DataAnnotations.Display
