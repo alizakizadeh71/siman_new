@@ -1,4 +1,4 @@
-﻿@model ViewModels.Areas.Administrator.Request.SearchViewModel
+﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
 
 @{
     string strTitle =
@@ -178,7 +178,7 @@
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        width: "100px",
+                        width: "10px",
                         title: "",
                         template: function (dataItem) {
 
@@ -187,14 +187,6 @@
                             strTemplate +=
                                 '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/Request/Edit/'
                                 + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></span></a>';
-
-                            @*if (dataItem.RequestState_Value < 1 && (@Infrastructure.Sessions.AuthenticatedUser.RoleCode==700 || @Infrastructure.Sessions.AuthenticatedUser.RoleCode==800))
-                            {
-                                strTemplate +=
-                                ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.UpAmontPaid)" href="/Administrator/Request/UpAmountPaid/'
-                                + dataItem.Id + '"><img src="../../../Content/Icon/UpAmontPaid.png"/></span></a>';
-                            }*@
-                            @*if (dataItem.RequestState_Value < 2 && (@Infrastructure.Sessions.AuthenticatedUser.RoleCode==700 || @Infrastructure.Sessions.AuthenticatedUser.RoleCode==800) && ( dataItem.SecNumber=="00000" || dataItem.AmountPaid>500000000))*@
                             if (dataItem.RequestState_Value <2 && (@Infrastructure.Sessions.AuthenticatedUser.RoleCode==800|| @Infrastructure.Sessions.AuthenticatedUser.RoleCode==1000))
                             {
                                 // اگر کاربر مالی عادی بود و تبصره 23 نبود دسترسی ویرایش را نداشته باشد
@@ -205,189 +197,85 @@
                             return (strTemplate);
                         },
                     },
-                        @if (Infrastructure.Sessions.AuthenticatedUser.Role != Enums.Roles.ExporterOFInvoice)
-                        {
-                                <text>
-                                {
-                                    hidden: false,
-                                    locked: true,
-                                    lockable: true,
-                                    title: "@Resources.Model.Request.SubSystem",
-                                    field: "@Resources.Model.Strings.RequestKeys.SubSystem",
-                                    width: "160px",
-                                },
-                                </text>
-                        }
-                                            {
-                                                hidden: false,
+                    {
+                        hidden: false,
                         locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Request.CompanyName",
-                        field: "@Resources.Model.Strings.RequestKeys.CompanyName",
-                        width: "220px",
+                        title: "@Resources.Model.Cement.InvoiceNumber",
+                        field: "@Resources.Model.Strings.CementKeys.InvoiceNumber",
+                        width: "20px",
                     },
                     {
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Request.ServiceTariff",
-                        field: "@Resources.Model.Strings.RequestKeys.ServiceTariff",
-                        width: "130px",
+                        title: "@Resources.Model.Cement.StringProductName",
+                        field: "@Resources.Model.Strings.CementKeys.StringProductName",
+                        width: "20px",
                     },
                     {
-                                                hidden: false,
+                        hidden: false,
                         locked: false,
                         lockable: true,
-                        title: "@Resources.Model.Request.RequestState",
-                        field: "@Resources.Model.Strings.RequestKeys.RequestState",
-                        width: "50px",
+                        title: "@Resources.Model.Cement.StringProductType",
+                        field: "@Resources.Model.Strings.CementKeys.StringProductType",
+                        width: "20px",
                     },
-                    {
-                                                hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Request.Province",
-                        field: "@Resources.Model.Strings.RequestKeys.Province",
-                        width: "100px",
-                    },
-                    {
-                                                hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Request.City",
-                        field: "@Resources.Model.Strings.RequestKeys.City",
-                        width: "100px",
-                    },
-                    {
-                                                hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Request.AmountPaid",
-                        field: "@Resources.Model.Strings.RequestKeys.AmountPaid",
-                        width: "100px",
-                    },
-                    {
-                                                hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Request.CompanyNationalCode",
-                        field: "@Resources.Model.Strings.RequestKeys.CompanyNationalCode",
-                        width: "50px",
-                    },
-                    {
-                                                hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Request.InvoiceNumber",
-                        field: "@Resources.Model.Strings.RequestKeys.InvoiceNumber",
-                        width: "50px",
-                    },
-                    {
-                                                hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Request.InvoiceDate",
-                        field: "@Resources.Model.Strings.RequestKeys.InvoiceDate",
-                        width: "50px",
-                    },
-
-
-
-
                     {
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Request.AmountPaidDate",
-                        field: "@Resources.Model.Strings.RequestKeys.AmountPaidDate",
-                        width: "50px",
+                        title: "@Resources.Model.Cement.StringPackageType",
+                        field: "@Resources.Model.Strings.CementKeys.StringPackageType",
+                        width: "20px",
                     },
                     {
-                                                hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.RecordNumber",
-                        field: "@Resources.Model.Strings.RequestKeys.RecordNumber",
-                        width: "50px",
-                    },
-                    {
-                                                hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.ImportRecordNumber2",
-                        field: "@Resources.Model.Strings.RequestKeys.ImportRecordNumber2",
-                        width: "50px",
-                    },
-                    {
-                                                hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.RecordDate",
-                        field: "@Resources.Model.Strings.RequestKeys.RecordDate",
-                        width: "50px",
-                    },
-
-                    @*{
-                                                hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "میزان ارز",
-                        field: "@Resources.Model.Strings.RequestKeys.BaseCurrencyValue",
-                        width: "50px",
-                    },
-                    {
-                                                hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "نوع ارز",
-                        field: "@Resources.Model.Strings.RequestKeys.CurrencyUnit",
-                        width: "50px",
-                    },
-                    {
-                                                hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "پیگیری بانکی",
-                        field: "@Resources.Model.Strings.RequestKeys.Bank_TraceNo",
-                        width: "50px",
-                    },*@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    {
-                                                title: "ثبت فوب پرداختی جدید",
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        width: "100px",
-                        title: "",
-                        template: function (dataItem) {
-
-                        var strTemplate = "";
-                        if(@Infrastructure.Sessions.AuthenticatedUser.RoleCode==800|| @Infrastructure.Sessions.AuthenticatedUser.RoleCode==1000)
-                        {
-                           // اگر کاربر مالی عادی بود و تبصره 23 یا فوب نبود دسترسی ویرایش را نداشته باشد
-                            strTemplate +=
-                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Request/EditIVO/'
-                                + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></span></a>';
-
-                        }
-
-                        return (strTemplate);
+                        title: "@Resources.Model.Cement.StringFactoryName",
+                        field: "@Resources.Model.Strings.CementKeys.StringFactoryName",
+                        width: "20px",
                     },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Cement.StringTonnage",
+                        field: "@Resources.Model.Strings.CementKeys.StringTonnage",
+                        width: "20px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Cement.StringProvince",
+                        field: "@Resources.Model.Strings.CementKeys.StringProvince",
+                        width: "20px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Cement.StringCity",
+                        field: "@Resources.Model.Strings.CementKeys.StringCity",
+                        width: "20px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Cement.BuyerMobile",
+                        field: "@Resources.Model.Strings.CementKeys.BuyerMobile",
+                        width: "20px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Cement.StringInsertDateTime",
+                        field: "@Resources.Model.Strings.CementKeys.StringInsertDateTime",
+                        width: "20px",
                     },
                 ]
         });
@@ -396,7 +284,7 @@
         // **************************************************
 
         $("button#btnSearch").click(function () {
-
+            debugger;
             var varDataSource =
                 new kendo.data.DataSource({
 
@@ -413,64 +301,42 @@
                             dataType: "json",
                             url: "/Administrator/Request/Search",
                             data: {
-                                CompanyName: function () {
-                                    return ($("input#CompanyName").val());
+                                InvoiceNumber: function () {
+                                    return ($("input#InvoiceNumber").val());
                                 },
 
-                                CompanyNationalCode: function () {
-                                    return ($("input#CompanyNationalCode").val());
+                                BuyerMobile: function () {
+                                    return ($("input#BuyerMobile").val());
                                 },
 
-                                DepositNumber: function () {
-                                    return ($("input#DepositNumber").val());
+                                ProductName: function () {
+                                    return ($("select#ProductName").val());
                                 },
-                                Bank_TraceNo: function () {
-                                    return ($("input#Bank_TraceNo").val());
+                                
+                                ProductType: function () {
+                                    return ($("select#ProductType").val());
                                 },
-                                BaseCurrencyValue: function () {
-                                    return ($("input#BaseCurrencyValue").val());
+                                
+                                PackageType: function () {
+                                    return ($("select#PackageType").val());
                                 },
-                                CurrencyUnit: function () {
-                                    return ($("#CurrencyUnit").val());
+                                
+                                FactoryName: function () {
+                                    return ($("select#FactoryName").val());
                                 },
-
-                                Bank_Terminal: function () {
-                                    return ($("input#Bank_Terminal").val());
+                                
+                                Tonnage: function () {
+                                    return ($("select#Tonnage").val());
                                 },
-
-                                SubSystem: function () {
-                                    return ($("select#SubSystem").val());
-                                },
-
-                                ServiceTariffs: function () {
-                                    return ($("select#ServiceTariffs").val());
-                                },
-
+                                
                                 Province: function () {
                                     return ($("select#Province").val());
                                 },
-
+                                
                                 City: function () {
                                     return ($("select#City").val());
                                 },
 
-                                RecordNumber: function () {
-                                    return ($("input#RecordNumber").val());
-                                },
-
-                                ImportRecordNumber2: function () {
-                                    return ($("input#ImportRecordNumber2").val());
-                                },
-
-                                InvoiceNumber: function () {
-                                    return ($("input#InvoiceNumber").val());
-                                },
-                                RequestState: function () {
-                                    return ($("select#RequestState").val());
-                                },
-                                CommodityType: function () {
-                                    return ($("input#CommodityType").val());
-                                },
                                 StartDate: function () {
                                     return ($("input#StartDate").val());
                                 },
@@ -484,16 +350,13 @@
                                     return ($("input#PayEndDate").val());
                                 },
                                 FromAmount: function () {
-                                    debugger;
                                     var number = $("#FromAmount").val();
                                     for (var i = 0; i < number.split(',').length; i++) {
                                         number = number.replace(',', '');
                                     }
                                     $("#FromAmount").val(number);
                                     return (
-
                                         $("input#FromAmount").val()
-
                                     );
                                 },
                                 ToAmount: function () {
@@ -546,27 +409,23 @@
         <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
             <div class="col col-md-6">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.CompanyName, new { @class = "col-md-4 control-label" })
+                    @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control" , @onfocus = "this.value=''", @type = "text" })
+                        @Html.DropDownListFor(model => model.ProductName, null,
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.DepositNumber, new { @class = "col-md-4 control-label" })
+                    @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.DepositNumber, new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.PackageType, null,
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.CompanyNationalCode, new { @class = "col-md-4 control-label" })
+                    @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.CompanyNationalCode, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SubSystem, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.DropDownListFor(model => model.SubSystem, null,
+                        @Html.DropDownListFor(model => model.Tonnage, null,
                         Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
                 </div>
@@ -574,19 +433,7 @@
                     @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
                         @Html.DropDownListFor(model => model.Province, null,
-                                 Resources.General.SelectAnItem, new { @class = "chzn-select form-control", @onchange = "onChange()" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CommodityType, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.CommodityType, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FromAmount, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.FromAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control", @onchange = "onChange()" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -601,47 +448,32 @@
                         @Html.TextBoxFor(model => model.PayStartDate, new { @class = "form-control" })
                     </div>
                 </div>
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Bank_TraceNo, new { @class = "col-md-4 control-label" })
+                    @Html.LabelFor(model => model.FromAmount, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.Bank_TraceNo, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.FromAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ImportRecordNumber2, new { @class = "col-md-4 control-label" })
+                    @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.ImportRecordNumber2, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
                     </div>
                 </div>
             </div>
             <div class="col col-md-6">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.RecordNumber, new { @class = "col-md-4 control-label" })
+                    @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.RecordNumber, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.InvoiceNumber, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.InvoiceNumber, new { @class = "form-control" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.RequestState, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.DropDownListFor(model => model.RequestState, null,
+                        @Html.DropDownListFor(model => model.ProductType, null,
                         Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ServiceTariffs, new { @class = "col-md-4 control-label" })
+                    @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
-                        @*@Html.DropDownListFor(model => model.ServiceTariffs, null,
-                            Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })*@
-                        @Html.EditorFor(x => x.ServiceTariffs, MVC.Shared.Views.EditorTemplates.DropDownSearchOption)
+                        @Html.DropDownListFor(model => model.FactoryName, null,
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -652,15 +484,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Bank_Terminal, new { @class = "col-md-4 control-label" })
+                    @Html.LabelFor(model => model.InvoiceNumber, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.Bank_Terminal, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ToAmount, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.ToAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
+                        @Html.TextBoxFor(model => model.InvoiceNumber, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-group">
@@ -669,7 +495,6 @@
                         @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.PayEndDate, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
@@ -677,21 +502,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.BaseCurrencyValue, new { @class = "col-md-4 control-label" })
+                    @Html.LabelFor(model => model.ToAmount, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.BaseCurrencyValue, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.ToAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CurrencyUnit, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(x => x.CurrencyUnit, MVC.Shared.Views.EditorTemplates.DropDownSearchOption)
-                    </div>
-                </div>
-
             </div>
-            @*<div class="col col-md-6">
-                </div>*@
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-8">
                     <button type="button" id="btnSearch" name="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
@@ -707,10 +523,10 @@
         <div class="col-md-12 panel-body">
             <div class="col-md-12">
                 <div class="row">
-                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
+                    @*<a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
                        onclick="location.href='@Url.Action("Download", "Request")'">
                         <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
-                    </a>
+                    </a>*@
                     <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
                        href="/HomeMain/Main/" style="float:left;">
                         <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
@@ -723,14 +539,14 @@
                 </div>
                 <br />
                 <div class="row">
-                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
+                    @*<a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
                        onclick="location.href='@Url.Action("Download", "Request")'">
                         <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
                     </a>
                     <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
                        href="/HomeMain/Main/" style="float:left;">
                         <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
-                    </a>
+                    </a>*@
                 </div>
             </div>
         </div>

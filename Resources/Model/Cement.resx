@@ -129,6 +129,9 @@
   <data name="FactoryName" xml:space="preserve">
     <value>نام کارخانه</value>
   </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>شماره فاکتور</value>
+  </data>
   <data name="PackageType" xml:space="preserve">
     <value>نوع بسته بندی</value>
   </data>
@@ -140,6 +143,30 @@
   </data>
   <data name="Province" xml:space="preserve">
     <value>استان تخلیه</value>
+  </data>
+  <data name="StringCity" xml:space="preserve">
+    <value>شهر تخلیه</value>
+  </data>
+  <data name="StringFactoryName" xml:space="preserve">
+    <value>نام کارخانه</value>
+  </data>
+  <data name="StringInsertDateTime" xml:space="preserve">
+    <value>زمان ثبت</value>
+  </data>
+  <data name="StringPackageType" xml:space="preserve">
+    <value>نوع بسته بندی</value>
+  </data>
+  <data name="StringProductName" xml:space="preserve">
+    <value>نام کالا</value>
+  </data>
+  <data name="StringProductType" xml:space="preserve">
+    <value>نوع کالا</value>
+  </data>
+  <data name="StringProvince" xml:space="preserve">
+    <value>استان تخلیه</value>
+  </data>
+  <data name="StringTonnage" xml:space="preserve">
+    <value>تناژ</value>
   </data>
   <data name="Tonnage" xml:space="preserve">
     <value>تناژ</value>

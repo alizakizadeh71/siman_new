@@ -81,5 +81,63 @@ namespace ViewModels.Areas.Administrator.Cement
         #endregion
         public string Address { get; set; }
         public string Description { get; set; }
+
+        #region FromAmount
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.FromAmount)]
+        #endregion
+        public int? FromAmount { get; set; }
+
+        #region ToAmount
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.ToAmount)]
+        #endregion
+        public int? ToAmount { get; set; }
+
+        #region StartDate
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.StartDate)]
+        #endregion
+        public DateTime? StartDate { get; set; }
+
+        #region EndDate
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.EndDate)]
+        #endregion
+        public DateTime? EndDate { get; set; }
+
+        #region StartDate
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.PayStartDate)]
+        #endregion
+        public DateTime? PayStartDate { get; set; }
+
+        #region EndDate
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.PayEndDate)]
+        #endregion
+        public DateTime? PayEndDate { get; set; }
+
+        #region InvoiceNumber
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.InvoiceNumber)]
+        #endregion
+        public int? InvoiceNumber { get; set; }
+        public string StringProductName { get; set; }
+        public string StringProductType { get; set; }
+        public string StringPackageType { get; set; }
+        public string StringFactoryName { get; set; }
+        public string StringTonnage { get; set; }
+        public string StringProvince { get; set; }
+        public string StringCity { get; set; }
+        public DateTime InsertDateTime { get; set; }
+        public string StringInsertDateTime { get; set; }
     }
 }

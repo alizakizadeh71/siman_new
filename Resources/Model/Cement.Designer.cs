@@ -97,6 +97,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شماره فاکتور.
+        /// </summary>
+        public static string InvoiceNumber {
+            get {
+                return ResourceManager.GetString("InvoiceNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نوع بسته بندی.
         /// </summary>
         public static string PackageType {
@@ -129,6 +138,78 @@ namespace Resources.Model {
         public static string Province {
             get {
                 return ResourceManager.GetString("Province", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شهر تخلیه.
+        /// </summary>
+        public static string StringCity {
+            get {
+                return ResourceManager.GetString("StringCity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام کارخانه.
+        /// </summary>
+        public static string StringFactoryName {
+            get {
+                return ResourceManager.GetString("StringFactoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to زمان ثبت.
+        /// </summary>
+        public static string StringInsertDateTime {
+            get {
+                return ResourceManager.GetString("StringInsertDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع بسته بندی.
+        /// </summary>
+        public static string StringPackageType {
+            get {
+                return ResourceManager.GetString("StringPackageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام کالا.
+        /// </summary>
+        public static string StringProductName {
+            get {
+                return ResourceManager.GetString("StringProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع کالا.
+        /// </summary>
+        public static string StringProductType {
+            get {
+                return ResourceManager.GetString("StringProductType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to استان تخلیه.
+        /// </summary>
+        public static string StringProvince {
+            get {
+                return ResourceManager.GetString("StringProvince", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تناژ.
+        /// </summary>
+        public static string StringTonnage {
+            get {
+                return ResourceManager.GetString("StringTonnage", resourceCulture);
             }
         }
         

@@ -98,7 +98,7 @@
             modelBuilder.Configurations.Add(new PackageType.Configuration());
             modelBuilder.Configurations.Add(new FactoryName.Configuration());
             modelBuilder.Configurations.Add(new Tonnage.Configuration());
-            //modelBuilder.Configurations.Add(new FactorCement.Configuration());
+            modelBuilder.Configurations.Add(new FactorCement.Configuration());
         }
 
         public System.Data.Entity.DbSet<Models.City> Cities { get; set; }

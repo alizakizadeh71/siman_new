@@ -9,10 +9,9 @@ namespace DAL
 			: base(databaseContext)
 		{
 		}
-        public IQueryable<Models.Tonnage> GetSubHeadLines()
+        public IQueryable<Models.Tonnage> GetTonnages()
         {
-            IQueryable<Models.Tonnage> list = null;
-            list = Get();
+            IQueryable<Models.Tonnage> list = Get();
             return list;
         }
 

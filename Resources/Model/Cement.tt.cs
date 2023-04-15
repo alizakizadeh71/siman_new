@@ -62,6 +62,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: شماره فاکتور
+        /// </summary>
+        public static string InvoiceNumber([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.InvoiceNumber;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("InvoiceNumber", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: نوع بسته بندی
         /// </summary>
         public static string PackageType([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -99,6 +109,86 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.Cement.Province;
             }
             return global::Resources.Model.Cement.ResourceManager.GetString("Province", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: شهر تخلیه
+        /// </summary>
+        public static string StringCity([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringCity;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringCity", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: نام کارخانه
+        /// </summary>
+        public static string StringFactoryName([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringFactoryName;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringFactoryName", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: زمان ثبت
+        /// </summary>
+        public static string StringInsertDateTime([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringInsertDateTime;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringInsertDateTime", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: نوع بسته بندی
+        /// </summary>
+        public static string StringPackageType([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringPackageType;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringPackageType", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: نام کالا
+        /// </summary>
+        public static string StringProductName([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringProductName;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringProductName", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: نوع کالا
+        /// </summary>
+        public static string StringProductType([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringProductType;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringProductType", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: استان تخلیه
+        /// </summary>
+        public static string StringProvince([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringProvince;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringProvince", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: تناژ
+        /// </summary>
+        public static string StringTonnage([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringTonnage;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringTonnage", resourceCulture);
         }
         
         /// <summary>
@@ -153,6 +243,11 @@ namespace Resources.Model.Strings {
         public const string FactoryName = "FactoryName";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: شماره فاکتور
+        /// </summary>
+        public const string InvoiceNumber = "InvoiceNumber";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: نوع بسته بندی
         /// </summary>
         public const string PackageType = "PackageType";
@@ -171,6 +266,46 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: استان تخلیه
         /// </summary>
         public const string Province = "Province";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: شهر تخلیه
+        /// </summary>
+        public const string StringCity = "StringCity";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نام کارخانه
+        /// </summary>
+        public const string StringFactoryName = "StringFactoryName";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: زمان ثبت
+        /// </summary>
+        public const string StringInsertDateTime = "StringInsertDateTime";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نوع بسته بندی
+        /// </summary>
+        public const string StringPackageType = "StringPackageType";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نام کالا
+        /// </summary>
+        public const string StringProductName = "StringProductName";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نوع کالا
+        /// </summary>
+        public const string StringProductType = "StringProductType";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: استان تخلیه
+        /// </summary>
+        public const string StringProvince = "StringProvince";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: تناژ
+        /// </summary>
+        public const string StringTonnage = "StringTonnage";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: تناژ

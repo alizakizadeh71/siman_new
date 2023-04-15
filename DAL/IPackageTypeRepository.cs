@@ -3,9 +3,9 @@
     public interface IPackageTypeRepository : IRepository<Models.PackageType>
 	{
 
-        System.Linq.IQueryable<Models.PackageType> GetSubHeadLines();
+        System.Linq.IQueryable<Models.PackageType> GetPackageTypes();
 
-        Models.PackageType GetByCode(string code);
+        Models.PackageType GetByPackageTypeCode(string code);
 
         System.Linq.IQueryable<Models.PackageType> GetByProductTypeId(System.Guid ProductTypeId);
 	}

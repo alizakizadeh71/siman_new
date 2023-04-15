@@ -4,7 +4,8 @@ namespace DAL
 {
     public interface IFactorCementRepository : IRepository<Models.FactorCement>
 	{
-        System.Linq.IQueryable<Models.FactorCement> Get(Models.User user);
+        int GetLastInvoiceNumber();
+        System.Linq.IQueryable<Models.FactorCement> GetByUser(Models.User user);
 
         void Insertdata(Models.FactorCement factorCement);
 

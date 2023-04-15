@@ -12,8 +12,7 @@ namespace DAL
 
         public IQueryable<Models.FactoryName> GetFactoryNames()
         {
-            IQueryable<Models.FactoryName> list = null;
-            list = Get();
+            IQueryable<Models.FactoryName> list = Get();
             return list;
         }
 

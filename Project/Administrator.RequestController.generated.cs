@@ -332,7 +332,7 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Request.SearchViewModel viewModel)
+        public override System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Search);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);

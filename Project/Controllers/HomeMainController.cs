@@ -69,6 +69,7 @@ namespace OPS.Controllers
                 if (ModelState.IsValid)
                 {
                     long AmountPaid = 1100; /// محاسبه مبلغ
+                    int LastInvoiceNumber = UnitOfWork.FactorCementRepository.GetLastInvoiceNumber() + 1;
                     Models.User oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
                     Models.FactorCement oFactorCement = new Models.FactorCement()
                     {
@@ -89,8 +90,10 @@ namespace OPS.Controllers
                         URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
                         UserId = oUser.Id,
                     };
-                    UnitOfWork.FactorCementRepository.Insert(oFactorCement);
-                    ViewBag.PageMessages = " مبلغ پرداختی " + AmountPaid + " تومان ";
+                    oFactorCement.InvoiceNumber = LastInvoiceNumber;
+                    UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
+                    //ViewBag.PageMessages = " مبلغ پرداختی " + AmountPaid + " تومان ";
+                    ViewBag.PageMessages = " درخواست شما با شماره فاکتور " + LastInvoiceNumber + " با موفقیت ثبت شد، جهت هماهنگی بیشتر با شما تماس گرفته خواهد شد ";
                 }
             }
             catch (Exception ex)

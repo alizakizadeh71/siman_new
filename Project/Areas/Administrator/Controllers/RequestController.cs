@@ -17,97 +17,96 @@ namespace OPS.Areas.Administrator.Controllers
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
         public virtual ActionResult Index()
         {
-            var varSubsystems = UnitOfWork.SubSystemRepository.Get().OrderBy(current => current.Name).ToList();
-            ViewData["SubSystem"] = new System.Web.Mvc.SelectList(varSubsystems, "Id", "Name", null);
+            var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
+            base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", null).OrderByDescending(x => x.Text);
 
-            var varServiceTariffs = UnitOfWork.ServiceTariffRepository.Get()
-                .ToList()
-                .Select(x => new ViewModels.ComboboxItemGuid
-                {
-                    Id = x.Id,
-                    Name = x.NameString
-                })
-                .OrderBy(current => current.Name)
-                .ToList();
-            ViewBag.ServiceTariffs = varServiceTariffs;
+            var ProductType = UnitOfWork.ProductTypeRepository.GetProductTypes().ToList(); /// نوع کالا
+            base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", null).OrderByDescending(x => x.Text); /// تیپ یک
 
-            var varRequestStates = Infrastructure.Utility.EnumList(Enums.EnumTypes.RequestStates);
-            ViewData["RequestState"] = new System.Web.Mvc.SelectList(varRequestStates, "Id", "Name", null);
+            var PackageType = UnitOfWork.PackageTypeRepository.GetPackageTypes().ToList(); /// تیپ یک
+            base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", null).OrderByDescending(x => x.Text); /// کیسه
+
+            var FactoryName = UnitOfWork.FactoryNameRepository.GetFactoryNames().ToList(); /// سیمان
+            base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", null).OrderBy(x => x.Text); /// ممتازان کرمان
+
+            var Tonnage = UnitOfWork.tonnageRepository.GetTonnages().ToList(); /// کیسه
+            base.ViewData["Tonnage"] = new System.Web.Mvc.SelectList(Tonnage, "Id", "Name", null).OrderBy(x => x.Text); /// 12 تن
 
             var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
-            ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
-
-            //var varProvinces = UnitOfWork.ProvinceRepository.Get()
-            //    .Select(x => new ViewModels.ComboboxItemGuid
-            //    {
-            //        Id = x.Id,
-            //        Name = x.Name
-            //    })
-            //    .OrderBy(current => current.Name)
-            //    .ToList();
-            //ViewBag.Province = varProvinces;
+            base.ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
 
             var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
-            ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
-
-            var varCurrencyUnit = UnitOfWork.CurrencyUnitRepository.Get().ToList()
-                .Select(x => new ViewModels.ComboboxItemGuid
-                {
-                    Id = x.Id,
-                    Name = x.NameString
-                })
-                    .OrderBy(current => current.Name)
-                    .ToList();
-            ViewBag.CurrencyUnit = varCurrencyUnit;
-
-            return View();
+            base.ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+            return View(cementViewModel);
         }
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
-        public virtual System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Request.SearchViewModel viewModel)
+        public virtual System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
         {
             bool Search = false;
             System.Globalization.PersianCalendar opersian = new System.Globalization.PersianCalendar();
 
             var varRequest =
-                UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                ;
+                UnitOfWork.FactorCementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User);
 
             #region Condition
-            viewModel.CompanyName = Utilities.Text.Utility.FixText(viewModel.CompanyName);
-            viewModel.CompanyNationalCode = Utilities.Text.Utility.FixText(viewModel.CompanyNationalCode);
-            viewModel.RecordNumber = Utilities.Text.Utility.FixText(viewModel.RecordNumber);
-            viewModel.CommodityType = Utilities.Text.Utility.FixText(viewModel.CommodityType);
-
-            if (viewModel.Province != null && viewModel.Province != new Guid())
+            if (!string.IsNullOrEmpty(viewModel?.BuyerMobile))
             {
-                varRequest = varRequest.Where(current => current.ProvinceId == viewModel.Province);
+                viewModel.BuyerMobile = Utilities.Text.Utility.FixText(viewModel.BuyerMobile);
+                varRequest = varRequest.Where(x => x.BuyerMobile == viewModel.BuyerMobile);
                 Search = true;
             }
 
-            if (viewModel.City != null && viewModel.City != new Guid())
+            if (!string.IsNullOrEmpty(viewModel?.InvoiceNumber.ToString()))
             {
-                varRequest = varRequest.Where(current => current.CityId == viewModel.City);
+                varRequest = varRequest.Where(x => x.InvoiceNumber == viewModel.InvoiceNumber);
                 Search = true;
             }
 
-            if (viewModel.RequestState.HasValue)
+            if (viewModel?.ProductName != null && viewModel.ProductName != Guid.Empty)
             {
-                varRequest = varRequest.Where(current => current.RequestState == viewModel.RequestState);
+                varRequest = varRequest.Where(x => x.ProductNameId == viewModel.ProductName);
                 Search = true;
             }
 
-            if (viewModel.SubSystem != null && viewModel.SubSystem != new Guid())
+            if (viewModel?.ProductType != null && viewModel.ProductType != Guid.Empty)
             {
-                //if (viewModel.SubSystem == new Guid("00000000-0000-0000-0000-000000000001"))
-                //    varRequest = varRequest.Where(current => current.SecNumber == "00000");
-
-                //else
-                varRequest = varRequest.Where(current => current.SubSystemId == viewModel.SubSystem);
+                varRequest = varRequest.Where(x => x.ProductTypeId == viewModel.ProductType);
                 Search = true;
             }
-            if (viewModel.FromAmount.ToString().Length > 0 && viewModel.ToAmount.ToString().Length > 0 && viewModel.FromAmount <= viewModel.ToAmount)
+
+            if (viewModel?.PackageType != null && viewModel.PackageType != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.PackageTypeId == viewModel.PackageType);
+                Search = true;
+            }
+
+            if (viewModel?.FactoryName != null && viewModel.FactoryName != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.FactoryNameId == viewModel.FactoryName);
+                Search = true;
+            }
+
+            if (viewModel?.Tonnage != null && viewModel.Tonnage != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.TonnageId == viewModel.Tonnage);
+                Search = true;
+            }
+
+            if (viewModel?.Province != null && viewModel.Province != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.ProvinceId == viewModel.Province);
+                Search = true;
+            }
+
+            if (viewModel?.City != null && viewModel?.City != new Guid())
+            {
+                varRequest = varRequest.Where(x => x.CityId == viewModel.City);
+                Search = true;
+            }
+            if (viewModel?.FromAmount.ToString().Length > 0 && viewModel.ToAmount.ToString().Length > 0 && viewModel.FromAmount <= viewModel.ToAmount)
             {
                 varRequest =
                     varRequest
@@ -115,281 +114,70 @@ namespace OPS.Areas.Administrator.Controllers
                     ;
                 Search = true;
             }
-            if (viewModel.StartDate.ToString().Length > 0)
+            if (viewModel?.StartDate.ToString().Length > 0)
             {
                 varRequest =
                     varRequest
-                    .Where(current => current.InvoiceDate >= viewModel.StartDate)
+                    .Where(current => current.InsertDateTime >= viewModel.StartDate)
                     ;
                 Search = true;
             }
-            if (viewModel.EndDate.ToString().Length > 0)
+            if (viewModel?.EndDate.ToString().Length > 0)
             {
                 var EndDate1 = viewModel.EndDate;
                 var EndDate2 = EndDate1.Value.AddDays(1);
                 varRequest =
                     varRequest
-                    .Where(current => current.InvoiceDate < EndDate2)
+                    .Where(current => current.InsertDateTime < EndDate2)
                     ;
                 Search = true;
             }
 
-            if (viewModel.PayStartDate.ToString().Length > 0)
+            if (viewModel?.PayStartDate.ToString().Length > 0)
             {
-                //string StringPayStartDate = ConvertDate(viewModel.PayStartDate.ToString());
-                //DateTime dt = DateTime.Parse(viewModel.PayStartDate.ToString(), new CultureInfo("fa-IR"));
-                //var NewDate = new Infrastructure.Calander(viewModel.PayStartDate.Value);
-
                 varRequest = varRequest.Where(current => current.AmountPaidDate >= viewModel.PayStartDate);
-                //varRequest = varRequest.Where(current =>
-                //     (current.AmountPaidDate != null && current.AmountPaidDate >= viewModel.PayStartDate) ||
-                //     (current.AmountPaidDate == null && current.Bank_ShamsiDate != null && current.Bank_ShamsiDate.Length == 10 &&
-                //     (StringPayStartDate.CompareTo(current.Bank_ShamsiDate) <= 0)));
                 Search = true;
             }
-            if (viewModel.PayEndDate.ToString().Length > 0)
+            if (viewModel?.PayEndDate.ToString().Length > 0)
             {
                 var PayEndDate1 = viewModel.PayEndDate.Value;
                 var PayEndDate2 = PayEndDate1.AddDays(1);
                 var StringPayEndDate = ConvertDate(PayEndDate2.ToString());
                 varRequest = varRequest.Where(current => current.AmountPaidDate < PayEndDate2);
-                //varRequest = varRequest.Where(current =>
-                //    (current.AmountPaidDate != null && current.AmountPaidDate < PayEndDate2) ||
-                //    (current.AmountPaidDate == null && current.Bank_ShamsiDate != null && current.Bank_ShamsiDate.Length == 10 &&
-                //    (StringPayEndDate.CompareTo(current.Bank_ShamsiDate) >= 0)));
                 Search = true;
             }
-
-            if (viewModel.CompanyName != string.Empty && viewModel.CompanyName != "نام شرکت باید به طور دقیق وارد شود")
-            {
-                varRequest =
-                    varRequest
-                    .Where(current => current.CompanyName == viewModel.CompanyName)
-                    ;
-                Search = true;
-            }
-
-            if (viewModel.CommodityType != string.Empty)
-            {
-                varRequest =
-                    varRequest
-                    .Where(current => current.CommodityType.Contains(viewModel.CommodityType))
-                    ;
-                Search = true;
-            }
-
-            if (viewModel.CompanyNationalCode != string.Empty)
-            {
-                varRequest =
-                    varRequest
-                    .Where(current => current.CompanyNationalCode == viewModel.CompanyNationalCode)
-                    ;
-                Search = true;
-            }
-
-            if (viewModel.RecordNumber != string.Empty)
-            {
-                varRequest =
-                    varRequest
-                    .Where(current => current.RecordNumber == viewModel.RecordNumber);
-                Search = true;
-            }
-            
-            if (!string.IsNullOrEmpty(viewModel.ImportRecordNumber2))
-            {
-                varRequest =
-                    varRequest
-                    .Where(current => current.ImportRecordNumber == viewModel.ImportRecordNumber2);
-                Search = true;
-            }
-
-            if (viewModel.InvoiceNumber.HasValue)
-            {
-                varRequest =
-                    varRequest
-                    .Where(current => current.InvoiceNumber == viewModel.InvoiceNumber.Value)
-                    ;
-                Search = true;
-            }
-
-
-
-            if (viewModel.BaseCurrencyValue.HasValue) // جستجو بر اساس مبلغ فوب
-            {
-                varRequest =
-                    varRequest
-                    .Where(current => current.BaseCurrencyValue == viewModel.BaseCurrencyValue.Value)
-                    ;
-                Search = true;
-            }
-            if (viewModel.CurrencyUnit != null && viewModel.CurrencyUnit != new Guid()) // جستجو بر اساس نوع ارز
-            {
-                var Code = UnitOfWork.CurrencyUnitRepository.Get()
-                    .Where(current => current.Id == viewModel.CurrencyUnit)
-                    .FirstOrDefault().Code;
-                varRequest = varRequest.Where(current => current.CurrencyCode == Code);
-                Search = true;
-            }
-            if (viewModel.Bank_TraceNo.HasValue) // جستجو بر اساس شماره پیگیري بانکی
-            {
-                varRequest =
-                    varRequest
-                    .Where(current => current.Bank_TraceNo == viewModel.Bank_TraceNo.Value)
-                    ;
-                Search = true;
-            }
-
-
-
-
-            if (!Search)
-            {
-                return (Json(null, System.Web.Mvc.JsonRequestBehavior.AllowGet));
-            }
-
             #endregion
-
-            //var varSubsystems = UnitOfWork.SubSystemRepository.Get().OrderBy(current => current.Name).ToList();
-            //ViewData["SubSystem"] = new System.Web.Mvc.SelectList(varSubsystems, "Id", "Name", viewModel.SubSystem);
-
-            //var varRequestStates = Infrastructure.Utility.EnumList(Enums.EnumTypes.RequestStates);
-            //ViewData["RequestState"] = new System.Web.Mvc.SelectList(varRequestStates, "Id", "Name", viewModel.RequestState);
-
-            //var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
-            //ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
-
-            //var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
-            //ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
 
             try
             {
-                var ViewModelsvarRequest
-                     = varRequest
-                     .OrderByDescending(current => current.InvoiceNumber)
-                     .Select(current =>
-                         new ViewModels.Areas.Administrator.Request.IndexViewModel
-                         {
-                             Id = current.Id,
-                             //SubSystemId = current.SubSystemId,
-                             SubSystem = current.SubSystem.Name,
-                             CompanyName = current.CompanyName,
-                             //ServiceTariffId = current.ServiceTariffId,
-                             ServiceTariff = current.ServiceTariff.Name,
-                             //ProvinceId = current.ProvinceId,
-                             Province=current.Province.Name,
-                             SecNumber = current.SecNumber,
-                             CompanyNationalCode = current.CompanyNationalCode,
-                             InvoiceNumber = current.InvoiceNumber,
-                             InvoiceDateNew = current.InvoiceDate,
-                             AmountPaidDateNew = current.AmountPaidDate,
-                             RecordNumber = current.RecordNumber,
-                             RecordDate = current.RecordDate,
-                             RequestStateNew = current.RequestState,
-                             RequestState_Value = current.RequestState,
-                             AmountPaid = current.AmountPaid,
-                             DepositNumber = current.DepositNumber,
-                             //CityId = current.CityId,
-                             City=current.City.Name,
-                             CeratedBy=current.User.FullName,
-                             //CeratedById = current.UserId,
-                             Bank_ShamsiDate = current.Bank_ShamsiDate,
-                         })
-                         .ToList();
-                var result = new List<ViewModels.Areas.Administrator.Request.IndexViewModel>();
-
-                ViewModelsvarRequest
-                     .ForEach(current =>
-                     {
-                         result.Add(
-                         new ViewModels.Areas.Administrator.Request.IndexViewModel
-                         {
-                             Id = current.Id,
-                             SubSystem = current.SubSystem,
-                             CompanyName = current.CompanyName,
-                             ServiceTariff = current.ServiceTariff,
-                             Province = current.Province,
-                             SecNumber = current.SecNumber,
-                             CompanyNationalCode = current.CompanyNationalCode,
-                             InvoiceNumber = current.InvoiceNumber,
-                             InvoiceDate = new Infrastructure.Calander(current.InvoiceDateNew.Value).Persion(),
-                             AmountPaidDate = current.AmountPaidDate != null ? new Infrastructure.Calander(current.AmountPaidDateNew ?? DateTime.Now).Persion() : current.Bank_ShamsiDate,
-                             RecordNumber = current.RecordNumber,
-                             RecordDate = current.RecordDate,
-                             RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, current.RequestStateNew.Value),
-                             RequestState_Value = current.RequestState_Value,
-                             AmountPaid = current.AmountPaid,
-                             DepositNumber = current.DepositNumber,
-                             City =current.City,
-                             CeratedBy = current.CeratedBy,
-                         });
-                         return;
-                     }
-                );
-
-                     //.AsQueryable();
-                object dataSource;
+                var ViewModelsvarBanks
+                    = varRequest.OrderBy(current => current.InvoiceNumber)
+                    .ToList()
+                    .Select(current =>
+                        new ViewModels.Areas.Administrator.Cement.CementViewModel()
+                        {
+                            InvoiceNumber = current.InvoiceNumber,
+                            StringProductName = current.ProductName.Name,
+                            StringProductType = current.ProductType.Name,
+                            StringPackageType = current.PackageType.Name,
+                            StringFactoryName = current.FactoryName.Name,
+                            StringTonnage = current.Tonnage.Name,
+                            StringProvince = current.Province.Name,
+                            StringCity = current.City.Name,
+                            BuyerMobile = current.BuyerMobile,
+                            StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
+                        })
+                        .AsQueryable();
 
                 var varResult =
                     Utilities.Kendo.HtmlHelpers
-                    .ParseGridData<ViewModels.Areas.Administrator.Request.IndexViewModel>(result.AsQueryable(), true, out dataSource);
-
-                Infrastructure.Sessions.SearchDataSource = dataSource;
+                    .ParseGridData<ViewModels.Areas.Administrator.Cement.CementViewModel>(ViewModelsvarBanks);
 
                 return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
             }
             catch (Exception ex)
             {
-                var ViewModelsvarRequest
-                     = varRequest
-                     .OrderByDescending(current => current.InvoiceNumber)
-                     .Take(5)
-                     .Select(current =>
-                         new ViewModels.Areas.Administrator.Request.IndexViewModel
-                         {
-                             Id = current.Id,
-                             CompanyName = current.CompanyName,
-                             CompanyNationalCode = current.CompanyNationalCode,
-                             RequestState_Value = current.RequestState,
-                             InvoiceNumber = current.InvoiceNumber,
-                             AmountPaid = current.AmountPaid,
-                         })
-                         .ToList();
-
-                var ViewModelsvarRequest2 = ViewModelsvarRequest
-                          .Select(current =>
-                          new ViewModels.Areas.Administrator.Request.IndexViewModel
-                          {
-                              Id = current.Id,
-                              CompanyName = current.CompanyName,
-                              SubSystem = "",
-                              ServiceTariff = "",
-                              Province = "",
-                              SecNumber = "",
-                              CompanyNationalCode = current.CompanyNationalCode,
-                              InvoiceNumber = current.InvoiceNumber,
-                              InvoiceDate = "",
-                              AmountPaidDate = "",
-                              RecordNumber = "",
-                              RecordDate = "",
-                              RequestState = "",
-                              RequestState_Value = current.RequestState_Value,
-                              AmountPaid = current.AmountPaid,
-                              DepositNumber = "",
-                              City = "",
-                              CeratedBy = "",
-                          })
-                          .AsQueryable();
-
-                object dataSource;
-
-                var varResult =
-                    Utilities.Kendo.HtmlHelpers
-                    .ParseGridData<ViewModels.Areas.Administrator.Request.IndexViewModel>(ViewModelsvarRequest2, true, out dataSource);
-
-                Infrastructure.Sessions.SearchDataSource = dataSource;
-
-                return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
-
+                return null;
             }
         }
 
@@ -418,166 +206,33 @@ namespace OPS.Areas.Administrator.Controllers
             return Year + "/" + Month + "/" + Day;
         }
 
-        [System.Web.Mvc.HttpPost]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
-        public virtual System.Web.Mvc.JsonResult GetRequests()
+        private void ViewData(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
-            var varRequest =
-                UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                .Where(x => x.SubSystem.Code < 2000 || x.SubSystem.Code > 3000)
-                ;
+            var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
+            base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", cementViewModel.ProductName).OrderByDescending(x => x.Text);
 
-            // اگر کاربر صدور فاکتور بود زیر سیستم بررسی نشود و در درخواست ها نمایش داده شود
-            if (Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.ExporterOFInvoice)
-            {
-                varRequest =
-                UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                ;
-            }
+            var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
+            base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", cementViewModel.ProductType).OrderByDescending(x => x.Text); /// تیپ یک
 
-            var varSubsystems = UnitOfWork.SubSystemRepository.Get().OrderBy(current => current.Name).ToList();
-            ViewData["SubSystem"] = new System.Web.Mvc.SelectList(varSubsystems, "Id", "Name", null);
+            var PackageType = UnitOfWork.PackageTypeRepository.GetByProductTypeId(cementViewModel.ProductType).ToList(); /// تیپ یک
+            base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", cementViewModel.PackageType).OrderByDescending(x => x.Text); /// کیسه
 
-            var varRequestStates = Infrastructure.Utility.EnumList(Enums.EnumTypes.RequestStates);
-            ViewData["RequestState"] = new System.Web.Mvc.SelectList(varRequestStates, "Id", "Name", null);
+            var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
+            base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", cementViewModel.FactoryName).OrderBy(x => x.Text); /// ممتازان کرمان
 
-            var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
-            ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
+            var Tonnage = UnitOfWork.tonnageRepository.GetByPackageTypeId(cementViewModel.PackageType).ToList(); /// کیسه
+            base.ViewData["Tonnage"] = new System.Web.Mvc.SelectList(Tonnage, "Id", "Name", cementViewModel.Tonnage).OrderBy(x => x.Text); /// 12 تن
 
-            var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
-            ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
+            var Province = UnitOfWork.ProvinceRepository.Get().ToList();
+            base.ViewData["Province"] = new System.Web.Mvc.SelectList(Province, "Id", "Name", cementViewModel.Province).OrderBy(x => x.Text);
 
-            try
-            {
-                var ViewModelsvarRequest
-                     = varRequest
-                     .OrderByDescending(current => current.InvoiceNumber)
-                     .Take(30)
-                     .Select(current =>
-                         new ViewModels.Areas.Administrator.Request.IndexViewModel
-                         {
-                             Id = current.Id,
-                             SubSystemId = current.SubSystemId,
-                             CompanyName = current.CompanyName,
-                             ServiceTariffId = current.ServiceTariffId,
-                             ProvinceId = current.ProvinceId,
-                             SecNumber = current.SecNumber,
-                             CompanyNationalCode = current.CompanyNationalCode,
-                             InvoiceNumber = current.InvoiceNumber,
-                             InvoiceDateNew = current.InvoiceDate,
-                             AmountPaidDateNew = current.AmountPaidDate,
-                             RecordNumber = current.RecordNumber,
-                             RecordDate = current.RecordDate,
-                             RequestStateNew = current.RequestState,
-                             RequestState_Value = current.RequestState,
-                             AmountPaid = current.AmountPaid,
-                             DepositNumber = current.DepositNumber,
-                             CityId = current.CityId,
-                             CeratedById = current.UserId,
-                             Bank_ShamsiDate = current.Bank_ShamsiDate,
-                         })
-                         .ToList();
-
-
-                var ViewModelsvarRequest1 = ViewModelsvarRequest
-                     .Select(current =>
-                     new ViewModels.Areas.Administrator.Request.IndexViewModel
-                     {
-                         Id = current.Id,
-                         SubSystem = UnitOfWork.SubSystemRepository.GetById(current.SubSystemId).Name,
-                         CompanyName = current.CompanyName,
-                         ServiceTariff = GetServiceTariff(current.ServiceTariffId),
-                         Province = UnitOfWork.ProvinceRepository.GetById(current.ProvinceId).Name,
-                         SecNumber = current.SecNumber,
-                         CompanyNationalCode = current.CompanyNationalCode,
-                         InvoiceNumber = current.InvoiceNumber,
-                         InvoiceDate = new Infrastructure.Calander(current.InvoiceDateNew.Value).Persion(),
-                         AmountPaidDate = current.AmountPaidDate != null ? new Infrastructure.Calander(current.AmountPaidDateNew ?? DateTime.Now).Persion() : current.Bank_ShamsiDate,
-                         RecordNumber = current.RecordNumber,
-                         RecordDate = current.RecordDate,
-                         RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, current.RequestStateNew.Value),
-                         RequestState_Value = current.RequestState_Value,
-                         AmountPaid = current.AmountPaid,
-                         DepositNumber = current.DepositNumber,
-                         City = GetCity(current.CityId),
-                         CeratedBy = UnitOfWork.UserRepository.GetById(current.CeratedById).FullName,
-                     })
-                     .AsQueryable();
-
-                //object dataSource;
-
-                //var varResult =
-                //    Utilities.Kendo.HtmlHelpers
-                //    .ParseGridData<ViewModels.Areas.Administrator.Request.IndexViewModel>(ViewModelsvarRequest);
-
-                ////Infrastructure.Sessions.DataSource = dataSource;
-
-                //****************** New******************//
-                object dataSource;
-
-                var varResult =
-                    Utilities.Kendo.HtmlHelpers
-                    .ParseGridData<ViewModels.Areas.Administrator.Request.IndexViewModel>(ViewModelsvarRequest1, true, out dataSource);
-
-                Infrastructure.Sessions.SearchDataSource = dataSource;
-
-                return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
-            }
-            catch (Exception ex)
-            {
-                var ViewModelsvarRequest
-                     = varRequest
-                     .OrderByDescending(current => current.InvoiceNumber)
-                     .Take(5)
-                     .Select(current =>
-                         new ViewModels.Areas.Administrator.Request.IndexViewModel
-                         {
-                             Id = current.Id,
-                             CompanyName = current.CompanyName,
-                             CompanyNationalCode = current.CompanyNationalCode,
-                             RequestState_Value = current.RequestState,
-                             InvoiceNumber = current.InvoiceNumber,
-                             AmountPaid = current.AmountPaid,
-                         })
-                         .ToList();
-
-                var ViewModelsvarRequest2 = ViewModelsvarRequest
-                          .Select(current =>
-                          new ViewModels.Areas.Administrator.Request.IndexViewModel
-                          {
-                              Id = current.Id,
-                              CompanyName = current.CompanyName,
-                              SubSystem = "",
-                              ServiceTariff = "",
-                              Province = "",
-                              SecNumber = "",
-                              CompanyNationalCode = current.CompanyNationalCode,
-                              InvoiceNumber = current.InvoiceNumber,
-                              InvoiceDate = "",
-                              AmountPaidDate = "",
-                              RecordNumber = "",
-                              RecordDate = "",
-                              RequestState = "",
-                              RequestState_Value = current.RequestState_Value,
-                              AmountPaid = current.AmountPaid,
-                              DepositNumber = "",
-                              City = "",
-                              CeratedBy = "",
-                          })
-                          .AsQueryable();
-
-                object dataSource;
-
-                var varResult =
-                    Utilities.Kendo.HtmlHelpers
-                    .ParseGridData<ViewModels.Areas.Administrator.Request.IndexViewModel>(ViewModelsvarRequest2, true, out dataSource);
-
-                Infrastructure.Sessions.SearchDataSource = dataSource;
-
-                return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
-
-            }
+            var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList(); /// کرمان
+            base.ViewData["City"] = new System.Web.Mvc.SelectList(City, "Id", "Name", cementViewModel.City).OrderBy(x => x.Text); /// کوهبنان
         }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.JsonResult GetRequests() => (JsonResult)Search(null);
 
         private string GetCity(Guid? cityId)
         {
@@ -885,7 +540,7 @@ namespace OPS.Areas.Administrator.Controllers
 
                     else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Certificate)
                         oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-                    
+
                     else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Lims)
                         oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
 
@@ -1523,7 +1178,7 @@ namespace OPS.Areas.Administrator.Controllers
 
                                 else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Certificate)
                                     oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-                                
+
                                 else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Lims)
                                     oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
 

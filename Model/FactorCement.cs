@@ -12,8 +12,8 @@ namespace Models
         {
             public Configuration()
             {
-                Property(current => current.InvoiceNumber)
-                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+                //Property(current => current.InvoiceNumber)
+                //    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
 
                 Property(current => current.DepositNumber).HasMaxLength(30);
                 Property(current => current.BuyerMobile).HasMaxLength(11);
@@ -39,7 +39,7 @@ namespace Models
 
                 HasRequired(current => current.PackageType)
                     .WithMany(packageType => packageType.FactorCements)
-                    .HasForeignKey(current => current.PackageType)
+                    .HasForeignKey(current => current.PackageTypeId)
                     .WillCascadeOnDelete(false)
                     ;
 
@@ -80,7 +80,7 @@ namespace Models
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.InvoiceNumber)]
         #endregion
-        public int InvoiceNumber { get; set; }
+        public int? InvoiceNumber { get; set; }
 
 
         #region User
@@ -191,6 +191,7 @@ namespace Models
             Name = Resources.Model.Strings.RequestKeys.AmountPaid)]
         #endregion
         public long AmountPaid { get; set; }
+        public System.DateTime? AmountPaidDate { get; set; }
 
         #region
         [System.ComponentModel.DataAnnotations.Display

@@ -9,21 +9,20 @@ namespace DAL
 			: base(databaseContext)
 		{
 		}
-        public IQueryable<Models.PackageType> GetSubHeadLines()
+        public IQueryable<Models.PackageType> GetPackageTypes()
         {
-            IQueryable<Models.PackageType> list = null;
-            list = Get();
+            IQueryable<Models.PackageType> list = Get();
             return list;
         }
 
-        public Models.PackageType GetByCode(string code)
+        public Models.PackageType GetByPackageTypeCode(string code)
         {
-            Models.PackageType oSubHeadLine =
+            Models.PackageType oPackageType =
                 Get()
                 .Where(currenct => currenct.Code == code)
                 .FirstOrDefault();
 
-            return oSubHeadLine;
+            return oPackageType;
         }
 
 

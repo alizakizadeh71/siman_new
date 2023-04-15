@@ -3,7 +3,7 @@
     public interface ITonnageRepository : IRepository<Models.Tonnage>
 	{
 
-        System.Linq.IQueryable<Models.Tonnage> GetSubHeadLines();
+        System.Linq.IQueryable<Models.Tonnage> GetTonnages();
 
         Models.Tonnage GetByCode(string code);
 
