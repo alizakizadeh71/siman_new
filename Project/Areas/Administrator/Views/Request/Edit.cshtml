@@ -1,4 +1,4 @@
-﻿@model ViewModels.Areas.Administrator.Request.EditViewModel
+﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
 @{
     string strTitel =
         string.Format("{0} {1}",
@@ -77,25 +77,10 @@
 
     }
 
-    @*function ViewIncomplete() {
-        if (confirm('Are you sure ?'))
-        {
-            $.ajax({
-                url: '/Administrator/Request/Incomplete',
-                type: 'Get',
-                data: { RecordNumber: @Model.RecordNumber, SystemMessage: $("#SystemMessage").val() },
-                success: function (data) {
-                    alert('su');
-                    //location.replace("~/Administrator/Request/Incomplete");
-                }
-            });
-        }
-    }*@
-
     @*=> دستگاه کارتخوان => *@
 
     //sendToPos
-    function SendToPos() {
+    @*function SendToPos() {
 
 
         var req_params = {};
@@ -103,8 +88,6 @@
 
 
         req_params.AM = ["PECSingleAmount", @Model.AmountPaid];
-
-                //document.getElementById("r_cardholder").innerHTML = "true!";
                 req_params.SV = '@Model.DepositNumber'.substr(0, 15);
                 req_params.SG = '@Model.DepositNumber'.substr(15, 15);
 
@@ -114,44 +97,20 @@
         req_params.R2 = "";
         req_params.T1 = '@Model.CompanyName';
         req_params.T2 = "";
-        //req_params.A1 = $('#amount1').val();
-        //	req_params.I1 = $('#idd1').val();
-        //req_params.A2 = $('#amount2').val();
-        //req_params.I2 = $('#idd2').val();
-        //if ($('#service').val().length > 0)
-
-        //else
-        //	document.getElementById("test1").innerHTML = "false!";
-        //req_params.BI = $('#billpaymentid').val();
-        //req_params.PI = $('#paymentid').val();
-
         req_params.AD = "";
         req_params.PD = "1";
-
         var settel_str = "";
         var keyval_str = "";
-        //for (i = 1; i < 10; i++)
-        //    if ($('#amount' + i).val().length > 0 && $('#SingleAmount').val() <= 0) {
-        //        settel_str += i + "=" + $('#amount' + i).val() + ",";
-        //        keyval_str += $('#amount' + i).val() + "=" + $('#idd' + i).val() + "=" + $('#D' + i).val() + ",";
-        //    }
 
         $('#settelment').val(settel_str.slice(0, -1));
         req_params.ST = $('#settelment').val().split(",");
         $('#key_value').val(keyval_str.slice(0, -1));
         req_params.AV = $('#key_value').val().split(",");
 
-
-
-        @*var billId = '@Model.DepositNumber'.substr(0, 13);
-        var settlementId = '@Model.DepositNumber'.substr(13, 6);*@
-
         var paymentCart = null;
         $.ajax({
-            //url: '/Administrator/Request/SendToPos',
             url: $('#pcpos_url').val(),
             type: 'post',
-            @*//data: { paymentAmount: '@Model.AmountPaid', invoiceNumber: '@Model.InvoiceNumber', depositNumber: '@Model.DepositNumber' },*@
             data: JSON.stringify(req_params),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -177,14 +136,13 @@
                         }
                     })
                 }
-                // Record Information In Database
             },
             failure: function (errMsg) {
                 alert(errMsg);
             }
         }).done(function () {
         })
-    }
+    }*@
     @*<= دستگاه کارتخوان <= *@
 
     function ViewMasterFile(href) {
@@ -243,96 +201,35 @@
             <div class="panel-body">
                 @Html.HiddenFor(model => model.Id)
                 <dl class="dl-horizontal">
-                    <dt>@Html.DisplayNameFor(model => model.DepositNumber)</dt>
-                    <dd style="background-color:#d1f1f3;">
-                        @if (!(Model.SubSystem == "تبصره 23" && (Model.RequestState == "درحال بررسی" || Model.RequestState == "نواقصی")))
-                        {
-
-                            @Html.DisplayFor(model => model.DepositNumber)
-                            @Html.ActionLink("چاپ شناسه واریز", MVC.Administrator.Request.PrintDepositNumber(Model.InvoiceNumber), new { @class = "btn btn-info", @style = "margin-right:100px;" })
-                        }
-                        @if (Model.RequestState == "تایید پرداخت")
-                        {
-                            @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber), new { @class = "btn btn-info", @style = "margin-right:100px;" })
-                        }
-
-                    </dd>
-
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.CompanyName)</dt>
-                    <dd>@Html.DisplayFor(model => model.CompanyName)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.CompanyNationalCode)</dt>
-                    <dd>@Html.DisplayFor(model => model.CompanyNationalCode)</dd>
-                    @if (Infrastructure.Sessions.AuthenticatedUser.Role != Enums.Roles.ExporterOFInvoice)
-                    {
-                        <br />
-                        <dt>@Html.DisplayNameFor(model => model.SubSystem)</dt>
-                        <dd>@Html.DisplayFor(model => model.SubSystem)</dd>
-                    }
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.RecordNumber)</dt>
-                    <dd>@Html.DisplayFor(model => model.RecordNumber)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.RecordDate)</dt>
-                    <dd>@Html.DisplayFor(model => model.RecordDate)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.ServiceTariff)</dt>
-                    <dd>@Html.DisplayFor(model => model.ServiceTariff)</dd>
-                    <br />
                     <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
                     <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.InvoiceDate)</dt>
-                    <dd>@Html.DisplayFor(model => model.InvoiceDate)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.StringProductName)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringProductName)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.BaseCurrencyValue)</dt>
-                    <dd>@Html.DisplayFor(model => model.BaseCurrencyValue)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.StringProductType)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringProductType)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.CurrencyValue)</dt>
-                    <dd>@Html.DisplayFor(model => model.CurrencyValue)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.StringPackageType)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringPackageType)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.CurrencyRation)</dt>
-                    <dd>@Html.DisplayFor(model => model.CurrencyRation)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.StringFactoryName)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringFactoryName)</dd>
                     <br />
-                    @{
-                        if (Model.RequestStateCode < (int)Enums.RequestStates.Payment)
-                        {
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.SystemMessage, new { @class = "col-md-2 control-label" })
-                                <div class="col-md-6">
-                                    @Html.TextBoxFor(model => model.SystemMessage, new { @class = "form-control panel-danger col-md-6" })
-                                    @Html.ValidationMessageFor(model => model.SystemMessage)
-                                </div>
-                            </div>
-                            <br />
-
-                            <dt>@Html.DisplayNameFor(model => model.AmountPaid)</dt>
-                            <dd class="label-info">@string.Format("{0:n0}",Model.AmountPaid) <span>@Resources.OPS.Caption.Rial</span></dd>
-                            <br />
-                            <dt>@Html.DisplayNameFor(model => model.Bank_TraceNo)</dt>
-                            <dd class="label-warning">@Html.DisplayFor(model => model.Bank_TraceNo)</dd>
-                            <br />
-                            <dt>@Html.DisplayNameFor(model => model.Bank_ShamsiDate)</dt>
-                            <dd class="label-warning">@Html.DisplayFor(model => model.Bank_ShamsiDate)</dd>
-                        }
-
-                        else
-                        {
-                            <dt>@Html.DisplayNameFor(model => model.AmountPaid)</dt>
-                            <dd class="label-success">@string.Format("{0:n0}", Model.AmountPaid) <span>@Resources.OPS.Caption.Rial</span></dd>
-                            <br />
-                            <dt>@Html.DisplayNameFor(model => model.Bank_TraceNo)</dt>
-                            <dd class="label-success">@Html.DisplayFor(model => model.Bank_TraceNo)</dd>
-                            <br />
-                            <dt>@Html.DisplayNameFor(model => model.Bank_ShamsiDate)</dt>
-                            <dd class="label-success">@Html.DisplayFor(model => model.Bank_ShamsiDate)</dd>
-                        }
-                    }
-
+                    <dt>@Html.DisplayNameFor(model => model.StringTonnage)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringTonnage)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.RequestState)</dt>
-                    <dd>@Html.DisplayFor(model => model.RequestState)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.StringProvince)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringProvince)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.StringCity)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringCity)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.BuyerMobile)</dt>
+                    <dd>@Html.DisplayFor(model => model.BuyerMobile)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.StringInsertDateTime)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringInsertDateTime)</dd>
                     <br />
                     <div class="form-group">
                         @Html.Label("توضیحات", new { @class = "col-md-2 control-label" })
@@ -353,143 +250,10 @@
             <div class="panel-footer">
                 <div class="container">
                     <div class="col-md-11" style="margin-right:15px;">
-                        @if ((Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.MaliExpert00) ||
-                            (Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.MaliExpert01) ||
-                            (Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.MaliAdminGholami) ||
-                            (Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.Programmer)
-                            )
-                        {
-                            if (Model.RequestStateCode < (int)Enums.RequestStates.Payment)
-                            {
-                                <input type="submit" name="submit" onclick="return confirm('آیا مطمئن هستید ؟');" value="دستور پرداخت" class="btn btn-success col-md-2" style="margin-left:5px;" />
-                            }
-
-                            else if (Model.RequestStateCode == (int)Enums.RequestStates.Payment)
-                            {
-                                <input type="submit" name="submit" onclick="return confirm('آیا مطمئن هستید ؟');" value="@Resources.Enum.RequestStates.PaymentConfirmation" class="btn btn-success col-md-2" style="margin-left:5px;" />
-                            }
-                            <button onclick="ViewFile()" type="button" class="btn btn-primary col-md-2" data-toggle="modal" data-target="#myModal" style="margin-left:5px;">
-                                مشاهده مدارک
-                            </button>
-
-                            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.Request.Index(), new { @class = "btn btn-default" })
-
-                            if (Model.RequestStateCode < (int)Enums.RequestStates.Payment)
-                            {
-                                <input type="submit" name="submit" onclick="return confirm('آیا مطمئن هستید ؟');" value="@Resources.Action.Incomplete" class="btn btn-danger col-md-2" style="margin-left:5px;" />
-                            }
-                            if (Model.RequestState != "تایید پرداخت")
-                            {
-                                if (!(Model.SubSystem == "تبصره 23" || Model.SubSystem == "سامانه دارو درمان - مجوز بهداشتی"))
-                                {
-                                    <button id="btnSendToPosId" type="button" class="btn btn-primary col-md-2" style="margin-left:5px;">
-                                        ارسال به دستگاه کارتخوان
-                                    </button>
-                                    <input type="text" style="display:none" placeholder="URL" value="http://127.0.0.1:8080/pcpos" id="pcpos_url" />
-                                    <textarea style="display:none" cols="40" rows="2" placeholder="Settelment" id="settelment">1=500,2=500</textarea>
-                                    <textarea style="display:none" cols="40" rows="2" placeholder="Key Value" value="" id="key_value">تت=23, بب=27,کک=28</textarea>
-                                    <div id="result" style="display:none"></div>
-                                }
-                                else
-                                {
-                                    if (Model.RequestState == "دارای دستور پرداخت")
-                                    {
-                                        <button id="btnSendToPosId" type="button" class="btn btn-primary col-md-2" style="margin-left:5px;">
-                                            ارسال به دستگاه کارتخوان
-                                        </button>
-                                        <input type="text" style="display:none" placeholder="URL" value="http://127.0.0.1:8080/pcpos" id="pcpos_url" />
-                                        <textarea style="display:none" cols="40" rows="2" placeholder="Settelment" id="settelment">1=500,2=500</textarea>
-                                        <textarea style="display:none" cols="40" rows="2" placeholder="Key Value" value="" id="key_value">تت=23, بب=27,کک=28</textarea>
-                                        <div id="result" style="display:none"></div>
-                                    }
-                                }
-
-                                if (Model.RequestState == "دارای دستور پرداخت")
-                                {
-                                    if ((Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.MaliAdminGholami) ||
-                            (Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.Programmer))
-                                    {
-                                        <input type="submit" onclick="return confirm('آیا مطمئن هستید ؟');" name="submit" value="لغو دستور پرداخت" class="btn btn-danger col-md-2" style="margin-left:5px;" />
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if ((Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.MaliAdminGholami) ||
-                            (Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.Programmer))
-                                {
-                                    <input type="submit" onclick="return confirm('آیا مطمئن هستید ؟');" name="submit" value="لغو تایید پرداخت" class="btn btn-danger col-md-2" style="margin-left:5px;" />
-                                }
-                            }
-                            if (Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.Programmer) /// in IF Hazf Shavad
-                                {
-                                <button id="PaymentInquiryId" type="button" class="btn btn-primary col-md-2" style="margin-left:5px;">
-                                    استعلام پرداخت از بانک
-                                </button>
-                                }
-
-}
-                    else if (IsFaVA == false)
-                    {
-                        if (Model.RequestState != "تایید پرداخت"
-                            && (!(Model.SubSystem == "تبصره 23" || Model.SubSystem == "سامانه دارو درمان - مجوز بهداشتی" || Model.SubSystem == "پروانه ها" || Model.SubSystem == "گواهی حق ثبت")))
-                        {
-                            if (Model.RequestState == "دارای دستور پرداخت")
-                            {
-                                <button id="btnSendToPosId" type="button" class="btn btn-primary col-md-2" style="margin-left:5px;">
-                                    ارسال به دستگاه کارتخوان
-                                </button>
-                                <input type="text" style="display:none" placeholder="URL" value="http://127.0.0.1:8080/pcpos" id="pcpos_url" />
-                                <textarea style="display:none" cols="40" rows="2" placeholder="Settelment" id="settelment">1=500,2=500</textarea>
-                                <textarea style="display:none" cols="40" rows="2" placeholder="Key Value" value="" id="key_value">تت=23, بب=27,کک=28</textarea>
-                                <div id="result" style="display:none"></div>
-                            }
-                        }
-
-                        //if ((Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.ProvinceExpert00) || // کاربر ارشد استان
-                        //    (Infrastructure.Sessions.AuthenticatedUser.Role == Enums.Roles.ProvinceExpert01)) // کاربر مالی استان
-
-                        if (Model.SubSystem == "پروانه ها" || Model.SubSystem == "گواهی حق ثبت") // فقط زیر سیستم پروانه ها و گواهی حق ثبت را بتوانند ببینند
-                        {
-                            if (IsApprovallicense == true) // اگر مجوز تایید پروانه ها رو داشت
-                            {
-                                if (Model.RequestStateCode == (int)Enums.RequestStates.InitialRequet)
-                                {
-                                    <input type="submit" name="submit" onclick="return confirm('آیا مطمئن هستید ؟');" value="دستور پرداخت" class="btn btn-success col-md-2" style="margin-left:5px;" />
-                                }
-                                if ((Model.RequestStateCode == (int)Enums.RequestStates.PaymentOrder) || (Model.RequestStateCode == (int)Enums.RequestStates.InitialRequet))
-                                {
-                                    <input type="submit" name="submit" onclick="return confirm('آیا مطمئن هستید ؟');" value="@Resources.Action.Incomplete" class="btn btn-danger col-md-2" style="margin-left:5px;" />
-                                }
-                                if (Model.RequestStateCode == (int)Enums.RequestStates.Payment)
-                                {
-                                    <input type="submit" name="submit" onclick="return confirm('آیا مطمئن هستید ؟');" value="@Resources.Enum.RequestStates.PaymentConfirmation" class="btn btn-success col-md-2" style="margin-left:5px;" />
-                                }
-                                if (Model.RequestStateCode == (int)Enums.RequestStates.PaymentOrder)
-                                {
-                                    <button id="btnSendToPosId" type="button" class="btn btn-primary col-md-2" style="margin-left:5px;">
-                                        ارسال به دستگاه کارتخوان
-                                    </button>
-                                    <input type="text" style="display:none" placeholder="URL" value="http://127.0.0.1:8080/pcpos" id="pcpos_url" />
-                                    <textarea style="display:none" cols="40" rows="2" placeholder="Settelment" id="settelment">1=500,2=500</textarea>
-                                    <textarea style="display:none" cols="40" rows="2" placeholder="Key Value" value="" id="key_value">تت=23, بب=27,کک=28</textarea>
-                                    <div id="result" style="display:none"></div>
-                                }
-                            }
-                            <button onclick="ViewFile()" type="button" class="btn btn-primary col-md-2" data-toggle="modal" data-target="#myModal" style="margin-left:5px;">
-                                مشاهده مدارک
-                            </button>
-                        }
-                    }
-
-                    @*<= دستگاه کارتخوان <= *@
-
                         <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
                            href="/HomeMain/Main/" style="float:left;">
                             <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
                         </a>
-
-
                     </div>
                 </div>
             </div>

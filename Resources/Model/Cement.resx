@@ -120,6 +120,9 @@
   <data name="Address" xml:space="preserve">
     <value>آدرس دقیق</value>
   </data>
+  <data name="AmountPaid" xml:space="preserve">
+    <value>مبلغ پرداخت</value>
+  </data>
   <data name="BuyerMobile" xml:space="preserve">
     <value>موبایل خریدار</value>
   </data>

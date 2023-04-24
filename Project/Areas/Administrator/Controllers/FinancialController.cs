@@ -18,55 +18,390 @@ namespace OPS.Areas.Administrator.Controllers
     public partial class FinancialController : Infrastructure.BaseControllerWithUnitOfWork
     {
 
+
         [System.Web.Mvc.HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert01)]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
         public virtual ActionResult Index()
         {
-            var varSubsystems = UnitOfWork.SubSystemRepository.Get().OrderBy(current => current.Name).ToList();
-            ViewData["SubSystem"] = new System.Web.Mvc.SelectList(varSubsystems, "Id", "Name", null);
-
-            var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
-            ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
-
-            var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
-            ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
-
-            return View();
+            Viewdata();
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+            return View(cementViewModel);
         }
+
+        private void Viewdata()
+        {
+            var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
+            base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", null).OrderByDescending(x => x.Text);
+
+            var ProductType = UnitOfWork.ProductTypeRepository.GetProductTypes().ToList(); /// نوع کالا
+            base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", null).OrderByDescending(x => x.Text); /// تیپ یک
+
+            var PackageType = UnitOfWork.PackageTypeRepository.GetPackageTypes().ToList(); /// تیپ یک
+            base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", null).OrderByDescending(x => x.Text); /// کیسه
+
+            var FactoryName = UnitOfWork.FactoryNameRepository.GetFactoryNames().ToList(); /// سیمان
+            base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", null).OrderBy(x => x.Text); /// ممتازان کرمان
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
+        public virtual System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
+        {
+            bool Search = false;
+            System.Globalization.PersianCalendar opersian = new System.Globalization.PersianCalendar();
+
+            var varRequest =
+                UnitOfWork.FinancialManagementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User);
+
+            #region Condition
+
+            if (!string.IsNullOrEmpty(viewModel?.InvoiceNumber.ToString()))
+            {
+                varRequest = varRequest.Where(x => x.InvoiceNumber == viewModel.InvoiceNumber);
+                Search = true;
+            }
+
+            if (viewModel?.ProductName != null && viewModel.ProductName != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.ProductNameId == viewModel.ProductName);
+                Search = true;
+            }
+
+            if (viewModel?.ProductType != null && viewModel.ProductType != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.ProductTypeId == viewModel.ProductType);
+                Search = true;
+            }
+
+            if (viewModel?.PackageType != null && viewModel.PackageType != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.PackageTypeId == viewModel.PackageType);
+                Search = true;
+            }
+
+            if (viewModel?.FactoryName != null && viewModel.FactoryName != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.FactoryNameId == viewModel.FactoryName);
+                Search = true;
+            }
+
+            if (viewModel?.FromAmount.ToString().Length > 0 && viewModel.ToAmount.ToString().Length > 0 && viewModel.FromAmount <= viewModel.ToAmount)
+            {
+                varRequest =
+                    varRequest
+                    .Where(current => current.AmountPaid >= viewModel.FromAmount && current.AmountPaid <= viewModel.ToAmount)
+                    ;
+                Search = true;
+            }
+            if (viewModel?.StartDate.ToString().Length > 0)
+            {
+                varRequest =
+                    varRequest
+                    .Where(current => current.InsertDateTime >= viewModel.StartDate)
+                    ;
+                Search = true;
+            }
+            if (viewModel?.EndDate.ToString().Length > 0)
+            {
+                var EndDate1 = viewModel.EndDate;
+                var EndDate2 = EndDate1.Value.AddDays(1);
+                varRequest =
+                    varRequest
+                    .Where(current => current.InsertDateTime < EndDate2)
+                    ;
+                Search = true;
+            }
+            #endregion
+
+            try
+            {
+                var ViewModelsvarBanks
+                    = varRequest.OrderBy(current => current.InvoiceNumber)
+                    .ToList()
+                    .Select(current =>
+                        new ViewModels.Areas.Administrator.Cement.CementViewModel()
+                        {
+                            Id = current.Id,
+                            InvoiceNumber = current.InvoiceNumber,
+                            StringProductName = current.ProductName.Name,
+                            StringProductType = current.ProductType.Name,
+                            StringPackageType = current.PackageType.Name,
+                            StringFactoryName = current.FactoryName.Name,
+                            AmountPaid = current.AmountPaid,
+                            StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
+                        })
+                        .AsQueryable();
+
+                var varResult =
+                    Utilities.Kendo.HtmlHelpers
+                    .ParseGridData<ViewModels.Areas.Administrator.Cement.CementViewModel>(ViewModelsvarBanks);
+
+                return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.JsonResult GetRequests() => (JsonResult)Search(null);
+
 
         [System.Web.Mvc.HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert01)]
-        public virtual ActionResult Index2()
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult Create()
         {
-
-            var varSubsystems = UnitOfWork.SubSystemRepository.Get().OrderBy(current => current.Name).ToList();
-            ViewData["SubSystem"] = new System.Web.Mvc.SelectList(varSubsystems, "Id", "Name", null);
-
-            //var varServiceTariffs = UnitOfWork.ServiceTariffRepository.Get().OrderBy(current => current.Name).ToList();
-            //ViewData["ServiceTariffs"] = new System.Web.Mvc.SelectList(varServiceTariffs, "Id", "Name", null);
-
-            var varServiceTariffs = UnitOfWork.ServiceTariffRepository.Get()
-                .ToList()
-                .Select(x => new ViewModels.ComboboxItemGuid
-                {
-                    Id = x.Id,
-                    Name = x.NameString
-                })
-                .OrderBy(current => current.Name)
-                .ToList();
-            ViewBag.ServiceTariffs = varServiceTariffs;
-
-            var varRequestStates = Infrastructure.Utility.EnumList(Enums.EnumTypes.RequestStates);
-            ViewData["RequestState"] = new System.Web.Mvc.SelectList(varRequestStates, "Id", "Name", null);
-
-            var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
-            ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
-
-            var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
-            ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
-
-            return View();
+            Viewdata();
+            ViewBag.PageMessages = null;
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+            return View(cementViewModel);
         }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult Create(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            ViewBag.PageMessages = null;
+
+
+            var oFindSubHeadLine =
+                 UnitOfWork.FinancialManagementRepository
+                 .GetByUser(Infrastructure.Sessions.AuthenticatedUser.User)
+                 .Where(current => current.ProductNameId == cementViewModel.ProductName)
+                 .Where(current => current.ProductTypeId == cementViewModel.ProductType)
+                 .Where(current => current.PackageTypeId == cementViewModel.PackageType)
+                 .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
+                 .FirstOrDefault()
+                 ;
+
+            if (oFindSubHeadLine != null)
+            {
+                ViewBag.PageMessages += "خدمات مشابه با همین ویژگی ها در سیستم ثبت شده است.";
+                ViewBag.PageMessages += "<br/>";
+                return View(cementViewModel);
+            }
+            
+            if (cementViewModel.FromAmount == null || cementViewModel.FromAmount.Value <= 0)
+            {
+                ViewBag.PageMessages += "مبلغ را وارد نمایید.";
+                ViewBag.PageMessages += "<br/>";
+                return View(cementViewModel);
+            }
+
+            if (ModelState.IsValid)
+            {
+                Models.FinancialManagement financialManagement = new Models.FinancialManagement();
+                financialManagement.ProductNameId = cementViewModel.ProductName;
+                financialManagement.ProductTypeId = cementViewModel.ProductType;
+                financialManagement.PackageTypeId = cementViewModel.PackageType;
+                financialManagement.FactoryNameId = cementViewModel.FactoryName;
+                financialManagement.AmountPaid = cementViewModel.FromAmount.Value;
+                UnitOfWork.FinancialManagementRepository.Insertdata(financialManagement);
+                UnitOfWork.Save();
+
+                ViewBag.PageMessages += "خدمات درخواستی شما با موفقیت ثبت گردید  ";
+            }
+
+            return View(cementViewModel);
+        }
+
+        //[System.Web.Mvc.HttpGet]
+        //[Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        //public virtual System.Web.Mvc.ActionResult Edit(System.Guid id)
+        //{
+        //    ViewBag.PageMessages = null;
+
+        //    if (id == null)
+        //    {
+        //        return (RedirectToAction
+        //            (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
+        //    }
+
+        //    ViewModels.Areas.Administrator.HeadLine.EditViewModel oOffice
+        //        = UnitOfWork.HeadLineRepository.Get()
+        //        .Where(current => current.Id == id)
+        //        .ToList()
+        //        .Select(current => new ViewModels.Areas.Administrator.HeadLine.EditViewModel()
+        //        {
+        //            Id = current.Id,
+        //            Name = current.Name,
+        //            Code = current.Code,
+        //        })
+        //        .FirstOrDefault()
+        //        ;
+
+        //    if (oOffice == null)
+        //    {
+        //        return (RedirectToAction
+        //            (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+        //    }
+
+        //    return (View(oOffice));
+        //}
+
+        //[System.Web.Mvc.HttpPost]
+        //[Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        //public virtual System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.HeadLine.EditViewModel Office)
+        //{
+        //    ViewBag.PageMessages = null;
+
+        //    try
+        //    {
+        //        var OldValue =
+        //            UnitOfWork.HeadLineRepository
+        //            .Get()
+        //            .Where(current => current.Id == Office.Id)
+        //            .FirstOrDefault()
+        //            ;
+
+        //        Models.HeadLine oFindedOther;
+        //        Models.HeadLine oFindedOffice;
+
+        //        oFindedOther =
+        //            UnitOfWork.HeadLineRepository
+        //            .Get()
+        //            .Where(current => current.Code == Office.Code)
+        //            .Where(current => current.Id != Office.Id)
+        //            .FirstOrDefault()
+        //            ;
+
+        //        oFindedOffice =
+        //            UnitOfWork.HeadLineRepository
+        //            .Get()
+        //            .Where(current => current.Id == Office.Id)
+        //            .FirstOrDefault()
+        //            ;
+
+        //        if (oFindedOther != null)
+        //        {
+        //            ViewBag.PageMessages += "تعرفه ای با نام  یا کد مشابه در سیستم ثبت شده است.";
+        //            ViewBag.PageMessages += "<br/>";
+        //            return View(Office);
+        //        }
+
+
+        //        // **************************************************
+        //        // **************************************************
+        //        if (ModelState.IsValid)
+        //        {
+        //            oFindedOffice.UpdateDateTime = DateTime.Now;
+        //            oFindedOffice.Name = Office.Name;
+        //            oFindedOffice.Code = Office.Code;
+
+        //            UnitOfWork.HeadLineRepository.Update(oFindedOffice);
+        //            UnitOfWork.Save();
+
+        //            ViewBag.PageMessages += "تعرفه درخواستی شما با موفقیت ثبت گردید  ";
+        //        }
+
+        //        return View(Office);
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+        //    }
+        //}
+
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
+        public virtual System.Web.Mvc.ActionResult Delete(System.Guid id)
+        {
+            ViewBag.PageMessages = null;
+
+            if (id == null)
+            {
+                return (RedirectToAction
+                    (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
+            }
+
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel 
+                = UnitOfWork.FinancialManagementRepository.Get()
+                .Where(current => current.Id == id)
+                .ToList()
+                .Select(current => new ViewModels.Areas.Administrator.Cement.CementViewModel()
+                {
+                    Id = current.Id,
+                    InvoiceNumber = current.InvoiceNumber,
+                    StringProductName = current.ProductName.Name,
+                    StringProductType = current.ProductType.Name,
+                    StringPackageType = current.PackageType.Name,
+                    StringFactoryName = current.FactoryName.Name,
+                    StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
+                })
+                .FirstOrDefault()
+                ;
+
+            if (cementViewModel == null)
+            {
+                return (RedirectToAction
+                    (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+            }
+
+            return (View(cementViewModel));
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.ActionName("Delete")]
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
+        public virtual System.Web.Mvc.ActionResult DeleteConfirmed(System.Guid id)
+        {
+            try
+            {
+                var oFinancialManagement =
+                    UnitOfWork.FinancialManagementRepository.Get()
+                    .Where(current => current.Id == id)
+                    .FirstOrDefault();
+
+                ViewBag.PageMessages = string.Empty;
+
+                if (oFinancialManagement != null)
+                {
+                    oFinancialManagement.IsActived = false;
+                    oFinancialManagement.IsDeleted = true;
+                    oFinancialManagement.UpdateDateTime = DateTime.Now;
+                    UnitOfWork.FinancialManagementRepository.Update(oFinancialManagement);
+                    UnitOfWork.Save();
+                    return (RedirectToAction(MVC.Administrator.Financial.Index()));
+                }
+
+                else
+                    return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+            }
+
+            catch (Exception ex)
+            {
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert01)]
@@ -622,108 +957,6 @@ namespace OPS.Areas.Administrator.Controllers
             {
                 throw ex;
             }
-        }
-
-        [System.Web.Mvc.HttpPost]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert01)]
-        public virtual System.Web.Mvc.JsonResult GetRequests()
-        {
-            var varRequest =
-                UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                .Where(current => current.Bank_AppStatusCode == 0)
-                .Where(x => x.SubSystem.Code == (int)Enums.SubSystems.Drug_Clearance23 ? x.AmountPaid > 0 : true)
-                .Where(current => current.Bank_AppStatusDescription == "COMMIT")
-                ;
-
-            DateTime nowDateTime = DateTime.Now.AddDays(-3);
-            int PaymentConfirmation = (int)Enums.RequestStates.PaymentConfirmation;
-
-            var varSubsystems = UnitOfWork.SubSystemRepository.Get().OrderBy(current => current.Name).ToList();
-            ViewData["SubSystem"] = new System.Web.Mvc.SelectList(varSubsystems, "Id", "Name", null);
-
-            var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
-            ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
-
-            var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
-            ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
-
-            var ViewModelsvarRequest
-                 = varRequest
-                 .Where(current => current.RequestState == PaymentConfirmation)
-                 .Where(current => current.Bank_RealTransactionDateTime >= nowDateTime)
-                 .Where(x => x.SubSystem.Code == (int)Enums.SubSystems.Drug_Clearance23 ? x.AmountPaid > 0 : true)
-                 .OrderByDescending(current => current.Bank_RealTransactionDateTime)
-                 .ThenBy(current => current.CompanyName)
-                 .ToList()
-                 .Select(current =>
-                     new
-                     {
-                         Id = current.Id,
-                         SubSystem = current.SubSystem.Name,
-                         CompanyName = current.CompanyName,
-                         TotalValue = current.TotalValue,
-                         CommodityType = current.CommodityType,
-                         CompanyNationalCode = current.CompanyNationalCode,
-                         Province = current.Province.Name,
-                         InvoiceNumber = current.InvoiceNumber,
-                         InvoiceDate = new Infrastructure.Calander(current.InvoiceDate).Persion(),
-                         RequestCode = current.RecordNumber,
-                         RequestDate = current.RecordDate,
-                         PerformNumber = current.PerformNumber,
-                         PerformDate = current.PerformDate,
-                         CurrencyCode = Infrastructure.Utility.EnumValue(Enums.EnumTypes.CurrencyUnits, current.CurrencyCode),
-                         CurrencyValue = current.CurrencyValue,
-                         AmountPaid = current.AmountPaid,
-                         Bank_TraceNo = current.Bank_TraceNo.Value.ToString(),
-                         Bank_BankReciptNumber = current.Bank_BankReciptNumber.Substring(8),
-                         Bank_ShamsiDate = current.Bank_ShamsiDate != null ? (current.Bank_ShamsiDate.Substring(0, 4)
-                         + "/" + current.Bank_ShamsiDate.Substring(4, 2)
-                         + "/" + current.Bank_ShamsiDate.Substring(6, 2)) : "[تاریخ ندارد]",
-                         Tarefeh = current.Tariffs != null ? current.Tariffs.Value : 0,
-                         SystemTarefeh = current.ServiceTariff != null ? Convert.ToInt32(current.ServiceTariff.Amount) : 0,
-                         LisenceNumber = current.LicenseNumber,
-                         LicenseDate = current.LicenseDate != null ? new Infrastructure.Calander(current.LicenseDate.Value).Persion() : "[نا مشخص]"
-
-                     })
-                     .ToList()
-                     .Select(current =>
-                     new ViewModels.Areas.Administrator.Request.IndexFinancialViewModel()
-                     {
-                         Id = current.Id,
-                         SubSystem = current.SubSystem,
-                         CompanyName = current.CompanyName,
-                         TotalValue = current.TotalValue,
-                         CommodityType = current.CommodityType,
-                         CompanyNationalCode = current.CompanyNationalCode,
-                         Province = current.Province,
-                         InvoiceNumber = current.InvoiceNumber,
-                         InvoiceDate = current.InvoiceDate,
-                         RecordNumber = current.RequestCode,
-                         RecordDate = current.RequestDate,
-                         PerformNumber = current.PerformNumber,
-                         PerformDate = current.PerformDate,
-                         CurrencyCode = current.CurrencyCode,
-                         CurrencyValue = current.CurrencyValue,
-                         AmountPaid = current.AmountPaid,
-                         Bank_TraceNo = current.Bank_TraceNo,
-                         Bank_BankReciptNumber = current.Bank_BankReciptNumber,
-                         Bank_ShamsiDate = current.Bank_ShamsiDate,
-                         SystemTarefeh = current.SystemTarefeh,
-                         Tarefeh = current.Tarefeh,
-                         LisenceNumber = current.LisenceNumber,
-                         LicenseDate = current.LicenseDate
-                     })
-                     .AsQueryable();
-
-            object dataSource;
-
-            var varResult =
-                Utilities.Kendo.HtmlHelpers
-                .ParseGridData<ViewModels.Areas.Administrator.Request.IndexFinancialViewModel>(ViewModelsvarRequest, true, out dataSource);
-
-            Infrastructure.Sessions.SearchDataSource = dataSource;
-
-            return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
         }
 
         [System.Web.Mvc.HttpGet]

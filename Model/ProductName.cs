@@ -29,5 +29,6 @@ namespace Models
         public virtual System.Collections.Generic.IList<ProductType> ProductTypes { get; set; }
         public virtual System.Collections.Generic.IList<FactoryName> FactoryNames { get; set; }
         public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
+        public virtual System.Collections.Generic.IList<FinancialManagement> FinancialManagements { get; set; }
     }
 }

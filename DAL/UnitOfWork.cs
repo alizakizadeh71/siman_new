@@ -502,6 +502,19 @@
                 return (_FactorCementRepository);
             }
         }
+        
+        private IFinancialManagementRepository _FinancialManagementRepository;
+        public IFinancialManagementRepository FinancialManagementRepository
+        {
+            get
+            {
+                if (_FinancialManagementRepository == null)
+                {
+                    _FinancialManagementRepository = new FinancialManagementRepository(DatabaseContext);
+                }
+                return (_FinancialManagementRepository);
+            }
+        }
 
 
         private IRoleRepository _RoleRepository;

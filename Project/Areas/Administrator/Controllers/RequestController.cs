@@ -156,6 +156,7 @@ namespace OPS.Areas.Administrator.Controllers
                     .Select(current =>
                         new ViewModels.Areas.Administrator.Cement.CementViewModel()
                         {
+                            Id = current.Id,
                             InvoiceNumber = current.InvoiceNumber,
                             StringProductName = current.ProductName.Name,
                             StringProductType = current.ProductType.Name,
@@ -305,65 +306,27 @@ namespace OPS.Areas.Administrator.Controllers
         {
             try
             {
-                ViewBag.IsApprovallicense = Infrastructure.Sessions.AuthenticatedUser.User.IsApprovallicense; // مجوز دسترسی پروانه ها
-                ViewBag.IsFaVA = Infrastructure.Sessions.AuthenticatedUser.User.Role.Code == 860 ? true : false; // اگر فاوا بود دکمه ها نمایش داده نشود
                 ViewBag.MessageList = UnitOfWork.MessageRepository.MetMessageByRequestId(id);
-
                 ViewBag.PageMessages = null;
 
-                #region Update Currency Ration
-                var oLastRequest =
-                    UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                    .Where(current => current.Id == id)
-                    .FirstOrDefault()
-                    ;
-
-                var oCurrency = UnitOfWork.CurrencyUnitRepository.GetByCode(oLastRequest.CurrencyCode);
-
-                //if (oLastRequest.RequestState < (int)Enums.RequestStates.PaymentOrder)
-                //{
-                //    oLastRequest.CurrencyRation = oCurrency.Ratio;
-
-                //    if (oLastRequest.SubSystem.Code == (int)Enums.SubSystems.Drug_Clearance)
-                //        oLastRequest.AmountPaid = Convert.ToInt64(oLastRequest.CurrencyValue * oCurrency.Ratio) + 33000;
-                //    else
-                //        oLastRequest.AmountPaid = Convert.ToInt64(oLastRequest.CurrencyValue * oCurrency.Ratio);
-
-                //    //oLastRequest.AmountPaid = Convert.ToInt64(oLastRequest.CurrencyValue * oCurrency.Ratio) + 33000;
-                //    UnitOfWork.RequestRepository.Update(oLastRequest);
-                //    UnitOfWork.Save();
-                //}
-                #endregion
-
                 var oRequest =
-                 UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
+                 UnitOfWork.FactorCementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User)
                  .Where(current => current.Id == id)
                  .ToList()
-                 .Select(current => new ViewModels.Areas.Administrator.Request.EditViewModel()
+                 .Select(current => new ViewModels.Areas.Administrator.Cement.CementViewModel()
                  {
                      Id = current.Id,
-                     SubSystem = current.SubSystem.Name,
-                     CompanyName = current.CompanyName,
-                     Province = current.Province.Name,
-                     CompanyNationalCode = current.CompanyNationalCode,
-                     RecordNumber = current.RecordNumber,
-                     RecordDate = current.RecordDate,
                      InvoiceNumber = current.InvoiceNumber,
-                     ServiceTariff = current.ServiceTariff?.NameString,
-                     InvoiceDate = new Infrastructure.Calander(current.InvoiceDate).Persion(),
-                     CurrencyValue = current.CurrencyValue,
-                     CurrencyRation = current.CurrencyRation,
-                     BaseCurrencyValue
-                     = (current.BaseCurrencyValue ?? (current.CurrencyValue * current.CurrencyRation))
-                     + " " + oCurrency.Name,
-                     AmountPaid = current.AmountPaid,
-                     RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, current.RequestState),
-                     RequestStateCode = current.RequestState,
-                     Bank_TraceNo = current.Bank_TraceNo,
-                     Bank_ShamsiDate = current.Bank_ShamsiDate,
+                     StringProductName = current.ProductName.Name,
+                     StringProductType = current.ProductType.Name,
+                     StringPackageType = current.PackageType.Name,
+                     StringFactoryName = current.FactoryName.Name,
+                     StringTonnage = current.Tonnage.Name,
+                     StringProvince = current.Province.Name,
+                     StringCity = current.City.Name,
+                     BuyerMobile = current.BuyerMobile,
+                     StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
                      Description = current.Description,
-                     DepositNumber = current.DepositNumber,
-                     SystemMessage = string.Empty
                  })
                  .FirstOrDefault();
 

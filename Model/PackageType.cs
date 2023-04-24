@@ -37,5 +37,6 @@ namespace Models
         public System.Guid ProductTypeId { get; set; }
         public virtual System.Collections.Generic.IList<Tonnage> Tonnages { get; set; }
         public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
+        public virtual System.Collections.Generic.IList<FinancialManagement> FinancialManagements { get; set; }
     }
 }

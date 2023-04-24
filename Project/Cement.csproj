@@ -490,6 +490,7 @@
     <Content Include="Areas\Administrator\Views\Request\PrintNewFactor.cshtml" />
     <Content Include="Areas\Administrator\Views\CentralBank\Index.cshtml" />
     <Content Include="App_Data\orgCertBundle.pfx" />
+    <Content Include="Areas\Administrator\Views\Financial\Create.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">

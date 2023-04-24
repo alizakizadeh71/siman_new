@@ -187,13 +187,12 @@
                             strTemplate +=
                                 '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/Request/Edit/'
                                 + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></span></a>';
-                            if (dataItem.RequestState_Value <2 && (@Infrastructure.Sessions.AuthenticatedUser.RoleCode==800|| @Infrastructure.Sessions.AuthenticatedUser.RoleCode==1000))
+                            @*if (dataItem.RequestState_Value <2 && (@Infrastructure.Sessions.AuthenticatedUser.RoleCode==800|| @Infrastructure.Sessions.AuthenticatedUser.RoleCode==1000))
                             {
-                                // اگر کاربر مالی عادی بود و تبصره 23 نبود دسترسی ویرایش را نداشته باشد
                                     strTemplate +=
                                     ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.UpAmontPaid)" href="/Administrator/Request/UpAmountPaid/'
                                     + dataItem.Id + '"><img src="../../../Content/Icon/UpAmontPaid.png"/></span></a>';
-                            }
+                            }*@
                             return (strTemplate);
                         },
                     },

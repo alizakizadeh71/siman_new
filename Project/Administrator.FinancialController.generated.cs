@@ -46,6 +46,24 @@ namespace OPS.Areas.Administrator.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Search()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Search);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Delete()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DeleteConfirmed()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult CompanyOption()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.CompanyOption);
@@ -103,11 +121,14 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string Index2 = "Index2";
+            public readonly string Search = "Search";
+            public readonly string GetRequests = "GetRequests";
+            public readonly string Create = "Create";
+            public readonly string Delete = "Delete";
+            public readonly string DeleteConfirmed = "Delete";
             public readonly string CompanyOption = "CompanyOption";
             public readonly string RequestOption = "RequestOption";
             public readonly string DateOption = "DateOption";
-            public readonly string GetRequests = "GetRequests";
             public readonly string DetailsInvoiceNumber = "DetailsInvoiceNumber";
             public readonly string DetailsId = "DetailsId";
             public readonly string DetailsByTracingCode = "DetailsByTracingCode";
@@ -120,11 +141,14 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string Index2 = "Index2";
+            public const string Search = "Search";
+            public const string GetRequests = "GetRequests";
+            public const string Create = "Create";
+            public const string Delete = "Delete";
+            public const string DeleteConfirmed = "Delete";
             public const string CompanyOption = "CompanyOption";
             public const string RequestOption = "RequestOption";
             public const string DateOption = "DateOption";
-            public const string GetRequests = "GetRequests";
             public const string DetailsInvoiceNumber = "DetailsInvoiceNumber";
             public const string DetailsId = "DetailsId";
             public const string DetailsByTracingCode = "DetailsByTracingCode";
@@ -134,6 +158,38 @@ namespace OPS.Areas.Administrator.Controllers
         }
 
 
+        static readonly ActionParamsClass_Search s_params_Search = new ActionParamsClass_Search();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Search SearchParams { get { return s_params_Search; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Search
+        {
+            public readonly string viewModel = "viewModel";
+        }
+        static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Create CreateParams { get { return s_params_Create; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Create
+        {
+            public readonly string cementViewModel = "cementViewModel";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_DeleteConfirmed s_params_DeleteConfirmed = new ActionParamsClass_DeleteConfirmed();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DeleteConfirmed DeleteConfirmedParams { get { return s_params_DeleteConfirmed; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DeleteConfirmed
+        {
+            public readonly string id = "id";
+        }
         static readonly ActionParamsClass_CompanyOption s_params_CompanyOption = new ActionParamsClass_CompanyOption();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_CompanyOption CompanyOptionParams { get { return s_params_CompanyOption; } }
@@ -200,10 +256,12 @@ namespace OPS.Areas.Administrator.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Create = "Create";
                 public readonly string DetailsId = "DetailsId";
                 public readonly string Index = "Index";
                 public readonly string PaymentReport = "PaymentReport";
             }
+            public readonly string Create = "~/Areas/Administrator/Views/Financial/Create.cshtml";
             public readonly string DetailsId = "~/Areas/Administrator/Views/Financial/DetailsId.cshtml";
             public readonly string Index = "~/Areas/Administrator/Views/Financial/Index.cshtml";
             public readonly string PaymentReport = "~/Areas/Administrator/Views/Financial/PaymentReport.cshtml";
@@ -221,9 +279,43 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Index2()
+        public override System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
         {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index2);
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Search);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.JsonResult GetRequests()
+        {
+            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GetRequests);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Create()
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Create(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cementViewModel", cementViewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Delete(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DeleteConfirmed(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
@@ -245,12 +337,6 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DateOption);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.JsonResult GetRequests()
-        {
-            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GetRequests);
             return callInfo;
         }
 

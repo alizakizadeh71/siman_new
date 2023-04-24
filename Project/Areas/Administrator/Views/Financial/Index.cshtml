@@ -1,4 +1,4 @@
-﻿@model ViewModels.Areas.Administrator.Request.SearchViewModel
+﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
 
 @{
     string strTitle =
@@ -6,16 +6,83 @@
         Resources.Action.ListOf,
         Resources.Model.Request.EntitiesName);
 }
+<style>
+    input#CompanyName {
+        color: gray;
+        padding: 6px 12px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+    }
+</style>
+
 <script type="text/javascript">
 
-    jQuery(document).ready(function ($) {
-        $('#tabs').tab();
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+    // باز شدن در صفحه جدید
+    $(document).on('click', 'a.btn-blank', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        window.open(url, '_blank');
     });
 
+    function Comma(Num) {
+        Num += '';
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        x = Num.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1))
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        return x1 + x2;
+    }
+
+
     $(document).ready(function () {
+
+        $('input#CompanyName').val('نام شرکت باید به طور دقیق وارد شود');
+
+        $('#StartDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $('#EndDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $('#PayStartDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $('#PayEndDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
         $("#SearchPanelHeader").click(function () {
             $("#SearchPanelBody").toggle(1000);
         });
+
+        //$("#input#CompanyName").click(function () {
+        //    this.style.color.val('red')
+        //});
 
         //*********************************
         var varDataSource =
@@ -77,7 +144,6 @@
 
             columnMenu: {
                 columns: true,
-                sortable: true,
                 filterable: true,
                 messages: {
                     lock: "قفل شده",
@@ -108,157 +174,89 @@
                         template: "#= ++rowNumber #",
                     },
                     {
+                        title: "جزئیات و اقدامات",
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        width: "50px",
+                        width: "10px",
                         title: "",
                         template: function (dataItem) {
 
                             var strTemplate = "";
 
-                            strTemplate +=
-                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/Financial/DetailsId/'
-                                + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></span></a>';
+                            @*strTemplate +=
+                                '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Financial/Edit/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></span></a>';*@
 
+                            strTemplate +=
+                            ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/Financial/Delete/'
+                            + dataItem.Id + '"><img src="../../../Content/Icon/UpAmontPaid.png"/></span></a>';
                             return (strTemplate);
                         },
                     },
                     {
                         hidden: false,
-                        locked: false,
+                        locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Request.SubSystem",
-                        field: "@Resources.Model.Strings.RequestKeys.SubSystem",
-                        width: "160px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.CompanyName",
-                        field: "@Resources.Model.Strings.RequestKeys.CompanyName",
-                        width: "220px",
+                        title: "@Resources.Model.Cement.InvoiceNumber",
+                        field: "@Resources.Model.Strings.CementKeys.InvoiceNumber",
+                        width: "10px",
                     },
                     {
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Request.Province",
-                        field: "@Resources.Model.Strings.RequestKeys.Province",
-                        width: "100px",
+                        title: "@Resources.Model.Cement.AmountPaid",
+                        field: "@Resources.Model.Strings.CementKeys.AmountPaid",
+                        width: "10px",
                     },
                     {
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Request.AmountPaid",
-                        field: "@Resources.Model.Strings.RequestKeys.AmountPaid",
-                        width: "120px",
+                        title: "@Resources.Model.Cement.StringProductName",
+                        field: "@Resources.Model.Strings.CementKeys.StringProductName",
+                        width: "20px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Cement.StringProductName",
+                        field: "@Resources.Model.Strings.CementKeys.StringProductName",
+                        width: "20px",
                     },
                     {
                         hidden: false,
                         locked: false,
                         lockable: true,
-                        title: "@Resources.Model.Request.CompanyNationalCode",
-                        field: "@Resources.Model.Strings.RequestKeys.CompanyNationalCode",
-                        width: "80px",
+                        title: "@Resources.Model.Cement.StringProductType",
+                        field: "@Resources.Model.Strings.CementKeys.StringProductType",
+                        width: "20px",
                     },
                     {
                         hidden: false,
-                        locked: false,
+                        locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Request.CommodityType",
-                        field: "@Resources.Model.Strings.RequestKeys.CommodityType",
-                        width: "130px",
+                        title: "@Resources.Model.Cement.StringPackageType",
+                        field: "@Resources.Model.Strings.CementKeys.StringPackageType",
+                        width: "20px",
                     },
                     {
                         hidden: false,
-                        locked: false,
+                        locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Request.TotalValue",
-                        field: "@Resources.Model.Strings.RequestKeys.TotalValue",
-                        width: "110px",
+                        title: "@Resources.Model.Cement.StringFactoryName",
+                        field: "@Resources.Model.Strings.CementKeys.StringFactoryName",
+                        width: "20px",
                     },
                     {
                         hidden: false,
-                        locked: false,
+                        locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Request.RecordNumber",
-                        field: "@Resources.Model.Strings.RequestKeys.RecordNumber",
-                        width: "110px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.RecordDate",
-                        field: "@Resources.Model.Strings.RequestKeys.RecordDate",
-                        width: "110px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.Bank_TraceNo",
-                        field: "@Resources.Model.Strings.RequestKeys.Bank.TraceNo",
-                        width: "110px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.Bank_ShamsiDate",
-                        field: "@Resources.Model.Strings.RequestKeys.Bank.ShamsiDate",
-                        width: "110px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.InvoiceNumber",
-                        field: "@Resources.Model.Strings.RequestKeys.InvoiceNumber",
-                        width: "110px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.InvoiceDate",
-                        field: "@Resources.Model.Strings.RequestKeys.InvoiceDate",
-                        width: "110px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.LisenceNumber",
-                        field: "@Resources.Model.Strings.RequestKeys.LisenceNumber",
-                        width: "110px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.LicenseDate",
-                        field: "@Resources.Model.Strings.RequestKeys.LicenseDate",
-                        width: "110px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.Tarefeh",
-                        field: "@Resources.Model.Strings.RequestKeys.Tarefeh",
-                        width: "110px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Request.SystemTarefeh",
-                        field: "@Resources.Model.Strings.RequestKeys.SystemTarefeh",
-                        width: "110px",
+                        title: "@Resources.Model.Cement.StringInsertDateTime",
+                        field: "@Resources.Model.Strings.CementKeys.StringInsertDateTime",
+                        width: "20px",
                     },
                 ]
         });
@@ -266,7 +264,8 @@
         // **************************************************
         // **************************************************
 
-        $("button#btnCompanyOption").click(function () {
+        $("button#btnSearch").click(function () {
+            debugger;
             var varDataSource =
                 new kendo.data.DataSource({
 
@@ -281,215 +280,71 @@
                         read: {
                             type: "POST",
                             dataType: "json",
-                            url: "/Administrator/Financial/CompanyOption",
+                            url: "/Administrator/Financial/Search",
                             data: {
-                                CompanyName: function () {
-                                    return ($("input#CompanyName").val());
-                                },
-                                CompanyNationalCode: function () {
-                                    return ($("input#CompanyNationalCode").val());
-                                },
-                                Province: function () {
-                                    return ($("select#Province").val());
-                                },
-                                City: function () {
-                                    return ($("select#City").val());
-                                },
-                                SubSystem: function () {
-                                    return ($("select#SubSystem").val());
-                                },
-                                RecordNumber: function () {
-                                    return ($("input#RecordNumber").val());
+                                AmountPaid: function () {
+                                    return ($("input#AmountPaid").val());
                                 },
                                 InvoiceNumber: function () {
                                     return ($("input#InvoiceNumber").val());
                                 },
-                                RequestState: function () {
-                                    return (3);
+
+                                ProductName: function () {
+                                    return ($("select#ProductName").val());
                                 },
+
+                                ProductType: function () {
+                                    return ($("select#ProductType").val());
+                                },
+
+                                PackageType: function () {
+                                    return ($("select#PackageType").val());
+                                },
+
+                                FactoryName: function () {
+                                    return ($("select#FactoryName").val());
+                                },
+
                                 StartDate: function () {
                                     return ($("input#StartDate").val());
                                 },
                                 EndDate: function () {
                                     return ($("input#EndDate").val());
                                 },
-                                CommodityType: function () {
-                                    return ($("input#CommodityType").val());
+                                PayStartDate: function () {
+                                    return ($("input#PayStartDate").val());
+                                },
+                                PayEndDate: function () {
+                                    return ($("input#PayEndDate").val());
+                                },
+                                FromAmount: function () {
+                                    var number = $("#FromAmount").val();
+                                    for (var i = 0; i < number.split(',').length; i++) {
+                                        number = number.replace(',', '');
+                                    }
+                                    $("#FromAmount").val(number);
+                                    return (
+                                        $("input#FromAmount").val()
+                                    );
+                                },
+                                ToAmount: function () {
+                                    var number = $("#ToAmount").val();
+                                    for (var i = 0; i < number.split(',').length; i++) {
+                                        number = number.replace(',', '');
+                                    }
+                                    $("#ToAmount").val(number);
+                                    return ($("input#ToAmount").val());
                                 },
                             },
                         },
                     },
 
                     requestStart: function (e) {
-                        $("button#btnCompanyOption").hide();
+                        $("button#btnSearch").hide();
                     },
 
                     requestEnd: function (e) {
-                        $("button#btnCompanyOption").show();
-                    },
-
-                    schema: {
-                        data: function (e) {
-                            return (e.Data);
-                        },
-                        total: function (e) {
-                            return (e.Total);
-                        },
-                    },
-                });
-
-            // **************************************************
-            // **************************************************
-
-            var varGrid =
-                $('div#grid').data("kendoGrid");
-
-            varGrid.setDataSource(varDataSource);
-        });
-
-        $("button#btnRequestOption").click(function () {
-
-            var varDataSource =
-                new kendo.data.DataSource({
-
-                    pageSize: 10,
-
-                    serverPaging: true,
-                    serverSorting: true,
-                    serverFiltering: true,
-                    serverAggregates: false,
-
-                    transport: {
-                        read: {
-                            type: "POST",
-                            dataType: "json",
-                            url: "/Administrator/Financial/RequestOption",
-                            data: {
-                                CompanyName: function () {
-                                    return ($("input#CompanyName").val());
-                                },
-                                CompanyNationalCode: function () {
-                                    return ($("input#CompanyNationalCode").val());
-                                },
-                                Province: function () {
-                                    return ($("select#Province").val());
-                                },
-                                City: function () {
-                                    return ($("select#City").val());
-                                },
-                                SubSystem: function () {
-                                    return ($("select#SubSystem").val());
-                                },
-                                RecordNumber: function () {
-                                    return ($("input#RecordNumber").val());
-                                },
-                                InvoiceNumber: function () {
-                                    return ($("input#InvoiceNumber").val());
-                                },
-                                RequestState: function () {
-                                    return (3);
-                                },
-                                StartDate: function () {
-                                    return ($("input#StartDate").val());
-                                },
-                                EndDate: function () {
-                                    return ($("input#EndDate").val());
-                                },
-                                CommodityType: function () {
-                                    return ($("input#CommodityType").val());
-                                },
-                            },
-                        },
-                    },
-
-                    requestStart: function (e) {
-                        $("button#btnRequestOption").hide();
-                    },
-
-                    requestEnd: function (e) {
-                        $("button#btnRequestOption").show();
-                    },
-
-                    schema: {
-                        data: function (e) {
-                            return (e.Data);
-                        },
-                        total: function (e) {
-                            return (e.Total);
-                        },
-                    },
-                });
-
-            // **************************************************
-            // **************************************************
-
-            var varGrid =
-                $('div#grid').data("kendoGrid");
-
-            varGrid.setDataSource(varDataSource);
-        });
-
-        $("button#btnDateOption").click(function () {
-
-            var varDataSource =
-                new kendo.data.DataSource({
-
-                    pageSize: 10,
-
-                    serverPaging: true,
-                    serverSorting: true,
-                    serverFiltering: true,
-                    serverAggregates: false,
-
-                    transport: {
-                        read: {
-                            type: "POST",
-                            dataType: "json",
-                            url: "/Administrator/Financial/DateOption",
-                            data: {
-                                CompanyName: function () {
-                                    return ($("input#CompanyName").val());
-                                },
-                                CompanyNationalCode: function () {
-                                    return ($("input#CompanyNationalCode").val());
-                                },
-                                Province: function () {
-                                    return ($("select#Province").val());
-                                },
-                                City: function () {
-                                    return ($("select#City").val());
-                                },
-                                SubSystem: function () {
-                                    return ($("select#SubSystem").val());
-                                },
-                                RecordNumber: function () {
-                                    return ($("input#RecordNumber").val());
-                                },
-                                InvoiceNumber: function () {
-                                    return ($("input#InvoiceNumber").val());
-                                },
-                                RequestState: function () {
-                                    return (3);
-                                },
-                                StartDate: function () {
-                                    return ($("input#StartDate").val());
-                                },
-                                EndDate: function () {
-                                    return ($("input#EndDate").val());
-                                },
-                                CommodityType: function () {
-                                    return ($("input#CommodityType").val());
-                                },
-                            },
-                        },
-                    },
-
-                    requestStart: function (e) {
-                        $("button#btnDateOption").hide();
-                    },
-
-                    requestEnd: function (e) {
-                        $("button#btnDateOption").show();
+                        $("button#btnSearch").show();
                     },
 
                     schema: {
@@ -520,116 +375,71 @@
             جستجو ( کلیک کنید...!)
         </div>
         <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
-            <ul id="tabs" class="nav nav-tabs alert-info panel-heading" data-tabs="tabs">
-                <li class="active"><a href="#CompanyOption" data-toggle="tab">جستجو اطلاعات شرکت</a></li>
-                <li><a href="#RequestOption" data-toggle="tab">جستجو اطلاعات درخواست</a></li>
-                @*<li><a href="#DateOption" data-toggle="tab">جستجو تاریخ پرداخت</a></li>*@
-            </ul>
-            <div id="my-tab-content" class="tab-content  alert-info panel-body">
-                <div class="tab-pane active" id="CompanyOption">
-                    <br />
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            <span class="badge">1</span>
-                            @Html.LabelFor(model => model.CompanyName, new { @class = "control-label" })
-                        </div>
-                        <div class="col col-md-8">
-                            @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            <span class="badge">2</span>
-                            @Html.LabelFor(model => model.CompanyNationalCode, new { @class = "control-label" })
-                        </div>
-                        <div class="col col-md-8">
-                            @Html.TextBoxFor(model => model.CompanyNationalCode, new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-9">
-                            @*@Html.ActionLink(@Resources.OPS.Button.Search, MVC.Administrator.Financial.CompanyOption(), new { @class = "btn btn-primary" })*@
-                            <button type="button" id="btnCompanyOption" name="btnCompanyOption" class="btn btn-primary">@Resources.OPS.Button.Search</button>
-                        </div>
+            <div class="col col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.DropDownListFor(model => model.ProductName, null,
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
                 </div>
-                <div class="tab-pane" id="RequestOption">
-                    <br />
-                    <div class="form-group">
-                        <label class="col-md-2">
-                            <span class="badge">1</span>پرداخت از تاریخ :
-                        </label>
-                        <div class="col col-md-8">
-                            @Html.EditorFor(model => model.StartDate, new { @class = "form-control" })
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.DropDownListFor(model => model.PackageType, null,
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-2">
-                            <span class="badge">2</span>تا تاریخ :
-                        </label>
-                        <div class="col col-md-8">
-                            @Html.EditorFor(model => model.EndDate, new { @class = "form-control" })
-                        </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartDate, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-2">
-                            <span class="badge">3</span>@Resources.Model.Request.Province
-                        </label>
-                        <div class="col col-md-8">
-                            @Html.DropDownListFor(model => model.Province, null,
-                            Resources.General.SelectAnItem, new { @class = "chzn-select form-control", @onchange = "onChange()" })
-                        </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FromAmount, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.TextBoxFor(model => model.FromAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-2">
-                            <span class="badge">4</span>@Resources.Model.Request.City
-                        </label>
-                        <div id="DivCityId" class="col col-md-8">
-                            @Html.DropDownListFor(model => model.City, null,
-                                 Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
-                        </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.InvoiceNumber, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.TextBoxFor(model => model.InvoiceNumber, new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-2">
-                            <span class="badge">5</span>@Resources.Model.Request.SubSystem
-                        </label>
-                        <div class="col col-md-8">
-                            @Html.DropDownListFor(model => model.SubSystem, null,
-                                 Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
-                        </div>
+                </div>
+            </div>
+            <div class="col col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.DropDownListFor(model => model.ProductType, null,
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            <span class="badge">6</span>
-                            @Html.LabelFor(model => model.RecordNumber, new { @class = "control-label" })
-                        </div>
-                        <div class="col col-md-8">
-                            @Html.TextBoxFor(model => model.RecordNumber, new { @class = "form-control" })
-                        </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.DropDownListFor(model => model.FactoryName, null,
+                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            <span class="badge">7</span>
-                            @Html.LabelFor(model => model.PerformNumber, new { @class = "control-label" })
-                        </div>
-                        <div class="col col-md-8">
-                            @Html.TextBoxFor(model => model.PerformNumber, new { @class = "form-control" })
-                        </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndDate, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            <span class="badge">8</span>
-                            @Html.LabelFor(model => model.CommodityType, new { @class = "control-label" })
-                        </div>
-                        <div class="col col-md-8">
-                            @Html.TextBoxFor(model => model.CommodityType, new { @class = "form-control" })
-                        </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ToAmount, new { @class = "col-md-4 control-label" })
+                    <div class="col col-md-8">
+                        @Html.TextBoxFor(model => model.ToAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-9">
-                            <button type="button" id="btnRequestOption" name="btnRequestOption" class="btn btn-primary">@Resources.OPS.Button.Search</button>
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-8">
+                    <button type="button" id="btnSearch" name="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
                 </div>
             </div>
         </div>
@@ -640,44 +450,40 @@
             @strTitle
         </div>
         <div class="col-md-12 panel-body">
-            @*<button id="asassas" onclick="ExportToExcel()"></button>*@
             <div class="col-md-12">
-                <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
-                   onclick="location.href='@Url.Action("Download", "Financial")'">
-                    <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
-                </a>
                 <div class="row">
-                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                    <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
+                       href="/Administrator/Financial/Create/"><span style="float:right;">ثبت قیمت جدید</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+                    <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
                        href="/HomeMain/Main/" style="float:left;">
                         <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
                     </a>
                 </div>
                 <br />
                 <div class="row" style="overflow-y: scroll;">
-                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1700px;">
+                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1500px;">
                     </div>
+                </div>
+                <br />
+                <div class="row">
+                    @*<a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
+                           onclick="location.href='@Url.Action("Download", "Request")'">
+                            <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
+                        </a>
+                        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                           href="/HomeMain/Main/" style="float:left;">
+                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+                        </a>*@
                 </div>
             </div>
         </div>
-        <div class="panel-footer">
-            <br />
-            <div class="row">
-                <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
-                   onclick="location.href='@Url.Action("Download", "Financial")'">
-                    <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
-                </a>
-                <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
-                   href="/HomeMain/Main/" style="float:left;">
-                    <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
-                </a>
-            </div>
-        </div>
+        <div class="panel-footer"></div>
     </div>
 </section>
 
+
 <script type="text/javascript">
     function onChange() {
-
         $.ajax({
             url: '/Administrator/Request/GetCities',
             type: 'post',
@@ -691,12 +497,21 @@
                 select.append(option1);
 
                 $.each(data, function (i, city) {
-                    var option = ('<option value="' + city.Id + '"> ' + city.Name + '</option>');
+                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
                     select.append(option);
                 })
 
                 $("#DivCityId").append(select);
             }
+        });
+    }
+
+    function GetTransactionReportByPageNumber(id) {
+        $.ajax({
+            url: '/Administrator/Request/GetTransactionReportByPageNumber',
+            type: 'Get',
+            data: { id: id},
+            success: alert('ok')
         });
     }
 </script>

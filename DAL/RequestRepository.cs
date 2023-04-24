@@ -18,7 +18,6 @@ namespace DAL
             try
             {
                 IQueryable<Models.Request> retValue;
-
                 // اگر کاربر صدورفاکتور بود بر اساس ای دی در درخواست ها نمایش داده شود
                 if (user.Role.Code <= (int)Enums.Roles.ExporterOFInvoice)
                 {
@@ -27,7 +26,6 @@ namespace DAL
                         .Where(current => current.IsActived == true)
                         .Where(current => ((current.UserId == user.Id)||((current.CityId == user.CityId) &&(user.CityId != null))));
                 }
-
                 else if (user.Role.Code <= (int)Enums.Roles.ProvinceExpert00)
                 {
                     retValue = Get()
@@ -35,7 +33,6 @@ namespace DAL
                         .Where(current => current.IsActived == true)
                         .Where(current => current.ProvinceId == user.ProvinceId);
                 }
-
                 else
                     retValue = Get()
                          .Where(current => current.IsDeleted == false)

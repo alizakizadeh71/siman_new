@@ -78,5 +78,6 @@ namespace Models
         public virtual System.Collections.Generic.IList<UserLoginLog> UserLoginLogs { get; set; }
         public virtual System.Collections.Generic.IList<CurrencyUnit> CurrencyUnits { get; set; }
         public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
+        public virtual System.Collections.Generic.IList<FinancialManagement> FinancialManagements { get; set; }
     }
 }

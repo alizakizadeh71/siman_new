@@ -38,5 +38,6 @@ namespace Models
 
         public virtual System.Collections.Generic.IList<PackageType> PackageTypes { get; set; }
         public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
+        public virtual System.Collections.Generic.IList<FinancialManagement> FinancialManagements { get; set; }
     }
 }

@@ -53,6 +53,7 @@
         public System.Data.Entity.DbSet<ProductName> ProductNames{ get; set; }
         public System.Data.Entity.DbSet<ProductType> ProductTypes{ get; set; }
         public System.Data.Entity.DbSet<FactorCement> FactorCements { get; set; }
+        public System.Data.Entity.DbSet<FinancialManagement> FinancialManagements { get; set; }
         public System.Data.Entity.DbSet<PackageType> PackageTypes{ get; set; }
 
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)

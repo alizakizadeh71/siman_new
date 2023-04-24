@@ -139,5 +139,7 @@ namespace ViewModels.Areas.Administrator.Cement
         public string StringCity { get; set; }
         public DateTime InsertDateTime { get; set; }
         public string StringInsertDateTime { get; set; }
+        public Guid Id { get; set; }
+        public long AmountPaid { get; set; }
     }
 }
