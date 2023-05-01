@@ -222,6 +222,7 @@
     <Content Include="Content\Images\1.ico" />
     <Content Include="Content\Images\2.ico" />
     <Content Include="Content\Images\Baner.jpg" />
+    <Content Include="Content\Images\Cement.png" />
     <Content Include="Content\Images\CSP.png" />
     <Content Include="Content\Images\Dampezeshki-logo-LimooGraphic.png" />
     <Content Include="Content\Images\Guid.jpg" />
@@ -491,6 +492,8 @@
     <Content Include="Areas\Administrator\Views\CentralBank\Index.cshtml" />
     <Content Include="App_Data\orgCertBundle.pfx" />
     <Content Include="Areas\Administrator\Views\Financial\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\Delete.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">

@@ -11,10 +11,6 @@ namespace OPS.Controllers
 {
     public partial class HomeMainController : Infrastructure.BaseControllerWithUnitOfWork
     {
-
-
-
-
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual ActionResult Index()
@@ -68,32 +64,52 @@ namespace OPS.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    long AmountPaid = 1100; /// محاسبه مبلغ
-                    int LastInvoiceNumber = UnitOfWork.FactorCementRepository.GetLastInvoiceNumber() + 1;
-                    Models.User oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
-                    Models.FactorCement oFactorCement = new Models.FactorCement()
+
+                    var oFinancialManagement =
+                         UnitOfWork.FinancialManagementRepository
+                         .Get()
+                         .Where(current => current.ProductNameId == cementViewModel.ProductName)
+                         .Where(current => current.ProductTypeId == cementViewModel.ProductType)
+                         .Where(current => current.PackageTypeId == cementViewModel.PackageType)
+                         .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
+                         .FirstOrDefault()
+                         ;
+                    if (oFinancialManagement == null)
                     {
-                        ProductNameId = cementViewModel.ProductName,
-                        ProductTypeId = cementViewModel.ProductType,
-                        PackageTypeId = cementViewModel.PackageType,
-                        FactoryNameId = cementViewModel.FactoryName,
-                        TonnageId = cementViewModel.Tonnage,
-                        ProvinceId = cementViewModel.Province,
-                        CityId = cementViewModel.City,
-                        BuyerMobile = cementViewModel.BuyerMobile,
-                        Address = cementViewModel.Address,
-                        AmountPaid = AmountPaid,
-                        Description = cementViewModel.Description,
-                        RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),
-                        UserIPAddress = Request.UserHostAddress,
-                        Browser = Request.Browser.Type, // مدل و ورژن مرورگر
-                        URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
-                        UserId = oUser.Id,
-                    };
-                    oFactorCement.InvoiceNumber = LastInvoiceNumber;
-                    UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
-                    //ViewBag.PageMessages = " مبلغ پرداختی " + AmountPaid + " تومان ";
-                    ViewBag.PageMessages = " درخواست شما با شماره فاکتور " + LastInvoiceNumber + " با موفقیت ثبت شد، جهت هماهنگی بیشتر با شما تماس گرفته خواهد شد ";
+                        ViewBag.PageMessages = " قیمت توسط ادمین در سیستم ثبت نشده است ";
+                    }
+                    else
+                    {
+                        var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
+                            .Where(x => x.Id == cementViewModel.Tonnage).FirstOrDefault().Code);
+
+                        long AmountPaid = oFinancialManagement.AmountPaid * Tonnage; /// محاسبه مبلغ
+                        int LastInvoiceNumber = UnitOfWork.FactorCementRepository.GetLastInvoiceNumber() + 1;
+                        Models.User oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
+                        Models.FactorCement oFactorCement = new Models.FactorCement()
+                        {
+                            ProductNameId = cementViewModel.ProductName,
+                            ProductTypeId = cementViewModel.ProductType,
+                            PackageTypeId = cementViewModel.PackageType,
+                            FactoryNameId = cementViewModel.FactoryName,
+                            TonnageId = cementViewModel.Tonnage,
+                            ProvinceId = cementViewModel.Province,
+                            CityId = cementViewModel.City,
+                            BuyerMobile = cementViewModel.BuyerMobile,
+                            Address = cementViewModel.Address,
+                            AmountPaid = AmountPaid,
+                            Description = cementViewModel.Description,
+                            RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),
+                            UserIPAddress = Request.UserHostAddress,
+                            Browser = Request.Browser.Type, // مدل و ورژن مرورگر
+                            URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
+                            UserId = oUser.Id,
+                        };
+                        oFactorCement.InvoiceNumber = LastInvoiceNumber;
+                        UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
+                        cementViewModel.InvoiceNumber = LastInvoiceNumber;
+                        ViewBag.PageMessages = " شماره فاکتور " + LastInvoiceNumber + " مبلغ قابل پرداخت : " + AmountPaid + " تومان       ";
+                    }
                 }
             }
             catch (Exception ex)

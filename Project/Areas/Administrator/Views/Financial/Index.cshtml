@@ -184,23 +184,15 @@
 
                             var strTemplate = "";
 
-                            @*strTemplate +=
+                            strTemplate +=
                                 '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Financial/Edit/'
-                                + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></span></a>';*@
+                            + dataItem.Id + '"><img src="../../../Content/Icon/Edit.png"/></span></a>';
 
                             strTemplate +=
                             ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/Financial/Delete/'
-                            + dataItem.Id + '"><img src="../../../Content/Icon/UpAmontPaid.png"/></span></a>';
+                            + dataItem.Id + '"><img src="../../../Content/Icon/Delete.png"/></span></a>';
                             return (strTemplate);
                         },
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.InvoiceNumber",
-                        field: "@Resources.Model.Strings.CementKeys.InvoiceNumber",
-                        width: "10px",
                     },
                     {
                         hidden: false,
@@ -209,14 +201,6 @@
                         title: "@Resources.Model.Cement.AmountPaid",
                         field: "@Resources.Model.Strings.CementKeys.AmountPaid",
                         width: "10px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProductName",
-                        field: "@Resources.Model.Strings.CementKeys.StringProductName",
-                        width: "20px",
                     },
                     {
                         hidden: false,
@@ -240,7 +224,7 @@
                         lockable: true,
                         title: "@Resources.Model.Cement.StringPackageType",
                         field: "@Resources.Model.Strings.CementKeys.StringPackageType",
-                        width: "20px",
+                        width: "10px",
                     },
                     {
                         hidden: false,
@@ -248,7 +232,7 @@
                         lockable: true,
                         title: "@Resources.Model.Cement.StringFactoryName",
                         field: "@Resources.Model.Strings.CementKeys.StringFactoryName",
-                        width: "20px",
+                        width: "10px",
                     },
                     {
                         hidden: false,
@@ -378,16 +362,18 @@
             <div class="col col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
+                    <div class="col-md-8">
                         @Html.DropDownListFor(model => model.ProductName, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
+                        @Html.ValidationMessageFor(model => model.ProductName)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
+                    <div class="col-md-8" id="DivPackageTypeId">
                         @Html.DropDownListFor(model => model.PackageType, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangePackageType()" })
+                        @Html.ValidationMessageFor(model => model.PackageType)
                     </div>
                 </div>
                 <div class="form-group">
@@ -412,16 +398,17 @@
             <div class="col col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
+                    <div class="col-md-8" id="DivProductTypeId">
                         @Html.DropDownListFor(model => model.ProductType, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
+                        @Html.ValidationMessageFor(model => model.ProductType)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.DropDownListFor(model => model.FactoryName, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                    <div class="col-md-8" id="DivFactoryNameId">
+                        @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FactoryName)
                     </div>
                 </div>
                 <div class="form-group">
@@ -461,7 +448,7 @@
                 </div>
                 <br />
                 <div class="row" style="overflow-y: scroll;">
-                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1500px;">
+                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1100px;">
                     </div>
                 </div>
                 <br />
@@ -483,9 +470,9 @@
 
 
 <script type="text/javascript">
-    function onChange() {
+    function onChangeProvince() {
         $.ajax({
-            url: '/Administrator/Request/GetCities',
+            url: '/Administrator/HeadOfFactor/GetCities',
             type: 'post',
             data: { provinceId: $("#Province").val() },
             success: function (data) {
@@ -502,16 +489,116 @@
                 })
 
                 $("#DivCityId").append(select);
+                $('#City>option:eq(1)').prop('selected', true);
             }
         });
     }
 
-    function GetTransactionReportByPageNumber(id) {
+
+    function onChangeProductName() {
         $.ajax({
-            url: '/Administrator/Request/GetTransactionReportByPageNumber',
-            type: 'Get',
-            data: { id: id},
-            success: alert('ok')
+            url: '/Administrator/Cement/GetProductType',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivProductTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+                $.each(data, function (i, ProductType) {
+                    var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
+                    /// baraye inke avalin id baraye loade Select badi estefade shavad
+                    if (i == 0) {
+                        onChangeProductType(ProductType.Id);
+                    }
+                    select.append(option);
+                })
+
+                $("#DivProductTypeId").append(select);
+                $('#ProductType>option:eq(1)').prop('selected', true);
+            }
+        });
+
+        $.ajax({
+            url: '/Administrator/Cement/GetFactoryName',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivFactoryNameId").empty();
+
+                var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, FactoryName) {
+                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivFactoryNameId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#FactoryName>option:eq(1)').prop('selected', true);
+            }
         });
     }
+
+    function onChangeProductType(ProductTypee) {
+        debugger;
+        if (ProductTypee == undefined) { /// baraye inke dafe aval az loade safhe bekhoone
+            ProductTypee = $("#ProductType").val();
+        }
+        $.ajax({
+            url: '/Administrator/Cement/GetPackageType',
+            type: 'post',
+            data: { ProductTypeId: ProductTypee },
+            success: function (data) {
+
+                $("#DivPackageTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, PackageType) {
+                    var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivPackageTypeId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#PackageType>option:eq(1)').prop('selected', true);
+                onChangePackageType();
+            }
+        });
+    }
+
+    function onChangePackageType() {
+        debugger;
+        $.ajax({
+            url: '/Administrator/Cement/GetTonnage',
+            type: 'post',
+            data: { PackageTypeId: $("#PackageType").val() },
+            success: function (data) {
+
+                $("#DivTonnageId").empty();
+
+                var select = $("<select class='form-control' id='Tonnage' name='Tonnage' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, Tonnage) {
+                    var option = ('<option value="' + Tonnage.Id + '"> ' + Tonnage.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivTonnageId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#Tonnage>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
 </script>

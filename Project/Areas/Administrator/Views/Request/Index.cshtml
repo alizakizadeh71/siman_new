@@ -311,27 +311,27 @@
                                 ProductName: function () {
                                     return ($("select#ProductName").val());
                                 },
-                                
+
                                 ProductType: function () {
                                     return ($("select#ProductType").val());
                                 },
-                                
+
                                 PackageType: function () {
                                     return ($("select#PackageType").val());
                                 },
-                                
+
                                 FactoryName: function () {
                                     return ($("select#FactoryName").val());
                                 },
-                                
+
                                 Tonnage: function () {
                                     return ($("select#Tonnage").val());
                                 },
-                                
+
                                 Province: function () {
                                     return ($("select#Province").val());
                                 },
-                                
+
                                 City: function () {
                                     return ($("select#City").val());
                                 },
@@ -409,30 +409,33 @@
             <div class="col col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
+                    <div class="col-md-8">
                         @Html.DropDownListFor(model => model.ProductName, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
+                        @Html.ValidationMessageFor(model => model.ProductName)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
+                    <div class="col-md-8" id="DivPackageTypeId">
                         @Html.DropDownListFor(model => model.PackageType, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.DropDownListFor(model => model.Tonnage, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangePackageType()" })
+                        @Html.ValidationMessageFor(model => model.PackageType)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
+                    <div class="col-md-8">
                         @Html.DropDownListFor(model => model.Province, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control", @onchange = "onChange()" })
+                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
+                        @Html.ValidationMessageFor(model => model.Province)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8" id="DivTonnageId">
+                        @Html.DropDownListFor(model => model.Tonnage, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Tonnage)
                     </div>
                 </div>
                 <div class="form-group">
@@ -463,23 +466,24 @@
             <div class="col col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
+                    <div class="col-md-8" id="DivProductTypeId">
                         @Html.DropDownListFor(model => model.ProductType, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
+                        @Html.ValidationMessageFor(model => model.ProductType)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.DropDownListFor(model => model.FactoryName, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                    <div class="col-md-8" id="DivFactoryNameId">
+                        @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FactoryName)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.City, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8" id="DivCityId">
-                        @Html.DropDownListFor(model => model.City, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                    <div class="col-md-8" id="DivCityId">
+                        @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.City)
                     </div>
                 </div>
                 <div class="form-group">
@@ -522,10 +526,6 @@
         <div class="col-md-12 panel-body">
             <div class="col-md-12">
                 <div class="row">
-                    @*<a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
-                       onclick="location.href='@Url.Action("Download", "Request")'">
-                        <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
-                    </a>*@
                     <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
                        href="/HomeMain/Main/" style="float:left;">
                         <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
@@ -538,14 +538,6 @@
                 </div>
                 <br />
                 <div class="row">
-                    @*<a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
-                       onclick="location.href='@Url.Action("Download", "Request")'">
-                        <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
-                    </a>
-                    <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
-                       href="/HomeMain/Main/" style="float:left;">
-                        <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
-                    </a>*@
                 </div>
             </div>
         </div>
@@ -554,10 +546,11 @@
 </section>
 
 
+
 <script type="text/javascript">
-    function onChange() {
+    function onChangeProvince() {
         $.ajax({
-            url: '/Administrator/Request/GetCities',
+            url: '/Administrator/HeadOfFactor/GetCities',
             type: 'post',
             data: { provinceId: $("#Province").val() },
             success: function (data) {
@@ -574,16 +567,116 @@
                 })
 
                 $("#DivCityId").append(select);
+                $('#City>option:eq(1)').prop('selected', true);
             }
         });
     }
 
-    function GetTransactionReportByPageNumber(id) {
+
+    function onChangeProductName() {
         $.ajax({
-            url: '/Administrator/Request/GetTransactionReportByPageNumber',
-            type: 'Get',
-            data: { id: id},
-            success: alert('ok')
+            url: '/Administrator/Cement/GetProductType',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivProductTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+                $.each(data, function (i, ProductType) {
+                    var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
+                    /// baraye inke avalin id baraye loade Select badi estefade shavad
+                    if (i == 0) {
+                        onChangeProductType(ProductType.Id);
+                    }
+                    select.append(option);
+                })
+
+                $("#DivProductTypeId").append(select);
+                $('#ProductType>option:eq(1)').prop('selected', true);
+            }
+        });
+
+        $.ajax({
+            url: '/Administrator/Cement/GetFactoryName',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivFactoryNameId").empty();
+
+                var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, FactoryName) {
+                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivFactoryNameId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#FactoryName>option:eq(1)').prop('selected', true);
+            }
         });
     }
+
+    function onChangeProductType(ProductTypee) {
+        debugger;
+        if (ProductTypee == undefined) { /// baraye inke dafe aval az loade safhe bekhoone
+            ProductTypee = $("#ProductType").val();
+        }
+        $.ajax({
+            url: '/Administrator/Cement/GetPackageType',
+            type: 'post',
+            data: { ProductTypeId: ProductTypee },
+            success: function (data) {
+
+                $("#DivPackageTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, PackageType) {
+                    var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivPackageTypeId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#PackageType>option:eq(1)').prop('selected', true);
+                onChangePackageType();
+            }
+        });
+    }
+
+    function onChangePackageType() {
+        debugger;
+        $.ajax({
+            url: '/Administrator/Cement/GetTonnage',
+            type: 'post',
+            data: { PackageTypeId: $("#PackageType").val() },
+            success: function (data) {
+
+                $("#DivTonnageId").empty();
+
+                var select = $("<select class='form-control' id='Tonnage' name='Tonnage' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, Tonnage) {
+                    var option = ('<option value="' + Tonnage.Id + '"> ' + Tonnage.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivTonnageId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#Tonnage>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
 </script>

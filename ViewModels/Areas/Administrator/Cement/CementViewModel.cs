@@ -73,6 +73,8 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.BuyerMobile)]
         #endregion
         public string BuyerMobile { get; set; }
+        public string BuyerNationalCode { get; set; }
+        public string BuyerName { get; set; }
 
         #region Address
         [System.ComponentModel.DataAnnotations.Display
@@ -140,6 +142,13 @@ namespace ViewModels.Areas.Administrator.Cement
         public DateTime InsertDateTime { get; set; }
         public string StringInsertDateTime { get; set; }
         public Guid Id { get; set; }
+
+        #region AmountPaid
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.AmountPaid)]
+        #endregion
         public long AmountPaid { get; set; }
+        public bool? FinalApprove { get; set; }
     }
 }

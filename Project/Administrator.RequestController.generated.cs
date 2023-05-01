@@ -139,8 +139,8 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string Search = "Search";
             public readonly string GetRequests = "GetRequests";
+            public readonly string Search = "Search";
             public readonly string DetailsInvoiceNumber = "DetailsInvoiceNumber";
             public readonly string Edit = "Edit";
             public readonly string EditIVO = "EditIVO";
@@ -160,8 +160,8 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string Search = "Search";
             public const string GetRequests = "GetRequests";
+            public const string Search = "Search";
             public const string DetailsInvoiceNumber = "DetailsInvoiceNumber";
             public const string Edit = "Edit";
             public const string EditIVO = "EditIVO";
@@ -332,16 +332,16 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
+        public override System.Web.Mvc.JsonResult GetRequests()
+        {
+            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GetRequests);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Search);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.JsonResult GetRequests()
-        {
-            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GetRequests);
             return callInfo;
         }
 

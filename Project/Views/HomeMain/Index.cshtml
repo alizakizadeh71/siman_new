@@ -17,9 +17,13 @@
 
             if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
             {
-                <div class="panel panel-info">
+                <div class="panel panel-info" style="text-align:center">
                     <div style="color:red" class="panel-body">
                         @Html.Raw(ViewBag.PageMessages)
+                        @if (Model.InvoiceNumber != null)
+                        {
+                            @Html.ActionLink("ثبت درخواست و دریافت فاکتور ", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-info", @style = "margin-right:100px;" })
+                        }
                     </div>
                 </div>
             }
@@ -85,12 +89,12 @@
             </div>
 
             @*<div class="form-group">
-                @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6" id="DivCityId">
-                    @Html.DropDownListFor(model => model.Village, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Village)
-                </div>
-            </div>*@
+                    @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6" id="DivCityId">
+                        @Html.DropDownListFor(model => model.Village, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Village)
+                    </div>
+                </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" })
@@ -111,7 +115,7 @@
             <div class="form-group">
                 <div class="text-center">
                     @*<input type="submit" value='محاسبه قیمت' class="btn btn-success" />*@
-                    <input type="submit" value='ثبت درخواست' class="btn btn-success" />
+                    <input type="submit" value='محاسبه قیمت' class="btn btn-success" />
                 </div>
             </div>
         }
@@ -237,25 +241,9 @@
             e.preventDefault();
         }
     }
-    $(function () {
-        $('#refresh').click(function () {
-            $.ajax({
-                url: '@Url.Action("CaptchaImage", "Account")',
-                type: "GET",
-                data: ""
-            })
-            .done(function (functionResult) {
-                $("#imgcpatcha").attr("src", "/Account/CaptchaImage?" + functionResult);
-            });
-        });
-    });
 </script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        //$('select>option:eq(1)').prop('selected', true);
-        //onChangeProductName();
-    });
     function onChangeProvince() {
         $.ajax({
             url: '/Administrator/HeadOfFactor/GetCities',

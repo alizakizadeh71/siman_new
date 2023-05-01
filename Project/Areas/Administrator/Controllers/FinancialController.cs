@@ -23,25 +23,29 @@ namespace OPS.Areas.Administrator.Controllers
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
         public virtual ActionResult Index()
         {
-            Viewdata();
             ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+            Viewdata(cementViewModel);
             return View(cementViewModel);
         }
-
-        private void Viewdata()
+        private void Viewdata(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
             var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
-            base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", null).OrderByDescending(x => x.Text);
+            base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", cementViewModel.ProductName).OrderByDescending(x => x.Text);
 
-            var ProductType = UnitOfWork.ProductTypeRepository.GetProductTypes().ToList(); /// نوع کالا
-            base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", null).OrderByDescending(x => x.Text); /// تیپ یک
+            var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
+            base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", cementViewModel.ProductType).OrderByDescending(x => x.Text); /// تیپ یک
 
-            var PackageType = UnitOfWork.PackageTypeRepository.GetPackageTypes().ToList(); /// تیپ یک
-            base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", null).OrderByDescending(x => x.Text); /// کیسه
+            var PackageType = UnitOfWork.PackageTypeRepository.GetByProductTypeId(cementViewModel.ProductType).ToList(); /// تیپ یک
+            base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", cementViewModel.PackageType).OrderByDescending(x => x.Text); /// کیسه
 
-            var FactoryName = UnitOfWork.FactoryNameRepository.GetFactoryNames().ToList(); /// سیمان
-            base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", null).OrderBy(x => x.Text); /// ممتازان کرمان
+            var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
+            base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", cementViewModel.FactoryName).OrderBy(x => x.Text); /// ممتازان کرمان
         }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.JsonResult GetRequests() => (JsonResult)Search(null);
+
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
@@ -54,12 +58,6 @@ namespace OPS.Areas.Administrator.Controllers
                 UnitOfWork.FinancialManagementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User);
 
             #region Condition
-
-            if (!string.IsNullOrEmpty(viewModel?.InvoiceNumber.ToString()))
-            {
-                varRequest = varRequest.Where(x => x.InvoiceNumber == viewModel.InvoiceNumber);
-                Search = true;
-            }
 
             if (viewModel?.ProductName != null && viewModel.ProductName != Guid.Empty)
             {
@@ -116,13 +114,13 @@ namespace OPS.Areas.Administrator.Controllers
             try
             {
                 var ViewModelsvarBanks
-                    = varRequest.OrderBy(current => current.InvoiceNumber)
+                    = varRequest.OrderByDescending(current => current.InsertDateTime)
                     .ToList()
                     .Select(current =>
                         new ViewModels.Areas.Administrator.Cement.CementViewModel()
                         {
                             Id = current.Id,
-                            InvoiceNumber = current.InvoiceNumber,
+                            //InvoiceNumber = current.InvoiceNumber,
                             StringProductName = current.ProductName.Name,
                             StringProductType = current.ProductType.Name,
                             StringPackageType = current.PackageType.Name,
@@ -143,19 +141,14 @@ namespace OPS.Areas.Administrator.Controllers
                 return null;
             }
         }
-        
-        [System.Web.Mvc.HttpPost]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
-        public virtual System.Web.Mvc.JsonResult GetRequests() => (JsonResult)Search(null);
-
 
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
         public virtual System.Web.Mvc.ActionResult Create()
         {
-            Viewdata();
             ViewBag.PageMessages = null;
             ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+            Viewdata(cementViewModel);
             return View(cementViewModel);
         }
 
@@ -177,133 +170,120 @@ namespace OPS.Areas.Administrator.Controllers
                  ;
 
             if (oFindSubHeadLine != null)
-            {
-                ViewBag.PageMessages += "خدمات مشابه با همین ویژگی ها در سیستم ثبت شده است.";
-                ViewBag.PageMessages += "<br/>";
-                return View(cementViewModel);
-            }
-            
-            if (cementViewModel.FromAmount == null || cementViewModel.FromAmount.Value <= 0)
-            {
-                ViewBag.PageMessages += "مبلغ را وارد نمایید.";
-                ViewBag.PageMessages += "<br/>";
-                return View(cementViewModel);
-            }
+                ViewBag.PageMessages = "خدمات مشابه با همین ویژگی ها در سیستم ثبت شده است.";
 
-            if (ModelState.IsValid)
+            else if (cementViewModel.AmountPaid <= 0)
+                ViewBag.PageMessages = "مبلغ را وارد نمایید.";
+
+            else if (ModelState.IsValid)
             {
                 Models.FinancialManagement financialManagement = new Models.FinancialManagement();
+                financialManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
                 financialManagement.ProductNameId = cementViewModel.ProductName;
                 financialManagement.ProductTypeId = cementViewModel.ProductType;
                 financialManagement.PackageTypeId = cementViewModel.PackageType;
                 financialManagement.FactoryNameId = cementViewModel.FactoryName;
-                financialManagement.AmountPaid = cementViewModel.FromAmount.Value;
+                financialManagement.AmountPaid = cementViewModel.AmountPaid;
                 UnitOfWork.FinancialManagementRepository.Insertdata(financialManagement);
                 UnitOfWork.Save();
 
-                ViewBag.PageMessages += "خدمات درخواستی شما با موفقیت ثبت گردید  ";
+                ViewBag.PageMessages = "خدمات درخواستی شما با موفقیت ثبت گردید  ";
             }
 
+            Viewdata(cementViewModel);
             return View(cementViewModel);
         }
 
-        //[System.Web.Mvc.HttpGet]
-        //[Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
-        //public virtual System.Web.Mvc.ActionResult Edit(System.Guid id)
-        //{
-        //    ViewBag.PageMessages = null;
 
-        //    if (id == null)
-        //    {
-        //        return (RedirectToAction
-        //            (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
-        //    }
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult Edit(System.Guid id)
+        {
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel
+                = UnitOfWork.FinancialManagementRepository.Get()
+                .Where(current => current.Id == id)
+                .ToList()
+                .Select(current => new ViewModels.Areas.Administrator.Cement.CementViewModel()
+                {
+                    Id = current.Id,
+                    AmountPaid = current.AmountPaid,
+                    ProductName = current.ProductNameId,
+                    ProductType = current.ProductTypeId,
+                    PackageType = current.PackageTypeId,
+                    FactoryName = current.FactoryNameId,
+                })
+                .FirstOrDefault()
+                ;
 
-        //    ViewModels.Areas.Administrator.HeadLine.EditViewModel oOffice
-        //        = UnitOfWork.HeadLineRepository.Get()
-        //        .Where(current => current.Id == id)
-        //        .ToList()
-        //        .Select(current => new ViewModels.Areas.Administrator.HeadLine.EditViewModel()
-        //        {
-        //            Id = current.Id,
-        //            Name = current.Name,
-        //            Code = current.Code,
-        //        })
-        //        .FirstOrDefault()
-        //        ;
+            Viewdata(cementViewModel);
+            ViewBag.PageMessages = null;
 
-        //    if (oOffice == null)
-        //    {
-        //        return (RedirectToAction
-        //            (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-        //    }
+            return (View(cementViewModel));
+        }
 
-        //    return (View(oOffice));
-        //}
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            ViewBag.PageMessages = null;
 
-        //[System.Web.Mvc.HttpPost]
-        //[Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
-        //public virtual System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.HeadLine.EditViewModel Office)
-        //{
-        //    ViewBag.PageMessages = null;
+            try
+            {
+                var OlderAccount =
+                    UnitOfWork.FinancialManagementRepository
+                    .Get()
+                    .Where(current => current.Id == cementViewModel.Id)
+                    .FirstOrDefault()
+                    ;
 
-        //    try
-        //    {
-        //        var OldValue =
-        //            UnitOfWork.HeadLineRepository
-        //            .Get()
-        //            .Where(current => current.Id == Office.Id)
-        //            .FirstOrDefault()
-        //            ;
+                var oFindedOther =
+                    UnitOfWork.FinancialManagementRepository
+                    .Get()
+                    .Where(current => current.ProductNameId == cementViewModel.ProductName)
+                    .Where(current => current.ProductTypeId == cementViewModel.ProductType)
+                    .Where(current => current.PackageTypeId == cementViewModel.PackageType)
+                    .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
+                    .Where(current => current.Id != cementViewModel.Id)
+                    .FirstOrDefault()
+                    ;
 
-        //        Models.HeadLine oFindedOther;
-        //        Models.HeadLine oFindedOffice;
+                Viewdata(cementViewModel);
 
-        //        oFindedOther =
-        //            UnitOfWork.HeadLineRepository
-        //            .Get()
-        //            .Where(current => current.Code == Office.Code)
-        //            .Where(current => current.Id != Office.Id)
-        //            .FirstOrDefault()
-        //            ;
+                if (oFindedOther != null)
+                {
+                    ViewBag.PageMessages += "حساب با این مشخصات در سیستم ثبت شده است.";
+                }
+                else
+                {
+                    // **************************************************
+                    OlderAccount.IsDeleted = true;
+                    OlderAccount.IsActived = false;
+                    OlderAccount.UpdateDateTime = DateTime.Now;
+                    UnitOfWork.FinancialManagementRepository.Update(OlderAccount);
+                    UnitOfWork.Save();
+                    // **************************************************
+                    Models.FinancialManagement newfinancialManagement = new Models.FinancialManagement();
+                    newfinancialManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
+                    newfinancialManagement.ProductNameId = cementViewModel.ProductName;
+                    newfinancialManagement.ProductTypeId = cementViewModel.ProductType;
+                    newfinancialManagement.PackageTypeId = cementViewModel.PackageType;
+                    newfinancialManagement.FactoryNameId = cementViewModel.FactoryName;
+                    newfinancialManagement.AmountPaid = cementViewModel.AmountPaid;
+                    UnitOfWork.FinancialManagementRepository.Insertdata(newfinancialManagement);
+                    UnitOfWork.Save();
 
-        //        oFindedOffice =
-        //            UnitOfWork.HeadLineRepository
-        //            .Get()
-        //            .Where(current => current.Id == Office.Id)
-        //            .FirstOrDefault()
-        //            ;
+                    // **************************************************
+                    ViewBag.PageMessages = "خدمات درخواستی شما با موفقیت ویرایش گردید  ";
+                }
 
-        //        if (oFindedOther != null)
-        //        {
-        //            ViewBag.PageMessages += "تعرفه ای با نام  یا کد مشابه در سیستم ثبت شده است.";
-        //            ViewBag.PageMessages += "<br/>";
-        //            return View(Office);
-        //        }
+                return View(cementViewModel);
+            }
 
-
-        //        // **************************************************
-        //        // **************************************************
-        //        if (ModelState.IsValid)
-        //        {
-        //            oFindedOffice.UpdateDateTime = DateTime.Now;
-        //            oFindedOffice.Name = Office.Name;
-        //            oFindedOffice.Code = Office.Code;
-
-        //            UnitOfWork.HeadLineRepository.Update(oFindedOffice);
-        //            UnitOfWork.Save();
-
-        //            ViewBag.PageMessages += "تعرفه درخواستی شما با موفقیت ثبت گردید  ";
-        //        }
-
-        //        return View(Office);
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-        //    }
-        //}
+            catch (Exception ex)
+            {
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+            }
+        }
 
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
@@ -317,59 +297,54 @@ namespace OPS.Areas.Administrator.Controllers
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
             }
 
-            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel 
+            var oAccountNumberManage
                 = UnitOfWork.FinancialManagementRepository.Get()
                 .Where(current => current.Id == id)
                 .ToList()
                 .Select(current => new ViewModels.Areas.Administrator.Cement.CementViewModel()
                 {
-                    Id = current.Id,
-                    InvoiceNumber = current.InvoiceNumber,
                     StringProductName = current.ProductName.Name,
                     StringProductType = current.ProductType.Name,
                     StringPackageType = current.PackageType.Name,
                     StringFactoryName = current.FactoryName.Name,
+                    AmountPaid = current.AmountPaid,
                     StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
                 })
                 .FirstOrDefault()
                 ;
 
-            if (cementViewModel == null)
+            if (oAccountNumberManage == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
             }
 
-            return (View(cementViewModel));
+            return (View(oAccountNumberManage));
         }
 
+
         [System.Web.Mvc.HttpPost]
-        [System.Web.Mvc.ActionName("Delete")]
-        [System.Web.Mvc.ValidateAntiForgeryToken]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
-        public virtual System.Web.Mvc.ActionResult DeleteConfirmed(System.Guid id)
+        public virtual System.Web.Mvc.ActionResult Delete(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
             try
             {
-                var oFinancialManagement =
+                var varAccountNumberManages =
                     UnitOfWork.FinancialManagementRepository.Get()
-                    .Where(current => current.Id == id)
+                    .Where(current => current.Id == cementViewModel.Id)
                     .FirstOrDefault();
 
                 ViewBag.PageMessages = string.Empty;
 
-                if (oFinancialManagement != null)
+                if (varAccountNumberManages != null)
                 {
-                    oFinancialManagement.IsActived = false;
-                    oFinancialManagement.IsDeleted = true;
-                    oFinancialManagement.UpdateDateTime = DateTime.Now;
-                    UnitOfWork.FinancialManagementRepository.Update(oFinancialManagement);
+                    varAccountNumberManages.IsDeleted = true;
+                    varAccountNumberManages.IsActived = false;
+                    varAccountNumberManages.UpdateDateTime = DateTime.Now;
+                    UnitOfWork.FinancialManagementRepository.Update(varAccountNumberManages);
                     UnitOfWork.Save();
-                    return (RedirectToAction(MVC.Administrator.Financial.Index()));
                 }
-
-                else
-                    return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+                return (RedirectToAction(MVC.Administrator.Financial.Index()));
             }
 
             catch (Exception ex)
@@ -398,10 +373,86 @@ namespace OPS.Areas.Administrator.Controllers
 
 
 
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult Edit1(System.Guid id)
+        {
+            ViewBag.PageMessages = null;
+            var financialManagement = UnitOfWork.FinancialManagementRepository.GetById(id);
+
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+            cementViewModel.AmountPaid = financialManagement.AmountPaid;
+            cementViewModel.StringProductName = UnitOfWork.ProductNameRepository.GetById(financialManagement.ProductNameId).Name;
+            cementViewModel.StringProductType = UnitOfWork.ProductTypeRepository.GetById(financialManagement.ProductTypeId).Name;
+            cementViewModel.StringPackageType = UnitOfWork.PackageTypeRepository.GetById(financialManagement.PackageTypeId).Name;
+            cementViewModel.StringFactoryName = UnitOfWork.FactoryNameRepository.GetById(financialManagement.FactoryNameId).Name;
+            cementViewModel.StringInsertDateTime = new Infrastructure.Calander(financialManagement.InsertDateTime).Persion();
+            return View(cementViewModel);
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult Edit1(ViewModels.Areas.Administrator.HeadLine.EditViewModel Office)
+        {
+            ViewBag.PageMessages = null;
+
+            try
+            {
+                var OldValue =
+                    UnitOfWork.HeadLineRepository
+                    .Get()
+                    .Where(current => current.Id == Office.Id)
+                    .FirstOrDefault()
+                    ;
+
+                Models.HeadLine oFindedOther;
+                Models.HeadLine oFindedOffice;
+
+                oFindedOther =
+                    UnitOfWork.HeadLineRepository
+                    .Get()
+                    .Where(current => current.Code == Office.Code)
+                    .Where(current => current.Id != Office.Id)
+                    .FirstOrDefault()
+                    ;
+
+                oFindedOffice =
+                    UnitOfWork.HeadLineRepository
+                    .Get()
+                    .Where(current => current.Id == Office.Id)
+                    .FirstOrDefault()
+                    ;
+
+                if (oFindedOther != null)
+                {
+                    ViewBag.PageMessages += "تعرفه ای با نام  یا کد مشابه در سیستم ثبت شده است.";
+                    ViewBag.PageMessages += "<br/>";
+                    return View(Office);
+                }
 
 
+                // **************************************************
+                // **************************************************
+                if (ModelState.IsValid)
+                {
+                    oFindedOffice.UpdateDateTime = DateTime.Now;
+                    oFindedOffice.Name = Office.Name;
+                    oFindedOffice.Code = Office.Code;
 
+                    UnitOfWork.HeadLineRepository.Update(oFindedOffice);
+                    UnitOfWork.Save();
 
+                    ViewBag.PageMessages += "تعرفه درخواستی شما با موفقیت ثبت گردید  ";
+                }
+
+                return View(Office);
+            }
+
+            catch (Exception ex)
+            {
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+            }
+        }
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert01)]
@@ -529,10 +580,10 @@ namespace OPS.Areas.Administrator.Controllers
                          Bank_ShamsiDate = current.Bank_ShamsiDate != null ? (current.Bank_ShamsiDate.Substring(0, 4)
                          + "/" + current.Bank_ShamsiDate.Substring(4, 2)
                          + "/" + current.Bank_ShamsiDate.Substring(6, 2)) : "[تاریخ ندارد]",
-                         Tarefeh=current.Tariffs!=null?current.Tariffs.Value:0,
-                         SystemTarefeh= current.ServiceTariff!=null?Convert.ToInt32(current.ServiceTariff.Amount):0,
-                         LisenceNumber=current.LicenseNumber,
-                         LicenseDate= current.LicenseDate!=null?new Infrastructure.Calander(current.LicenseDate.Value).Persion():"[نا مشخص]"
+                         Tarefeh = current.Tariffs != null ? current.Tariffs.Value : 0,
+                         SystemTarefeh = current.ServiceTariff != null ? Convert.ToInt32(current.ServiceTariff.Amount) : 0,
+                         LisenceNumber = current.LicenseNumber,
+                         LicenseDate = current.LicenseDate != null ? new Infrastructure.Calander(current.LicenseDate.Value).Persion() : "[نا مشخص]"
                      })
                      .ToList()
                      .Select(current =>
@@ -908,8 +959,8 @@ namespace OPS.Areas.Administrator.Controllers
                              Tarefeh = current.Tariffs != null ? current.Tariffs.Value : 0,
                              LisenceNumber = current.LicenseNumber,
                              SystemTarefeh = current.ServiceTariff != null ? Convert.ToInt32(current.ServiceTariff.Amount) : 0,
-                             LicenseDate = current.LicenseDate != null 
-                                ? new Infrastructure.Calander(current.LicenseDate.Value).Persion() 
+                             LicenseDate = current.LicenseDate != null
+                                ? new Infrastructure.Calander(current.LicenseDate.Value).Persion()
                                 : "[نا مشخص]"
                          })
                          .ToList()
@@ -1145,7 +1196,7 @@ namespace OPS.Areas.Administrator.Controllers
             WorkSheet.Cells[2, 7].Value = Resources.Model.Request.CurrencyCode;
             WorkSheet.Cells[2, 8].Value = Resources.Model.Request.CurrencyValue;
             WorkSheet.Cells[2, 9].Value = Resources.Model.Request.AmountPaid;
-			WorkSheet.Cells[2, 10].Value = Resources.Model.Request.RecordNumber;
+            WorkSheet.Cells[2, 10].Value = Resources.Model.Request.RecordNumber;
             WorkSheet.Cells[2, 11].Value = Resources.Model.Request.RecordDate;
             WorkSheet.Cells[2, 12].Value = Resources.Model.Request.PerformNumber;
             WorkSheet.Cells[2, 13].Value = Resources.Model.Request.PerformDate;
@@ -1155,12 +1206,12 @@ namespace OPS.Areas.Administrator.Controllers
             WorkSheet.Cells[2, 17].Value = Resources.Model.Request.LisenceNumber;
             WorkSheet.Cells[2, 18].Value = Resources.Model.Request.LicenseDate;
             WorkSheet.Cells[2, 19].Value = Resources.Model.Request.Tarefeh;
-			WorkSheet.Cells[2, 20].Value = Resources.Model.Request.SystemTarefeh;
-			WorkSheet.Cells[2, 21].Value = "مبلغ ارز";
+            WorkSheet.Cells[2, 20].Value = Resources.Model.Request.SystemTarefeh;
+            WorkSheet.Cells[2, 21].Value = "مبلغ ارز";
 
 
-			#region Cell Borders
-			WorkSheet.Cells[2, 1].Style.Border.Top.Style
+            #region Cell Borders
+            WorkSheet.Cells[2, 1].Style.Border.Top.Style
                 = WorkSheet.Cells[2, 1].Style.Border.Bottom.Style
                 = WorkSheet.Cells[2, 1].Style.Border.Right.Style
                 = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
@@ -1260,16 +1311,16 @@ namespace OPS.Areas.Administrator.Controllers
                = WorkSheet.Cells[2, 20].Style.Border.Right.Style
                = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
 
-			WorkSheet.Cells[2, 21].Style.Border.Top.Style
-			   = WorkSheet.Cells[2, 21].Style.Border.Bottom.Style
-			   = WorkSheet.Cells[2, 21].Style.Border.Right.Style
-			   = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+            WorkSheet.Cells[2, 21].Style.Border.Top.Style
+               = WorkSheet.Cells[2, 21].Style.Border.Bottom.Style
+               = WorkSheet.Cells[2, 21].Style.Border.Right.Style
+               = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
 
-			#endregion
+            #endregion
 
 
-			// Inserts Data
-			for (int i = 0; i < datasource.Count(); i++)
+            // Inserts Data
+            for (int i = 0; i < datasource.Count(); i++)
             {
                 #region Row Value
                 WorkSheet.Cells[i + 3, 1].Value = datasource.ElementAt(i).SubSystem;
@@ -1292,12 +1343,12 @@ namespace OPS.Areas.Administrator.Controllers
                 WorkSheet.Cells[i + 3, 18].Value = datasource.ElementAt(i).LicenseDate;
                 WorkSheet.Cells[i + 3, 19].Value = datasource.ElementAt(i).Tarefeh;
                 WorkSheet.Cells[i + 3, 20].Value = datasource.ElementAt(i).SystemTarefeh;
-				WorkSheet.Cells[i + 3, 21].Value =
-					Math.Round((datasource.ElementAt(i).AmountPaid)/(datasource.ElementAt(i).CurrencyValue));
-				#endregion
+                WorkSheet.Cells[i + 3, 21].Value =
+                    Math.Round((datasource.ElementAt(i).AmountPaid) / (datasource.ElementAt(i).CurrencyValue));
+                #endregion
 
-				#region Cell Borders
-				WorkSheet.Cells[i + 3, 1].Style.Border.Top.Style
+                #region Cell Borders
+                WorkSheet.Cells[i + 3, 1].Style.Border.Top.Style
                     = WorkSheet.Cells[i + 3, 1].Style.Border.Bottom.Style
                     = WorkSheet.Cells[i + 3, 1].Style.Border.Right.Style
                     = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
@@ -1397,13 +1448,13 @@ namespace OPS.Areas.Administrator.Controllers
                     = WorkSheet.Cells[i + 3, 20].Style.Border.Right.Style
                     = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
 
-				WorkSheet.Cells[i + 3, 21].Style.Border.Top.Style
-					= WorkSheet.Cells[i + 3, 21].Style.Border.Bottom.Style
-					= WorkSheet.Cells[i + 3, 21].Style.Border.Right.Style
-					= OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                WorkSheet.Cells[i + 3, 21].Style.Border.Top.Style
+                    = WorkSheet.Cells[i + 3, 21].Style.Border.Bottom.Style
+                    = WorkSheet.Cells[i + 3, 21].Style.Border.Right.Style
+                    = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
 
-				#endregion
-			}
+                #endregion
+            }
 
             WorkSheet.Column(1).AutoFit(25);
             WorkSheet.Column(2).AutoFit(30);
@@ -1427,8 +1478,8 @@ namespace OPS.Areas.Administrator.Controllers
             WorkSheet.Column(20).AutoFit(20);
             WorkSheet.Column(21).AutoFit(20);
 
-			// Format Header of Table
-			using (ExcelRange rng = WorkSheet.Cells["A1:P1"])
+            // Format Header of Table
+            using (ExcelRange rng = WorkSheet.Cells["A1:P1"])
             {
                 rng.Style.Font.Bold = true;
                 rng.Style.Fill.PatternType = ExcelFillStyle.Solid; //Set Pattern for the background to Solid 

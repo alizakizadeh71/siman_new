@@ -210,6 +210,7 @@ namespace Models
         public string URLAddress { get; set; }
         public string UserIPAddress { get; set; }
         public string Browser { get; set; }
+        public bool FinalApprove { get; set; }
 
         public virtual System.Collections.Generic.IList<File> Files { get; set; }
         public virtual System.Collections.Generic.IList<Message> Messages { get; set; }

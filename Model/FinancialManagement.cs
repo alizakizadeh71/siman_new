@@ -51,13 +51,6 @@ namespace Models
         public FinancialManagement()
         {
         }
-        #region
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.InvoiceNumber)]
-        #endregion
-        public int? InvoiceNumber { get; set; }
-
 
         #region User
         [System.ComponentModel.DataAnnotations.Display

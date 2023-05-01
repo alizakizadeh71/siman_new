@@ -20,16 +20,16 @@ namespace OPS.Areas.Administrator.Controllers
             var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
             base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", null).OrderByDescending(x => x.Text);
 
-            var ProductType = UnitOfWork.ProductTypeRepository.GetProductTypes().ToList(); /// نوع کالا
+            var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(new Guid()).ToList(); /// نوع کالا
             base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", null).OrderByDescending(x => x.Text); /// تیپ یک
 
-            var PackageType = UnitOfWork.PackageTypeRepository.GetPackageTypes().ToList(); /// تیپ یک
+            var PackageType = UnitOfWork.PackageTypeRepository.GetByProductTypeId(new Guid()).ToList(); /// تیپ یک
             base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", null).OrderByDescending(x => x.Text); /// کیسه
 
-            var FactoryName = UnitOfWork.FactoryNameRepository.GetFactoryNames().ToList(); /// سیمان
+            var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(new Guid()).ToList(); /// سیمان
             base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", null).OrderBy(x => x.Text); /// ممتازان کرمان
 
-            var Tonnage = UnitOfWork.tonnageRepository.GetTonnages().ToList(); /// کیسه
+            var Tonnage = UnitOfWork.tonnageRepository.GetByPackageTypeId(new Guid()).ToList(); /// کیسه
             base.ViewData["Tonnage"] = new System.Web.Mvc.SelectList(Tonnage, "Id", "Name", null).OrderBy(x => x.Text); /// 12 تن
 
             var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
@@ -37,9 +37,14 @@ namespace OPS.Areas.Administrator.Controllers
 
             var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
             base.ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
+
             ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
             return View(cementViewModel);
         }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.JsonResult GetRequests() => (JsonResult)Search(null);
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
@@ -49,7 +54,8 @@ namespace OPS.Areas.Administrator.Controllers
             System.Globalization.PersianCalendar opersian = new System.Globalization.PersianCalendar();
 
             var varRequest =
-                UnitOfWork.FactorCementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User);
+                UnitOfWork.FactorCementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User)
+                .Where(x=>x.FinalApprove == true);
 
             #region Condition
             if (!string.IsNullOrEmpty(viewModel?.BuyerMobile))
@@ -230,10 +236,6 @@ namespace OPS.Areas.Administrator.Controllers
             var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList(); /// کرمان
             base.ViewData["City"] = new System.Web.Mvc.SelectList(City, "Id", "Name", cementViewModel.City).OrderBy(x => x.Text); /// کوهبنان
         }
-
-        [System.Web.Mvc.HttpPost]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
-        public virtual System.Web.Mvc.JsonResult GetRequests() => (JsonResult)Search(null);
 
         private string GetCity(Guid? cityId)
         {
@@ -1868,59 +1870,39 @@ namespace OPS.Areas.Administrator.Controllers
         [Infrastructure.SyncPermission(isPublic: true)]
         public virtual ActionResult PrintNewFactor(int invoiceNumber)
         {
-            Models.Request oRequest = null;
             try
             {
-                List<Models.DetailOfFactor> list = null;
-
-                oRequest =
-                UnitOfWork.RequestRepository.Get()
+                var factorCement =
+                UnitOfWork.FactorCementRepository.Get()
                 .Where(current => current.InvoiceNumber == invoiceNumber)
                 .FirstOrDefault();
 
-                if (oRequest.CurrencyRation == Convert.ToDecimal("1.00"))
-                {
-                    ViewBag.CurrencyRation = "     ---  ";
-                    ViewBag.BaseCurrencyValue = "     ---  ";
-                }
+                factorCement.FinalApprove = true;
+                UnitOfWork.FactorCementRepository.Update(factorCement);
+                UnitOfWork.Save();
 
-                else
-                {
-                    ViewBag.CurrencyRation = oRequest.CurrencyRation;
-                    ViewBag.BaseCurrencyValue = oRequest.BaseCurrencyValue;
-                }
+                ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
 
-                ViewBag.ServiceTariff = oRequest.ServiceTariff.NameString + " * " + oRequest.ServiceTariff.SubHeadLine.Name;
+                cementViewModel.Id = factorCement.Id;
+                cementViewModel.InvoiceNumber = factorCement.InvoiceNumber;
+                cementViewModel.StringInsertDateTime = new Infrastructure.Calander(factorCement.InsertDateTime).Persion();
+                cementViewModel.BuyerMobile = factorCement.BuyerMobile;
+                cementViewModel.BuyerName = factorCement.User.FullName;
+                cementViewModel.BuyerNationalCode = factorCement.User.NationalCode;
+                cementViewModel.StringProvince = factorCement.Province.Name;
+                cementViewModel.StringCity = factorCement.City.Name;
+                cementViewModel.StringProductName = factorCement.ProductName.Name;
+                cementViewModel.StringProductType = factorCement.ProductType.Name;
+                cementViewModel.StringPackageType = factorCement.PackageType.Name;
+                cementViewModel.StringFactoryName = factorCement.FactoryName.Name;
+                cementViewModel.StringTonnage = factorCement.Tonnage.Name;
+                cementViewModel.AmountPaid = factorCement.AmountPaid;
 
-
-                string CommodityDescription = string.Empty; // نمایش شرح خدمت در فاکتور های مالی
-                try
+                var File = new Rotativa.MVC.ViewAsPdf("PrintNewFactor", cementViewModel)
                 {
-                    var headoffactorid = oRequest.HeadOfFactor.Id;
-                    List<Models.DetailOfFactor> detailOfFactors = UnitOfWork.DetailOfFactorRepository.Get(headoffactorid).ToList();
-                    foreach (var item in detailOfFactors)
-                    {
-                        if (detailOfFactors.Count > 1)
-                        {
-                            CommodityDescription += item.CommodityDescription + " - ";
-                        }
-                        else
-                        {
-                            CommodityDescription = item.CommodityDescription;
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                }
-                ViewBag.CommodityDescription = CommodityDescription;
-
-                var File = new Rotativa.MVC.ViewAsPdf("PrintNewFactor", oRequest)
-                {
-                    FileName = oRequest.CompanyName + "-" + oRequest.InvoiceNumber + ".pdf"
+                    FileName = factorCement.InvoiceNumber + ".pdf"
                 };
                 return File;
-
             }
 
             catch (Exception ex)

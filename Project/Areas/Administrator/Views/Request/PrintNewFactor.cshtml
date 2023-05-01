@@ -1,4 +1,4 @@
-﻿@model Models.Request
+﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
 
 @{
     Layout = "~/Views/Shared/_Layouts/_SiteForPrint.cshtml";
@@ -24,20 +24,21 @@
         <div class="panel panel-info" style="font-family: BYekan, Tahoma;">
             <div class="panel-heading ">
                 <div style="margin-right:5%">
-                    <img src="~/Content/Images/ivo-logo2.png"/>
+                    <img src="~/Content/Images/Cement.png"/>
                 </div>
 
                     <center style="margin-top:-2%">
                         <b>
-                            گواھی اخذ تعرفه دامپزشکی کشور
+                            فاکتور خرید مصالح ساختمانی زکی زاده
                         </b>
                     </center>
 
-                <div style="margin-right:70%; margin-top:-5%">
+                <div style="margin-right:80%; margin-top:-5%">
                     @Html.DisplayNameFor(model => model.InvoiceNumber) : @Html.DisplayFor(model => model.InvoiceNumber)
                     <br />
-                    @Html.DisplayNameFor(model => model.InvoiceDate) :  @Html.DisplayFor(model => model.InvoiceDate)
+                    تاریخ فاکتور :  @Html.DisplayFor(model => model.StringInsertDateTime)
                 </div>
+                <br />
             </div>
             <div class="panel-body">
                 @Html.HiddenFor(model => model.Id)
@@ -45,49 +46,49 @@
                     string RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, Model.RequestState);
                 }*@
                 <br />
-                <table class="col-md-12 BorderStyle">
-                    <caption style="background-color:lightblue; width:864px;" class="BorderStyle">
-                        <span>@*گواھی اخذ تعرفه خدمات دامپزشکی*@</span>
+                <table class="col-md-12 BorderStyle" align="center">
+                    <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
+                        <span>اطلاعات خریدار</span>
                     </caption>
                     <tr class="BorderStyle">
                         <td>نام شرکت/شخص</td>
                         <td class="BorderStyle">شناسه ملی/کد ملی</td>
-                        <td>@Html.DisplayNameFor(model => model.RecordNumber)</td>
-                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.SubSystem)</td>
-
+                        <td>@Html.DisplayNameFor(model => model.BuyerMobile)</td>
+                        <td class="BorderStyle">استان</td>
+                        <td>شهرستان</td>
                     </tr>
                     <tr class="BorderStyle">
-                        <td>@Html.DisplayFor(model => model.CompanyName)</td>
-                        <td class="BorderStyle">@Html.DisplayFor(model => model.CompanyNationalCode)</td>
-                        <td>@Html.DisplayFor(model => model.RecordNumber)</td>
-                        <td class="BorderStyle">@Html.DisplayFor(model => model.SubSystem.Name)</td>
-
-
-
+                        <td>@Html.DisplayFor(model => model.BuyerName)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.BuyerNationalCode)</td>
+                        <td>@Html.DisplayFor(model => model.BuyerMobile)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.StringProvince)</td>
+                        <td>@Html.DisplayFor(model => model.StringCity)</td>
                     </tr>
                 </table>
                 <br />
-                <table class="col-md-12 BorderStyle">
+                <table class="col-md-12 BorderStyle" align="center">
                     <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
                         <span>اطلاعات کالا</span>
                     </caption>
                     <tr class="BorderStyle">
-                        <td>@Html.DisplayNameFor(model => model.ServiceTariff)</td>
-                        <td class="BorderStyle">شرح خدمت</td>
-                        <td>@Html.DisplayNameFor(model => model.CurrencyValue)</td>
-                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.CurrencyRation)</td>
-                        <td>@Html.DisplayNameFor(model => model.BaseCurrencyValue)</td>
+                        <td>@Html.DisplayNameFor(model => model.ProductName)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.ProductType)</td>
+                        <td>@Html.DisplayNameFor(model => model.PackageType)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.FactoryName)</td>
+                        <td>@Html.DisplayNameFor(model => model.Tonnage)</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.AmountPaid)</td>
                     </tr>
                     <tr class="BorderStyle">
-                        <td>@ViewBag.ServiceTariff</td>
-                        <td class="BorderStyle">@ViewBag.CommodityDescription</td>
-                        <td >@Html.DisplayFor(model => model.CurrencyValue)</td>
-                        <td class="BorderStyle">@ViewBag.CurrencyRation</td>
-                        <td >@ViewBag.BaseCurrencyValue</td>
+                        <td>@Html.DisplayFor(model => model.StringProductName)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.StringProductType)</td>
+                        <td >@Html.DisplayFor(model => model.StringPackageType)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.StringFactoryName)</td>
+                        <td>@Html.DisplayFor(model => model.StringTonnage)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.AmountPaid)</td>
                     </tr>
                 </table>
                 <br />
-                <table class="col-md-12 BorderStyle">
+                @*<table class="col-md-12 BorderStyle">
                     <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
                         <span>اطلاعات پرداخت</span>
                     </caption>
@@ -103,10 +104,10 @@
                         <td>@Html.DisplayFor(model => model.Bank_ShamsiDate)</td>
                         <td class="BorderStyle">@Html.DisplayFor(model => model.DepositNumber)</td>
                     </tr>
-                </table>
+                </table>*@
                 <br />
                 <div style="margin-right:70%">
-                    اداره درآمد سازمان دامپزشکی کشور
+                    سامانه خرید آنلاین مصالح ساختمانی
                 </div>
             </div>
             <div class="panel-footer">
