@@ -187,7 +187,7 @@
 
     <div class="row">
         <div class="panel panel-info">
-            <div class="panel-heading">
+            @*<div class="panel-heading">
                 <h4>@strTitel</h4>
                 <div style="text-align:center ; color:brown">
                     با توجه به مشکل پیش آمده پس از باز کردن صفحه دوباره افزونه CSP
@@ -197,38 +197,38 @@
                 <div style="text-align:center ; color:brown">
                     <a style="color:#4e6cff ; font-weight:bold" href="https://ops.ivo.ir/CSP.pdf">برای دانلود راه حل جدید شرکت تجارت الکترونیک پارسیان کلیک کنید - در صورت نیاز میتوانید از این روش به جای روش بالا استفاده نمایید</a>
                 </div>
-            </div>
+            </div>*@
             <div class="panel-body">
                 @Html.HiddenFor(model => model.Id)
                 <dl class="dl-horizontal">
                     <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
                     <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.StringProductName)</dt>
+                    <dt>@Html.DisplayNameFor(model => model.ProductName)</dt>
                     <dd>@Html.DisplayFor(model => model.StringProductName)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.StringProductType)</dt>
+                    <dt>@Html.DisplayNameFor(model => model.ProductType)</dt>
                     <dd>@Html.DisplayFor(model => model.StringProductType)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.StringPackageType)</dt>
+                    <dt>@Html.DisplayNameFor(model => model.PackageType)</dt>
                     <dd>@Html.DisplayFor(model => model.StringPackageType)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.StringFactoryName)</dt>
+                    <dt>@Html.DisplayNameFor(model => model.FactoryName)</dt>
                     <dd>@Html.DisplayFor(model => model.StringFactoryName)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.StringTonnage)</dt>
+                    <dt>@Html.DisplayNameFor(model => model.Tonnage)</dt>
                     <dd>@Html.DisplayFor(model => model.StringTonnage)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.StringProvince)</dt>
+                    <dt>@Html.DisplayNameFor(model => model.Province)</dt>
                     <dd>@Html.DisplayFor(model => model.StringProvince)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.StringCity)</dt>
+                    <dt>@Html.DisplayNameFor(model => model.City)</dt>
                     <dd>@Html.DisplayFor(model => model.StringCity)</dd>
                     <br />
                     <dt>@Html.DisplayNameFor(model => model.BuyerMobile)</dt>
                     <dd>@Html.DisplayFor(model => model.BuyerMobile)</dd>
                     <br />
-                    <dt>@Html.DisplayNameFor(model => model.StringInsertDateTime)</dt>
+                    <dt>زمان ثبت</dt>
                     <dd>@Html.DisplayFor(model => model.StringInsertDateTime)</dd>
                     <br />
                     <div class="form-group">
