@@ -18,11 +18,11 @@
             if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
             {
                 <div class="panel panel-info" style="text-align:center">
-                    <div style="color:red" class="panel-body">
+                    <div style="color:black" class="panel-body">
                         @Html.Raw(ViewBag.PageMessages)
                         @if (Model.InvoiceNumber != null)
                         {
-                            @Html.ActionLink("ثبت درخواست و دریافت فاکتور ", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-info", @style = "margin-right:100px;" })
+                            @Html.ActionLink("پرداخت و دریافت فاکتور ", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success", @style = "margin-right:7px;" })
                         }
                     </div>
                 </div>
@@ -115,7 +115,7 @@
             <div class="form-group">
                 <div class="text-center">
                     @*<input type="submit" value='محاسبه قیمت' class="btn btn-success" />*@
-                    <input type="submit" value='محاسبه قیمت' class="btn btn-success" />
+                    <input type="submit" value='محاسبه قیمت درب کارخانه' class="btn btn-info" />
                 </div>
             </div>
         }

@@ -68,11 +68,12 @@ namespace OPS.Controllers
                     var oFinancialManagement =
                          UnitOfWork.FinancialManagementRepository
                          .Get()
+                         .Where(x=>x.IsActived && !x.IsDeleted)
                          .Where(current => current.ProductNameId == cementViewModel.ProductName)
                          .Where(current => current.ProductTypeId == cementViewModel.ProductType)
                          .Where(current => current.PackageTypeId == cementViewModel.PackageType)
                          .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
-                         .FirstOrDefault()
+                         .SingleOrDefault()
                          ;
                     if (oFinancialManagement == null)
                     {
@@ -108,7 +109,7 @@ namespace OPS.Controllers
                         oFactorCement.InvoiceNumber = LastInvoiceNumber;
                         UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
                         cementViewModel.InvoiceNumber = LastInvoiceNumber;
-                        ViewBag.PageMessages = " شماره فاکتور " + LastInvoiceNumber + " مبلغ قابل پرداخت : " + AmountPaid + " تومان       ";
+                        ViewBag.PageMessages = "مبلغ قابل پرداخت: " + String.Format("{0:n0}", AmountPaid) + " تومان ";
                     }
                 }
             }

@@ -16,7 +16,6 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var varRoles
                 = UnitOfWork.RoleRepository.Get()
-                .Where(current => current.Code < Infrastructure.Sessions.AuthenticatedUser.RoleCode)
                 .OrderBy(current => current.Name).ToList();
 
             ViewData["Role"] = new System.Web.Mvc.SelectList(varRoles, "Id", "Name", null);
@@ -26,7 +25,8 @@ namespace OPS.Areas.Administrator.Controllers
 
             var varCities = UnitOfWork.CityRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
             ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
-            return View();
+            ViewModels.Areas.Administrator.User.SearchViewModel searchViewModel = new ViewModels.Areas.Administrator.User.SearchViewModel();
+            return View(searchViewModel);
         }
 
         [System.Web.Mvc.HttpPost]
@@ -102,7 +102,7 @@ namespace OPS.Areas.Administrator.Controllers
                          Province = current.Province != null ? current.Province.Name : "[نا مشخص]",
                          City = current.City != null ? current.City.Name : "[نا مشخص]",
                          IsActive = current.IsActived,
-                         IsApprovallicense = current.IsApprovallicense,
+                         //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
                      })
                      .ToList()
@@ -116,7 +116,7 @@ namespace OPS.Areas.Administrator.Controllers
                          Province = current.Province,
                          City = current.City,
                          IsActive = current.IsActive,
-                         IsApprovallicense = current.IsApprovallicense,
+                         //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
                      })
                      .AsQueryable();
@@ -166,7 +166,7 @@ namespace OPS.Areas.Administrator.Controllers
                              Province = current.Province != null ? current.Province.Name : "[نا مشخص]",
                              City = current.City != null ? current.City.Name : "[نا مشخص]",
                              IsActive = current.IsActived,
-                             IsApprovallicense = current.IsApprovallicense,
+                             //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
                          .ToList()
@@ -180,7 +180,7 @@ namespace OPS.Areas.Administrator.Controllers
                              Province = current.Province,
                              City = current.City,
                              IsActive = current.IsActive,
-                             IsApprovallicense = current.IsApprovallicense,
+                             //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
                          .AsQueryable();
@@ -205,7 +205,6 @@ namespace OPS.Areas.Administrator.Controllers
 
             var varRoles
                 = UnitOfWork.RoleRepository.Get()
-                .Where(current => current.Code < Infrastructure.Sessions.AuthenticatedUser.RoleCode)
                 .OrderBy(current => current.Name).ToList();
             ViewData["Role"] = new System.Web.Mvc.SelectList(varRoles, "Id", "Name", null);
 
@@ -215,7 +214,8 @@ namespace OPS.Areas.Administrator.Controllers
             var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
             ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
 
-            return View();
+            ViewModels.Areas.Administrator.User.CreateViewModel createViewModel = new ViewModels.Areas.Administrator.User.CreateViewModel();
+            return View(createViewModel);
         }
 
         [System.Web.Mvc.HttpPost]
@@ -276,7 +276,7 @@ namespace OPS.Areas.Administrator.Controllers
                 ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
                 ViewBag.PageMessages += "کاربر مشابه با همین ویژگی ها در سیستم ثبت شده است.";
                 ViewBag.PageMessages += "<br/>";
-                return View();
+                return View(user);
             }
             if (user.FullName == string.Empty || user.FullName == null)
             {
@@ -293,7 +293,7 @@ namespace OPS.Areas.Administrator.Controllers
                 ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
                 ViewBag.PageMessages += "احراز هویت انجام نشده است";
                 ViewBag.PageMessages += "<br/>";
-                return View();
+                return View(user);
             }
             if (user.Password == string.Empty || user.Password == null)
             {
@@ -310,7 +310,7 @@ namespace OPS.Areas.Administrator.Controllers
                 ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
                 ViewBag.PageMessages += "گذرواژه وارد نشده است";
                 ViewBag.PageMessages += "<br/>";
-                return View();
+                return View(user);
             }
 
             if (ModelState.IsValid)
@@ -355,7 +355,7 @@ namespace OPS.Areas.Administrator.Controllers
             {
                 ViewBag.PageMessages += "خطا دیتا - دیتا های وارد شده را دوباره بررسی نمایید";
                 ViewBag.PageMessages += "<br/>";
-                return View();
+                return View(user);
             }
 
             return View(user);
@@ -431,7 +431,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             var varRoles
                 = UnitOfWork.RoleRepository.Get()
-                .Where(current => current.Code < Infrastructure.Sessions.AuthenticatedUser.RoleCode)
+                //.Where(current => current.Code < Infrastructure.Sessions.AuthenticatedUser.RoleCode)
                 .OrderBy(current => current.Name).ToList();
             ViewData["Role"] = new System.Web.Mvc.SelectList(varRoles, "Id", "Name", oUser.Role);
 

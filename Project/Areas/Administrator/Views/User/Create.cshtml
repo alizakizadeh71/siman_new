@@ -101,7 +101,7 @@
                 <div class="col-md-6">
                     @Html.TextBoxFor(model => model.BirthDay, new { @class = "form-control col-md-6" })
                     @Html.ValidationMessageFor(model => model.BirthDay)
-                    <input id="checkPersonValidationByNationalCode" type="button" style="width:100px" value="احراز هویت" class="btn-info" title="با فشردن این دکمه، کاربر با استفاده از شناسه ملی و تاریخ تولد احراز هویت شده و نام و نام خانوادگی پر میشوند." />
+                    @*<input id="checkPersonValidationByNationalCode" type="button" style="width:100px" value="احراز هویت" class="btn-info" title="با فشردن این دکمه، کاربر با استفاده از شناسه ملی و تاریخ تولد احراز هویت شده و نام و نام خانوادگی پر میشوند." />*@
                 </div>
             </div>
 
@@ -121,13 +121,13 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.LabelFor(model => model.IsApprovallicense, new { @class = "col-md-2 control-label" })
                 <div class="col-md-6">
                     @Html.CheckBoxFor(model => model.IsApprovallicense, new { @class = "form-control col-md-6" })
                     @Html.ValidationMessageFor(model => model.IsApprovallicense)
                 </div>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <div class="col-md-10 col-md-offset-2">
@@ -176,7 +176,7 @@
 
     $(document).ready(function () {
 
-        $('#FullName').prop('readonly', true);
+        //$('#FullName').prop('readonly', true);
 
 
         $('#BirthDay').datepicker({

@@ -243,6 +243,7 @@ namespace OPS.Areas.Administrator.Controllers
                     .Where(current => current.ProductTypeId == cementViewModel.ProductType)
                     .Where(current => current.PackageTypeId == cementViewModel.PackageType)
                     .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
+                    .Where(current => current.AmountPaid == cementViewModel.AmountPaid)
                     .Where(current => current.Id != cementViewModel.Id)
                     .FirstOrDefault()
                     ;
