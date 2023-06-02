@@ -36,6 +36,36 @@ namespace DAL
             }
         }
 
+        public IQueryable<Models.FactorCement> GetByinvoicenumber(int invoicenumber)
+        {
+            try
+            {
+                IQueryable<Models.FactorCement> retValue = Get()
+                         .Where(current => current.InvoiceNumber == invoicenumber)
+                         .Where(current => current.IsDeleted == false)
+                         .Where(current => current.IsActived == true);
+                return retValue;
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public IQueryable<Models.FactorCement> GetByAuthority(string authority)
+        {
+            try
+            {
+                IQueryable<Models.FactorCement> retValue = Get()
+                         .Where(current => current.Authority == authority)
+                         .Where(current => current.IsDeleted == false)
+                         .Where(current => current.IsActived == true);
+                return retValue;
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
         public IQueryable<Models.FactorCement> GetByUser(Models.User user)
         {
             try

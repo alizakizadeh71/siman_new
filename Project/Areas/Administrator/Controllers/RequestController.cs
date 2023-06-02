@@ -1877,12 +1877,7 @@ namespace OPS.Areas.Administrator.Controllers
                 .Where(current => current.InvoiceNumber == invoiceNumber)
                 .FirstOrDefault();
 
-                factorCement.FinalApprove = true;
-                UnitOfWork.FactorCementRepository.Update(factorCement);
-                UnitOfWork.Save();
-
                 ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
-
                 cementViewModel.Id = factorCement.Id;
                 cementViewModel.InvoiceNumber = factorCement.InvoiceNumber;
                 cementViewModel.StringInsertDateTime = new Infrastructure.Calander(factorCement.InsertDateTime).Persion();

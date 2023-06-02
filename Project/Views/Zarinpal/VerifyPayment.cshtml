@@ -1,4 +1,5 @@
-﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
+﻿
+@model ViewModels.Areas.Administrator.Cement.CementViewModel
 
 @{
     Layout = "~/Views/Shared/_Layouts/_SiteForPrint.cshtml";
@@ -21,33 +22,32 @@
 </style>
 @{
     <div class="row">
+        <center style="color:red">
+            @TempData["NotFoundMessage"]
+        </center>
         <div class="panel panel-info" style="font-family: BYekan, Tahoma;">
             <div class="panel-heading ">
-                <div style="margin-right:5%">
-                    <img src="~/Content/Images/Cement.png"/>
-                </div>
-
-                    <center style="margin-top:-2%">
-                        <b>
-                            فاکتور خرید مصالح ساختمانی
-                        </b>
-                    </center>
-
-                <div style="margin-right:80%; margin-top:-5%">
-                    @Html.DisplayNameFor(model => model.InvoiceNumber) : @Html.DisplayFor(model => model.InvoiceNumber)
-                    <br />
-                    تاریخ فاکتور :  @Html.DisplayFor(model => model.StringInsertDateTime)
-                </div>
-                <br />
+                <center style="text-align:center">
+                    <b3>
+                        فاکتور خرید مصالح ساختمانی
+                        <hr />
+                        شماره فاکتور : @Html.DisplayFor(model => model.InvoiceNumber)
+                        <hr />
+                        تاریخ فاکتور :  @Html.DisplayFor(model => model.StringInsertDateTime)
+                    </b3>
+                </center>
+                @*<div style="margin-right:5%">
+                <img src="~/Content/Images/Cement.png" />
+            </div>*@
             </div>
             <div class="panel-body">
                 @Html.HiddenFor(model => model.Id)
                 @*@{
-                    string RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, Model.RequestState);
-                }*@
+                string RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, Model.RequestState);
+            }*@
                 <br />
                 <table class="col-md-12 BorderStyle" align="center">
-                    <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
+                    <caption style="background-color: lightblue;" class="BorderStyle">
                         <span>اطلاعات خریدار</span>
                     </caption>
                     <tr class="BorderStyle">
@@ -67,7 +67,7 @@
                 </table>
                 <br />
                 <table class="col-md-12 BorderStyle" align="center">
-                    <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
+                    <caption style="background-color: lightblue;" class="BorderStyle">
                         <span>اطلاعات کالا</span>
                     </caption>
                     <tr class="BorderStyle">
@@ -80,14 +80,14 @@
                     <tr class="BorderStyle">
                         <td>@Html.DisplayFor(model => model.StringProductName)</td>
                         <td class="BorderStyle">@Html.DisplayFor(model => model.StringProductType)</td>
-                        <td >@Html.DisplayFor(model => model.StringPackageType)</td>
+                        <td>@Html.DisplayFor(model => model.StringPackageType)</td>
                         <td class="BorderStyle">@Html.DisplayFor(model => model.StringFactoryName)</td>
                         <td>@Html.DisplayFor(model => model.StringTonnage)</td>
                     </tr>
                 </table>
                 <br />
                 <table class="col-md-12 BorderStyle">
-                    <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
+                    <caption style="background-color: lightblue;" class="BorderStyle">
                         <span>اطلاعات پرداخت</span>
                     </caption>
                     <tr class="BorderStyle">
@@ -102,14 +102,31 @@
                     </tr>
                 </table>
                 <br />
-                <div style="margin-right:70%">
+                <div style="text-align:center">
                     سامانه خرید آنلاین مصالح ساختمانی
                 </div>
             </div>
-            <div class="panel-footer">
-                <br />
-                <br />
-            </div>
+            @using (Html.BeginForm("PrintNewFactor", "Request", routeValues: new { Area = "Administrator", @class = "form-horizontal", role = "form" }, method: FormMethod.Get))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true)
+                <center class="form-group row">
+                    <div class="col-md-offset-2">
+                        @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-info", @style = "margin-right:100px;" })
+                    </div>
+                </center>
+            }
+            @using (Html.BeginForm("Index", "HomeMain", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <center class="form-group row">
+                    <div class="col-md-offset-2">
+                        <input type="submit" value='بازگشت به سامانه' class="btn btn-primary" />
+                    </div>
+                </center>
+            }
         </div>
     </div>
 }

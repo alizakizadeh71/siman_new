@@ -33,6 +33,7 @@ public static class MVC
     public static OPS.Controllers.HomeMainController HomeMain = new OPS.Controllers.T4MVC_HomeMainController();
     public static OPS.Controllers.ParsianPGWSalePaymentController ParsianPGWSalePayment = new OPS.Controllers.T4MVC_ParsianPGWSalePaymentController();
     public static OPS.Controllers.PaymentController Payment = new OPS.Controllers.T4MVC_PaymentController();
+    public static OPS.Controllers.ZarinpalController Zarinpal = new OPS.Controllers.T4MVC_ZarinpalController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -927,6 +928,7 @@ namespace Links
             public static readonly string _1_ico = Url("1.ico");
             public static readonly string _2_ico = Url("2.ico");
             public static readonly string Baner_jpg = Url("Baner.jpg");
+            public static readonly string Cement_png = Url("Cement.png");
             public static readonly string CSP_png = Url("CSP.png");
             public static readonly string Dampezeshki_logo_LimooGraphic_png = Url("Dampezeshki-logo-LimooGraphic.png");
             public static readonly string Guid_jpg = Url("Guid.jpg");

@@ -22,7 +22,8 @@
                         @Html.Raw(ViewBag.PageMessages)
                         @if (Model.InvoiceNumber != null)
                         {
-                            @Html.ActionLink("پرداخت و دریافت فاکتور ", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success", @style = "margin-right:7px;" })
+                            @*@Html.ActionLink("پرداخت و دریافت فاکتور ", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success", @style = "margin-right:7px;" })*@
+                            @Html.ActionLink("پرداخت و دریافت فاکتور ", MVC.Zarinpal.Payment(Model.InvoiceNumber.Value), new { @class = "btn btn-success", @style = "margin-right:7px;" })
                         }
                     </div>
                 </div>
@@ -187,18 +188,7 @@
     </div>
     <div class="col-md-4">
         <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; -webkit-box-shadow: 0 4px 2px #777; -moz-box-shadow: 0 4px 2px #777; box-shadow: 0 4px 2px #777;">
-            <img src="~/Content/Images/ops.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%;" class="img-responsive" />
-            <hr />
-            <div class="caption">
-                <h4 style="margin-top:-20px;">انواع سیمان</h4>
-                <p>...</p>
-                <br />
-                <br />
-                <p>
-                    <a class="btn btn-default" href="#">ادامه مطلب ...</a>
-                    @*@Html.ActionLink("212121212121212", MVC.Payment.MerchantCommit2());*@
-                </p>
-            </div>
+            <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=340301&amp;Code=15RKvgmjoNFLcmU8pGMk"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=340301&amp;Code=15RKvgmjoNFLcmU8pGMk" alt="" style="cursor:pointer" id="15RKvgmjoNFLcmU8pGMk"></a>
         </div>
     </div>
 </div>

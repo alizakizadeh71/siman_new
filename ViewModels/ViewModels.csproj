@@ -142,6 +142,10 @@
     <Compile Include="Areas\Administrator\User\EditViewModel.cs" />
     <Compile Include="Areas\Administrator\User\IndexViewModel.cs" />
     <Compile Include="Areas\Administrator\User\SearchViewModel.cs" />
+    <Compile Include="Areas\Administrator\ZarinPal\ErrorViewModel.cs" />
+    <Compile Include="Areas\Administrator\ZarinPal\RequestParameters.cs" />
+    <Compile Include="Areas\Administrator\ZarinPal\URLs.cs" />
+    <Compile Include="Areas\Administrator\ZarinPal\VerifyParameters.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="IComboboxItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

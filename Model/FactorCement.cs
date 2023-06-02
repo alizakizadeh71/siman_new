@@ -211,6 +211,43 @@ namespace Models
         public string UserIPAddress { get; set; }
         public string Browser { get; set; }
         public bool FinalApprove { get; set; }
+        public string Authority { get; set; }
+
+
+
+        /// <summary>
+        ///  مهم : درصورت موفقیت آمیز بودن تراکنش، با فراخوانی متد
+        ///  verify
+        ///  یکبار کد
+        ///  code 100
+        ///  رخ میدهد و در دفعات بعدی وریفای
+        ///  همان تراکنش کد 101 رخ میدهد.
+        ///  کد 
+        ///  code 101 
+        ///  به معنای آن است که تراکنش موفق بوده و یکبار قبلا وریفای شده است و این بار دوم هست
+        /// </summary>
+
+        /// <summary>
+        ///  شماره کارت به صورت Mask
+        /// </summary>
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.Model.Request),
+        Name = Resources.Model.Strings.RequestKeys.Bank.CustomerCardNumber)]
+        public string card_pan { get; set; }
+
+        /// <summary>
+        /// عددي كه نشان دهنده موفق بودن يا عدم موفق بودن پرداخت ميباشد
+        /// </summary>
+        public int Bankcode { get; set; }
+        /// <summary>
+        /// در صورتي كه پرداخت موفق باشد؛ شماره تراكنش پرداخت انجام شده را بر ميگرداند.
+        /// </summary>
+        public long ref_id { get; set; }
+        public int fee { get; set; }
+        public bool downloadPDF { get; set; }
+
+
+
 
         public virtual System.Collections.Generic.IList<File> Files { get; set; }
         public virtual System.Collections.Generic.IList<Message> Messages { get; set; }

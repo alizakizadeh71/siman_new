@@ -149,6 +149,8 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.AmountPaid)]
         #endregion
         public long AmountPaid { get; set; }
+        public string ref_id { get; set; }
+        public string card_pan { get; set; }
         public bool? FinalApprove { get; set; }
     }
 }
