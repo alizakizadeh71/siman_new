@@ -157,7 +157,7 @@ namespace OPS.Areas.Administrator.Controllers
             try
             {
                 var ViewModelsvarBanks
-                    = varRequest.OrderBy(current => current.InvoiceNumber)
+                    = varRequest.OrderByDescending(current => current.InvoiceNumber)
                     .ToList()
                     .Select(current =>
                         new ViewModels.Areas.Administrator.Cement.CementViewModel()
@@ -1892,6 +1892,8 @@ namespace OPS.Areas.Administrator.Controllers
                 cementViewModel.StringFactoryName = factorCement.FactoryName.Name;
                 cementViewModel.StringTonnage = factorCement.Tonnage.Name;
                 cementViewModel.AmountPaid = factorCement.AmountPaid;
+                cementViewModel.ref_id = factorCement.ref_id.ToString();
+                cementViewModel.card_pan = factorCement.card_pan;
 
                 var File = new Rotativa.MVC.ViewAsPdf("PrintNewFactor", cementViewModel)
                 {

@@ -36,15 +36,9 @@
                         تاریخ فاکتور :  @Html.DisplayFor(model => model.StringInsertDateTime)
                     </b3>
                 </center>
-                @*<div style="margin-right:5%">
-                <img src="~/Content/Images/Cement.png" />
-            </div>*@
             </div>
             <div class="panel-body">
                 @Html.HiddenFor(model => model.Id)
-                @*@{
-                string RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, Model.RequestState);
-            }*@
                 <br />
                 <table class="col-md-12 BorderStyle" align="center">
                     <caption style="background-color: lightblue;" class="BorderStyle">
@@ -86,7 +80,7 @@
                     </tr>
                 </table>
                 <br />
-                <table class="col-md-12 BorderStyle">
+                <table class="col-md-12 BorderStyle" align="center">
                     <caption style="background-color: lightblue;" class="BorderStyle">
                         <span>اطلاعات پرداخت</span>
                     </caption>
@@ -113,7 +107,7 @@
                 @Html.ValidationSummary(true)
                 <center class="form-group row">
                     <div class="col-md-offset-2">
-                        @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-info", @style = "margin-right:100px;" })
+                        @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success"})
                     </div>
                 </center>
             }
