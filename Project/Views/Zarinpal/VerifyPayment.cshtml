@@ -25,103 +25,107 @@
         <center style="color:red">
             @TempData["NotFoundMessage"]
         </center>
-        <div class="panel panel-info" style="font-family: BYekan, Tahoma;">
-            <div class="panel-heading ">
-                <center style="text-align:center">
-                    <b3>
-                        فاکتور خرید مصالح ساختمانی
-                        <hr />
-                        شماره فاکتور : @Html.DisplayFor(model => model.InvoiceNumber)
-                        <hr />
-                        تاریخ فاکتور :  @Html.DisplayFor(model => model.StringInsertDateTime)
-                    </b3>
-                </center>
-            </div>
-            <div class="panel-body">
-                @Html.HiddenFor(model => model.Id)
-                <br />
-                <table class="col-md-12 BorderStyle" align="center">
-                    <caption style="background-color: lightblue;" class="BorderStyle">
-                        <span>اطلاعات خریدار</span>
-                    </caption>
-                    <tr class="BorderStyle">
-                        <td>نام شرکت/شخص</td>
-                        <td class="BorderStyle">شناسه ملی/کد ملی</td>
-                        <td>@Html.DisplayNameFor(model => model.BuyerMobile)</td>
-                        <td class="BorderStyle">استان</td>
-                        <td>شهرستان</td>
-                    </tr>
-                    <tr class="BorderStyle">
-                        <td>@Html.DisplayFor(model => model.BuyerName)</td>
-                        <td class="BorderStyle">@Html.DisplayFor(model => model.BuyerNationalCode)</td>
-                        <td>@Html.DisplayFor(model => model.BuyerMobile)</td>
-                        <td class="BorderStyle">@Html.DisplayFor(model => model.StringProvince)</td>
-                        <td>@Html.DisplayFor(model => model.StringCity)</td>
-                    </tr>
-                </table>
-                <br />
-                <table class="col-md-12 BorderStyle" align="center">
-                    <caption style="background-color: lightblue;" class="BorderStyle">
-                        <span>اطلاعات کالا</span>
-                    </caption>
-                    <tr class="BorderStyle">
-                        <td>@Html.DisplayNameFor(model => model.ProductName)</td>
-                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.ProductType)</td>
-                        <td>@Html.DisplayNameFor(model => model.PackageType)</td>
-                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.FactoryName)</td>
-                        <td>@Html.DisplayNameFor(model => model.Tonnage)</td>
-                    </tr>
-                    <tr class="BorderStyle">
-                        <td>@Html.DisplayFor(model => model.StringProductName)</td>
-                        <td class="BorderStyle">@Html.DisplayFor(model => model.StringProductType)</td>
-                        <td>@Html.DisplayFor(model => model.StringPackageType)</td>
-                        <td class="BorderStyle">@Html.DisplayFor(model => model.StringFactoryName)</td>
-                        <td>@Html.DisplayFor(model => model.StringTonnage)</td>
-                    </tr>
-                </table>
-                <br />
-                <table class="col-md-12 BorderStyle" align="center">
-                    <caption style="background-color: lightblue;" class="BorderStyle">
-                        <span>اطلاعات پرداخت</span>
-                    </caption>
-                    <tr class="BorderStyle">
-                        <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
-                        <td class="BorderStyle">شماره تراكنش</td>
-                        <td>شماره کارت خریدار</td>
-                    </tr>
-                    <tr class="BorderStyle">
-                        <td>@Html.DisplayFor(model => model.AmountPaid)</td>
-                        <td class="BorderStyle">@Html.DisplayFor(model => model.ref_id)</td>
-                        <td>@Html.DisplayFor(model => model.card_pan)</td>
-                    </tr>
-                </table>
-                <br />
-                <div style="text-align:center">
-                    سامانه خرید آنلاین مصالح ساختمانی
+        @if (TempData["NotFoundMessage"] == null)
+        {
+
+            <div class="panel panel-info" style="font-family: BYekan, Tahoma;">
+                <div class="panel-heading ">
+                    <center style="text-align:center">
+                        <b3>
+                            فاکتور خرید مصالح ساختمانی
+                            <hr />
+                            شماره فاکتور : @Html.DisplayFor(model => model.InvoiceNumber)
+                            <hr />
+                            تاریخ فاکتور :  @Html.DisplayFor(model => model.StringInsertDateTime)
+                        </b3>
+                    </center>
                 </div>
+                <div class="panel-body">
+                    @Html.HiddenFor(model => model.Id)
+                    <br />
+                    <table class="col-md-12 BorderStyle" align="center">
+                        <caption style="background-color: lightblue;" class="BorderStyle">
+                            <span>اطلاعات خریدار</span>
+                        </caption>
+                        <tr class="BorderStyle">
+                            <td>نام شرکت/شخص</td>
+                            <td class="BorderStyle">شناسه ملی/کد ملی</td>
+                            <td>@Html.DisplayNameFor(model => model.BuyerMobile)</td>
+                            <td class="BorderStyle">استان</td>
+                            <td>شهرستان</td>
+                        </tr>
+                        <tr class="BorderStyle">
+                            <td>@Html.DisplayFor(model => model.BuyerName)</td>
+                            <td class="BorderStyle">@Html.DisplayFor(model => model.BuyerNationalCode)</td>
+                            <td>@Html.DisplayFor(model => model.BuyerMobile)</td>
+                            <td class="BorderStyle">@Html.DisplayFor(model => model.StringProvince)</td>
+                            <td>@Html.DisplayFor(model => model.StringCity)</td>
+                        </tr>
+                    </table>
+                    <br />
+                    <table class="col-md-12 BorderStyle" align="center">
+                        <caption style="background-color: lightblue;" class="BorderStyle">
+                            <span>اطلاعات کالا</span>
+                        </caption>
+                        <tr class="BorderStyle">
+                            <td>@Html.DisplayNameFor(model => model.ProductName)</td>
+                            <td class="BorderStyle">@Html.DisplayNameFor(model => model.ProductType)</td>
+                            <td>@Html.DisplayNameFor(model => model.PackageType)</td>
+                            <td class="BorderStyle">@Html.DisplayNameFor(model => model.FactoryName)</td>
+                            <td>@Html.DisplayNameFor(model => model.Tonnage)</td>
+                        </tr>
+                        <tr class="BorderStyle">
+                            <td>@Html.DisplayFor(model => model.StringProductName)</td>
+                            <td class="BorderStyle">@Html.DisplayFor(model => model.StringProductType)</td>
+                            <td>@Html.DisplayFor(model => model.StringPackageType)</td>
+                            <td class="BorderStyle">@Html.DisplayFor(model => model.StringFactoryName)</td>
+                            <td>@Html.DisplayFor(model => model.StringTonnage)</td>
+                        </tr>
+                    </table>
+                    <br />
+                    <table class="col-md-12 BorderStyle" align="center">
+                        <caption style="background-color: lightblue;" class="BorderStyle">
+                            <span>اطلاعات پرداخت</span>
+                        </caption>
+                        <tr class="BorderStyle">
+                            <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
+                            <td class="BorderStyle">شماره تراكنش</td>
+                            <td>شماره کارت خریدار</td>
+                        </tr>
+                        <tr class="BorderStyle">
+                            <td>@Html.DisplayFor(model => model.AmountPaid)</td>
+                            <td class="BorderStyle">@Html.DisplayFor(model => model.ref_id)</td>
+                            <td>@Html.DisplayFor(model => model.card_pan)</td>
+                        </tr>
+                    </table>
+                    <br />
+                    <div style="text-align:center">
+                        سامانه خرید آنلاین مصالح ساختمانی
+                    </div>
+                </div>
+                @using (Html.BeginForm("PrintNewFactor", "Request", routeValues: new { Area = "Administrator", @class = "form-horizontal", role = "form" }, method: FormMethod.Get))
+                {
+                    @Html.AntiForgeryToken()
+                    <hr />
+                    @Html.ValidationSummary(true)
+                    <center class="form-group row">
+                        <div class="col-md-offset-2">
+                            @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success" })
+                        </div>
+                    </center>
+                }
             </div>
-            @using (Html.BeginForm("PrintNewFactor", "Request", routeValues: new { Area = "Administrator", @class = "form-horizontal", role = "form" }, method: FormMethod.Get))
-            {
-                @Html.AntiForgeryToken()
-                <hr />
-                @Html.ValidationSummary(true)
-                <center class="form-group row">
-                    <div class="col-md-offset-2">
-                        @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success"})
-                    </div>
-                </center>
-            }
-            @using (Html.BeginForm("Index", "HomeMain", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
-                <center class="form-group row">
-                    <div class="col-md-offset-2">
-                        <input type="submit" value='بازگشت به سامانه' class="btn btn-primary" />
-                    </div>
-                </center>
-            }
-        </div>
+        }
+        @using (Html.BeginForm("Index", "HomeMain", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <center class="form-group row">
+                <div class="col-md-offset-2">
+                    <input type="submit" value='بازگشت به سامانه' class="btn btn-primary" />
+                </div>
+            </center>
+        }
     </div>
 }
 

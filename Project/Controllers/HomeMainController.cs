@@ -109,7 +109,7 @@ namespace OPS.Controllers
                         oFactorCement.InvoiceNumber = LastInvoiceNumber;
                         UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
                         cementViewModel.InvoiceNumber = LastInvoiceNumber;
-                        ViewBag.PageMessages = "مبلغ قابل پرداخت: " + String.Format("{0:n0}", AmountPaid) + " تومان ";
+                        ViewBag.PageMessages = "مبلغ قابل پرداخت: " + String.Format("{0:n0}", AmountPaid) + " ریال ";
                     }
                 }
             }

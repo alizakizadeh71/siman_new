@@ -13,6 +13,13 @@
 }
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        $('#ProductName').prop('disabled', true);
+        $('#ProductType').prop('disabled', true);
+        $('#PackageType').prop('disabled', true);
+        $('#FactoryName').prop('disabled', true);
+    })
+
     function AllowNumbersOnly(e) {
         var code = (e.which) ? e.which : e.keyCode;
         if (code > 31 && (code < 48 || code > 57)) {
@@ -139,6 +146,10 @@
         </div>
         <div class="panel-body">
             @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.ProductName1)
+            @Html.HiddenFor(model => model.ProductType1)
+            @Html.HiddenFor(model => model.PackageType1)
+            @Html.HiddenFor(model => model.FactoryName1)
 
             <div class="form-group">
                 @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })

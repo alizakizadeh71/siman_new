@@ -17,6 +17,7 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.ProductName)]
         #endregion
         public Guid ProductName { get; set; }
+        public Guid ProductName1 { get; set; }
 
         #region ProductType
         [System.ComponentModel.DataAnnotations.Display
@@ -24,6 +25,7 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.ProductType)]
         #endregion
         public Guid ProductType { get; set; }
+        public Guid ProductType1 { get; set; }
 
         #region PackageType
         [System.ComponentModel.DataAnnotations.Display
@@ -31,6 +33,7 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.PackageType)]
         #endregion
         public Guid PackageType { get; set; }
+        public Guid PackageType1 { get; set; }
 
         #region FactoryName
         [System.ComponentModel.DataAnnotations.Display
@@ -38,6 +41,7 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.FactoryName)]
         #endregion
         public Guid FactoryName { get; set; }
+        public Guid FactoryName1 { get; set; }
 
         #region Tonnage
         [System.ComponentModel.DataAnnotations.Display

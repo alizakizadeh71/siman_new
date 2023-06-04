@@ -211,6 +211,10 @@ namespace OPS.Areas.Administrator.Controllers
                     ProductType = current.ProductTypeId,
                     PackageType = current.PackageTypeId,
                     FactoryName = current.FactoryNameId,
+                    ProductName1 = current.ProductNameId,
+                    ProductType1 = current.ProductTypeId,
+                    PackageType1 = current.PackageTypeId,
+                    FactoryName1 = current.FactoryNameId,
                 })
                 .FirstOrDefault()
                 ;
@@ -236,46 +240,36 @@ namespace OPS.Areas.Administrator.Controllers
                     .FirstOrDefault()
                     ;
 
-                var oFindedOther =
-                    UnitOfWork.FinancialManagementRepository
-                    .Get()
-                    .Where(current => current.ProductNameId == cementViewModel.ProductName)
-                    .Where(current => current.ProductTypeId == cementViewModel.ProductType)
-                    .Where(current => current.PackageTypeId == cementViewModel.PackageType)
-                    .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
-                    .Where(current => current.AmountPaid == cementViewModel.AmountPaid)
-                    .Where(current => current.Id != cementViewModel.Id)
-                    .FirstOrDefault()
-                    ;
+                var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
+                base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", cementViewModel.ProductName1).OrderByDescending(x => x.Text);
 
-                Viewdata(cementViewModel);
+                var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(cementViewModel.ProductName1).ToList(); /// سیمان
+                base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", cementViewModel.ProductType1).OrderByDescending(x => x.Text); /// تیپ یک
 
-                if (oFindedOther != null)
-                {
-                    ViewBag.PageMessages += "حساب با این مشخصات در سیستم ثبت شده است.";
-                }
-                else
-                {
-                    // **************************************************
-                    OlderAccount.IsDeleted = true;
-                    OlderAccount.IsActived = false;
-                    OlderAccount.UpdateDateTime = DateTime.Now;
-                    UnitOfWork.FinancialManagementRepository.Update(OlderAccount);
-                    UnitOfWork.Save();
-                    // **************************************************
-                    Models.FinancialManagement newfinancialManagement = new Models.FinancialManagement();
-                    newfinancialManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
-                    newfinancialManagement.ProductNameId = cementViewModel.ProductName;
-                    newfinancialManagement.ProductTypeId = cementViewModel.ProductType;
-                    newfinancialManagement.PackageTypeId = cementViewModel.PackageType;
-                    newfinancialManagement.FactoryNameId = cementViewModel.FactoryName;
-                    newfinancialManagement.AmountPaid = cementViewModel.AmountPaid;
-                    UnitOfWork.FinancialManagementRepository.Insertdata(newfinancialManagement);
-                    UnitOfWork.Save();
+                var PackageType = UnitOfWork.PackageTypeRepository.GetByProductTypeId(cementViewModel.ProductType1).ToList(); /// تیپ یک
+                base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", cementViewModel.PackageType1).OrderByDescending(x => x.Text); /// کیسه
 
-                    // **************************************************
-                    ViewBag.PageMessages = "خدمات درخواستی شما با موفقیت ویرایش گردید  ";
-                }
+                var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(cementViewModel.ProductName1).ToList(); /// سیمان
+                base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", cementViewModel.FactoryName1).OrderBy(x => x.Text); /// ممتازان کرمان
+
+                // **************************************************
+                OlderAccount.IsDeleted = true;
+                OlderAccount.IsActived = false;
+                OlderAccount.UpdateDateTime = DateTime.Now;
+                UnitOfWork.FinancialManagementRepository.Update(OlderAccount);
+                // **************************************************
+                Models.FinancialManagement newfinancialManagement = new Models.FinancialManagement();
+                newfinancialManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
+                newfinancialManagement.ProductNameId = cementViewModel.ProductName1;
+                newfinancialManagement.ProductTypeId = cementViewModel.ProductType1;
+                newfinancialManagement.PackageTypeId = cementViewModel.PackageType1;
+                newfinancialManagement.FactoryNameId = cementViewModel.FactoryName1;
+                newfinancialManagement.AmountPaid = cementViewModel.AmountPaid;
+                UnitOfWork.FinancialManagementRepository.Insertdata(newfinancialManagement);
+                UnitOfWork.Save();
+
+                // **************************************************
+                ViewBag.PageMessages = "خدمات درخواستی شما با موفقیت ویرایش گردید  ";
 
                 return View(cementViewModel);
             }

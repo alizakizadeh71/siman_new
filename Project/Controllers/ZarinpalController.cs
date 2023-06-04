@@ -39,7 +39,7 @@ namespace OPS.Controllers
         private MerchantUtility oMerchantUtility = new MerchantUtility();
         private Infrastructure.cbinasimService oCBINasim = new Infrastructure.cbinasimService();
         PGServiceClient oIPGServices = new PGServiceClient();
-        string testamount = "10017";
+        //string testamount = "10017";
 
         public virtual ActionResult Payment(int invoiceNumber)
         {
@@ -56,8 +56,6 @@ namespace OPS.Controllers
                 if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
                 {
                     callbackurl = "http://localhost:6066/Zarinpal/VerifyPayment";
-                    mobile = "09130445980";
-                    amount = testamount;
                 }
 
                 ViewModels.Areas.Administrator.ZarinPal.RequestParameters Parameters = new ViewModels.Areas.Administrator.ZarinPal.RequestParameters(merchant, amount, description, callbackurl, mobile, "ali_animax@yahoo.com");
@@ -138,10 +136,10 @@ namespace OPS.Controllers
                 parameters.amount = oFactorCement.AmountPaid.ToString();
                 parameters.merchant_id = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
 
-                if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
-                {
-                    parameters.amount = testamount;
-                }
+                //if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
+                //{
+                //    parameters.amount = testamount;
+                //}
 
                 var client = new RestClient(URLs.verifyUrl);
                 Method method = Method.Post;
