@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to مصالح پخش - سامانه فروش مصالح ساختمانی.
+        ///   Looks up a localized string similar to مصالح پخش تناژ - سامانه فروش مصالح ساختمانی.
         /// </summary>
         public static string ApplicationName {
             get {

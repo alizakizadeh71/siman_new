@@ -9,7 +9,7 @@
     }
 
     .example::after {
-        content: "مصالح پخش، خرید مصالح ساختمانی";
+        content: "مصالح پخش تناژ، خرید مصالح ساختمانی";
         position: absolute;
         top: 100px;
         white-space: pre;
@@ -18,10 +18,9 @@
         font-weight: bold;
         font-size: 20px;
     }
-
 </style>
 <div class="example">
-    <img title="مصالح پخش" class="background-image" src="~/Content/Images/Baner.jpg">
+    <img title="مصالح پخش تناژ" class="background-image" src="~/Content/Images/Baner.jpg">
 </div>
 
 @*<img  title="مصالح پخش" src="~/Content/Images/Baner.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%; z-index: -10; border: solid; border-width: 7px; border-color: #e1e1e1; -webkit-box-shadow: 0 7px 2px #777; -moz-box-shadow: 0 7px 2px #777; box-shadow: 0 7px 2px #777;" class="img-responsive">*@
@@ -40,7 +39,7 @@
             if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
             {
                 <div class="panel panel-info" style="text-align:center">
-                    <div style="color:black" class="panel-body">
+                    <div style="color:red ; font-weight:bold" class="panel-body">
                         @Html.Raw(ViewBag.PageMessages)
                         @if (Model.InvoiceNumber != null)
                         {
@@ -151,10 +150,16 @@
 
                 <div class="item active" style="font-size:22px">
                     <p style="color:darkslateblue">
-                        قابل توجه پیمان کاران
+                        قابل توجه مصالح فروشان محترم
                     </p>
                     <p>
-                        تحویل فوری سیمان در محل
+                        تخفیف ویژه برای شما
+                        <br />
+                        مصالح فروشان محترم می توانند در صورت خرید مداوم از این سایت می توانند
+                        از تخفیفات ویژه مصالح فروشان بهره مند شوند. شرکت مصالح پخش تناژ در نظر
+                        دارد که برای خریداران ویژه ی خود تا 50 درصد از سود خود را به صورت پله ای کاهش دهد
+                        <br />
+                        جهت بهره مندی از این تخفیفات می توانید با قسمت پشتیبانی سایت تماس بگیرید.
                     </p>
                     <br />
 
@@ -162,10 +167,14 @@
 
                 <div class="item" style="font-size:22px">
                     <p style="color:green">
-                        قابل توجه مصالح فروشان
+                        قابل توجه پیمانکاران محترم
                     </p>
                     <p>
-                        تخفیف ویژه برای شما
+                        تحویل فوری سیمان در محل پروژه های شما
+                        <br />
+                        شرکت مصالح پخش تناژ با کمترین قیمت و در سریع ترین زمان ممکن می تواند
+                        محمله خریداری شده را در محل انجام پروژه های شما تحویل دهد. همچنین پیمانکاران عزیز می توانند، در
+                        صورت خرید مداوم از این سایت، از تخفیفات ویژه که مخصوص مصالح فروشان است بهره مند شوند.
                     </p>
                     <br />
                 </div>

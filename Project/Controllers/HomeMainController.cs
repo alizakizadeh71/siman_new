@@ -133,7 +133,6 @@ namespace OPS.Controllers
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
             return View();
         }
 
@@ -141,7 +140,6 @@ namespace OPS.Controllers
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
             return View();
         }
 

@@ -75,6 +75,8 @@ namespace ViewModels.Areas.Administrator.Cement
         [System.ComponentModel.DataAnnotations.Display
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.BuyerMobile)]
+        [System.ComponentModel.DataAnnotations.MaxLength(11, ErrorMessage = "شماره همراه باید 11 رقم باشد")]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         #endregion
         public string BuyerMobile { get; set; }
         public string BuyerNationalCode { get; set; }
