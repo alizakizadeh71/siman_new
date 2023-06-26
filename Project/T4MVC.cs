@@ -915,6 +915,7 @@ namespace Links
             public static readonly string Setting_png = Url("Setting.png");
             public static readonly string SubSystem_png = Url("SubSystem.png");
             public static readonly string tick16_png = Url("tick16.png");
+            public static readonly string Truck_png = Url("Truck.png");
             public static readonly string UpAmontPaid_png = Url("UpAmontPaid.png");
             public static readonly string UserSetting_png = Url("UserSetting.png");
             public static readonly string ViewUser_png = Url("ViewUser.png");

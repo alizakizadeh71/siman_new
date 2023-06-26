@@ -216,6 +216,7 @@
     <Content Include="Content\Icon\SubSystem.png" />
     <Content Include="Content\Icon\OfficeService.png" />
     <Content Include="Content\Icon\tick16.png" />
+    <Content Include="Content\Icon\Truck.png" />
     <Content Include="Content\Icon\UpAmontPaid.png" />
     <Content Include="Content\Icon\UserSetting.png" />
     <Content Include="Content\Icon\ViewUser.png" />
@@ -494,6 +495,10 @@
     <Content Include="Areas\Administrator\Views\Financial\Create.cshtml" />
     <Content Include="Areas\Administrator\Views\Financial\Edit.cshtml" />
     <Content Include="Areas\Administrator\Views\Financial\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\DestinationPrice.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\DestinationIndex.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\DestinationEdit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\DestinationDelete.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">

@@ -52,15 +52,39 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DestinationSearch()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DestinationSearch);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Edit()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DestinationEdit()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DestinationEdit);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DestinationPrice()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DestinationPrice);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Delete()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DestinationDelete()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DestinationDelete);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -127,11 +151,17 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string DestinationIndex = "DestinationIndex";
             public readonly string GetRequests = "GetRequests";
+            public readonly string DestinationGetRequests = "DestinationGetRequests";
             public readonly string Search = "Search";
+            public readonly string DestinationSearch = "DestinationSearch";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
+            public readonly string DestinationEdit = "DestinationEdit";
+            public readonly string DestinationPrice = "DestinationPrice";
             public readonly string Delete = "Delete";
+            public readonly string DestinationDelete = "DestinationDelete";
             public readonly string Edit1 = "Edit1";
             public readonly string CompanyOption = "CompanyOption";
             public readonly string RequestOption = "RequestOption";
@@ -148,11 +178,17 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string DestinationIndex = "DestinationIndex";
             public const string GetRequests = "GetRequests";
+            public const string DestinationGetRequests = "DestinationGetRequests";
             public const string Search = "Search";
+            public const string DestinationSearch = "DestinationSearch";
             public const string Create = "Create";
             public const string Edit = "Edit";
+            public const string DestinationEdit = "DestinationEdit";
+            public const string DestinationPrice = "DestinationPrice";
             public const string Delete = "Delete";
+            public const string DestinationDelete = "DestinationDelete";
             public const string Edit1 = "Edit1";
             public const string CompanyOption = "CompanyOption";
             public const string RequestOption = "RequestOption";
@@ -174,6 +210,14 @@ namespace OPS.Areas.Administrator.Controllers
         {
             public readonly string viewModel = "viewModel";
         }
+        static readonly ActionParamsClass_DestinationSearch s_params_DestinationSearch = new ActionParamsClass_DestinationSearch();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DestinationSearch DestinationSearchParams { get { return s_params_DestinationSearch; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DestinationSearch
+        {
+            public readonly string viewModel = "viewModel";
+        }
         static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Create CreateParams { get { return s_params_Create; } }
@@ -191,11 +235,38 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string id = "id";
             public readonly string cementViewModel = "cementViewModel";
         }
+        static readonly ActionParamsClass_DestinationEdit s_params_DestinationEdit = new ActionParamsClass_DestinationEdit();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DestinationEdit DestinationEditParams { get { return s_params_DestinationEdit; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DestinationEdit
+        {
+            public readonly string id = "id";
+            public readonly string cementViewModel = "cementViewModel";
+        }
+        static readonly ActionParamsClass_DestinationPrice s_params_DestinationPrice = new ActionParamsClass_DestinationPrice();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DestinationPrice DestinationPriceParams { get { return s_params_DestinationPrice; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DestinationPrice
+        {
+            public readonly string id = "id";
+            public readonly string cementViewModel = "cementViewModel";
+        }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Delete
+        {
+            public readonly string id = "id";
+            public readonly string cementViewModel = "cementViewModel";
+        }
+        static readonly ActionParamsClass_DestinationDelete s_params_DestinationDelete = new ActionParamsClass_DestinationDelete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DestinationDelete DestinationDeleteParams { get { return s_params_DestinationDelete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DestinationDelete
         {
             public readonly string id = "id";
             public readonly string cementViewModel = "cementViewModel";
@@ -277,6 +348,10 @@ namespace OPS.Areas.Administrator.Controllers
             {
                 public readonly string Create = "Create";
                 public readonly string Delete = "Delete";
+                public readonly string DestinationDelete = "DestinationDelete";
+                public readonly string DestinationEdit = "DestinationEdit";
+                public readonly string DestinationIndex = "DestinationIndex";
+                public readonly string DestinationPrice = "DestinationPrice";
                 public readonly string DetailsId = "DetailsId";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
@@ -284,6 +359,10 @@ namespace OPS.Areas.Administrator.Controllers
             }
             public readonly string Create = "~/Areas/Administrator/Views/Financial/Create.cshtml";
             public readonly string Delete = "~/Areas/Administrator/Views/Financial/Delete.cshtml";
+            public readonly string DestinationDelete = "~/Areas/Administrator/Views/Financial/DestinationDelete.cshtml";
+            public readonly string DestinationEdit = "~/Areas/Administrator/Views/Financial/DestinationEdit.cshtml";
+            public readonly string DestinationIndex = "~/Areas/Administrator/Views/Financial/DestinationIndex.cshtml";
+            public readonly string DestinationPrice = "~/Areas/Administrator/Views/Financial/DestinationPrice.cshtml";
             public readonly string DetailsId = "~/Areas/Administrator/Views/Financial/DetailsId.cshtml";
             public readonly string Edit = "~/Areas/Administrator/Views/Financial/Edit.cshtml";
             public readonly string Index = "~/Areas/Administrator/Views/Financial/Index.cshtml";
@@ -302,15 +381,34 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
+        public override System.Web.Mvc.ActionResult DestinationIndex()
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationIndex);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.JsonResult GetRequests()
         {
             var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GetRequests);
             return callInfo;
         }
 
+        public override System.Web.Mvc.JsonResult DestinationGetRequests()
+        {
+            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.DestinationGetRequests);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Search);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DestinationSearch(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationSearch);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
             return callInfo;
         }
@@ -335,9 +433,37 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
+        public override System.Web.Mvc.ActionResult DestinationEdit(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationEdit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cementViewModel", cementViewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DestinationEdit(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationEdit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cementViewModel", cementViewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DestinationPrice(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationPrice);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DestinationPrice(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationPrice);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cementViewModel", cementViewModel);
             return callInfo;
         }
@@ -346,6 +472,20 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DestinationDelete(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationDelete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DestinationDelete(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationDelete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cementViewModel", cementViewModel);
             return callInfo;
         }
 

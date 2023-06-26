@@ -516,6 +516,19 @@
             }
         }
 
+        private IDestinationManagementRepository _DestinationManagementRepository;
+        public IDestinationManagementRepository DestinationManagementRepository
+        {
+            get
+            {
+                if (_DestinationManagementRepository == null)
+                {
+                    _DestinationManagementRepository = new DestinationManagementRepository(DatabaseContext);
+                }
+                return (_DestinationManagementRepository);
+            }
+        }
+
 
         private IRoleRepository _RoleRepository;
         public IRoleRepository RoleRepository

@@ -27,6 +27,15 @@ namespace OPS.Areas.Administrator.Controllers
             Viewdata(cementViewModel);
             return View(cementViewModel);
         }
+
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
+        public virtual ActionResult DestinationIndex()
+        {
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+            Viewdata(cementViewModel);
+            return View(cementViewModel);
+        }
         private void Viewdata(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
             var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
@@ -40,11 +49,21 @@ namespace OPS.Areas.Administrator.Controllers
 
             var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
             base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", cementViewModel.FactoryName).OrderBy(x => x.Text); /// ممتازان کرمان
+
+            var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
+            ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", cementViewModel.Province);
+
+            var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList();
+            ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", cementViewModel.City);
         }
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
         public virtual System.Web.Mvc.JsonResult GetRequests() => (JsonResult)Search(null);
+        
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.JsonResult DestinationGetRequests() => (JsonResult)DestinationSearch(null);
 
 
         [System.Web.Mvc.HttpPost]
@@ -141,6 +160,104 @@ namespace OPS.Areas.Administrator.Controllers
                 return null;
             }
         }
+        
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
+        public virtual System.Web.Mvc.ActionResult DestinationSearch(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
+        {
+            bool Search = false;
+            System.Globalization.PersianCalendar opersian = new System.Globalization.PersianCalendar();
+
+            var varRequest =
+                UnitOfWork.DestinationManagementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User);
+
+            #region Condition
+
+            if (viewModel?.ProductName != null && viewModel.ProductName != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.FinancialManagement.ProductNameId == viewModel.ProductName);
+                Search = true;
+            }
+
+            if (viewModel?.ProductType != null && viewModel.ProductType != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.FinancialManagement.ProductTypeId == viewModel.ProductType);
+                Search = true;
+            }
+
+            if (viewModel?.PackageType != null && viewModel.PackageType != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.FinancialManagement.PackageTypeId == viewModel.PackageType);
+                Search = true;
+            }
+
+            if (viewModel?.FactoryName != null && viewModel.FactoryName != Guid.Empty)
+            {
+                varRequest = varRequest.Where(x => x.FinancialManagement.FactoryNameId == viewModel.FactoryName);
+                Search = true;
+            }
+
+            if (viewModel?.FromAmount.ToString().Length > 0 && viewModel.ToAmount.ToString().Length > 0 && viewModel.FromAmount <= viewModel.ToAmount)
+            {
+                varRequest =
+                    varRequest
+                    .Where(current => current.FinancialManagement.AmountPaid >= viewModel.FromAmount && current.FinancialManagement.AmountPaid <= viewModel.ToAmount)
+                    ;
+                Search = true;
+            }
+            if (viewModel?.StartDate.ToString().Length > 0)
+            {
+                varRequest =
+                    varRequest
+                    .Where(current => current.FinancialManagement.InsertDateTime >= viewModel.StartDate)
+                    ;
+                Search = true;
+            }
+            if (viewModel?.EndDate.ToString().Length > 0)
+            {
+                var EndDate1 = viewModel.EndDate;
+                var EndDate2 = EndDate1.Value.AddDays(1);
+                varRequest =
+                    varRequest
+                    .Where(current => current.FinancialManagement.InsertDateTime < EndDate2)
+                    ;
+                Search = true;
+            }
+            #endregion
+
+            try
+            {
+                var ViewModelsvarBanks
+                    = varRequest.OrderByDescending(current => current.InsertDateTime)
+                    .ToList()
+                    .Select(current =>
+                        new ViewModels.Areas.Administrator.Cement.CementViewModel()
+                        {
+                            Id = current.Id,
+                            //InvoiceNumber = current.InvoiceNumber,
+                            StringProductName = current.FinancialManagement.ProductName.Name,
+                            StringProductType = current.FinancialManagement.ProductType.Name,
+                            StringPackageType = current.FinancialManagement.PackageType.Name,
+                            StringFactoryName = current.FinancialManagement.FactoryName.Name,
+                            AmountPaid = current.FinancialManagement.AmountPaid,
+                            StringProvince = current.Province.Name,
+                            StringCity = current.City.Name,
+                            DestinationAmountPaid = current.DestinationAmountPaid,
+                            StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
+                        })
+                        .AsQueryable();
+
+                var varResult =
+                    Utilities.Kendo.HtmlHelpers
+                    .ParseGridData<ViewModels.Areas.Administrator.Cement.CementViewModel>(ViewModelsvarBanks);
+
+                return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
@@ -175,7 +292,7 @@ namespace OPS.Areas.Administrator.Controllers
             else if (cementViewModel.AmountPaid <= 0)
                 ViewBag.PageMessages = "مبلغ را وارد نمایید.";
 
-            else if (ModelState.IsValid)
+            else
             {
                 Models.FinancialManagement financialManagement = new Models.FinancialManagement();
                 financialManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
@@ -224,6 +341,43 @@ namespace OPS.Areas.Administrator.Controllers
 
             return (View(cementViewModel));
         }
+        
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult DestinationEdit(System.Guid id)
+        {
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel
+                = UnitOfWork.DestinationManagementRepository.Get()
+                .Where(current => current.Id == id)
+                .ToList()
+                .Select(current => new ViewModels.Areas.Administrator.Cement.CementViewModel()
+                {
+                    Id = current.Id,
+                    FinancialManagementId = current.FinancialManagementId,
+                    AmountPaid = current.FinancialManagement.AmountPaid,
+                    AmountPaid1 = current.FinancialManagement.AmountPaid,
+                    ProductName = current.FinancialManagement.ProductNameId,
+                    ProductType = current.FinancialManagement.ProductTypeId,
+                    PackageType = current.FinancialManagement.PackageTypeId,
+                    FactoryName = current.FinancialManagement.FactoryNameId,
+                    ProductName1 = current.FinancialManagement.ProductNameId,
+                    ProductType1 = current.FinancialManagement.ProductTypeId,
+                    PackageType1 = current.FinancialManagement.PackageTypeId,
+                    FactoryName1 = current.FinancialManagement.FactoryNameId,
+                    Province = current.ProvinceId.Value,
+                    Province1 = current.ProvinceId.Value,
+                    City = current.CityId,
+                    City1 = current.CityId,
+                    DestinationAmountPaid = current.DestinationAmountPaid,
+                })
+                .FirstOrDefault()
+                ;
+
+            Viewdata(cementViewModel);
+            ViewBag.PageMessages = null;
+
+            return (View(cementViewModel));
+        }
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
@@ -258,18 +412,175 @@ namespace OPS.Areas.Administrator.Controllers
                 OlderAccount.UpdateDateTime = DateTime.Now;
                 UnitOfWork.FinancialManagementRepository.Update(OlderAccount);
                 // **************************************************
-                Models.FinancialManagement newfinancialManagement = new Models.FinancialManagement();
-                newfinancialManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
-                newfinancialManagement.ProductNameId = cementViewModel.ProductName1;
-                newfinancialManagement.ProductTypeId = cementViewModel.ProductType1;
-                newfinancialManagement.PackageTypeId = cementViewModel.PackageType1;
-                newfinancialManagement.FactoryNameId = cementViewModel.FactoryName1;
-                newfinancialManagement.AmountPaid = cementViewModel.AmountPaid;
-                UnitOfWork.FinancialManagementRepository.Insertdata(newfinancialManagement);
+                Models.FinancialManagement financialManagement = new Models.FinancialManagement();
+                financialManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
+                financialManagement.ProductNameId = cementViewModel.ProductName1;
+                financialManagement.ProductTypeId = cementViewModel.ProductType1;
+                financialManagement.PackageTypeId = cementViewModel.PackageType1;
+                financialManagement.FactoryNameId = cementViewModel.FactoryName1;
+                financialManagement.AmountPaid = cementViewModel.AmountPaid;
+                UnitOfWork.FinancialManagementRepository.Insertdata(financialManagement);
                 UnitOfWork.Save();
 
                 // **************************************************
                 ViewBag.PageMessages = "خدمات درخواستی شما با موفقیت ویرایش گردید  ";
+
+                return View(cementViewModel);
+            }
+
+            catch (Exception ex)
+            {
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+            }
+        }
+
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult DestinationEdit(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            ViewBag.PageMessages = null;
+
+            try
+            {
+                var OlderAccount =
+                    UnitOfWork.DestinationManagementRepository
+                    .Get()
+                    .Where(current => current.Id == cementViewModel.Id)
+                    .FirstOrDefault()
+                    ;
+
+                var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
+                base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", cementViewModel.ProductName1).OrderByDescending(x => x.Text);
+
+                var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(cementViewModel.ProductName1).ToList(); /// سیمان
+                base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", cementViewModel.ProductType1).OrderByDescending(x => x.Text); /// تیپ یک
+
+                var PackageType = UnitOfWork.PackageTypeRepository.GetByProductTypeId(cementViewModel.ProductType1).ToList(); /// تیپ یک
+                base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", cementViewModel.PackageType1).OrderByDescending(x => x.Text); /// کیسه
+
+                var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(cementViewModel.ProductName1).ToList(); /// سیمان
+                base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", cementViewModel.FactoryName1).OrderBy(x => x.Text); /// ممتازان کرمان
+
+                var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
+                ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", cementViewModel.Province1);
+
+                var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province1).ToList();
+                ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", cementViewModel.City1);
+
+                // **************************************************
+                OlderAccount.IsDeleted = true;
+                OlderAccount.IsActived = false;
+                OlderAccount.UpdateDateTime = DateTime.Now;
+                UnitOfWork.DestinationManagementRepository.Update(OlderAccount);
+                // **************************************************
+                Models.DestinationManagement destinationManagement = new Models.DestinationManagement();
+                destinationManagement.FinancialManagementId = cementViewModel.FinancialManagementId;
+                destinationManagement.ProvinceId = cementViewModel.Province1;
+                destinationManagement.CityId = cementViewModel.City1;
+                destinationManagement.DestinationAmountPaid = cementViewModel.DestinationAmountPaid;
+                UnitOfWork.DestinationManagementRepository.Insertdata(destinationManagement);
+                UnitOfWork.Save();
+
+                // **************************************************
+                ViewBag.PageMessages = "خدمات درخواستی شما با موفقیت ویرایش گردید  ";
+                cementViewModel.AmountPaid = cementViewModel.AmountPaid1;
+                return View(cementViewModel);
+            }
+
+            catch (Exception ex)
+            {
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+            }
+        }
+
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult DestinationPrice(System.Guid id)
+        {
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel
+                = UnitOfWork.FinancialManagementRepository.Get()
+                .Where(current => current.Id == id)
+                .ToList()
+                .Select(current => new ViewModels.Areas.Administrator.Cement.CementViewModel()
+                {
+                    Id = current.Id,
+                    AmountPaid = current.AmountPaid,
+                    ProductName = current.ProductNameId,
+                    ProductType = current.ProductTypeId,
+                    PackageType = current.PackageTypeId,
+                    FactoryName = current.FactoryNameId,
+                    ProductName1 = current.ProductNameId,
+                    ProductType1 = current.ProductTypeId,
+                    PackageType1 = current.PackageTypeId,
+                    FactoryName1 = current.FactoryNameId,
+                    AmountPaid1 = current.AmountPaid,
+                })
+                .FirstOrDefault()
+                ;
+
+            var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
+            ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
+
+            var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
+            ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
+
+            Viewdata(cementViewModel);
+            ViewBag.PageMessages = null;
+
+            return (View(cementViewModel));
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual System.Web.Mvc.ActionResult DestinationPrice(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            ViewBag.PageMessages = null;
+
+            try
+            {
+                var oFinancialManagement =
+                    UnitOfWork.FinancialManagementRepository
+                    .Get()
+                    .Where(current => current.Id == cementViewModel.Id)
+                    .FirstOrDefault()
+                    ;
+
+                var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
+                base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", cementViewModel.ProductName1).OrderByDescending(x => x.Text);
+
+                var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(cementViewModel.ProductName1).ToList(); /// سیمان
+                base.ViewData["ProductType"] = new System.Web.Mvc.SelectList(ProductType, "Id", "Name", cementViewModel.ProductType1).OrderByDescending(x => x.Text); /// تیپ یک
+
+                var PackageType = UnitOfWork.PackageTypeRepository.GetByProductTypeId(cementViewModel.ProductType1).ToList(); /// تیپ یک
+                base.ViewData["PackageType"] = new System.Web.Mvc.SelectList(PackageType, "Id", "Name", cementViewModel.PackageType1).OrderByDescending(x => x.Text); /// کیسه
+
+                var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(cementViewModel.ProductName1).ToList(); /// سیمان
+                base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", cementViewModel.FactoryName1).OrderBy(x => x.Text); /// ممتازان کرمان
+
+                var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
+                ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", cementViewModel.Province);
+
+                var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList();
+                ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", cementViewModel.City);
+                // **************************************************
+                Models.DestinationManagement newDestinationManagement = new Models.DestinationManagement();
+                //newDestinationManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
+                newDestinationManagement.FinancialManagementId = cementViewModel.Id;
+                newDestinationManagement.ProvinceId = cementViewModel.Province;
+                newDestinationManagement.CityId = cementViewModel.City;
+                newDestinationManagement.DestinationAmountPaid = cementViewModel.DestinationAmountPaid;
+                UnitOfWork.DestinationManagementRepository.Insertdata(newDestinationManagement);
+                //UnitOfWork.Save();
+
+                // **************************************************
+                ViewBag.PageMessages = "قیمت در مقصد با موفقیت ثبت گردید  ";
+
+                cementViewModel.ProductName = cementViewModel.ProductName1;
+                cementViewModel.ProductType = cementViewModel.ProductType1;
+                cementViewModel.PackageType = cementViewModel.PackageType1;
+                cementViewModel.FactoryName = cementViewModel.FactoryName1;
+                cementViewModel.AmountPaid = cementViewModel.AmountPaid1;
 
                 return View(cementViewModel);
             }
@@ -316,7 +627,78 @@ namespace OPS.Areas.Administrator.Controllers
 
             return (View(oAccountNumberManage));
         }
+        
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
+        public virtual System.Web.Mvc.ActionResult DestinationDelete(System.Guid id)
+        {
+            ViewBag.PageMessages = null;
 
+            if (id == null)
+            {
+                return (RedirectToAction
+                    (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
+            }
+
+            var oAccountNumberManage
+                = UnitOfWork.DestinationManagementRepository.Get()
+                .Where(current => current.Id == id)
+                .ToList()
+                .Select(current => new ViewModels.Areas.Administrator.Cement.CementViewModel()
+                {
+                    StringProductName = current.FinancialManagement.ProductName.Name,
+                    StringProductType = current.FinancialManagement.ProductType.Name,
+                    StringPackageType = current.FinancialManagement.PackageType.Name,
+                    StringFactoryName = current.FinancialManagement.FactoryName.Name,
+                    AmountPaid = current.FinancialManagement.AmountPaid,
+                    StringProvince = current.Province.Name,
+                    StringCity = current.City.Name,
+                    DestinationAmountPaid = current.DestinationAmountPaid,
+                    StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
+                })
+                .FirstOrDefault()
+                ;
+
+            if (oAccountNumberManage == null)
+            {
+                return (RedirectToAction
+                    (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+            }
+
+            return (View(oAccountNumberManage));
+        }
+
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
+        public virtual System.Web.Mvc.ActionResult DestinationDelete(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            try
+            {
+                var varAccountNumberManages =
+                    UnitOfWork.DestinationManagementRepository.Get()
+                    .Where(current => current.Id == cementViewModel.Id)
+                    .FirstOrDefault();
+
+                ViewBag.PageMessages = string.Empty;
+
+                if (varAccountNumberManages != null)
+                {
+                    varAccountNumberManages.IsDeleted = true;
+                    varAccountNumberManages.IsActived = false;
+                    varAccountNumberManages.UpdateDateTime = DateTime.Now;
+                    UnitOfWork.DestinationManagementRepository.Update(varAccountNumberManages);
+                    UnitOfWork.Save();
+                }
+                return (RedirectToAction(MVC.Administrator.Financial.DestinationIndex()));
+            }
+
+            catch (Exception ex)
+            {
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+            }
+        }
+        
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]

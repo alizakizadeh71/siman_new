@@ -53,5 +53,6 @@ namespace Models
         public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
         public virtual System.Collections.Generic.IList<HeadOfFactor> HeadOfFactors { get; set; }
         public virtual System.Collections.Generic.IList<User> Users { get; set; }
+        public virtual System.Collections.Generic.IList<DestinationManagement> DestinationManagements { get; set; }
     }
 }

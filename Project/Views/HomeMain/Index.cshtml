@@ -41,6 +41,9 @@
                 <div class="panel panel-info" style="text-align:center">
                     <div style="color:red ; font-weight:bold" class="panel-body">
                         @Html.Raw(ViewBag.PageMessages)
+                        <br />
+                        @Html.Raw(ViewBag.PageMessages2)
+                        <br />
                         @if (Model.InvoiceNumber != null)
                         {
                             @*@Html.ActionLink("پرداخت و دریافت فاکتور ", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success", @style = "margin-right:7px;" })*@
@@ -137,7 +140,7 @@
             <div class="form-group">
                 <div class="text-center">
                     @*<input type="submit" value='محاسبه قیمت' class="btn btn-success" />*@
-                    <input type="submit" value='محاسبه قیمت درب کارخانه' class="btn btn-info" />
+                    <input type="submit" value='محاسبه قیمت' class="btn btn-info" />
                 </div>
             </div>
         }

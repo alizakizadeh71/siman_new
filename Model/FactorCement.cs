@@ -245,7 +245,12 @@ namespace Models
         public long ref_id { get; set; }
         public int fee { get; set; }
         public bool downloadPDF { get; set; }
-
+        #region AmountPaid
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.DestinationAmountPaid)]
+        #endregion
+        public long? DestinationAmountPaid { get; set; }
 
 
 

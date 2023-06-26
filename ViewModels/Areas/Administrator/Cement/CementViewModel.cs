@@ -56,6 +56,7 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.Province)]
         #endregion
         public Guid Province { get; set; }
+        public Guid Province1 { get; set; }
 
         #region City
         [System.ComponentModel.DataAnnotations.Display
@@ -63,6 +64,7 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.City)]
         #endregion
         public Guid City { get; set; }
+        public Guid City1 { get; set; }
 
         #region Village
         [System.ComponentModel.DataAnnotations.Display
@@ -155,8 +157,18 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.AmountPaid)]
         #endregion
         public long AmountPaid { get; set; }
+        public long AmountPaid1 { get; set; }
+
+        #region AmountPaid
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.DestinationAmountPaid)]
+        #endregion
+        public long DestinationAmountPaid { get; set; }
         public string ref_id { get; set; }
         public string card_pan { get; set; }
         public bool? FinalApprove { get; set; }
+        public Guid FinancialManagementId { get; set; }
+
     }
 }

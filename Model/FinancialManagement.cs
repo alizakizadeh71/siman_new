@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Data.Entity;
 using System;
+using System.Collections.Generic;
 
 namespace Models
 {
@@ -105,5 +106,6 @@ namespace Models
             Name = Resources.Model.Strings.RequestKeys.AmountPaid)]
         #endregion
         public long AmountPaid { get; set; }
+        public virtual System.Collections.Generic.IList<DestinationManagement> DestinationManagements { get; set; }
     }
 }

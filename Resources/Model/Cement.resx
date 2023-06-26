@@ -121,13 +121,16 @@
     <value>آدرس دقیق</value>
   </data>
   <data name="AmountPaid" xml:space="preserve">
-    <value>مبلغ پرداخت</value>
+    <value>مبلغ پرداخت در کارخانه</value>
   </data>
   <data name="BuyerMobile" xml:space="preserve">
     <value>موبایل خریدار</value>
   </data>
   <data name="City" xml:space="preserve">
     <value>شهر تخلیه</value>
+  </data>
+  <data name="DestinationAmountPaid" xml:space="preserve">
+    <value>مبلغ پرداخت در محل</value>
   </data>
   <data name="FactoryName" xml:space="preserve">
     <value>نام کارخانه</value>

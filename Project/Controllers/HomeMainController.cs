@@ -84,6 +84,26 @@ namespace OPS.Controllers
                         var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
                             .Where(x => x.Id == cementViewModel.Tonnage).FirstOrDefault().Code);
 
+                        long? DestinationAmountPaid = null;
+                        var oDestinationManagement =
+                                 UnitOfWork.DestinationManagementRepository
+                                 .Get()
+                                 .Where(x => x.IsActived && !x.IsDeleted)
+                                 .Where(x => x.FinancialManagement.IsActived && !x.FinancialManagement.IsDeleted)
+                                 .Where(current => current.FinancialManagement.ProductNameId == cementViewModel.ProductName)
+                                 .Where(current => current.FinancialManagement.ProductTypeId == cementViewModel.ProductType)
+                                 .Where(current => current.FinancialManagement.PackageTypeId == cementViewModel.PackageType)
+                                 .Where(current => current.FinancialManagement.FactoryNameId == cementViewModel.FactoryName)
+                                 .Where(current => current.ProvinceId == cementViewModel.Province)
+                                 .Where(current => current.CityId == cementViewModel.City)
+                                 .SingleOrDefault()
+                                 ;
+                        if(oDestinationManagement != null)
+                        {
+                            DestinationAmountPaid = oDestinationManagement.DestinationAmountPaid * Tonnage;
+                        }
+
+
                         long AmountPaid = oFinancialManagement.AmountPaid * Tonnage; /// محاسبه مبلغ
                         int LastInvoiceNumber = UnitOfWork.FactorCementRepository.GetLastInvoiceNumber() + 1;
                         Models.User oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
@@ -99,6 +119,7 @@ namespace OPS.Controllers
                             BuyerMobile = cementViewModel.BuyerMobile,
                             Address = cementViewModel.Address,
                             AmountPaid = AmountPaid,
+                            DestinationAmountPaid = DestinationAmountPaid,
                             Description = cementViewModel.Description,
                             RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),
                             UserIPAddress = Request.UserHostAddress,
@@ -109,7 +130,8 @@ namespace OPS.Controllers
                         oFactorCement.InvoiceNumber = LastInvoiceNumber;
                         UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
                         cementViewModel.InvoiceNumber = LastInvoiceNumber;
-                        ViewBag.PageMessages = "مبلغ قابل پرداخت: " + String.Format("{0:n0}", AmountPaid) + " ریال ";
+                        ViewBag.PageMessages = "تحویل درب کارخانه: " + String.Format("{0:n0}", AmountPaid) + " ریال ";
+                        ViewBag.PageMessages2 = "تحویل در محل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال ";
                     }
                 }
             }

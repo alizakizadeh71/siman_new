@@ -1,4 +1,5 @@
-﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
+﻿
+@model ViewModels.Areas.Administrator.Cement.CementViewModel
 
 @{
     string strTitle =
@@ -99,7 +100,7 @@
                     read: {
                         type: "POST",
                         dataType: "json",
-                        url: "/Administrator/Financial/GetRequests",
+                        url: "/Administrator/Financial/DestinationGetRequests",
                     },
                 },
 
@@ -181,19 +182,14 @@
                         width: "10px",
                         title: "",
                         template: function (dataItem) {
-
                             var strTemplate = "";
 
                             strTemplate +=
-                                '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="قیمت مقصد" href="/Administrator/Financial/DestinationPrice/'
-                            + dataItem.Id + '"><img src="../../../Content/Icon/Truck.png"/></span></a>';
-                            
-                            strTemplate +=
-                                '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Financial/Edit/'
+                                '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Financial/DestinationEdit/'
                             + dataItem.Id + '"><img src="../../../Content/Icon/Edit.png"/></span></a>';
 
                             strTemplate +=
-                            ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/Financial/Delete/'
+                            ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/Financial/DestinationDelete/'
                             + dataItem.Id + '"><img src="../../../Content/Icon/Delete.png"/></span></a>';
                             return (strTemplate);
                         },
@@ -242,6 +238,30 @@
                         hidden: false,
                         locked: true,
                         lockable: true,
+                        title: "@Resources.Model.Cement.StringProvince",
+                        field: "@Resources.Model.Strings.CementKeys.StringProvince",
+                        width: "10px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Cement.StringCity",
+                        field: "@Resources.Model.Strings.CementKeys.StringCity",
+                        width: "10px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Cement.DestinationAmountPaid",
+                        field: "@Resources.Model.Strings.CementKeys.DestinationAmountPaid",
+                        width: "10px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
                         title: "@Resources.Model.Cement.StringInsertDateTime",
                         field: "@Resources.Model.Strings.CementKeys.StringInsertDateTime",
                         width: "20px",
@@ -268,7 +288,7 @@
                         read: {
                             type: "POST",
                             dataType: "json",
-                            url: "/Administrator/Financial/Search",
+                            url: "/Administrator/Financial/DestinationSearch",
                             data: {
                                 AmountPaid: function () {
                                     return ($("input#AmountPaid").val());
@@ -444,7 +464,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
-                       href="/Administrator/Financial/Create/"><span style="float:right;">ثبت قیمت جدید</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+                       href="/Administrator/Financial/Index/"><span style="float:right;">ثبت قیمت جدید</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
                     <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
                        href="/HomeMain/Main/" style="float:left;">
                         <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />

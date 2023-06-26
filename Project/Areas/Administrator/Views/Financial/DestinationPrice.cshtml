@@ -1,0 +1,276 @@
+﻿
+@model ViewModels.Areas.Administrator.Cement.CementViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.Edit,
+        Resources.ViewModel.AccountNumberManage.EntitiesName);
+
+    //string  QstrTitle = Model.BaseAccountNumber;
+    // if (ViewBag.BaseAccountNumber != null)
+    // {
+    //     QstrTitle = ViewBag.BaseAccountNumber;
+    // }
+}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#ProductName').prop('disabled', true);
+        $('#ProductType').prop('disabled', true);
+        $('#PackageType').prop('disabled', true);
+        $('#FactoryName').prop('disabled', true);
+        $('#AmountPaid').prop('disabled', true);
+    })
+
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
+    function Comma(Num) {
+        Num += '';
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        x = Num.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1))
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        return x1 + x2;
+    }
+
+
+    function onChangeProductName() {
+        debugger;
+        $.ajax({
+            url: '/Administrator/Cement/GetProductType',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivProductTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+                $.each(data, function (i, ProductType) {
+                    var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
+                    /// baraye inke avalin id baraye loade Select badi estefade shavad
+                    if (i == 0) {
+                        onChangeProductType(ProductType.Id);
+                    }
+                    select.append(option);
+                })
+
+                $("#DivProductTypeId").append(select);
+                $('#ProductType>option:eq(1)').prop('selected', true);
+            }
+        });
+
+        $.ajax({
+            url: '/Administrator/Cement/GetFactoryName',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivFactoryNameId").empty();
+
+                var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, FactoryName) {
+                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivFactoryNameId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#FactoryName>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
+    function onChangeProductType(ProductTypee) {
+        debugger;
+        if (ProductTypee == undefined) { /// baraye inke dafe aval az loade safhe bekhoone
+            ProductTypee = $("#ProductType").val();
+        }
+        $.ajax({
+            url: '/Administrator/Cement/GetPackageType',
+            type: 'post',
+            data: { ProductTypeId: ProductTypee },
+            success: function (data) {
+
+                $("#DivPackageTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, PackageType) {
+                    var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivPackageTypeId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#PackageType>option:eq(1)').prop('selected', true);
+                onChangePackageType();
+            }
+        });
+    }
+
+
+</script>
+@using (Html.BeginForm("DestinationPrice", "Financial", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                پیام های سیستمی
+            </div>
+            <div class="panel-body">
+                @Html.Raw(ViewBag.PageMessages)
+            </div>
+        </div>
+    }
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.ProductName1)
+            @Html.HiddenFor(model => model.ProductType1)
+            @Html.HiddenFor(model => model.PackageType1)
+            @Html.HiddenFor(model => model.FactoryName1)
+            @Html.HiddenFor(model => model.AmountPaid1)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.ProductName, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
+                    @Html.ValidationMessageFor(model => model.ProductName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8" id="DivProductTypeId">
+                    @Html.DropDownListFor(model => model.ProductType, null,
+                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
+                    @Html.ValidationMessageFor(model => model.ProductType)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8" id="DivPackageTypeId">
+                    @Html.DropDownListFor(model => model.PackageType, null,
+                   Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PackageType)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8" id="DivFactoryNameId">
+                    @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FactoryName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.AmountPaid, new { @class = "col-md-4 control-label" })
+                <div class="col col-md-8">
+                    @Html.TextBoxFor(model => model.AmountPaid, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.Province, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
+                    @Html.ValidationMessageFor(model => model.Province)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8" id="DivCityId">
+                    @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.City)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DestinationAmountPaid, new { @class = "col-md-4 control-label" })
+                <div class="col col-md-8">
+                    @Html.TextBoxFor(model => model.DestinationAmountPaid, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <input type="submit" value="@Resources.Buttons.Save" class="btn btn-success" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-footer">
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.Financial.DestinationIndex(), new { @class = "btn btn-default" })
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+               href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function onChange() {
+            $.ajax({
+                url: '/Administrator/AccountNumberManage/FindAccountNumber',
+                type: 'post',
+                data: { accountnumber: $("#AccountNumber").val() },
+                success: function (data) {
+                    //$("#BaseAccountNumber").empty();
+                    //var ddddd = $("#BaseAccountNumber");
+                    //sasas
+                    //$("#BaseAccountNumber") = data;
+                    //$.each(data, function (i, city) {
+                    //    $("#LocationCityId").append('<option value="' + city.Id + '"> ' + city.Name + '</option>')
+                    //})
+                }
+            });
+        }
+
+            function onChangeProvince() {
+        $.ajax({
+            url: '/Administrator/HeadOfFactor/GetCities',
+            type: 'post',
+            data: { provinceId: $("#Province").val() },
+            success: function (data) {
+
+                $("#DivCityId").empty();
+
+                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, city) {
+                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivCityId").append(select);
+                $('#City>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+    </script>
+}
