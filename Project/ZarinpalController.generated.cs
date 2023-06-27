@@ -85,6 +85,7 @@ namespace OPS.Controllers
         public class ActionParamsClass_Payment
         {
             public readonly string invoiceNumber = "invoiceNumber";
+            public readonly string MahalTahvil = "MahalTahvil";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -107,10 +108,11 @@ namespace OPS.Controllers
     {
         public T4MVC_ZarinpalController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Payment(int invoiceNumber)
+        public override System.Web.Mvc.ActionResult Payment(int invoiceNumber, string MahalTahvil)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Payment);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "invoiceNumber", invoiceNumber);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "MahalTahvil", MahalTahvil);
             return callInfo;
         }
 

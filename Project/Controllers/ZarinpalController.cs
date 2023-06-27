@@ -41,14 +41,22 @@ namespace OPS.Controllers
         PGServiceClient oIPGServices = new PGServiceClient();
         //string testamount = "10017";
 
-        public virtual ActionResult Payment(int invoiceNumber)
+        public virtual ActionResult Payment(int invoiceNumber, string MahalTahvil)
         {
             try
             {
                 var oFactorCement = UnitOfWork.FactorCementRepository.GetByinvoicenumber(invoiceNumber).FirstOrDefault();
 
                 string merchant = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
-                string amount = oFactorCement.AmountPaid.ToString();
+                string amount = string.Empty;
+                if (MahalTahvil == "Karkhane")
+                {
+                    amount = oFactorCement.AmountPaid.ToString();
+                }
+                else if (MahalTahvil == "Mahal")
+                {
+                    amount = oFactorCement.DestinationAmountPaid.ToString();
+                }
                 string authority;
                 string description = oFactorCement.ProductName.Name + " - " + oFactorCement.PackageType.Name + " - " + oFactorCement.FactoryName.Name + " - " + oFactorCement.Tonnage.Name;
                 string callbackurl = "https://masalehpakhsh.com/Zarinpal/VerifyPayment";

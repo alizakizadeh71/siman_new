@@ -167,6 +167,7 @@ namespace ViewModels.Areas.Administrator.Cement
         public long DestinationAmountPaid { get; set; }
         public string ref_id { get; set; }
         public string card_pan { get; set; }
+        public string MahalTahvil { get; set; }
         public bool? FinalApprove { get; set; }
         public Guid FinancialManagementId { get; set; }
 

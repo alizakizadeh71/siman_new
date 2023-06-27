@@ -130,8 +130,8 @@ namespace OPS.Controllers
                         oFactorCement.InvoiceNumber = LastInvoiceNumber;
                         UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
                         cementViewModel.InvoiceNumber = LastInvoiceNumber;
-                        ViewBag.PageMessages = "تحویل درب کارخانه: " + String.Format("{0:n0}", AmountPaid) + " ریال ";
-                        ViewBag.PageMessages2 = "تحویل در محل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال ";
+                        ViewBag.Karkhane = "تحویل درب کارخانه: " + String.Format("{0:n0}", AmountPaid) + " ریال ";
+                        ViewBag.Mahal = "تحویل در محل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال ";
                     }
                 }
             }
