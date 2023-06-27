@@ -52,13 +52,19 @@
                 @Html.ValidationSummary(true)
                 @Html.Hidden("invoiceNumber", null, new { @class = "form-controle" })
                 @Html.Hidden("MahalTahvil", null, new { @class = "form-controle" })
-                <div style="text-align:center" >
+                <div style="text-align:center">
                     <input class="btn btn-success" type="submit" disabled="disabled" id="btnPayment" style="margin-right:7px ; text-align:center" value="پرداخت و دریافت فاکتور" />
                 </div>
             }
         }
-
-
+        else if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+        {
+            <div class="panel panel-info" style="text-align:center">
+                <div style="color:red ; font-weight:bold" class="panel-body">
+                    @Html.Raw(ViewBag.PageMessages)
+                </div>
+            </div>
+        }
 
         @using (Html.BeginForm("Index", "HomeMain", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {

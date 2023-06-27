@@ -84,7 +84,7 @@ namespace OPS.Controllers
                         var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
                             .Where(x => x.Id == cementViewModel.Tonnage).FirstOrDefault().Code);
 
-                        long? DestinationAmountPaid = null;
+                        long? DestinationAmountPaid = 0;
                         var oDestinationManagement =
                                  UnitOfWork.DestinationManagementRepository
                                  .Get()
