@@ -233,7 +233,8 @@ namespace OPS.Controllers
             cementViewModel.StringFactoryName = oFactorCement.FactoryName.Name;
             cementViewModel.StringTonnage = oFactorCement.Tonnage.Name;
             cementViewModel.AmountPaid = oFactorCement.AmountPaid;
-            cementViewModel.DestinationAmountPaid = oFactorCement.DestinationAmountPaid != null ? oFactorCement.DestinationAmountPaid.Value : 0 ;
+            cementViewModel.DestinationAmountPaid = oFactorCement.DestinationAmountPaid != null ? oFactorCement.DestinationAmountPaid.Value : 0;
+            cementViewModel.MahalTahvil = oFactorCement.MahalTahvil == "Karkhane" ? "درب کارخانه" : oFactorCement.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ";
             cementViewModel.ref_id = oFactorCement.ref_id.ToString();
             cementViewModel.card_pan = oFactorCement.card_pan;
             return cementViewModel;

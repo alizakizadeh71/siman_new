@@ -88,11 +88,12 @@
                             <span>اطلاعات پرداخت</span>
                         </caption>
                         <tr class="BorderStyle">
-                            @if (Model.MahalTahvil == "Karkhane")
+                            <td class="BorderStyle">محل تحویل</td>
+                            @if (Model.MahalTahvil == "درب کارخانه")
                             {
                                 <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
                             }
-                            else if (Model.MahalTahvil == "Mahal")
+                            else if (Model.MahalTahvil == "مقصد خریدار")
                             {
                                 <td>@Html.DisplayNameFor(model => model.DestinationAmountPaid)</td>
                             }
@@ -100,11 +101,12 @@
                             <td>شماره کارت خریدار</td>
                         </tr>
                         <tr class="BorderStyle">
-                            @if (Model.MahalTahvil == "Karkhane")
+                            <td class="BorderStyle">@Html.DisplayFor(model => model.MahalTahvil)</td>
+                            @if (Model.MahalTahvil == "درب کارخانه")
                             {
                                 <td>@Html.DisplayFor(model => model.AmountPaid)</td>
                             }
-                            else if (Model.MahalTahvil == "Mahal")
+                            else if (Model.MahalTahvil == "مقصد خریدار")
                             {
                                 <td>@Html.DisplayFor(model => model.DestinationAmountPaid)</td>
                             }
