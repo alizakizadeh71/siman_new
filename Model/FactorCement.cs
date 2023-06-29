@@ -256,6 +256,6 @@ namespace Models
 
         public virtual System.Collections.Generic.IList<File> Files { get; set; }
         public virtual System.Collections.Generic.IList<Message> Messages { get; set; }
-
+        public string MahalTahvil { get; set; }
     }
 }

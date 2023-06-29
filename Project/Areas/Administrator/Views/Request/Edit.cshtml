@@ -188,19 +188,20 @@
     <div class="row">
         <div class="panel panel-info">
             @*<div class="panel-heading">
-                <h4>@strTitel</h4>
-                <div style="text-align:center ; color:brown">
-                    با توجه به مشکل پیش آمده پس از باز کردن صفحه دوباره افزونه CSP
-                    <img src="~/Content/Images/CSP.png" /> را فعال نمایید و با زدن دکمه F5 صفحه را رفرش کنید تا شرکت تجارت الکترونیک پارسیان راه حل جدیدی ارايه دهد
-                </div>
-                <br />
-                <div style="text-align:center ; color:brown">
-                    <a style="color:#4e6cff ; font-weight:bold" href="https://ops.ivo.ir/CSP.pdf">برای دانلود راه حل جدید شرکت تجارت الکترونیک پارسیان کلیک کنید - در صورت نیاز میتوانید از این روش به جای روش بالا استفاده نمایید</a>
-                </div>
-            </div>*@
+                    <h4>@strTitel</h4>
+                    <div style="text-align:center ; color:brown">
+                        با توجه به مشکل پیش آمده پس از باز کردن صفحه دوباره افزونه CSP
+                        <img src="~/Content/Images/CSP.png" /> را فعال نمایید و با زدن دکمه F5 صفحه را رفرش کنید تا شرکت تجارت الکترونیک پارسیان راه حل جدیدی ارايه دهد
+                    </div>
+                    <br />
+                    <div style="text-align:center ; color:brown">
+                        <a style="color:#4e6cff ; font-weight:bold" href="https://ops.ivo.ir/CSP.pdf">برای دانلود راه حل جدید شرکت تجارت الکترونیک پارسیان کلیک کنید - در صورت نیاز میتوانید از این روش به جای روش بالا استفاده نمایید</a>
+                    </div>
+                </div>*@
             <div class="panel-body">
                 @Html.HiddenFor(model => model.Id)
                 <dl class="dl-horizontal">
+                    <br />
                     <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
                     <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
                     <br />
@@ -228,6 +229,12 @@
                     <dt>@Html.DisplayNameFor(model => model.BuyerMobile)</dt>
                     <dd>@Html.DisplayFor(model => model.BuyerMobile)</dd>
                     <br />
+                    <dt>مبلغ پرداختی</dt>
+                    <dd>@Html.DisplayFor(model => model.AmountPaid)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.MahalTahvil)</dt>
+                    <dd>@Html.DisplayFor(model => model.MahalTahvil)</dd>
+                    <br />
                     <dt>زمان ثبت</dt>
                     <dd>@Html.DisplayFor(model => model.StringInsertDateTime)</dd>
                     <br />
@@ -244,6 +251,11 @@
                             @Html.Raw(ViewBag.MessageList)
                         </div>
                     </div>
+                    <br />
+                    <dt></dt>
+                    <dd>
+                        @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success" })
+                    </dd>
                     <br />
                 </dl>
             </div>

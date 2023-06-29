@@ -121,7 +121,7 @@
     <value>آدرس دقیق</value>
   </data>
   <data name="AmountPaid" xml:space="preserve">
-    <value>مبلغ پرداخت در کارخانه</value>
+    <value>مبلغ پرداخت درب کارخانه</value>
   </data>
   <data name="BuyerMobile" xml:space="preserve">
     <value>موبایل خریدار</value>
@@ -137,6 +137,9 @@
   </data>
   <data name="InvoiceNumber" xml:space="preserve">
     <value>شماره فاکتور</value>
+  </data>
+  <data name="MahalTahvil" xml:space="preserve">
+    <value>محل تحویل</value>
   </data>
   <data name="PackageType" xml:space="preserve">
     <value>نوع بسته بندی</value>

@@ -31,6 +31,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
+using Models;
 
 namespace OPS.Controllers
 {
@@ -46,14 +47,16 @@ namespace OPS.Controllers
             try
             {
                 var oFactorCement = UnitOfWork.FactorCementRepository.GetByinvoicenumber(invoiceNumber).FirstOrDefault();
+                oFactorCement.MahalTahvil = MahalTahvil;
+                UnitOfWork.FactorCementRepository.Update(oFactorCement);
 
                 string merchant = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
                 string amount = string.Empty;
-                if (MahalTahvil == "Karkhane")
+                if (oFactorCement.MahalTahvil == "Karkhane")
                 {
                     amount = oFactorCement.AmountPaid.ToString();
                 }
-                else if (MahalTahvil == "Mahal")
+                else if (oFactorCement.MahalTahvil == "Mahal")
                 {
                     amount = oFactorCement.DestinationAmountPaid.ToString();
                 }
@@ -141,7 +144,14 @@ namespace OPS.Controllers
                 }
 
                 parameters.authority = oFactorCement.Authority;
-                parameters.amount = oFactorCement.AmountPaid.ToString();
+                if (oFactorCement.MahalTahvil == "Karkhane")
+                {
+                    parameters.amount = oFactorCement.AmountPaid.ToString();
+                }
+                else if (oFactorCement.MahalTahvil == "Mahal")
+                {
+                    parameters.amount = oFactorCement.DestinationAmountPaid.ToString();
+                }
                 parameters.merchant_id = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
 
                 //if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
@@ -223,6 +233,7 @@ namespace OPS.Controllers
             cementViewModel.StringFactoryName = oFactorCement.FactoryName.Name;
             cementViewModel.StringTonnage = oFactorCement.Tonnage.Name;
             cementViewModel.AmountPaid = oFactorCement.AmountPaid;
+            cementViewModel.DestinationAmountPaid = oFactorCement.DestinationAmountPaid != null ? oFactorCement.DestinationAmountPaid.Value : 0 ;
             cementViewModel.ref_id = oFactorCement.ref_id.ToString();
             cementViewModel.card_pan = oFactorCement.card_pan;
             return cementViewModel;

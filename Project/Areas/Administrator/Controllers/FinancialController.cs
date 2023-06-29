@@ -60,7 +60,7 @@ namespace OPS.Areas.Administrator.Controllers
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
         public virtual System.Web.Mvc.JsonResult GetRequests() => (JsonResult)Search(null);
-        
+
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
         public virtual System.Web.Mvc.JsonResult DestinationGetRequests() => (JsonResult)DestinationSearch(null);
@@ -160,7 +160,7 @@ namespace OPS.Areas.Administrator.Controllers
                 return null;
             }
         }
-        
+
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
         public virtual System.Web.Mvc.ActionResult DestinationSearch(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
@@ -341,7 +341,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             return (View(cementViewModel));
         }
-        
+
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
         public virtual System.Web.Mvc.ActionResult DestinationEdit(System.Guid id)
@@ -563,18 +563,41 @@ namespace OPS.Areas.Administrator.Controllers
 
                 var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList();
                 ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", cementViewModel.City);
-                // **************************************************
-                Models.DestinationManagement newDestinationManagement = new Models.DestinationManagement();
-                //newDestinationManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
-                newDestinationManagement.FinancialManagementId = cementViewModel.Id;
-                newDestinationManagement.ProvinceId = cementViewModel.Province;
-                newDestinationManagement.CityId = cementViewModel.City;
-                newDestinationManagement.DestinationAmountPaid = cementViewModel.DestinationAmountPaid;
-                UnitOfWork.DestinationManagementRepository.Insertdata(newDestinationManagement);
-                //UnitOfWork.Save();
 
-                // **************************************************
-                ViewBag.PageMessages = "قیمت در مقصد با موفقیت ثبت گردید  ";
+
+
+                var oDestinationManagement =
+                     UnitOfWork.DestinationManagementRepository
+                     .GetByUser(Infrastructure.Sessions.AuthenticatedUser.User)
+                     .Where(current => current.FinancialManagement.ProductNameId == cementViewModel.ProductName1)
+                     .Where(current => current.FinancialManagement.ProductTypeId == cementViewModel.ProductType1)
+                     .Where(current => current.FinancialManagement.PackageTypeId == cementViewModel.PackageType1)
+                     .Where(current => current.FinancialManagement.FactoryNameId == cementViewModel.FactoryName1)
+                     .Where(current => current.ProvinceId == cementViewModel.Province)
+                     .Where(current => current.CityId == cementViewModel.City)
+                     .FirstOrDefault()
+                     ;
+
+                if (oDestinationManagement != null)
+                    ViewBag.PageMessages = "خدمات مشابه با همین ویژگی ها در سیستم ثبت شده است.";
+
+                else if (cementViewModel.DestinationAmountPaid <= 0)
+                    ViewBag.PageMessages = "مبلغ را وارد نمایید.";
+
+                else
+                {
+                    // **************************************************
+                    Models.DestinationManagement newDestinationManagement = new Models.DestinationManagement();
+                    //newDestinationManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
+                    newDestinationManagement.FinancialManagementId = cementViewModel.Id;
+                    newDestinationManagement.ProvinceId = cementViewModel.Province;
+                    newDestinationManagement.CityId = cementViewModel.City;
+                    newDestinationManagement.DestinationAmountPaid = cementViewModel.DestinationAmountPaid;
+                    UnitOfWork.DestinationManagementRepository.Insertdata(newDestinationManagement);
+                    //UnitOfWork.Save();
+                    // **************************************************
+                    ViewBag.PageMessages = "قیمت در مقصد با موفقیت ثبت گردید  ";
+                }
 
                 cementViewModel.ProductName = cementViewModel.ProductName1;
                 cementViewModel.ProductType = cementViewModel.ProductType1;
@@ -627,7 +650,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             return (View(oAccountNumberManage));
         }
-        
+
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
         public virtual System.Web.Mvc.ActionResult DestinationDelete(System.Guid id)
@@ -698,7 +721,7 @@ namespace OPS.Areas.Administrator.Controllers
                 return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
             }
         }
-        
+
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]

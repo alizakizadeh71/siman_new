@@ -32,7 +32,7 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to: مبلغ پرداخت در کارخانه
+        ///   Looks up a localized string similar to: مبلغ پرداخت درب کارخانه
         /// </summary>
         public static string AmountPaid([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -89,6 +89,16 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.Cement.InvoiceNumber;
             }
             return global::Resources.Model.Cement.ResourceManager.GetString("InvoiceNumber", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: محل تحویل
+        /// </summary>
+        public static string MahalTahvil([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.MahalTahvil;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("MahalTahvil", resourceCulture);
         }
         
         /// <summary>
@@ -248,7 +258,7 @@ namespace Resources.Model.Strings {
         public const string Address = "Address";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: مبلغ پرداخت در کارخانه
+        ///   Provides access to string resource key of value similar to: مبلغ پرداخت درب کارخانه
         /// </summary>
         public const string AmountPaid = "AmountPaid";
         
@@ -276,6 +286,11 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: شماره فاکتور
         /// </summary>
         public const string InvoiceNumber = "InvoiceNumber";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: محل تحویل
+        /// </summary>
+        public const string MahalTahvil = "MahalTahvil";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: نوع بسته بندی

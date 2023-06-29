@@ -159,7 +159,7 @@ namespace ViewModels.Areas.Administrator.Cement
         public long AmountPaid { get; set; }
         public long AmountPaid1 { get; set; }
 
-        #region AmountPaid
+        #region DestinationAmountPaid
         [System.ComponentModel.DataAnnotations.Display
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.DestinationAmountPaid)]
@@ -167,7 +167,14 @@ namespace ViewModels.Areas.Administrator.Cement
         public long DestinationAmountPaid { get; set; }
         public string ref_id { get; set; }
         public string card_pan { get; set; }
+
+        #region MahalTahvil
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.MahalTahvil)]
+        #endregion
         public string MahalTahvil { get; set; }
+
         public bool? FinalApprove { get; set; }
         public Guid FinancialManagementId { get; set; }
 

@@ -88,12 +88,26 @@
                             <span>اطلاعات پرداخت</span>
                         </caption>
                         <tr class="BorderStyle">
-                            <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
+                            @if (Model.MahalTahvil == "Karkhane")
+                            {
+                                <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
+                            }
+                            else if (Model.MahalTahvil == "Mahal")
+                            {
+                                <td>@Html.DisplayNameFor(model => model.DestinationAmountPaid)</td>
+                            }
                             <td class="BorderStyle">شماره تراكنش</td>
                             <td>شماره کارت خریدار</td>
                         </tr>
                         <tr class="BorderStyle">
-                            <td>@Html.DisplayFor(model => model.AmountPaid)</td>
+                            @if (Model.MahalTahvil == "Karkhane")
+                            {
+                                <td>@Html.DisplayFor(model => model.AmountPaid)</td>
+                            }
+                            else if (Model.MahalTahvil == "Mahal")
+                            {
+                                <td>@Html.DisplayFor(model => model.DestinationAmountPaid)</td>
+                            }
                             <td class="BorderStyle">@Html.DisplayFor(model => model.ref_id)</td>
                             <td>@Html.DisplayFor(model => model.card_pan)</td>
                         </tr>

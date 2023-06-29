@@ -36,9 +36,10 @@
                     <li>@Html.ActionLink(Resources.Action.Home, MVC.HomeMain.Index())</li>
                     <li>@Html.ActionLink(Resources.Action.About, MVC.HomeMain.About())</li>
                     <li>@Html.ActionLink(Resources.Action.Contact, MVC.HomeMain.Contact())</li>
-                    <li>@Html.ActionLink(Resources.Action.Login, MVC.HomeMain.Login())</li>
+                    @*<li>@Html.ActionLink(Resources.Action.Login, MVC.HomeMain.Login())</li>*@
                     @*<li>@Html.Partial("_PartialLogin")</li>*@
                 </ul>
+                <p style="text-align:left ; margin-top:1% ; font-size:large ; color:greenyellow" >شماره تماس : 09051520102</p>
                 @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
@@ -55,11 +56,11 @@
     </div>
 
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+        @Scripts.Render("~/bundles/bootstrap")*@
     @*<script src="~/Scripts/jquery-1.10.2.js"></script>*@
 
     <script src="~/Scripts/kendo/lastVersion/cultures/kendo.culture.fa-IR.min.js"></script>
-    <script src="~/Scripts/kendo/lastVersion/kendo.all.min.js"></script> 
+    <script src="~/Scripts/kendo/lastVersion/kendo.all.min.js"></script>
     <script src="~/Scripts/kendo/kendo.fa-IR.js"></script>
 
     <script src="~/Scripts/jquery-ui-1.8.21.custom.min.js"></script>

@@ -70,7 +70,7 @@ namespace Resources.Model {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to مبلغ پرداخت در کارخانه.
+        ///   Looks up a localized string similar to مبلغ پرداخت درب کارخانه.
         /// </summary>
         public static string AmountPaid {
             get {
@@ -120,6 +120,15 @@ namespace Resources.Model {
         public static string InvoiceNumber {
             get {
                 return ResourceManager.GetString("InvoiceNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to محل تحویل.
+        /// </summary>
+        public static string MahalTahvil {
+            get {
+                return ResourceManager.GetString("MahalTahvil", resourceCulture);
             }
         }
         

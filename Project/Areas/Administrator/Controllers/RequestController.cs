@@ -55,7 +55,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             var varRequest =
                 UnitOfWork.FactorCementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User)
-                .Where(x=>x.FinalApprove == true);
+                .Where(x => x.FinalApprove == true);
 
             #region Condition
             if (!string.IsNullOrEmpty(viewModel?.BuyerMobile))
@@ -172,6 +172,8 @@ namespace OPS.Areas.Administrator.Controllers
                             StringProvince = current.Province.Name,
                             StringCity = current.City.Name,
                             BuyerMobile = current.BuyerMobile,
+                            AmountPaid = current.MahalTahvil == "Karkhane" ? current.AmountPaid : current.MahalTahvil == "Mahal" ? current.DestinationAmountPaid.Value : 0,
+                            MahalTahvil = current.MahalTahvil == "Karkhane" ? "درب کارخانه" : current.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ",
                             StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
                         })
                         .AsQueryable();
@@ -327,6 +329,8 @@ namespace OPS.Areas.Administrator.Controllers
                      StringProvince = current.Province.Name,
                      StringCity = current.City.Name,
                      BuyerMobile = current.BuyerMobile,
+                     AmountPaid = current.MahalTahvil == "Karkhane" ? current.AmountPaid : current.MahalTahvil == "Mahal" ? current.DestinationAmountPaid.Value : 0,
+                     MahalTahvil = current.MahalTahvil == "Karkhane" ? "درب کارخانه" : current.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ",
                      StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
                      Description = current.Description,
                  })
@@ -1892,6 +1896,8 @@ namespace OPS.Areas.Administrator.Controllers
                 cementViewModel.StringFactoryName = factorCement.FactoryName.Name;
                 cementViewModel.StringTonnage = factorCement.Tonnage.Name;
                 cementViewModel.AmountPaid = factorCement.AmountPaid;
+                cementViewModel.DestinationAmountPaid = factorCement.DestinationAmountPaid != null ? factorCement.DestinationAmountPaid.Value : 0;
+                cementViewModel.MahalTahvil = factorCement.MahalTahvil == "Karkhane" ? "درب کارخانه" : factorCement.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ";
                 cementViewModel.ref_id = factorCement.ref_id.ToString();
                 cementViewModel.card_pan = factorCement.card_pan;
 
