@@ -13,7 +13,7 @@ namespace DAL
         public IQueryable<Models.ProductName> GetProductNames()
         {
             IQueryable<Models.ProductName> list = null;
-            list = Get();
+            list = Get().Where(x => x.IsActived && !x.IsDeleted);
             return list;
         }
 
@@ -21,6 +21,7 @@ namespace DAL
         {
             Models.ProductName oProductName =
                 Get()
+                .Where(x => x.IsActived && !x.IsDeleted)
                 .Where(currenct => currenct.Code == code)
                 .FirstOrDefault();
 

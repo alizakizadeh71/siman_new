@@ -12,7 +12,7 @@ namespace DAL
 
         public IQueryable<Models.FactoryName> GetFactoryNames()
         {
-            IQueryable<Models.FactoryName> list = Get();
+            IQueryable<Models.FactoryName> list = Get().Where(x => x.IsActived && !x.IsDeleted);
             return list;
         }
 
@@ -20,6 +20,7 @@ namespace DAL
         {
             Models.FactoryName oFactoryName =
                 Get()
+                .Where(x => x.IsActived && !x.IsDeleted)
                 .Where(currenct => currenct.Code == code)
                 .FirstOrDefault();
 
@@ -34,6 +35,7 @@ namespace DAL
 
                 retValue
                     = Get()
+                    .Where(x => x.IsActived && !x.IsDeleted)
                     .Where(current => current.ProductNameId == ProductNameId);
 
 

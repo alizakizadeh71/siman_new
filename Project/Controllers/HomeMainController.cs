@@ -19,12 +19,12 @@ namespace OPS.Controllers
             ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel
             {
                 ProductName = new Guid("c26a5f77-5a78-4dd6-9f0a-0b647c9f7195"),
-                ProductType = new Guid("5f6f25ba-4ee7-4b56-8bdf-fefc3e390b0d"),
-                PackageType = new Guid("167fd28a-fdec-4385-866f-e8c08dbfd8a6"),
+                ProductType = new Guid("bd25dd8b-7845-4021-b91e-fcfdb7a21649"),
+                PackageType = new Guid("85fe59ba-1eab-47cb-8635-2ce297f3cbb6"),
                 FactoryName = new Guid("4ad543c7-8af2-4832-917b-88d17758a9e1"),
-                Tonnage = new Guid("bf031e9a-6d4e-400f-a98e-e86ed3b954c9"),
-                Province = new Guid("c9cea679-6de8-11e5-8295-c0f8daba7555"),
-                City = new Guid("92f077e9-bd95-4756-bc78-ec8537c75d07"),
+                Tonnage = new Guid("9133daec-834a-4303-9687-5b08b479ffdf"),
+                Province = new Guid("d803f690-6de8-11e5-8295-c0f8daba7555"),
+                City = new Guid("f8b85020-ad88-4d89-9aa2-0de9e27fd9b1"),
             };
             ViewData(cementViewModel);
             return View(cementViewModel);
@@ -32,7 +32,7 @@ namespace OPS.Controllers
 
         private void ViewData(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
-            var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
+            var ProductName = UnitOfWork.ProductNameRepository.Get().Where(x=>x.IsActived && !x.IsDeleted).ToList();
             base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", cementViewModel.ProductName).OrderByDescending(x => x.Text);
 
             var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
@@ -47,7 +47,7 @@ namespace OPS.Controllers
             var Tonnage = UnitOfWork.tonnageRepository.GetByPackageTypeId(cementViewModel.PackageType).ToList(); /// کیسه
             base.ViewData["Tonnage"] = new System.Web.Mvc.SelectList(Tonnage, "Id", "Name", cementViewModel.Tonnage).OrderBy(x => x.Text); /// 12 تن
 
-            var Province = UnitOfWork.ProvinceRepository.Get().ToList();
+            var Province = UnitOfWork.ProvinceRepository.Get().Where(x => x.IsActived && !x.IsDeleted).ToList();
             base.ViewData["Province"] = new System.Web.Mvc.SelectList(Province, "Id", "Name", cementViewModel.Province).OrderBy(x => x.Text);
 
             var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList(); /// کرمان

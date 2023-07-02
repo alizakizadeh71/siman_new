@@ -14,6 +14,7 @@ namespace DAL
         {
             Models.City oCity =
                 Get()
+                .Where(x => x.IsActived && !x.IsDeleted)
                 .Where(current =>current.Code==code)
                 .Where(current =>current.ProvinceId== ProvinceId)
                 .FirstOrDefault();
@@ -31,6 +32,7 @@ namespace DAL
                 {
                     retValue
                         = Get()
+                        .Where(x => x.IsActived && !x.IsDeleted)
                         .Where(current => current.ProvinceId == user.ProvinceId);
                 }
 
@@ -38,6 +40,7 @@ namespace DAL
                 {
                     retValue
                         = Get()
+                        .Where(x => x.IsActived && !x.IsDeleted)
                         .OrderBy(current=>current.Name);
                 }
 
@@ -58,6 +61,7 @@ namespace DAL
 
                     retValue
                         = Get()
+                        .Where(x => x.IsActived && !x.IsDeleted)
                         .Where(current => current.ProvinceId == provinceId);
                
 

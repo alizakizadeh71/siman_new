@@ -11,7 +11,7 @@ namespace DAL
 		}
         public IQueryable<Models.Tonnage> GetTonnages()
         {
-            IQueryable<Models.Tonnage> list = Get();
+            IQueryable<Models.Tonnage> list = Get().Where(x => x.IsActived && !x.IsDeleted);
             return list;
         }
 
@@ -19,6 +19,7 @@ namespace DAL
         {
             Models.Tonnage oTonnage =
                 Get()
+                .Where(x => x.IsActived && !x.IsDeleted)
                 .Where(currenct => currenct.Code == code)
                 .FirstOrDefault();
 
@@ -34,6 +35,7 @@ namespace DAL
 
                 retValue
                     = Get()
+                    .Where(x => x.IsActived && !x.IsDeleted)
                     .Where(current => current.PackageTypeId == PackageTypeId);
 
                 return retValue;

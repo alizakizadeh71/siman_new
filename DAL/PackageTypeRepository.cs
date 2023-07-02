@@ -18,7 +18,7 @@ namespace DAL
         public Models.PackageType GetByPackageTypeCode(string code)
         {
             Models.PackageType oPackageType =
-                Get()
+                Get().Where(x => x.IsActived && !x.IsDeleted)
                 .Where(currenct => currenct.Code == code)
                 .FirstOrDefault();
 
@@ -33,7 +33,7 @@ namespace DAL
                 IQueryable<Models.PackageType> retValue;
 
                 retValue
-                    = Get()
+                    = Get().Where(x => x.IsActived && !x.IsDeleted)
                     .Where(current => current.ProductTypeId == ProductTypeId);
 
                 return retValue;
