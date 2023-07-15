@@ -130,63 +130,68 @@
         </div>
     }
 
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            ثبت قیمت درب کارخانه
-        </div>
-        <div class="panel-body">
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
-                <div class="col-md-8">
-                    @Html.DropDownListFor(model => model.ProductName, null,
-                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
-                    @Html.ValidationMessageFor(model => model.ProductName)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
-                <div class="col-md-8" id="DivProductTypeId">
-                    @Html.DropDownListFor(model => model.ProductType, null,
-                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
-                    @Html.ValidationMessageFor(model => model.ProductType)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
-                <div class="col-md-8" id="DivPackageTypeId">
-                    @Html.DropDownListFor(model => model.PackageType, null,
-                   Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.PackageType)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-4 control-label" })
-                <div class="col col-md-8">
-                    @Html.TextBoxFor(model => model.StringTonnage, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.code, new { @class = "col-md-4 control-label" })
-                <div class="col col-md-8">
-                    @Html.TextBoxFor(model => model.code, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-10 col-md-offset-2">
-                    <input type="submit" value="@Resources.Buttons.Create" class="btn btn-primary" />
-                </div>
-            </div>
-
-        </div>
-
-        <div class="panel-footer">
-            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.Tonnages.Index(), new { @class = "btn btn-default col-md-2" })
-
-            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
-               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
-            <br />
-            <br />
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        ثبت قیمت درب کارخانه
+    </div>
+    <div class="panel-warning">
+        <div class="panel-heading" style="height : 37px;">
+            <p style="color : black;">مقدار تناژ با کد باید یکی باشد برای مثال : 27تن است باید کد آن 27 باشد</p>
         </div>
     </div>
+    <div class="panel-body">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.DropDownListFor(model => model.ProductName, null,
+                Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
+                @Html.ValidationMessageFor(model => model.ProductName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8" id="DivProductTypeId">
+                @Html.DropDownListFor(model => model.ProductType, null,
+               Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
+                @Html.ValidationMessageFor(model => model.ProductType)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8" id="DivPackageTypeId">
+                @Html.DropDownListFor(model => model.PackageType, null,
+               Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PackageType)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-4 control-label" })
+            <div class="col col-md-8">
+                @Html.TextBoxFor(model => model.StringTonnage, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.code, new { @class = "col-md-4 control-label" })
+            <div class="col col-md-8">
+                @Html.TextBoxFor(model => model.code, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <input type="submit" value="@Resources.Buttons.Create" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panel-footer">
+        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.Tonnages.Index(), new { @class = "btn btn-default col-md-2" })
+
+        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+           href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+        <br />
+        <br />
+    </div>
+</div>
 }

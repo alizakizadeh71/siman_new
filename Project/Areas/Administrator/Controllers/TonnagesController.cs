@@ -100,7 +100,6 @@ namespace OPS.Areas.Administrator.Controllers
                  .Where(x => x.IsActived && !x.IsDeleted)
                  .Where(model => model.PackageTypeId == cementViewModel.PackageType)
                  .Where(model => model.Name == cementViewModel.StringTonnage)
-                 .Where(model => model.Code == cementViewModel.code)
                  .FirstOrDefault();
 
 
