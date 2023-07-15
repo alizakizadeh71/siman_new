@@ -109,6 +109,9 @@ namespace OPS.Areas.Administrator.Controllers
             else if (cementViewModel.StringTonnage == null || cementViewModel.code == null)
                 ViewBag.PageMessages = "فیلد های تناژ و کد نباید خالی باشد";
 
+            else if (!cementViewModel.StringTonnage.Contains(cementViewModel.code))
+                ViewBag.PageMessages = "کد باید شامل تناژ باشد";
+
             else
             {
                 Models.Tonnage tonnage = new Models.Tonnage();

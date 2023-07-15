@@ -136,8 +136,6 @@ namespace OPS.Areas.Administrator.Controllers
                 .ToList()
                 .Select(current => new ViewModels.Areas.Administrator.Cement.CementViewModel()
                 {
-                    ProductName = current.ProductType.ProductName.Id,
-                    ProductType = current.ProductType.Id,
                     StringPackageType = current.Name,
                     code = current.Code,
                     StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
