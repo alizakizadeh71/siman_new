@@ -61,7 +61,8 @@ namespace DAL
 
                     retValue
                         = Get()
-                        .Where(x => x.IsActived && !x.IsDeleted)
+                        //.Where(x => x.IsActived && !x.IsDeleted)
+                        .Where(x => !x.IsDeleted)
                         .Where(current => current.ProvinceId == provinceId);
                
 

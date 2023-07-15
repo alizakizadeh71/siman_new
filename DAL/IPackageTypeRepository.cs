@@ -8,5 +8,6 @@
         Models.PackageType GetByPackageTypeCode(string code);
 
         System.Linq.IQueryable<Models.PackageType> GetByProductTypeId(System.Guid ProductTypeId);
-	}
+        void Insertdata(Models.PackageType packageType);
+    }
 }

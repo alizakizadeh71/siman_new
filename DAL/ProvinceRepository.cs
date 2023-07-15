@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Data.Entity;
+using Models;
+using System;
 
 namespace DAL
 {
@@ -48,5 +50,19 @@ namespace DAL
                 throw ex;
             }
         }
-	}
+
+        public void Updatedata(Province province)
+        {
+            try
+            {
+                DatabaseContext.Entry(province).State = EntityState.Modified;
+                DatabaseContext.SaveChanges();
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
 }

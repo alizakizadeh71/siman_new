@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Data.Entity;
+using Models;
+using System;
 
 namespace DAL
 {
@@ -46,5 +48,19 @@ namespace DAL
                 throw ex;
             }
         }
-	}
+
+        public void Insertdata(Tonnage tonnage)
+        {
+            try
+            {
+                DatabaseContext.Tonnages.Add(tonnage);
+                DatabaseContext.SaveChanges();
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
 }

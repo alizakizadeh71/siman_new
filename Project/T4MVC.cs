@@ -49,18 +49,25 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.CementController Cement = new OPS.Areas.Administrator.Controllers.T4MVC_CementController();
         public OPS.Areas.Administrator.Controllers.CentralBankController CentralBank = new OPS.Areas.Administrator.Controllers.T4MVC_CentralBankController();
         public OPS.Areas.Administrator.Controllers.CertainController Certain = new OPS.Areas.Administrator.Controllers.T4MVC_CertainController();
+        public OPS.Areas.Administrator.Controllers.CityController City = new OPS.Areas.Administrator.Controllers.T4MVC_CityController();
         public OPS.Areas.Administrator.Controllers.CurrencyUnitController CurrencyUnit = new OPS.Areas.Administrator.Controllers.T4MVC_CurrencyUnitController();
         public OPS.Areas.Administrator.Controllers.DetailOfFactorController DetailOfFactor = new OPS.Areas.Administrator.Controllers.T4MVC_DetailOfFactorController();
         public OPS.Areas.Administrator.Controllers.ExecutableCodeController ExecutableCode = new OPS.Areas.Administrator.Controllers.T4MVC_ExecutableCodeController();
+        public OPS.Areas.Administrator.Controllers.FactoryNameController FactoryName = new OPS.Areas.Administrator.Controllers.T4MVC_FactoryNameController();
         public OPS.Areas.Administrator.Controllers.FinancialController Financial = new OPS.Areas.Administrator.Controllers.T4MVC_FinancialController();
         public OPS.Areas.Administrator.Controllers.HeadLineController HeadLine = new OPS.Areas.Administrator.Controllers.T4MVC_HeadLineController();
         public OPS.Areas.Administrator.Controllers.HeadOfFactorController HeadOfFactor = new OPS.Areas.Administrator.Controllers.T4MVC_HeadOfFactorController();
         public OPS.Areas.Administrator.Controllers.IncomeRowController IncomeRow = new OPS.Areas.Administrator.Controllers.T4MVC_IncomeRowController();
+        public OPS.Areas.Administrator.Controllers.PackageTypeController PackageType = new OPS.Areas.Administrator.Controllers.T4MVC_PackageTypeController();
+        public OPS.Areas.Administrator.Controllers.ProductNameController ProductName = new OPS.Areas.Administrator.Controllers.T4MVC_ProductNameController();
+        public OPS.Areas.Administrator.Controllers.ProductTypeController ProductType = new OPS.Areas.Administrator.Controllers.T4MVC_ProductTypeController();
+        public OPS.Areas.Administrator.Controllers.ProvinceController Province = new OPS.Areas.Administrator.Controllers.T4MVC_ProvinceController();
         public OPS.Areas.Administrator.Controllers.ReportBuilderController ReportBuilder = new OPS.Areas.Administrator.Controllers.T4MVC_ReportBuilderController();
         public OPS.Areas.Administrator.Controllers.RequestController Request = new OPS.Areas.Administrator.Controllers.T4MVC_RequestController();
         public OPS.Areas.Administrator.Controllers.ServiceTariffController ServiceTariff = new OPS.Areas.Administrator.Controllers.T4MVC_ServiceTariffController();
         public OPS.Areas.Administrator.Controllers.SubHeadLineController SubHeadLine = new OPS.Areas.Administrator.Controllers.T4MVC_SubHeadLineController();
         public OPS.Areas.Administrator.Controllers.SubSystemController SubSystem = new OPS.Areas.Administrator.Controllers.T4MVC_SubSystemController();
+        public OPS.Areas.Administrator.Controllers.TonnagesController Tonnages = new OPS.Areas.Administrator.Controllers.T4MVC_TonnagesController();
         public OPS.Areas.Administrator.Controllers.UserController User = new OPS.Areas.Administrator.Controllers.T4MVC_UserController();
         public T4MVC.Administrator.SharedController Shared = new T4MVC.Administrator.SharedController();
     }
@@ -905,6 +912,7 @@ namespace Links
             public static readonly string Hotel_png = Url("Hotel.png");
             public static readonly string Hotel1_png = Url("Hotel1.png");
             public static readonly string InfoUser_png = Url("InfoUser.png");
+            public static readonly string map_png = Url("map.png");
             public static readonly string Office_png = Url("Office.png");
             public static readonly string OfficeService_png = Url("OfficeService.png");
             public static readonly string Password_png = Url("Password.png");

@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Data.Entity;
+using Models;
+using System;
 
 namespace DAL
 {
@@ -35,7 +37,7 @@ namespace DAL
 
                 retValue
                     = Get()
-                    .Where(x => x.IsActived && !x.IsDeleted)
+                    .Where(x=>x.IsActived && !x.IsDeleted)
                     .Where(current => current.ProductNameId == ProductNameId);
 
 
@@ -43,6 +45,20 @@ namespace DAL
             }
 
             catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Insertdata(ProductType productType)
+        {
+            try
+            {
+                DatabaseContext.ProductTypes.Add(productType);
+                DatabaseContext.SaveChanges();
+            }
+
+            catch (Exception ex)
             {
                 throw ex;
             }

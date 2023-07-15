@@ -97,6 +97,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد.
+        /// </summary>
+        public static string code {
+            get {
+                return ResourceManager.GetString("code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مبلغ پرداخت در محل.
         /// </summary>
         public static string DestinationAmountPaid {
@@ -120,6 +129,15 @@ namespace Resources.Model {
         public static string InvoiceNumber {
             get {
                 return ResourceManager.GetString("InvoiceNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فعال.
+        /// </summary>
+        public static string IsActive {
+            get {
+                return ResourceManager.GetString("IsActive", resourceCulture);
             }
         }
         

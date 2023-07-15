@@ -129,6 +129,9 @@
   <data name="City" xml:space="preserve">
     <value>شهر تخلیه</value>
   </data>
+  <data name="code" xml:space="preserve">
+    <value>کد</value>
+  </data>
   <data name="DestinationAmountPaid" xml:space="preserve">
     <value>مبلغ پرداخت در محل</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="InvoiceNumber" xml:space="preserve">
     <value>شماره فاکتور</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>فعال</value>
   </data>
   <data name="MahalTahvil" xml:space="preserve">
     <value>محل تحویل</value>

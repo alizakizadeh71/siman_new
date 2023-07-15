@@ -92,6 +92,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: فعال
+        /// </summary>
+        public static string IsActive([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.IsActive;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("IsActive", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: محل تحویل
         /// </summary>
         public static string MahalTahvil([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -240,6 +250,16 @@ namespace Resources.Model.Strings {
             }
             return global::Resources.Model.Cement.ResourceManager.GetString("Village", resourceCulture);
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: کد
+        /// </summary>
+        public static string code([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.code;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("code", resourceCulture);
+        }
     }
 }
 namespace Resources.Model.Strings {
@@ -286,6 +306,11 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: شماره فاکتور
         /// </summary>
         public const string InvoiceNumber = "InvoiceNumber";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: فعال
+        /// </summary>
+        public const string IsActive = "IsActive";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: محل تحویل
@@ -361,5 +386,10 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: روستای تخلیه
         /// </summary>
         public const string Village = "Village";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: کد
+        /// </summary>
+        public const string code = "code";
     }
 }

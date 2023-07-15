@@ -8,5 +8,6 @@
         Models.Tonnage GetByCode(string code);
 
         System.Linq.IQueryable<Models.Tonnage> GetByPackageTypeId(System.Guid PackageTypeId);
-	}
+        void Insertdata(Models.Tonnage tonnage);
+    }
 }

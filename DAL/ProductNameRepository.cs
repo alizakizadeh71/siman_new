@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Data.Entity;
+using Models;
+using System;
 
 namespace DAL
 {
@@ -27,5 +29,24 @@ namespace DAL
 
             return oProductName;
         }
-	}
+
+        public void Insertdata(ProductName productName)
+        {
+            try
+            {
+                DatabaseContext.ProductNames.Add(productName);
+                DatabaseContext.SaveChanges();
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void save()
+        {
+            //DatabaseContext.SaveChanges();
+        }
+    }
 }

@@ -18,7 +18,20 @@ namespace ViewModels.Areas.Administrator.Cement
         #endregion
         public Guid ProductName { get; set; }
         public Guid ProductName1 { get; set; }
+        public string ProductName2 { get; set; }
+        #region IsActive
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.IsActive)]
+        #endregion IsActive
+        public bool IsActive { get; set; }
 
+        #region ProductName
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.code)]
+        #endregion
+        public string code { get; set; }
         #region ProductType
         [System.ComponentModel.DataAnnotations.Display
              (ResourceType = typeof(Resources.Model.Cement),

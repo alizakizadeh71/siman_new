@@ -38,7 +38,7 @@ namespace OPS.Areas.Administrator.Controllers
         }
         private void Viewdata(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
-            var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
+            var ProductName = UnitOfWork.ProductNameRepository.Get().Where(x => x.IsActived && !x.IsDeleted).ToList();
             base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", cementViewModel.ProductName).OrderByDescending(x => x.Text);
 
             var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان

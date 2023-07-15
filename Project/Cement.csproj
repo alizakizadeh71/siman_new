@@ -194,6 +194,7 @@
     <Content Include="Content\css\chosen.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Icon\ExcelMini.png" />
+    <Content Include="Content\Icon\map.png" />
     <Content Include="Content\Icon\Office.png" />
     <Content Include="Content\Icon\AccountNumber.png" />
     <Content Include="Content\Icon\back.png" />
@@ -499,6 +500,25 @@
     <Content Include="Areas\Administrator\Views\Financial\DestinationIndex.cshtml" />
     <Content Include="Areas\Administrator\Views\Financial\DestinationEdit.cshtml" />
     <Content Include="Areas\Administrator\Views\Financial\DestinationDelete.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductName\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductName\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductName\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductType\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductType\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductType\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\PackageType\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\PackageType\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\PackageType\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\FactoryName\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\FactoryName\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\FactoryName\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Province\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Province\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\City\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\City\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Tonnages\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Tonnages\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Tonnages\Delete.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">
@@ -1477,6 +1497,9 @@
     <Compile Include="Administrator.CertainController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Administrator.CityController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Administrator.CurrencyUnitController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1484,6 +1507,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Administrator.ExecutableCodeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator.FactoryNameController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Administrator.FinancialController.generated.cs">
@@ -1496,6 +1522,18 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Administrator.IncomeRowController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator.PackageTypeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator.ProductNameController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator.ProductTypeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator.ProvinceController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Administrator.ReportBuilderController.generated.cs">
@@ -1514,6 +1552,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Administrator.SubSystemController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator.TonnagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Administrator.UserController.generated.cs">
@@ -1539,6 +1580,7 @@
     <Compile Include="Areas\Administrator\Controllers\CertainController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Administrator\Controllers\CityController.cs" />
     <Compile Include="Areas\Administrator\Controllers\CurrencyUnitController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1548,6 +1590,7 @@
     <Compile Include="Areas\Administrator\Controllers\ExecutableCodeController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Administrator\Controllers\FactoryNameController.cs" />
     <Compile Include="Areas\Administrator\Controllers\FinancialController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1561,6 +1604,10 @@
     <Compile Include="Areas\Administrator\Controllers\IncomeRowController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Administrator\Controllers\PackageTypeController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\ProductNameController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\ProductTypeController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\ProvinceController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ReportBuilderController.cs" />
     <Compile Include="Areas\Administrator\Controllers\RequestController.cs">
       <SubType>Code</SubType>
@@ -1574,6 +1621,7 @@
     <Compile Include="Areas\Administrator\Controllers\SubSystemController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Administrator\Controllers\TonnagesController.cs" />
     <Compile Include="Areas\Administrator\Controllers\UserController.cs">
       <SubType>Code</SubType>
     </Compile>

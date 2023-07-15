@@ -7,5 +7,6 @@
 
         Models.FactoryName GetByCode(string code);
         System.Linq.IQueryable<Models.FactoryName> GetByProductNameId(System.Guid ProductNameId);
-	}
+        void Insertdata(Models.FactoryName factoryName);
+    }
 }

@@ -446,6 +446,7 @@ namespace OPS.Areas.Administrator.Controllers
             {
                 var cities =
                  UnitOfWork.ProductTypeRepository.GetByProductNameId(ProductNameId)
+                 .Where(x => x.IsActived && !x.IsDeleted)
                  .Select(x => new
                  {
                      Name = x.Name,
@@ -478,6 +479,7 @@ namespace OPS.Areas.Administrator.Controllers
             {
                 var cities =
                  UnitOfWork.PackageTypeRepository.GetByProductTypeId(ProductTypeId)
+                 .Where(x => x.IsActived && !x.IsDeleted)
                  .Select(x => new
                  {
                      Name = x.Name,

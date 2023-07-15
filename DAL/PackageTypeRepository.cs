@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Data.Entity;
+using Models;
+using System;
 
 namespace DAL
 {
@@ -44,5 +46,19 @@ namespace DAL
                 throw ex;
             }
         }
-	}
+
+        public void Insertdata(PackageType packageType)
+        {
+            try
+            {
+                DatabaseContext.PackageTypes.Add(packageType);
+                DatabaseContext.SaveChanges();
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
 }

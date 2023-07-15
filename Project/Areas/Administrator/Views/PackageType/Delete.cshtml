@@ -1,0 +1,57 @@
+﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.DeleteOf,
+        Resources.ViewModel.AccountNumberManage.EntitiesName);
+}
+@if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+{
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            پیام های سیستمی
+        </div>
+        <div class="panel-body">
+            @Html.Raw(ViewBag.PageMessages)
+        </div>
+    </div>
+}
+@using (Html.BeginForm("Delete", "PackageType", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+          حذف نوع بسته بندی
+        </div>
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+
+                <dt>@Html.DisplayNameFor(model => model.PackageType)</dt>
+                <dd>@Html.DisplayFor(model => model.StringProductType)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.code)</dt>
+                <dd>@Html.DisplayFor(model => model.code)</dd>
+            </dl>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(excludePropertyErrors: true)
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="@Resources.Buttons.Delete" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+        <div class="panel-footer">
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.PackageType.Index(), new { @class = "btn btn-default" })
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+               href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
+        </div>
+    </div>
+}

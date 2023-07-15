@@ -45,6 +45,7 @@
         public System.Data.Entity.DbSet<Role> Roles { get; set; }
         public System.Data.Entity.DbSet<User> Users { get; set; }
         public System.Data.Entity.DbSet<Request> Requests { get; set; }
+        public System.Data.Entity.DbSet<Tonnage> Tonnages { get; set; }
         public System.Data.Entity.DbSet<File> Files { get; set; }
         public System.Data.Entity.DbSet<Message> Messages { get; set; }
         public System.Data.Entity.DbSet<ProjectAction> ProjectActions { get; set; }
@@ -56,6 +57,7 @@
         public System.Data.Entity.DbSet<FinancialManagement> FinancialManagements { get; set; }
         public System.Data.Entity.DbSet<DestinationManagement> DestinationManagements { get; set; }
         public System.Data.Entity.DbSet<PackageType> PackageTypes{ get; set; }
+        public System.Data.Entity.DbSet<FactoryName> FactoryNames{ get; set; }
 
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {
