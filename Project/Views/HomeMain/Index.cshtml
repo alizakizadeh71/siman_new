@@ -18,6 +18,10 @@
         font-weight: bold;
         font-size: 23px;
     }
+    #loginFrom .row{
+        width : 100%;
+    }
+
 </style>
 
 <div class="example">
@@ -166,12 +170,10 @@
         }
     </section>
     <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
-        <h4 class="panel-heading" style="text-align:center ; color:brown"> <blink>اطلاعیه مهم </blink></h4>
-        <hr />
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-
-                <div class="item active" style="font-size:22px">
+        <h4 class="panel-heading" style="text-align:center ; color:brown"> <blink style="display: inline; opacity: 0.926016;">اطلاعیه مهم </blink></h4>
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner container">
+                <div class="carousel-item active col-md-offset-4 row" style="font-size: 22px;">
                     <p style="color:darkslateblue">
                         قابل توجه مصالح فروشان محترم
                     </p>
@@ -184,11 +186,8 @@
                         <br />
                         جهت بهره مندی از این تخفیفات می توانید با قسمت پشتیبانی سایت تماس بگیرید.
                     </p>
-                    <br />
-
                 </div>
-
-                <div class="item" style="font-size:22px">
+                <div class="carousel-item col-md-offset-2 row" style="font-size: 22px;">
                     <p style="color:green">
                         قابل توجه پیمانکاران محترم
                     </p>
@@ -201,9 +200,21 @@
                     </p>
                     <br />
                 </div>
+                <div class="row">
+                    <button class="carousel-control-prev col-sm-offset-2 col-md-1" type="button" data-bs-target="#carouselExample" data-bs-slide=next" style="margin-right: auto; margin-left:auto;">
+                        <span class="carousel-control-next-icon text-white bg-dark col-sm-2 col-md-4" aria-hidden="true" style="height:35px;"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next col-sm-2 col-md-1" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style="margin-right: auto; margin-left: auto;">
+                        <span class="carousel-control-prev-icon text-white bg-dark col-sm-2 col-md-4" aria-hidden="true" style="height:35px;"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
             </div>
+
         </div>
-        <hr />
+        <hr>
 
     </section>
 </div>
@@ -212,7 +223,7 @@
 <div class="row">
     <div class="col-md-4">
         <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; -webkit-box-shadow: 0 4px 2px #777; -moz-box-shadow: 0 4px 2px #777; box-shadow: 0 4px 2px #777;">
-            <img src="~/Content/Images/Guid.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%;" class="img-responsive" />
+            <img src="/Content/Images/Guid.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%;" class="img-responsive" />
             <hr />
             <div class="caption">
                 <h4 style="margin-top:-20px;">راهنما کاربران</h4>

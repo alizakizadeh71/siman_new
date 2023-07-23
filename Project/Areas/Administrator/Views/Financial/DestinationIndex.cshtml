@@ -463,30 +463,34 @@
         <div class="col-md-12 panel-body">
             <div class="col-md-12">
                 <div class="row">
-                    <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
-                       href="/Administrator/Financial/Index/"><span style="float:right;">ثبت قیمت جدید</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
-                    <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
-                       href="/HomeMain/Main/" style="float:left;">
-                        <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
-                    </a>
-                </div>
-                <br />
-                <div class="row" style="overflow-y: scroll;">
-                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1100px;">
+                    <div style="float : right;width:49%;">
+                        <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float: right; width: 125px;"
+                           href="/Administrator/Financial/Index/"><span style="float:right;">ثبت قیمت جدید</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+                    </div>
+                    <div style="float:left;width:49%;">
+                        <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                           href="/HomeMain/Main/" style="float: left;width:150px;">
+                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+                        </a>
+                    </div>
+                    </div>
+                    <br />
+                    <div class="row" style="overflow-y: scroll;">
+                        <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1100px;">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        @*<a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
+               onclick="location.href='@Url.Action("Download", "Request")'">
+                <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
+            </a>
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+               href="/HomeMain/Main/" style="float:left;">
+                <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+            </a>*@
                     </div>
                 </div>
-                <br />
-                <div class="row">
-                    @*<a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
-                           onclick="location.href='@Url.Action("Download", "Request")'">
-                            <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
-                        </a>
-                        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
-                           href="/HomeMain/Main/" style="float:left;">
-                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
-                        </a>*@
-                </div>
-            </div>
         </div>
         <div class="panel-footer"></div>
     </div>

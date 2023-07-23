@@ -75,6 +75,12 @@ namespace OPS.Controllers
                          .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
                          .SingleOrDefault()
                          ;
+                    var varRequest =
+                    UnitOfWork.DestinationManagementRepository.Get()
+                    .Where(x => x.IsActived && !x.IsDeleted)
+                    .Where(current => current.CityId == cementViewModel.City)
+                    .Select(x => x.DestinationAmountPaid).ToList();
+
                     if (oFinancialManagement == null)
                     {
                         ViewBag.PageMessages = " قیمت توسط ادمین در سیستم ثبت نشده است ";
@@ -129,6 +135,7 @@ namespace OPS.Controllers
                         };
                         oFactorCement.InvoiceNumber = LastInvoiceNumber;
                         UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
+                        DestinationAmountPaid = varRequest[0] + AmountPaid;
                         cementViewModel.InvoiceNumber = LastInvoiceNumber;
                         ViewBag.Karkhane = "تحویل درب کارخانه: " + String.Format("{0:n0}", AmountPaid) + " ریال ";
                         ViewBag.Mahal = "تحویل در محل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال ";
