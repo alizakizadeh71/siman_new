@@ -17,6 +17,12 @@ namespace OPS.Areas.Administrator.Controllers
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
         public virtual ActionResult Index()
         {
+            //var listItems = new SelectList(
+            //    new List<SelectListItem>
+            //    {
+            //    new SelectListItem { Selected = true, Text = "نهایی شده ها", Value = "true"},
+            //    new SelectListItem { Selected = false, Text = "نهایی نشده ها", Value = "false"},
+            //    });
             var ProductName = UnitOfWork.ProductNameRepository.Get().ToList();
             base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", null).OrderByDescending(x => x.Text);
 
@@ -31,6 +37,9 @@ namespace OPS.Areas.Administrator.Controllers
 
             var Tonnage = UnitOfWork.tonnageRepository.GetByPackageTypeId(new Guid()).ToList(); /// کیسه
             base.ViewData["Tonnage"] = new System.Web.Mvc.SelectList(Tonnage, "Id", "Name", null).OrderBy(x => x.Text); /// 12 تن
+
+            var stringFinalApprove = Infrastructure.Utility.EnumList(Enums.EnumTypes.FinalApprove);
+            base.ViewData["stringFinalApprove"] = new System.Web.Mvc.SelectList(stringFinalApprove, "Id", "Name", 1);
 
             var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
             base.ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
@@ -54,8 +63,10 @@ namespace OPS.Areas.Administrator.Controllers
             System.Globalization.PersianCalendar opersian = new System.Globalization.PersianCalendar();
 
             var varRequest =
-                UnitOfWork.FactorCementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User)
-                .Where(x => x.FinalApprove == true);
+                UnitOfWork.FactorCementRepository.GetByUser(Infrastructure.Sessions.AuthenticatedUser.User);
+
+            if (viewModel == null)
+                varRequest = varRequest.Where(x => x.FinalApprove == true);
 
             #region Condition
             if (!string.IsNullOrEmpty(viewModel?.BuyerMobile))
@@ -101,6 +112,21 @@ namespace OPS.Areas.Administrator.Controllers
                 Search = true;
             }
 
+            if (viewModel?.stringFinalApprove == "1")
+            {
+                viewModel.FinalApprove = true;
+                varRequest = varRequest.Where(x => x.FinalApprove == viewModel.FinalApprove);
+                Search = true;
+            }
+
+            if (viewModel?.stringFinalApprove == "0")
+            {
+                viewModel.FinalApprove = false;
+                varRequest = varRequest.Where(x => x.FinalApprove == viewModel.FinalApprove);
+                Search = true;
+            }
+
+            
             if (viewModel?.Province != null && viewModel.Province != Guid.Empty)
             {
                 varRequest = varRequest.Where(x => x.ProvinceId == viewModel.Province);
@@ -172,6 +198,8 @@ namespace OPS.Areas.Administrator.Controllers
                             StringProvince = current.Province.Name,
                             StringCity = current.City.Name,
                             BuyerMobile = current.BuyerMobile,
+                            //FinalApprove = current.FinalApprove,
+                            stringFinalApprove = current.FinalApprove == true ? "نهایی شده" : "نهایی نشده",
                             AmountPaid = current.MahalTahvil == "Karkhane" ? current.AmountPaid : current.MahalTahvil == "Mahal" ? current.DestinationAmountPaid.Value : 0,
                             MahalTahvil = current.MahalTahvil == "Karkhane" ? "درب کارخانه" : current.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ",
                             StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),

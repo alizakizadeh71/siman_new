@@ -68,6 +68,7 @@ namespace OPS.Controllers
             public readonly string Main = "Main";
             public readonly string UserGuid = "UserGuid";
             public readonly string Authenticate = "Authenticate";
+            public readonly string News = "News";
             public readonly string Continue_Authenticate = "Continue_Authenticate";
         }
 
@@ -82,6 +83,7 @@ namespace OPS.Controllers
             public const string Main = "Main";
             public const string UserGuid = "UserGuid";
             public const string Authenticate = "Authenticate";
+            public const string News = "News";
             public const string Continue_Authenticate = "Continue_Authenticate";
         }
 
@@ -111,6 +113,7 @@ namespace OPS.Controllers
                 public readonly string Index = "Index";
                 public readonly string Login = "Login";
                 public readonly string Main = "Main";
+                public readonly string News = "News";
                 public readonly string UserGuid = "UserGuid";
             }
             public readonly string About = "~/Views/HomeMain/About.cshtml";
@@ -120,6 +123,7 @@ namespace OPS.Controllers
             public readonly string Index = "~/Views/HomeMain/Index.cshtml";
             public readonly string Login = "~/Views/HomeMain/Login.cshtml";
             public readonly string Main = "~/Views/HomeMain/Main.cshtml";
+            public readonly string News = "~/Views/HomeMain/News.cshtml";
             public readonly string UserGuid = "~/Views/HomeMain/UserGuid.cshtml";
         }
     }
@@ -183,6 +187,12 @@ namespace OPS.Controllers
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Authenticate);
             return callInfo;
         }
+
+        //public override System.Web.Mvc.ActionResult News()
+        //{
+        //    var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.News);
+        //    return callInfo;
+        //}
 
         public override System.Web.Mvc.ActionResult Continue_Authenticate()
         {

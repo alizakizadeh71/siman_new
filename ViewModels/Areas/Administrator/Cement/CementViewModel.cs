@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,43 @@ namespace ViewModels.Areas.Administrator.Cement
         #endregion IsActive
         public bool IsActive { get; set; }
 
+        #region News
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.News)]
+        #endregion News
+        public Guid News { get; set; }
+
+        #region TitleNews
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.TitleNews)]
+        #endregion TitleNews
+
+        public string TitleNews { get; set; }
+
+        #region TextNews
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.TextNews)]
+        #endregion TextNews
+        public string TextNews { get; set; }
+
+        #region TextNews
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.startDateNews)]
+        #endregion TextNews
+        public DateTime startDateNews { get; set; }
+        public string startDateNews1 { get; set; }
+
+        #region TextNews
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.EndDateNews)]
+        #endregion TextNews
+        public DateTime EndDateNews { get; set; }
+        public string EndDateNews1 { get; set; }
         #region ProductName
         [System.ComponentModel.DataAnnotations.Display
              (ResourceType = typeof(Resources.Model.Cement),
@@ -162,6 +200,18 @@ namespace ViewModels.Areas.Administrator.Cement
         public string StringCity { get; set; }
         public DateTime InsertDateTime { get; set; }
         public string StringInsertDateTime { get; set; }
+        #region StringstartDateNews
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.StringstartDateNews)]
+        #endregion StringstartDateNews
+        public string StringstartDateNews { get; set; }
+        #region StringEndDateNews
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.StringEndDateNews)]
+        #endregion StringEndDateNews
+        public string StringEndDateNews { get; set; }
         public Guid Id { get; set; }
 
         #region AmountPaid
@@ -187,8 +237,21 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.MahalTahvil)]
         #endregion
         public string MahalTahvil { get; set; }
+        #region FinalApprove
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.FinalApprove)]
+        #endregion
 
         public bool? FinalApprove { get; set; }
+        #region stringFinalApprove
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.FinalApprove)]
+        #endregion
+        public string stringFinalApprove { get; set; }
+
+
         public Guid FinancialManagementId { get; set; }
 
     }

@@ -18,10 +18,14 @@
         font-weight: bold;
         font-size: 23px;
     }
-    #loginFrom .row{
-        width : 100%;
-    }
 
+    #loginFrom .row {
+        width: 100%;
+    }
+    .panel-body #Mahal {
+        margin-right : 6px;
+        margin-left : 3px;
+    }
 </style>
 
 <div class="example">
@@ -41,17 +45,21 @@
         {
             using (Html.BeginForm("Payment", "Zarinpal", FormMethod.Post))
             {
-                <div style="color:red ; text-align:center" ; font-weight:bold" class="panel-body">
-                    <p style="color:black">
-                        لطفا محل تحویل را انتخاب نمایید
-                    </p>
-                    @Html.RadioButtonFor(model => model.Description, "M", new { @onclick = "EnablePayment()", @id = "Karkhane" })
-                    @Html.Raw(ViewBag.Karkhane)
-                    <br />
-                    @Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
-                    @Html.Raw(ViewBag.Mahal)
-                    <br />
-                </div>
+    <div style="color:red ; text-align:center" ; font-weight:bold" class="panel-body">
+        <p style="color:black">
+            لطفا محل تحویل را انتخاب نمایید
+        </p>
+        @Html.RadioButtonFor(model => model.Description, "M", new { @onclick = "EnablePayment()", @id = "Karkhane" })
+        @Html.Raw(ViewBag.Karkhane)
+        <br />
+        @if (ViewBag.Mahal != null)
+        {
+            @Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
+            @Html.Raw(ViewBag.Mahal)
+            <br />
+        }
+
+    </div>
 
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
@@ -169,57 +177,10 @@
             </div>
         }
     </section>
-    <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
-        <h4 class="panel-heading" style="text-align:center ; color:brown"> <blink style="display: inline; opacity: 0.926016;">اطلاعیه مهم </blink></h4>
-        <div id="carouselExample" class="carousel slide">
-            <div class="carousel-inner container">
-                <div class="carousel-item active col-md-offset-4 row" style="font-size: 22px;">
-                    <p style="color:darkslateblue">
-                        قابل توجه مصالح فروشان محترم
-                    </p>
-                    <p>
-                        تخفیف ویژه برای شما
-                        <br />
-                        مصالح فروشان محترم می توانند در صورت خرید مداوم از این سایت می توانند
-                        از تخفیفات ویژه مصالح فروشان بهره مند شوند. شرکت مصالح پخش برخط در نظر
-                        دارد که برای خریداران ویژه ی خود تا 50 درصد از سود خود را به صورت پله ای کاهش دهد
-                        <br />
-                        جهت بهره مندی از این تخفیفات می توانید با قسمت پشتیبانی سایت تماس بگیرید.
-                    </p>
-                </div>
-                <div class="carousel-item col-md-offset-2 row" style="font-size: 22px;">
-                    <p style="color:green">
-                        قابل توجه پیمانکاران محترم
-                    </p>
-                    <p>
-                        تحویل فوری سیمان در محل پروژه های شما
-                        <br />
-                        شرکت مصالح پخش برخط با کمترین قیمت و در سریع ترین زمان ممکن می تواند
-                        محمله خریداری شده را در محل انجام پروژه های شما تحویل دهد. همچنین پیمانکاران عزیز می توانند، در
-                        صورت خرید مداوم از این سایت، از تخفیفات ویژه که مخصوص مصالح فروشان است بهره مند شوند.
-                    </p>
-                    <br />
-                </div>
-                <div class="row">
-                    <button class="carousel-control-prev col-sm-offset-2 col-md-1" type="button" data-bs-target="#carouselExample" data-bs-slide=next" style="margin-right: auto; margin-left:auto;">
-                        <span class="carousel-control-next-icon text-white bg-dark col-sm-2 col-md-4" aria-hidden="true" style="height:35px;"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next col-sm-2 col-md-1" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style="margin-right: auto; margin-left: auto;">
-                        <span class="carousel-control-prev-icon text-white bg-dark col-sm-2 col-md-4" aria-hidden="true" style="height:35px;"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
 
-            </div>
+        @Html.Action("News")
 
-        </div>
-        <hr>
-
-    </section>
 </div>
-<br />
-<br />
 <div class="row">
     <div class="col-md-4">
         <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; -webkit-box-shadow: 0 4px 2px #777; -moz-box-shadow: 0 4px 2px #777; box-shadow: 0 4px 2px #777;">

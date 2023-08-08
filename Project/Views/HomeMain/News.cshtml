@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Models.newsweb>
+@{ String active = "active";}
+
+@if (ViewBag.count != 0)
+{
+    <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
+        <h4 class="panel-heading" style="text-align:center ; color:brown"> <blink style="display: inline; opacity: 0.926016;">اطلاعیه مهم </blink></h4>
+        <div id="carouselExample" class="carousel slide" data-bs-ride="true">
+            <div class="carousel-inner" style="padding-top:10px; width: 80%; margin-left: auto; margin-right: auto; padding-left: 20px; padding-right: 20px; ">
+                @foreach (var item in Model)
+                {
+                    <div class="carousel-item @active col-md-offset-2 row" style="font-size: 22px;">
+                        <p style="color:darkslateblue">
+                            @item.Title
+                        </p>
+                        <p>
+                            @item.newsText
+                        </p>
+                    </div>
+                    active = "";
+                }
+            </div>
+            @if (ViewBag.count > 1)
+            {
+                <div class="row" style=" height: 25px; margin-bottom: 6px;">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style="margin-right: auto; margin-left: auto; margin-bottom: -50px; margin-top: 15px;">
+                        <span class="carousel-control-prev-icon text-light bg-dark col-sm-2 col-md-4" aria-hidden="true" style="height:35px;"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next" style="margin-right: auto; margin-left: auto; margin-bottom: -50px;margin-top : 15px;">
+                        <span class="carousel-control-next-icon text-light bg-dark col-sm-2 col-md-4" aria-hidden="true" style="height:35px;"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            }
+
+        </div>
+    </section>
+}
+

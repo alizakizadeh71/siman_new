@@ -1,5 +1,4 @@
-﻿
-@model ViewModels.Areas.Administrator.Cement.CementViewModel
+﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
 @{
     string strTitle =
         string.Format("{0} {1}",
@@ -19,7 +18,6 @@
         $('#ProductType').prop('disabled', true);
         $('#PackageType').prop('disabled', true);
         $('#FactoryName').prop('disabled', true);
-        $('#AmountPaid').prop('disabled', true);
     })
 
     function AllowNumbersOnly(e) {
@@ -28,6 +26,24 @@
             e.preventDefault();
         }
     }
+
+    $(document).ready(function () {
+
+        // create DatePicker from input HTML element
+        $('#StartDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $('#EndDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+    });
 
     function Comma(Num) {
         Num += '';
@@ -126,7 +142,7 @@
 
 
 </script>
-@using (Html.BeginForm("DestinationPrice", "Financial", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -144,85 +160,48 @@
     }
     <div class="panel panel-primary">
         <div class="panel-heading">
-            ثبت قیمت در مقصد
+            ویرایش خبر
         </div>
         <div class="panel-body">
             @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.ProductName1)
-            @Html.HiddenFor(model => model.ProductType1)
-            @Html.HiddenFor(model => model.PackageType1)
-            @Html.HiddenFor(model => model.FactoryName1)
-            @Html.HiddenFor(model => model.AmountPaid1)
+            @*@Html.HiddenFor(model => model.TitleNews)
+            @Html.HiddenFor(model => model.TextNews)*@
 
             <div class="form-group">
-                @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
+                @Html.LabelFor(model => model.TitleNews, new { @class = "col-md-4 control-label" })
                 <div class="col-md-8">
-                    @Html.DropDownListFor(model => model.ProductName, null,
-                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
-                    @Html.ValidationMessageFor(model => model.ProductName)
+                    @Html.TextBoxFor(model => model.TitleNews, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
-                <div class="col-md-8" id="DivProductTypeId">
-                    @Html.DropDownListFor(model => model.ProductType, null,
-                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
-                    @Html.ValidationMessageFor(model => model.ProductType)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
-                <div class="col-md-8" id="DivPackageTypeId">
-                    @Html.DropDownListFor(model => model.PackageType, null,
-                   Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.PackageType)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
-                <div class="col-md-8" id="DivFactoryNameId">
-                    @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.FactoryName)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.AmountPaid, new { @class = "col-md-4 control-label" })
-                <div class="col col-md-8">
-                    @Html.TextBoxFor(model => model.AmountPaid, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
+                @Html.LabelFor(model => model.TextNews, new { @class = "col-md-4 control-label" })
                 <div class="col-md-8">
-                    @Html.DropDownListFor(model => model.Province, null,
-                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
-                    @Html.ValidationMessageFor(model => model.Province)
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.City, new { @class = "col-md-4 control-label" })
-                <div class="col-md-8" id="DivCityId">
-                    @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.City)
+                    @Html.TextBoxFor(model => model.TextNews, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.DestinationAmountPaid, new { @class = "col-md-4 control-label" })
-                <div class="col col-md-8">
-                    @Html.TextBoxFor(model => model.DestinationAmountPaid, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
+                @Html.LabelFor(model => model.startDateNews, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.StringstartDateNews, new { @class = "form-control", @id = "StartDate" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EndDateNews, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.StringEndDateNews, new { @class = "form-control", @id = "EndDate"  })
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10 col-md-offset-2">
-                    <input type="submit" value="@Resources.Buttons.Save" class="btn btn-success" />
+                    <input type="submit" value="@Resources.Buttons.Create" class="btn btn-primary" />
                 </div>
             </div>
+
 
         </div>
 
         <div class="panel-footer">
-            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.Financial.DestinationIndex(), new { @class = "btn btn-default" })
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.News.Index(), new { @class = "btn btn-default" })
 
             <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
                href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
@@ -248,29 +227,5 @@
                 }
             });
         }
-
-            function onChangeProvince() {
-        $.ajax({
-            url: '/Administrator/HeadOfFactor/GetCities',
-            type: 'post',
-            data: { provinceId: $("#Province").val() },
-            success: function (data) {
-
-                $("#DivCityId").empty();
-
-                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-
-                $.each(data, function (i, city) {
-                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
-                    select.append(option);
-                })
-
-                $("#DivCityId").append(select);
-                $('#City>option:eq(1)').prop('selected', true);
-            }
-        });
-    }
     </script>
 }

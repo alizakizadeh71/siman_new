@@ -22,13 +22,13 @@ using System.Web.Routing;
 using T4MVC;
 namespace OPS.Areas.Administrator.Controllers
 {
-    public partial class TonnagesController
+    public partial class NewsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public TonnagesController() { }
+        public NewsController() { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected TonnagesController(Dummy d) { }
+        protected NewsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -52,19 +52,25 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Edit()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Delete()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public TonnagesController Actions { get { return MVC.Administrator.Tonnages; } }
+        public NewsController Actions { get { return MVC.Administrator.News; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "Administrator";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Tonnages";
+        public readonly string Name = "News";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Tonnages";
+        public const string NameConst = "News";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -76,6 +82,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string GetRequests = "GetRequests";
             public readonly string Search = "Search";
             public readonly string Create = "Create";
+            public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
         }
 
@@ -86,6 +93,7 @@ namespace OPS.Areas.Administrator.Controllers
             public const string GetRequests = "GetRequests";
             public const string Search = "Search";
             public const string Create = "Create";
+            public const string Edit = "Edit";
             public const string Delete = "Delete";
         }
 
@@ -104,6 +112,15 @@ namespace OPS.Areas.Administrator.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Create
         {
+            public readonly string cementViewModel = "cementViewModel";
+        }
+        static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Edit
+        {
+            public readonly string id = "id";
             public readonly string cementViewModel = "cementViewModel";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
@@ -127,18 +144,20 @@ namespace OPS.Areas.Administrator.Controllers
             {
                 public readonly string Create = "Create";
                 public readonly string Delete = "Delete";
+                public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
-            public readonly string Create = "~/Areas/Administrator/Views/Tonnages/Create.cshtml";
-            public readonly string Delete = "~/Areas/Administrator/Views/Tonnages/Delete.cshtml";
-            public readonly string Index = "~/Areas/Administrator/Views/Tonnages/Index.cshtml";
+            public readonly string Create = "~/Areas/Administrator/Views/News/Create.cshtml";
+            public readonly string Delete = "~/Areas/Administrator/Views/News/Delete.cshtml";
+            public readonly string Edit = "~/Areas/Administrator/Views/News/Edit.cshtml";
+            public readonly string Index = "~/Areas/Administrator/Views/News/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_TonnagesController : OPS.Areas.Administrator.Controllers.TonnagesController
+    public class T4MVC_NewsController : OPS.Areas.Administrator.Controllers.NewsController
     {
-        public T4MVC_TonnagesController() : base(Dummy.Instance) { }
+        public T4MVC_NewsController() : base(Dummy.Instance) { }
 
         public override System.Web.Mvc.ActionResult Index()
         {
@@ -168,6 +187,20 @@ namespace OPS.Areas.Administrator.Controllers
         public override System.Web.Mvc.ActionResult Create(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cementViewModel", cementViewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Edit(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cementViewModel", cementViewModel);
             return callInfo;
         }

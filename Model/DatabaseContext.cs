@@ -58,6 +58,7 @@
         public System.Data.Entity.DbSet<DestinationManagement> DestinationManagements { get; set; }
         public System.Data.Entity.DbSet<PackageType> PackageTypes{ get; set; }
         public System.Data.Entity.DbSet<FactoryName> FactoryNames{ get; set; }
+        public System.Data.Entity.DbSet<newsweb> News { get; set; }
 
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {

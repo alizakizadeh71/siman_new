@@ -356,6 +356,20 @@ namespace Infrastructure
                             .ToList();
                         break;
                     }
+                    
+                case Enums.EnumTypes.FinalApprove:
+                    {
+                        EnumRowList =
+                            Enum.GetValues(typeof(Enums.FinalApprove))
+                            .Cast<Enums.FinalApprove>().ToList()
+                            .Select(current => new Infrastructure.EnumRow()
+                            {
+                                Id = current.GetHashCode(),
+                                Name = Resources.Enum.FinalApprove.ResourceManager.GetString(current.ToString())
+                            })
+                            .ToList();
+                        break;
+                    }
 
                 default:
                     break;

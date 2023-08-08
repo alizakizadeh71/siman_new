@@ -1,5 +1,5 @@
 ﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
-
+@using Utilities.PersianDate
 @{
     string strTitle =
         string.Format("{0} {1}",
@@ -12,12 +12,6 @@
         padding: 6px 12px;
         border: 1px solid #cccccc;
         border-radius: 4px;
-    }
-
-    .k-icon {
-        background-image: none !important;
-        width: auto !important;
-        height: auto !important;
     }
 </style>
 
@@ -105,7 +99,7 @@
                     read: {
                         type: "POST",
                         dataType: "json",
-                        url: "/Administrator/Request/GetRequests",
+                        url: "/Administrator/News/GetRequests",
                     },
                 },
 
@@ -164,7 +158,7 @@
 
             dataBinding: function () {
                 rowNumber =
-					(this.dataSource.page() - 1) * this.dataSource.pageSize();
+                    (this.dataSource.page() - 1) * this.dataSource.pageSize();
             },
 
             // **************************************************
@@ -191,14 +185,12 @@
                             var strTemplate = "";
 
                             strTemplate +=
-                                '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/Request/Edit/'
-                            + dataItem.Id + '"><img class="k-icon" src="../../../Content/Icon/display.png"/></span></a>';
-                            @*if (dataItem.RequestState_Value <2 && (@Infrastructure.Sessions.AuthenticatedUser.RoleCode==800|| @Infrastructure.Sessions.AuthenticatedUser.RoleCode==1000))
-                            {
-                                    strTemplate +=
-                                    ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.UpAmontPaid)" href="/Administrator/Request/UpAmountPaid/'
-                                    + dataItem.Id + '"><img src="../../../Content/Icon/UpAmontPaid.png"/></span></a>';
-                            }*@
+                            ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/News/Delete/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/Delete.png"/></span></a>';
+
+                            strTemplate +=
+                            '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/News/Edit/'
+                            + dataItem.Id + '"><img src="../../../Content/Icon/Edit.png"/></span></a>';
                             return (strTemplate);
                         },
                     },
@@ -206,108 +198,28 @@
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Cement.InvoiceNumber",
-                        field: "@Resources.Model.Strings.CementKeys.InvoiceNumber",
+                        title: "@Resources.Model.Cement.TitleNews",
+                        field: "@Resources.Model.Strings.CementKeys.TitleNews",
+                        width: "20px",
+                    },
+                     {
+                        hidden: false,
+                        locked: true,
+                         lockable: true,
+                         title: "@Resources.Model.Cement.StringstartDateNews",
+                         field: "@Resources.Model.Strings.CementKeys.StringstartDateNews",
                         width: "20px",
                     },
                     {
                         hidden: false,
                         locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProductName",
-                        field: "@Resources.Model.Strings.CementKeys.StringProductName",
+                         lockable: true,
+                        title: "@Resources.Model.Cement.StringEndDateNews",
+                        field: "@Resources.Model.Strings.CementKeys.StringEndDateNews",
                         width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProductType",
-                        field: "@Resources.Model.Strings.CementKeys.StringProductType",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringPackageType",
-                        field: "@Resources.Model.Strings.CementKeys.StringPackageType",
-                        width: "20px",
-                    },
+            }
+                    ]
 
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringFactoryName",
-                        field: "@Resources.Model.Strings.CementKeys.StringFactoryName",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringTonnage",
-                        field: "@Resources.Model.Strings.CementKeys.StringTonnage",
-                        width: "20px",
-                    },
-                                        {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.stringFinalApprove",
-                         field: "@Resources.Model.Strings.CementKeys.stringFinalApprove",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProvince",
-                        field: "@Resources.Model.Strings.CementKeys.StringProvince",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringCity",
-                        field: "@Resources.Model.Strings.CementKeys.StringCity",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.BuyerMobile",
-                        field: "@Resources.Model.Strings.CementKeys.BuyerMobile",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "مبلغ پرداختی",
-                        field: "@Resources.Model.Strings.CementKeys.AmountPaid",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.MahalTahvil",
-                        field: "@Resources.Model.Strings.CementKeys.MahalTahvil",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringInsertDateTime",
-                        field: "@Resources.Model.Strings.CementKeys.StringInsertDateTime",
-                        width: "20px",
-                    },
-                ]
         });
 
         // **************************************************
@@ -329,14 +241,13 @@
                         read: {
                             type: "POST",
                             dataType: "json",
-                            url: "/Administrator/Request/Search",
+                            url: "/Administrator/Financial/Search",
                             data: {
+                                AmountPaid: function () {
+                                    return ($("input#AmountPaid").val());
+                                },
                                 InvoiceNumber: function () {
                                     return ($("input#InvoiceNumber").val());
-                                },
-
-                                BuyerMobile: function () {
-                                    return ($("input#BuyerMobile").val());
                                 },
 
                                 ProductName: function () {
@@ -353,22 +264,6 @@
 
                                 FactoryName: function () {
                                     return ($("select#FactoryName").val());
-                                },
-
-                                Tonnage: function () {
-                                    return ($("select#Tonnage").val());
-                                },
-
-                                stringFinalApprove: function () {
-                                    return ($("select#stringFinalApprove").val());
-                                },
-
-                                Province: function () {
-                                    return ($("select#Province").val());
-                                },
-
-                                City: function () {
-                                    return ($("select#City").val());
                                 },
 
                                 StartDate: function () {
@@ -436,130 +331,7 @@
 </script>
 
 <section id="Requests" class="form-horizontal" role="form">
-    <div class="panel panel-info">
-        <div class="panel-heading" id="SearchPanelHeader">
-            جستجو ( کلیک کنید...!)
-        </div>
-        <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
-            <div class="col col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.ProductName, null,
-                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
-                        @Html.ValidationMessageFor(model => model.ProductName)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivPackageTypeId">
-                        @Html.DropDownListFor(model => model.PackageType, null,
-                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangePackageType()" })
-                        @Html.ValidationMessageFor(model => model.PackageType)
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.Province, null,
-                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
-                        @Html.ValidationMessageFor(model => model.Province)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivTonnageId">
-                        @Html.DropDownListFor(model => model.Tonnage, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Tonnage)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.StartDate, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PayStartDate, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.PayStartDate, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FromAmount, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.FromAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivProductTypeId">
-                        @Html.DropDownListFor(model => model.ProductType, null,
-                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
-                        @Html.ValidationMessageFor(model => model.ProductType)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivFactoryNameId">
-                        @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.FactoryName)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.City, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivCityId">
-                        @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.City)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.InvoiceNumber, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.InvoiceNumber, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EndDate, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PayEndDate, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.PayEndDate, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ToAmount, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.ToAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.stringFinalApprove, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.stringFinalApprove, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-3 col-md-8">
-                    <button type="button" id="btnSearch" name="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <br />
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -568,7 +340,11 @@
         <div class="col-md-12 panel-body">
             <div class="col-md-12">
                 <div class="row">
-                    <div style="float:left;">
+                    <div style="float : right;width:49%;">
+                        <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;width:125px;"
+                           href="/Administrator/News/Create/"><span style="float:right;">ثبت خبر جدید</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+                    </div>
+                    <div style="float:left;width:49%;">
                         <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
                            href="/HomeMain/Main/" style="float : left;width:150px;">
                             <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
@@ -577,18 +353,25 @@
                 </div>
                 <br />
                 <div class="row" style="overflow-y: scroll;">
-                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1500px;">
+                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1100px;">
                     </div>
                 </div>
                 <br />
                 <div class="row">
+                    @*<a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
+                           onclick="location.href='@Url.Action("Download", "Request")'">
+                            <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
+                        </a>
+                        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                           href="/HomeMain/Main/" style="float:left;">
+                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+                        </a>*@
                 </div>
             </div>
         </div>
         <div class="panel-footer"></div>
     </div>
 </section>
-
 
 
 <script type="text/javascript">

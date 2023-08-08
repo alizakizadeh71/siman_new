@@ -1,9 +1,11 @@
 ﻿using DAL;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Utilities.PersianDate;
 //using PAPUtilities;
 
 
@@ -32,7 +34,7 @@ namespace OPS.Controllers
 
         private void ViewData(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
-            var ProductName = UnitOfWork.ProductNameRepository.Get().Where(x=>x.IsActived && !x.IsDeleted).ToList();
+            var ProductName = UnitOfWork.ProductNameRepository.Get().Where(x => x.IsActived && !x.IsDeleted).ToList();
             base.ViewData["ProductName"] = new System.Web.Mvc.SelectList(ProductName, "Id", "Name", cementViewModel.ProductName).OrderByDescending(x => x.Text);
 
             var ProductType = UnitOfWork.ProductTypeRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
@@ -68,7 +70,7 @@ namespace OPS.Controllers
                     var oFinancialManagement =
                          UnitOfWork.FinancialManagementRepository
                          .Get()
-                         .Where(x=>x.IsActived && !x.IsDeleted)
+                         .Where(x => x.IsActived && !x.IsDeleted)
                          .Where(current => current.ProductNameId == cementViewModel.ProductName)
                          .Where(current => current.ProductTypeId == cementViewModel.ProductType)
                          .Where(current => current.PackageTypeId == cementViewModel.PackageType)
@@ -78,8 +80,10 @@ namespace OPS.Controllers
                     var varRequest =
                     UnitOfWork.DestinationManagementRepository.Get()
                     .Where(x => x.IsActived && !x.IsDeleted)
-                    .Where(current => current.CityId == cementViewModel.City)
-                    .Select(x => x.DestinationAmountPaid).ToList();
+                    .Where(current => current.FinancialManagementId == oFinancialManagement.Id)
+                    .Where(current => current.ProvinceId == cementViewModel.Province)
+                    .Where(cuurrent => cuurrent.CityId == cementViewModel.City)
+                    .Select(x => x.DestinationAmountPaid).SingleOrDefault();
 
                     if (oFinancialManagement == null)
                     {
@@ -90,7 +94,7 @@ namespace OPS.Controllers
                         var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
                             .Where(x => x.Id == cementViewModel.Tonnage).FirstOrDefault().Code);
 
-                        long? DestinationAmountPaid = 0;
+                        long? DestinationAmountPaid = varRequest;
                         var oDestinationManagement =
                                  UnitOfWork.DestinationManagementRepository
                                  .Get()
@@ -104,12 +108,14 @@ namespace OPS.Controllers
                                  .Where(current => current.CityId == cementViewModel.City)
                                  .SingleOrDefault()
                                  ;
-                        if(oDestinationManagement != null)
+                        if (oDestinationManagement != null)
                         {
-                            DestinationAmountPaid = oDestinationManagement.DestinationAmountPaid * Tonnage;
+                            DestinationAmountPaid = (oDestinationManagement.FinancialManagement.AmountPaid * Tonnage) + oDestinationManagement.DestinationAmountPaid;
                         }
 
-
+                        //{
+                        //    DestinationAmountPaid = (oDestinationManagement.FinancialManagement.AmountPaid * Tonnage) + oDestinationManagement.DestinationAmountPaid;
+                        //}
                         long AmountPaid = oFinancialManagement.AmountPaid * Tonnage; /// محاسبه مبلغ
                         int LastInvoiceNumber = UnitOfWork.FactorCementRepository.GetLastInvoiceNumber() + 1;
                         Models.User oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
@@ -135,10 +141,14 @@ namespace OPS.Controllers
                         };
                         oFactorCement.InvoiceNumber = LastInvoiceNumber;
                         UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
-                        DestinationAmountPaid = varRequest[0] + AmountPaid;
+                        DestinationAmountPaid = varRequest + AmountPaid;
                         cementViewModel.InvoiceNumber = LastInvoiceNumber;
                         ViewBag.Karkhane = "تحویل درب کارخانه: " + String.Format("{0:n0}", AmountPaid) + " ریال ";
-                        ViewBag.Mahal = "تحویل در محل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال ";
+                        if (oDestinationManagement != null)
+                        {
+                            ViewBag.Mahal = "تحویل در محل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال ";
+                        }
+
                     }
                 }
             }
@@ -199,6 +209,14 @@ namespace OPS.Controllers
         public virtual ActionResult Authenticate()
         {
             return View();
+        }
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.None)]
+        public ActionResult News()
+        {
+            DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            var get = UnitOfWork.NewsReopsitory.Get().Where(s => s.IsActived && !s.IsDeleted && s.StartDate <= date1 && s.EndDate >= date1);
+            ViewBag.count = get.Count();
+            return PartialView(get);
         }
 
         [System.Web.Mvc.HttpGet]

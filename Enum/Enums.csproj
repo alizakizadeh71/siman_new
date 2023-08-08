@@ -57,6 +57,7 @@
     <Compile Include="EnumTypes.cs" />
     <Compile Include="LoginResponce.cs" />
     <Compile Include="PageMessageTypes.cs" />
+    <Compile Include="FinalApprove.cs" />
     <Compile Include="ServicesResponse.cs" />
     <Compile Include="RequestStates.cs" />
     <Compile Include="SubSystems.cs" />

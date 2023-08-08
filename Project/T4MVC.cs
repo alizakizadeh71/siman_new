@@ -58,6 +58,7 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.HeadLineController HeadLine = new OPS.Areas.Administrator.Controllers.T4MVC_HeadLineController();
         public OPS.Areas.Administrator.Controllers.HeadOfFactorController HeadOfFactor = new OPS.Areas.Administrator.Controllers.T4MVC_HeadOfFactorController();
         public OPS.Areas.Administrator.Controllers.IncomeRowController IncomeRow = new OPS.Areas.Administrator.Controllers.T4MVC_IncomeRowController();
+        public OPS.Areas.Administrator.Controllers.NewsController News = new OPS.Areas.Administrator.Controllers.T4MVC_NewsController();
         public OPS.Areas.Administrator.Controllers.PackageTypeController PackageType = new OPS.Areas.Administrator.Controllers.T4MVC_PackageTypeController();
         public OPS.Areas.Administrator.Controllers.ProductNameController ProductName = new OPS.Areas.Administrator.Controllers.T4MVC_ProductNameController();
         public OPS.Areas.Administrator.Controllers.ProductTypeController ProductType = new OPS.Areas.Administrator.Controllers.T4MVC_ProductTypeController();
@@ -179,9 +180,21 @@ namespace Links
                       
         public static readonly string bootstrap_rtl_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-rtl.min.js") ? Url("bootstrap-rtl.min.js") : Url("bootstrap-rtl.js");
                       
+        public static readonly string bootstrap_bundle_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.bundle.min.js") ? Url("bootstrap.bundle.min.js") : Url("bootstrap.bundle.js");
+                      
+        public static readonly string bootstrap_bundle_js_map = Url("bootstrap.bundle.js.map");
+        public static readonly string bootstrap_bundle_min_js = Url("bootstrap.bundle.min.js");
+        public static readonly string bootstrap_bundle_min_js_map = Url("bootstrap.bundle.min.js.map");
+        public static readonly string bootstrap_esm_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.esm.min.js") ? Url("bootstrap.esm.min.js") : Url("bootstrap.esm.js");
+                      
+        public static readonly string bootstrap_esm_js_map = Url("bootstrap.esm.js.map");
+        public static readonly string bootstrap_esm_min_js = Url("bootstrap.esm.min.js");
+        public static readonly string bootstrap_esm_min_js_map = Url("bootstrap.esm.min.js.map");
         public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
                       
+        public static readonly string bootstrap_js_map = Url("bootstrap.js.map");
         public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
+        public static readonly string bootstrap_min_js_map = Url("bootstrap.min.js.map");
         public static readonly string button_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/button.min.js") ? Url("button.min.js") : Url("button.js");
                       
         public static readonly string calendar_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/calendar.min.js") ? Url("calendar.min.js") : Url("calendar.js");
@@ -867,9 +880,46 @@ namespace Links
         private const string URLPATH = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        public static readonly string bootstrap_grid_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-grid.min.css") ? Url("bootstrap-grid.min.css") : Url("bootstrap-grid.css");
+             
+        public static readonly string bootstrap_grid_css_map = Url("bootstrap-grid.css.map");
+        public static readonly string bootstrap_grid_min_css = Url("bootstrap-grid.min.css");
+        public static readonly string bootstrap_grid_min_css_map = Url("bootstrap-grid.min.css.map");
+        public static readonly string bootstrap_grid_rtl_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-grid.rtl.min.css") ? Url("bootstrap-grid.rtl.min.css") : Url("bootstrap-grid.rtl.css");
+             
+        public static readonly string bootstrap_grid_rtl_css_map = Url("bootstrap-grid.rtl.css.map");
+        public static readonly string bootstrap_grid_rtl_min_css = Url("bootstrap-grid.rtl.min.css");
+        public static readonly string bootstrap_grid_rtl_min_css_map = Url("bootstrap-grid.rtl.min.css.map");
+        public static readonly string bootstrap_reboot_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-reboot.min.css") ? Url("bootstrap-reboot.min.css") : Url("bootstrap-reboot.css");
+             
+        public static readonly string bootstrap_reboot_css_map = Url("bootstrap-reboot.css.map");
+        public static readonly string bootstrap_reboot_min_css = Url("bootstrap-reboot.min.css");
+        public static readonly string bootstrap_reboot_min_css_map = Url("bootstrap-reboot.min.css.map");
+        public static readonly string bootstrap_reboot_rtl_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-reboot.rtl.min.css") ? Url("bootstrap-reboot.rtl.min.css") : Url("bootstrap-reboot.rtl.css");
+             
+        public static readonly string bootstrap_reboot_rtl_css_map = Url("bootstrap-reboot.rtl.css.map");
+        public static readonly string bootstrap_reboot_rtl_min_css = Url("bootstrap-reboot.rtl.min.css");
+        public static readonly string bootstrap_reboot_rtl_min_css_map = Url("bootstrap-reboot.rtl.min.css.map");
+        public static readonly string bootstrap_utilities_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-utilities.min.css") ? Url("bootstrap-utilities.min.css") : Url("bootstrap-utilities.css");
+             
+        public static readonly string bootstrap_utilities_css_map = Url("bootstrap-utilities.css.map");
+        public static readonly string bootstrap_utilities_min_css = Url("bootstrap-utilities.min.css");
+        public static readonly string bootstrap_utilities_min_css_map = Url("bootstrap-utilities.min.css.map");
+        public static readonly string bootstrap_utilities_rtl_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-utilities.rtl.min.css") ? Url("bootstrap-utilities.rtl.min.css") : Url("bootstrap-utilities.rtl.css");
+             
+        public static readonly string bootstrap_utilities_rtl_css_map = Url("bootstrap-utilities.rtl.css.map");
+        public static readonly string bootstrap_utilities_rtl_min_css = Url("bootstrap-utilities.rtl.min.css");
+        public static readonly string bootstrap_utilities_rtl_min_css_map = Url("bootstrap-utilities.rtl.min.css.map");
         public static readonly string bootstrap_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.css") ? Url("bootstrap.min.css") : Url("bootstrap.css");
              
+        public static readonly string bootstrap_css_map = Url("bootstrap.css.map");
         public static readonly string bootstrap_min_css = Url("bootstrap.min.css");
+        public static readonly string bootstrap_min_css_map = Url("bootstrap.min.css.map");
+        public static readonly string bootstrap_rtl_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.rtl.min.css") ? Url("bootstrap.rtl.min.css") : Url("bootstrap.rtl.css");
+             
+        public static readonly string bootstrap_rtl_css_map = Url("bootstrap.rtl.css.map");
+        public static readonly string bootstrap_rtl_min_css = Url("bootstrap.rtl.min.css");
+        public static readonly string bootstrap_rtl_min_css_map = Url("bootstrap.rtl.min.css.map");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class css {
             private const string URLPATH = "~/Content/css";

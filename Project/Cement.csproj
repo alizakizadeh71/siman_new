@@ -559,6 +559,10 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Areas\Administrator\Views\News\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\News\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\News\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\News\Delete.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">
@@ -1507,6 +1511,7 @@
     <Content Include="Views\HomeMain\Authenticate.cshtml" />
     <Content Include="Views\HomeMain\Login.cshtml" />
     <Content Include="Views\Zarinpal\VerifyPayment.cshtml" />
+    <Content Include="Views\HomeMain\News.cshtml" />
     <None Include="Web References\ir.shaparak.sadad\MerchantUtility.disco" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1562,6 +1567,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Administrator.IncomeRowController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Administrator.NewsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Administrator.PackageTypeController.generated.cs">
@@ -1644,6 +1652,7 @@
     <Compile Include="Areas\Administrator\Controllers\IncomeRowController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Administrator\Controllers\NewsController.cs" />
     <Compile Include="Areas\Administrator\Controllers\PackageTypeController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ProductNameController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ProductTypeController.cs" />

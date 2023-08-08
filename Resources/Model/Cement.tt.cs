@@ -72,6 +72,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: تاریخ پایان
+        /// </summary>
+        public static string EndDateNews([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.EndDateNews;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("EndDateNews", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: نام کارخانه
         /// </summary>
         public static string FactoryName([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -79,6 +89,26 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.Cement.FactoryName;
             }
             return global::Resources.Model.Cement.ResourceManager.GetString("FactoryName", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: نهایی شده / نهایی نشده
+        /// </summary>
+        public static string FinalApprove([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.FinalApprove;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("FinalApprove", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: نهایی شده / نهایی نشده
+        /// </summary>
+        public static string FinalApprove1([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.FinalApprove1;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("FinalApprove1", resourceCulture);
         }
         
         /// <summary>
@@ -109,6 +139,16 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.Cement.MahalTahvil;
             }
             return global::Resources.Model.Cement.ResourceManager.GetString("MahalTahvil", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: خبر
+        /// </summary>
+        public static string News([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.News;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("News", resourceCulture);
         }
         
         /// <summary>
@@ -159,6 +199,16 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.Cement.StringCity;
             }
             return global::Resources.Model.Cement.ResourceManager.GetString("StringCity", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: تاریخ پایان
+        /// </summary>
+        public static string StringEndDateNews([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringEndDateNews;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringEndDateNews", resourceCulture);
         }
         
         /// <summary>
@@ -232,6 +282,36 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: تاریخ شروع
+        /// </summary>
+        public static string StringstartDateNews([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringstartDateNews;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("StringstartDateNews", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: متن خبر
+        /// </summary>
+        public static string TextNews([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.TextNews;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("TextNews", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: عنوان خبر
+        /// </summary>
+        public static string TitleNews([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.TitleNews;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("TitleNews", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: تناژ
         /// </summary>
         public static string Tonnage([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -259,6 +339,26 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.Cement.code;
             }
             return global::Resources.Model.Cement.ResourceManager.GetString("code", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: تاریخ شروع 
+        /// </summary>
+        public static string startDateNews([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.startDateNews;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("startDateNews", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: نهایی شده / نهایی نشده
+        /// </summary>
+        public static string stringFinalApprove([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.stringFinalApprove;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("stringFinalApprove", resourceCulture);
         }
     }
 }
@@ -298,9 +398,24 @@ namespace Resources.Model.Strings {
         public const string DestinationAmountPaid = "DestinationAmountPaid";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: تاریخ پایان
+        /// </summary>
+        public const string EndDateNews = "EndDateNews";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: نام کارخانه
         /// </summary>
         public const string FactoryName = "FactoryName";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نهایی شده / نهایی نشده
+        /// </summary>
+        public const string FinalApprove = "FinalApprove";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نهایی شده / نهایی نشده
+        /// </summary>
+        public const string FinalApprove1 = "FinalApprove1";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: شماره فاکتور
@@ -316,6 +431,11 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: محل تحویل
         /// </summary>
         public const string MahalTahvil = "MahalTahvil";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: خبر
+        /// </summary>
+        public const string News = "News";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: نوع بسته بندی
@@ -341,6 +461,11 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: شهر تخلیه
         /// </summary>
         public const string StringCity = "StringCity";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: تاریخ پایان
+        /// </summary>
+        public const string StringEndDateNews = "StringEndDateNews";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: نام کارخانه
@@ -378,6 +503,21 @@ namespace Resources.Model.Strings {
         public const string StringTonnage = "StringTonnage";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: تاریخ شروع
+        /// </summary>
+        public const string StringstartDateNews = "StringstartDateNews";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: متن خبر
+        /// </summary>
+        public const string TextNews = "TextNews";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: عنوان خبر
+        /// </summary>
+        public const string TitleNews = "TitleNews";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: تناژ
         /// </summary>
         public const string Tonnage = "Tonnage";
@@ -391,5 +531,15 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: کد
         /// </summary>
         public const string code = "code";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: تاریخ شروع 
+        /// </summary>
+        public const string startDateNews = "startDateNews";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نهایی شده / نهایی نشده
+        /// </summary>
+        public const string stringFinalApprove = "stringFinalApprove";
     }
 }

@@ -126,12 +126,14 @@
     <Compile Include="IDestinationManagementRepository.cs" />
     <Compile Include="IFinancialManagementRepository.cs" />
     <Compile Include="IFactorCementRepository.cs" />
+    <Compile Include="INewsReopsitory.cs" />
     <Compile Include="IRequestRepository.cs" />
     <Compile Include="ITonnageRepository.cs" />
     <Compile Include="IPackageTypeRepository.cs" />
     <Compile Include="IFactoryNameRepository.cs" />
     <Compile Include="IProductTypeRepository.cs" />
     <Compile Include="IProductNameRepository.cs" />
+    <Compile Include="NewsReopsitory.cs" />
     <Compile Include="TonnageRepository.cs" />
     <Compile Include="PackageTypeRepository.cs" />
     <Compile Include="FactoryNameRepository.cs" />

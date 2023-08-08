@@ -1,4 +1,5 @@
 ﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
+@using Utilities.PersianDate
 @{
     string strTitle =
         string.Format("{0} {1}",
@@ -16,7 +17,7 @@
         </div>
     </div>
 }
-@using (Html.BeginForm("Delete", "ProductName", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Delete", "News", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -24,15 +25,21 @@
 
     <div class="panel panel-primary">
         <div class="panel-heading">
-           حذف کالا
+            حذف خبر
         </div>
         <div class="panel-body">
             <dl class="dl-horizontal">
-                <dt>@Html.DisplayNameFor(model => model.ProductName)</dt>
-                <dd>@Html.DisplayFor(model => model.StringProductName)</dd>
+                <dt>@Html.DisplayNameFor(model => model.TitleNews)</dt>
+                <dd>@Html.DisplayFor(model => model.TitleNews)</dd>
 
-                <dt>@Html.DisplayNameFor(model => model.code)</dt>
-                <dd>@Html.DisplayFor(model => model.code)</dd>
+                <dt>@Html.DisplayNameFor(model => model.TextNews)</dt>
+                <dd>@Html.DisplayFor(model => model.TextNews)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.startDateNews)</dt>
+                <dd>@Html.DisplayFor(model => model.StringstartDateNews)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.EndDateNews)</dt>
+                <dd>@Html.DisplayFor(model => model.StringEndDateNews)</dd>
             </dl>
             @using (Html.BeginForm())
             {
@@ -45,7 +52,7 @@
             }
         </div>
         <div class="panel-footer">
-            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.ProductName.Index(), new { @class = "btn btn-default" })
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.News.Index(), new { @class = "btn btn-default" })
 
             <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
                href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>

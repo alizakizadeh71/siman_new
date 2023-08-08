@@ -283,7 +283,19 @@
                 return (_ProductTypeRepository);
             }
         }
-        
+
+        private INewsReopsitory _newsReopsitory;
+        public INewsReopsitory NewsReopsitory
+        {
+            get
+            {
+                if (_newsReopsitory == null)
+                {
+                    _newsReopsitory = new NewsReopsitory(DatabaseContext);
+                }
+                return (_newsReopsitory);
+            }
+        }
         private IPackageTypeRepository _PackageTypeRepository;
         public IPackageTypeRepository PackageTypeRepository
         {

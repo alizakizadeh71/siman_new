@@ -115,11 +115,38 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تاریخ پایان.
+        /// </summary>
+        public static string EndDateNews {
+            get {
+                return ResourceManager.GetString("EndDateNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام کارخانه.
         /// </summary>
         public static string FactoryName {
             get {
                 return ResourceManager.GetString("FactoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نهایی شده / نهایی نشده.
+        /// </summary>
+        public static string FinalApprove {
+            get {
+                return ResourceManager.GetString("FinalApprove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نهایی شده / نهایی نشده.
+        /// </summary>
+        public static string FinalApprove1 {
+            get {
+                return ResourceManager.GetString("FinalApprove1", resourceCulture);
             }
         }
         
@@ -147,6 +174,15 @@ namespace Resources.Model {
         public static string MahalTahvil {
             get {
                 return ResourceManager.GetString("MahalTahvil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خبر.
+        /// </summary>
+        public static string News {
+            get {
+                return ResourceManager.GetString("News", resourceCulture);
             }
         }
         
@@ -187,6 +223,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تاریخ شروع .
+        /// </summary>
+        public static string startDateNews {
+            get {
+                return ResourceManager.GetString("startDateNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شهر تخلیه.
         /// </summary>
         public static string StringCity {
@@ -196,11 +241,29 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تاریخ پایان.
+        /// </summary>
+        public static string StringEndDateNews {
+            get {
+                return ResourceManager.GetString("StringEndDateNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام کارخانه.
         /// </summary>
         public static string StringFactoryName {
             get {
                 return ResourceManager.GetString("StringFactoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نهایی شده / نهایی نشده.
+        /// </summary>
+        public static string stringFinalApprove {
+            get {
+                return ResourceManager.GetString("stringFinalApprove", resourceCulture);
             }
         }
         
@@ -250,11 +313,38 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تاریخ شروع.
+        /// </summary>
+        public static string StringstartDateNews {
+            get {
+                return ResourceManager.GetString("StringstartDateNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تناژ.
         /// </summary>
         public static string StringTonnage {
             get {
                 return ResourceManager.GetString("StringTonnage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to متن خبر.
+        /// </summary>
+        public static string TextNews {
+            get {
+                return ResourceManager.GetString("TextNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عنوان خبر.
+        /// </summary>
+        public static string TitleNews {
+            get {
+                return ResourceManager.GetString("TitleNews", resourceCulture);
             }
         }
         

@@ -17,6 +17,7 @@ namespace Enums
         RequestStates = 6,
         Subsystems = 7,
         Roles = 8,
-        ServicesResponse = 9
+        ServicesResponse = 9,
+        FinalApprove = 10
     }
 }

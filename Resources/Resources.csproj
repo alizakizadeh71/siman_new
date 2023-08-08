@@ -103,6 +103,14 @@
     <Compile Include="Enum\FileTypes.tt.cs">
       <DependentUpon>FileTypes.tt</DependentUpon>
     </Compile>
+    <Compile Include="Enum\FinalApprove.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinalApprove.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\FinalApprove.tt.cs">
+      <DependentUpon>FinalApprove.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enum\LogTypes.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -311,6 +319,14 @@
     <Compile Include="Model\IncomeRow.tt.cs">
       <DependentUpon>IncomeRow.tt</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\news.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>news.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\news.tt.cs">
+      <DependentUpon>news.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Payment.Designer.cs">
       <DependentUpon>Payment.resx</DependentUpon>
@@ -540,6 +556,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FileTypes.txt</LastGenOutput>
     </None>
+    <None Include="Enum\FinalApprove.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FinalApprove.txt</LastGenOutput>
+    </None>
     <None Include="Enum\LogTypes.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LogTypes.cs</LastGenOutput>
@@ -611,6 +631,10 @@
     <None Include="Model\HeadOfFactor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>HeadOfFactor.txt</LastGenOutput>
+    </None>
+    <None Include="Model\news.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>news.txt</LastGenOutput>
     </None>
     <None Include="Model\Payment.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -699,6 +723,10 @@
     <EmbeddedResource Include="Enum\FileTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FileTypes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Enum\FinalApprove.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FinalApprove.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Enum\LogTypes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -804,6 +832,10 @@
     <EmbeddedResource Include="Model\IncomeRow.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IncomeRow.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\news.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>news.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Model\Payment.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -941,6 +973,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FileTypes.tt</DependentUpon>
     </Content>
+    <Content Include="Enum\FinalApprove.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FinalApprove.tt</DependentUpon>
+    </Content>
     <Content Include="Enum\PageMessageTypes.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -976,14 +1013,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Global.tt</DependentUpon>
     </Content>
+    <Content Include="Model\Cement.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Cement.txt</LastGenOutput>
+    </Content>
     <Content Include="Model\Cement.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Cement.tt</DependentUpon>
-    </Content>
-    <Content Include="Model\Cement.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Cement.txt</LastGenOutput>
     </Content>
     <Content Include="Model\CentralBank.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -993,6 +1030,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CentralBank.tt</DependentUpon>
+    </Content>
+    <Content Include="Model\news.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>news.tt</DependentUpon>
     </Content>
     <Content Include="Model\Request.txt">
       <AutoGen>True</AutoGen>
