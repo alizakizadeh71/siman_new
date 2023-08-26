@@ -188,11 +188,11 @@ namespace OPS.Controllers
             return callInfo;
         }
 
-        //public override System.Web.Mvc.ActionResult News()
-        //{
-        //    var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.News);
-        //    return callInfo;
-        //}
+        public override System.Web.Mvc.ActionResult News()
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.News);
+            return callInfo;
+        }
 
         public override System.Web.Mvc.ActionResult Continue_Authenticate()
         {

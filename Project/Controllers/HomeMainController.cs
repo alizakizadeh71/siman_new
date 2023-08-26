@@ -211,7 +211,7 @@ namespace OPS.Controllers
             return View();
         }
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.None)]
-        public ActionResult News()
+        public virtual ActionResult News()
         {
             DateTime date1 = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             var get = UnitOfWork.NewsReopsitory.Get().Where(s => s.IsActived && !s.IsDeleted && s.StartDate <= date1 && s.EndDate >= date1);
