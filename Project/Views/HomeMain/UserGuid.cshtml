@@ -3,6 +3,32 @@
 }
 @*<h2>@ViewBag.Title</h2>
     <br />*@
+<style>
+    .UserGuidImg::after {
+        content: "راهنمای کاربران";
+        position: absolute;
+        color:red;
+        top: 220px;
+        white-space: pre;
+        right: 58%;
+        transform: translateX(50%);
+        font-weight: bold;
+        font-size: 50px;
+    }
+    .panel-info {
+        width: 50%;
+        transition-property: all;
+        transition-duration: 1.5s;
+    }
+
+        .panel-info:hover {
+            width: 100%;
+        }
+</style>
+<div class="UserGuidImg">
+    <img src="~/Content/Images/getty_590617706_2000150020009280408_361885.jpg" style="top: 0px; left: 0px; width: 100%; height:400px; z-index: -10; border: solid; border-width: 7px; border-color: #e1e1e1; -webkit-box-shadow: 0 7px 2px #777; -moz-box-shadow: 0 7px 2px #777; box-shadow: 0 7px 2px #777;" class="img-responsive">
+</div>
+<br />
 <div class="panel panel-info">
     <h1 class="panel-heading" style="margin-top: 0px; padding-top: 10px; font-size: 20px; color:red">خریداران محترم لطفا قبل از خرید موارد زیر را مطالعه فرمایید:</h1>
     <p class="panel-body" style="font-size: 16px; padding-top: 5px;">

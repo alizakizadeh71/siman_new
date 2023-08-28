@@ -3,17 +3,41 @@
 }
 @*<h2>@ViewBag.Title</h2>
 <br />*@
-<div class="panel panel-info">
-    <h1 class="panel-heading" style="margin-top: 0px; padding-top: 10px; font-size: 20px; color:red">در صورت بروز هرگونه مشکل می توانید با شماره های زیر تماس بگیرید:</h1>
-    <p class="panel-body" style="font-size: 16px; padding-top: 5px;">
-        شماره تماس : 09133966939
-        <br />
-        شماره تماس : 09033966939
-        <br />
-        شماره تماس : 09051520102
-        <br />
-        شماره تماس : 03532437587
-        <br />
+<style>
+    .ContactImg::after {
+       
+        content: "تماس با ما";
+        position: absolute;
+        color:antiquewhite;
+        top: 137px;
+        white-space: pre;
+        right: 64%;
+        transform: translateX(50%);
+        font-weight: bold;
+        font-size: 30px;
+        
+    }
+   
+   
+    
+</style>
+<div class="ContactImg">
+    <img src="~/Content/Images/Contact-us.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%; z-index: -10; border: solid; border-width: 7px; border-color: #e1e1e1; -webkit-box-shadow: 0 7px 2px #777; -moz-box-shadow: 0 7px 2px #777; box-shadow: 0 7px 2px #777;" class="img-responsive">
+</div>
+<br />
+<div class="panel panel-info" style="background-color : darkgrey; width : 50%; margin-right: 250px;border-radius:30%;">
+    <h1 class="panel-heading" style="margin-top: 0px; padding-top: 10px;padding-right: 7%; font-size: 20px; color:black;background-color : darkgray;">در صورت بروز هرگونه مشکل می توانید با شماره های زیر تماس بگیرید:</h1>
+    <p class="panel-body" style="font-size: 16px; padding-top: 5px;padding-right: 35%;">
+        <b>
+            شماره تماس : 09133966939
+            <br />
+            شماره تماس : 09033966939
+            <br />
+            شماره تماس : 09051520102
+            <br />
+            شماره تماس : 03532437587
+            <br />
+        </b>
     </p>
 </div>
 <br />
