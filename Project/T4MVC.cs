@@ -984,16 +984,25 @@ namespace Links
             private const string URLPATH = "~/Content/Images";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string _02RHG_About_US_jpg = Url("02RHG.About-US.jpg");
             public static readonly string _1_ico = Url("1.ico");
             public static readonly string _2_ico = Url("2.ico");
+            public static readonly string About_us_min_jpg = Url("About-us-min.jpg");
             public static readonly string Baner_jpg = Url("Baner.jpg");
             public static readonly string Cement_png = Url("Cement.png");
+            public static readonly string Contact_us_jpg = Url("Contact-us.jpg");
             public static readonly string CSP_png = Url("CSP.png");
             public static readonly string Dampezeshki_logo_LimooGraphic_png = Url("Dampezeshki-logo-LimooGraphic.png");
+            public static readonly string download_jpg = Url("download.jpg");
+            public static readonly string downloadguid_jpg = Url("downloadguid.jpg");
+            public static readonly string getty_590617706_2000150020009280408_361885_jpg = Url("getty_590617706_2000150020009280408_361885.jpg");
             public static readonly string Guid_jpg = Url("Guid.jpg");
+            public static readonly string images__11__jpg = Url("images (11).jpg");
+            public static readonly string images_jpg = Url("images.jpg");
             public static readonly string ivo_logo_png = Url("ivo-logo.png");
             public static readonly string ivo_logo1_png = Url("ivo-logo1.png");
             public static readonly string ivo_logo2_png = Url("ivo-logo2.png");
+            public static readonly string megaphone_hand_yellow_background_attention_concep_295303_1679_png = Url("megaphone-hand-yellow-background-attention-concep_295303-1679.png");
             public static readonly string ops_jpg = Url("ops.jpg");
             public static readonly string PrintFooter_png = Url("PrintFooter.png");
             public static readonly string PrintHeader_png = Url("PrintHeader.png");

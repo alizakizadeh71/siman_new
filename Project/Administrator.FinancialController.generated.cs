@@ -454,12 +454,12 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        //public override System.Web.Mvc.ActionResult DestinationPrice()
-        //{
-        //    var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationPrice);
-        //    ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id");
-        //    return callInfo;
-        //}
+        public override System.Web.Mvc.ActionResult DestinationPrice(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DestinationPrice);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
 
         public override System.Web.Mvc.ActionResult DestinationPrice(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {

@@ -121,18 +121,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Message.cs" />
-    <Compile Include="Migrations\202307290854424_Add-table-news.cs" />
-    <Compile Include="Migrations\202307290854424_Add-table-news.Designer.cs">
-      <DependentUpon>202307290854424_Add-table-news.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202307291311459_Edit-table-news.cs" />
-    <Compile Include="Migrations\202307291311459_Edit-table-news.Designer.cs">
-      <DependentUpon>202307291311459_Edit-table-news.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202308010710564_Edit-tabale-News-Add-multi.cs" />
-    <Compile Include="Migrations\202308010710564_Edit-tabale-News-Add-multi.Designer.cs">
-      <DependentUpon>202308010710564_Edit-tabale-News-Add-multi.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="FactoryName.cs" />
     <Compile Include="News.cs" />
@@ -180,17 +168,6 @@
       <Project>{78fa154e-8772-4fc7-9c73-cc2e32baa91d}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202307290854424_Add-table-news.resx">
-      <DependentUpon>202307290854424_Add-table-news.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202307291311459_Edit-table-news.resx">
-      <DependentUpon>202307291311459_Edit-table-news.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202308010710564_Edit-tabale-News-Add-multi.resx">
-      <DependentUpon>202308010710564_Edit-tabale-News-Add-multi.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

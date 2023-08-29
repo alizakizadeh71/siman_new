@@ -257,6 +257,7 @@
     <Content Include="Content\Images\ops.jpg" />
     <Content Include="Content\Images\PrintFooter.png" />
     <Content Include="Content\Images\PrintHeader.png" />
+    <Content Include="Content\Images\rahnam.jpg" />
     <Content Include="Content\Images\Recepe.jpg" />
     <Content Include="Content\Images\Untitled.jpg" />
     <Content Include="Content\jquery-ui-1.8.21.custom.css" />
@@ -572,8 +573,6 @@
     <Content Include="Areas\Administrator\Views\News\Create.cshtml" />
     <Content Include="Areas\Administrator\Views\News\Edit.cshtml" />
     <Content Include="Areas\Administrator\Views\News\Delete.cshtml" />
-    <Content Include="Content\Images\contact-us-customer-support-person-connection-contact-us-customer-support-hotline-people-connect-phone-application-blue-background_36325-4547.avif" />
-    <Content Include="Content\Images\concept-communication-contact-us-customer-support-hotline-people-connect-business-hand-touching-virtual-screen-contact-icons-email-address-live-chat-with-internet-wifi_162459-2015.avif" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">

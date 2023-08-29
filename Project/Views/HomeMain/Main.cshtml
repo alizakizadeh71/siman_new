@@ -8,7 +8,10 @@
     }
     .col-md-3 {
         margin-right: 30px;
-        margin-left: 30px;
+        margin-left: 30px
+    }
+    .col-sm-12 {
+        min-height:32%;
     }
 </style>
 
@@ -20,34 +23,34 @@
             {
                 case Enums.Roles.Programmer:
                     {
-                <div class="row" style="margin-bottom:15px;">
-                    <a class="btn btn-primary col-md-3 col-sm-12  col-xs-12" href="/Administrator/Request/Index/" style="padding-top:20px;">
-                        <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
-                    </a>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-primary class1 col-md-3 col-sm-12  col-xs-12" href="/Administrator/Request/Index/" style="padding-top:20px;margin-top : 10px;max-height:100%;">
+                                <span style="float:right;">@Resources.Action.Request</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Request.png' />
+                            </a>
 
-                    <a class="btn btn-danger col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/Financial/Index/" style="padding-top:20px; margin-top : 10px;">
-                        <span style="float:right;">ثبت قیمت</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
-                    </a>
-                    <a class="btn btn-danger col-md-3 col-sm-12 col-xs-12" href="/Administrator/Financial/DestinationIndex/" style="padding-top: 20px; margin-top: 10px;">
-                        <span style="float:right;">ثبت قیمت کرایه تا مقصد</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png'/>
-                    </a>
-                </div>
-                <div class="row" style="margin-bottom:15px;">
-                    <a class="btn btn-warning col-md-3 col-sm-12 col-xs-12" href="/Administrator/User/Index/" style="padding-top: 20px;">
-                        <span style="float:right;">@Resources.Action.UserManagment</span><img style="float: left; margin-top: -12px;" src='../../../Content/Icon/UserSetting.png' />
-                    </a>
-                    <a class="btn btn-info col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/Province/Index/" style="padding-top: 20px; margin-top: 10px;">
-                        <span style="float:right;">استان های تحت پوشش</span><img style="float: left; margin-top: -12px; width: 64px; height : 64px;" src='../../../Content/Icon/map.png' />
-                    </a>
-                    <a class="btn btn-info col-md-3 col-sm-12 col-xs-12" href="/Administrator/City/Index/" style="padding-top: 20px; margin-top: 10px;">
-                        <span style="float:right;">شهرستان های تحت پوشش</span><img style="float: left; margin-top: -12px; width: 64px; height : 64px;" src='../../../Content/Icon/map.png' />
-                    </a>
-                </div>
+                            <a class="btn btn-danger col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/Financial/Index/" style="padding-top:20px; margin-top : 10px;">
+                                <span style="float:right;">ثبت قیمت</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-danger col-md-3 col-sm-12 col-xs-12" href="/Administrator/Financial/DestinationIndex/" style="padding-top: 20px; margin-top: 10px;">
+                                <span style="float:right;">ثبت قیمت کرایه تا مقصد</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-warning class1 col-md-3 col-sm-12 col-xs-12" href="/Administrator/User/Index/" style="padding-top: 20px; margin-top: 10px; max-height: 100%; height: 100px;">
+                                <span style="float:right;">@Resources.Action.UserManagment</span><img style="float: left; margin-top: -12px;" src='../../../Content/Icon/UserSetting.png' />
+                            </a>
+                            <a class="btn btn-info col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/Province/Index/" style="padding-top: 20px; margin-top: 10px;">
+                                <span style="float:right;">استان های تحت پوشش</span><img style="float: left; margin-top: -12px; width: 64px; height : 64px;" src='../../../Content/Icon/map.png' />
+                            </a>
+                            <a class="btn btn-info col-md-3 col-sm-12 col-xs-12" href="/Administrator/City/Index/" style="padding-top: 20px; margin-top: 10px;">
+                                <span style="float:right;">شهرستان های تحت پوشش</span><img style="float: left; margin-top: -12px; width: 64px; height : 64px;" src='../../../Content/Icon/map.png' />
+                            </a>
+                        </div>
 
-                            break;
-                        }
-                }
+                        break;
+                    }
             }
+        }
     </div>
 </div>
 <div class="jumbotron" style="margin-top: 0px; min-height: 200px;">
@@ -57,28 +60,28 @@
             {
                 case Enums.Roles.Programmer:
                     {
-                <div class="row" style="margin-bottom:15px;">
-                    <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/ProductName/Index/" style="padding-top: 20px; margin-top: 10px;">
-                        <span style="float:right;">ثبت کالا جدید</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
-                    </a>
-                    <a class="btn btn-success col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/ProductType/Index/" style="padding-top: 20px; margin-top: 10px;">
-                        <span style="float:right;">ثبت نوع کالا</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
-                    </a>
-                    <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/PackageType/Index/" style="padding-top: 20px; margin-top: 10px;">
-                        <span style="float:right;">ثبت نوع بسته بندی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
-                    </a>
-                </div>
-                <div class="row" style="margin-bottom:15px;">
-                    <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/FactoryName/Index/" style="padding-top: 20px;">
-                        <span style="float:right;">ثبت کارخانه</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
-                    </a>
-                    <a class="btn btn-success col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/Tonnages/Index/" style="padding-top: 20px; margin-top: 10px;">
-                        <span style="float:right;">ثبت تناژ</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
-                    </a>
-                    <a class="btn btn-primary col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/News/Index/" style="padding-top: 20px; margin-top: 10px;">
-                        <span style="float:right;">ثبت خبر</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
-                    </a>
-                </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/ProductName/Index/" style="padding-top: 20px; margin-top: 10px;max-height:100%;">
+                                <span style="float:right;">ثبت کالا جدید</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-success col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/ProductType/Index/" style="padding-top: 20px; margin-top: 10px;">
+                                <span style="float:right;">ثبت نوع کالا</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/PackageType/Index/" style="padding-top: 20px; margin-top: 10px;">
+                                <span style="float:right;">ثبت نوع بسته بندی</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                        </div>
+                        <div class="row" style="margin-bottom:15px;">
+                            <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/FactoryName/Index/" style="padding-top: 20px; margin-top: 10px; max-height: 100%;">
+                                <span style="float:right;">ثبت کارخانه</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-success col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/Tonnages/Index/" style="padding-top: 20px; margin-top: 10px;">
+                                <span style="float:right;">ثبت تناژ</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                            <a class="btn btn-primary col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/News/Index/" style="padding-top: 20px; margin-top: 10px;">
+                                <span style="float:right;">ثبت خبر</span><img style="float: left; margin-top: -5px;" src='../../../Content/Icon/Report.png' />
+                            </a>
+                        </div>
                         break;
                     }
             }
