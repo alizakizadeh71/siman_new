@@ -236,12 +236,15 @@
     <Content Include="Content\Icon\UserSetting.png" />
     <Content Include="Content\Icon\ViewUser.png" />
     <Content Include="Content\Images\02RHG.About-US.jpg" />
+    <Content Include="Content\Images\02RHG.About-US1.jpg" />
     <Content Include="Content\Images\1.ico" />
     <Content Include="Content\Images\2.ico" />
     <Content Include="Content\Images\About-us-min.jpg" />
     <Content Include="Content\Images\Baner.jpg" />
+    <Content Include="Content\Images\Banerr.jpg" />
     <Content Include="Content\Images\Cement.png" />
     <Content Include="Content\Images\Contact-us.jpg" />
+    <Content Include="Content\Images\Contact-us1.jpg" />
     <Content Include="Content\Images\CSP.png" />
     <Content Include="Content\Images\Dampezeshki-logo-LimooGraphic.png" />
     <Content Include="Content\Images\download.jpg" />
@@ -258,6 +261,7 @@
     <Content Include="Content\Images\PrintFooter.png" />
     <Content Include="Content\Images\PrintHeader.png" />
     <Content Include="Content\Images\rahnam.jpg" />
+    <Content Include="Content\Images\rahnama2.jpg" />
     <Content Include="Content\Images\Recepe.jpg" />
     <Content Include="Content\Images\Untitled.jpg" />
     <Content Include="Content\jquery-ui-1.8.21.custom.css" />
