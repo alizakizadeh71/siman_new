@@ -122,7 +122,13 @@ namespace ViewModels.Areas.Administrator.Cement
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.Village)]
         #endregion
-        public Guid? Village { get; set; }
+        public Guid Village { get; set; }
+        #region Village
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.Village)]
+        #endregion
+        public string stringVillage { get; set; }
 
         #region BuyerMobile
         [System.ComponentModel.DataAnnotations.Display

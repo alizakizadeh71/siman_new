@@ -264,6 +264,11 @@
       <DependentUpon>Certain.tt</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\village.Designer.cs">
+      <DependentUpon>village.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Model\City.Designer.cs">
       <DependentUpon>City.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -388,6 +393,9 @@
     <Compile Include="Model\User.tt.cs">
       <DependentUpon>User.tt</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\village.tt.cs">
+      <DependentUpon>village.tt</DependentUpon>
     </Compile>
     <Compile Include="OPS\Button.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -805,6 +813,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Certain.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Model\village.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>village.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model\City.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>City.Designer.cs</LastGenOutput>
@@ -1030,6 +1042,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CentralBank.tt</DependentUpon>
+    </Content>
+    <None Include="Model\village.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>village.txt</LastGenOutput>
+    </None>
+    <Content Include="Model\village.txt">
+      <DependentUpon>village.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Content>
     <Content Include="Model\news.txt">
       <AutoGen>True</AutoGen>

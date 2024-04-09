@@ -150,6 +150,7 @@
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="UserLoginLog.cs" />
+    <Compile Include="village.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

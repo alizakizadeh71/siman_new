@@ -322,7 +322,7 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to: روستای تخلیه
+        ///   Looks up a localized string similar to: بخش تخلیه
         /// </summary>
         public static string Village([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -359,6 +359,16 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.Cement.stringFinalApprove;
             }
             return global::Resources.Model.Cement.ResourceManager.GetString("stringFinalApprove", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: بخش تخلیه
+        /// </summary>
+        public static string stringVillage([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.StringVillage;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("stringVillage", resourceCulture);
         }
     }
 }
@@ -523,7 +533,7 @@ namespace Resources.Model.Strings {
         public const string Tonnage = "Tonnage";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: روستای تخلیه
+        ///   Provides access to string resource key of value similar to: بخش تخلیه
         /// </summary>
         public const string Village = "Village";
         
@@ -541,5 +551,10 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: نهایی شده / نهایی نشده
         /// </summary>
         public const string stringFinalApprove = "stringFinalApprove";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: بخش تخلیه
+        /// </summary>
+        public const string stringVillage = "stringVillage";
     }
 }

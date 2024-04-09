@@ -437,6 +437,35 @@ namespace OPS.Areas.Administrator.Controllers
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: true)]
+        public virtual ActionResult GetVillage(System.Guid cityId)
+        {
+            try
+            {
+                var Villages =
+                 UnitOfWork.VillageRepository.GetBycityId(cityId)
+                 .Select(x => new
+                 {
+                     Name = x.Name,
+                     Id = x.Id
+                 })
+                 .OrderBy(x => x.Name)
+                 .ToList()
+                 ;
+
+                return Json
+                    (data: Villages,
+                    behavior: System.Web.Mvc.JsonRequestBehavior.AllowGet);
+            }
+
+            catch (Exception ex)
+            {
+                Utilities.Net.LogHandler.Report(GetType(), null, ex);
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
+            }
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: true)]
         public virtual ActionResult GetSubHeadLines(System.Guid HeadLineId)
         {
             try

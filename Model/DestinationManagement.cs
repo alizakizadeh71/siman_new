@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Data.Entity;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models
 {
@@ -35,6 +36,12 @@ namespace Models
                     .HasForeignKey(current => current.CityId)
                     .WillCascadeOnDelete(false)
                     ;
+
+                HasRequired(current => current.City)
+                .WithMany(x => x.DestinationManagements)
+                .HasForeignKey(current => current.villageId)
+                .WillCascadeOnDelete(false)
+                ;
 
             }
         }
@@ -78,6 +85,9 @@ namespace Models
         #endregion
         public Guid CityId { get; set; }
         public virtual City City { get; set; }
+
+        public Guid? villageId { get; set; }
+        public virtual village Village { get; set; }
 
         #region
         [System.ComponentModel.DataAnnotations.Display

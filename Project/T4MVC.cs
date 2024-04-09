@@ -70,6 +70,7 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.SubSystemController SubSystem = new OPS.Areas.Administrator.Controllers.T4MVC_SubSystemController();
         public OPS.Areas.Administrator.Controllers.TonnagesController Tonnages = new OPS.Areas.Administrator.Controllers.T4MVC_TonnagesController();
         public OPS.Areas.Administrator.Controllers.UserController User = new OPS.Areas.Administrator.Controllers.T4MVC_UserController();
+        public OPS.Areas.Administrator.Controllers.VillageController Village = new OPS.Areas.Administrator.Controllers.T4MVC_VillageController();
         public T4MVC.Administrator.SharedController Shared = new T4MVC.Administrator.SharedController();
     }
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -985,12 +986,17 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string _02RHG_About_US_jpg = Url("02RHG.About-US.jpg");
+            public static readonly string _02RHG_About_US1_jpg = Url("02RHG.About-US1.jpg");
             public static readonly string _1_ico = Url("1.ico");
             public static readonly string _2_ico = Url("2.ico");
             public static readonly string About_us_min_jpg = Url("About-us-min.jpg");
             public static readonly string Baner_jpg = Url("Baner.jpg");
+            public static readonly string Baner1a_jpg = Url("Baner1a.jpg");
+            public static readonly string Banerr_jpg = Url("Banerr.jpg");
+            public static readonly string Banerr2_jpg = Url("Banerr2.jpg");
             public static readonly string Cement_png = Url("Cement.png");
             public static readonly string Contact_us_jpg = Url("Contact-us.jpg");
+            public static readonly string Contact_us1_jpg = Url("Contact-us1.jpg");
             public static readonly string CSP_png = Url("CSP.png");
             public static readonly string Dampezeshki_logo_LimooGraphic_png = Url("Dampezeshki-logo-LimooGraphic.png");
             public static readonly string download_jpg = Url("download.jpg");
@@ -1006,6 +1012,8 @@ namespace Links
             public static readonly string ops_jpg = Url("ops.jpg");
             public static readonly string PrintFooter_png = Url("PrintFooter.png");
             public static readonly string PrintHeader_png = Url("PrintHeader.png");
+            public static readonly string rahnam_jpg = Url("rahnam.jpg");
+            public static readonly string rahnama2_jpg = Url("rahnama2.jpg");
             public static readonly string Recepe_jpg = Url("Recepe.jpg");
             public static readonly string Untitled_jpg = Url("Untitled.jpg");
         }

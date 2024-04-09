@@ -420,6 +420,8 @@
         }
 
 
+
+
         private ICityRepository _CityRepository;
         public ICityRepository CityRepository
         {
@@ -433,6 +435,18 @@
             }
         }
 
+        private IVillageRepository _VillageRepository;
+        public IVillageRepository VillageRepository
+        {
+            get
+            {
+                if (_VillageRepository == null)
+                {
+                    _VillageRepository = new VillageRepository(DatabaseContext);
+                }
+                return (_VillageRepository);
+            }
+        }
 
         private ISubSystemRepository _SubSystemRepository;
         public ISubSystemRepository SubSystemRepository

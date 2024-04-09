@@ -331,6 +331,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to بخش تخلیه.
+        /// </summary>
+        public static string StringVillage {
+            get {
+                return ResourceManager.GetString("StringVillage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to متن خبر.
         /// </summary>
         public static string TextNews {
@@ -358,7 +367,7 @@ namespace Resources.Model {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to روستای تخلیه.
+        ///   Looks up a localized string similar to بخش تخلیه.
         /// </summary>
         public static string Village {
             get {

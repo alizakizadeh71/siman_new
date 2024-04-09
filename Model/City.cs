@@ -50,6 +50,7 @@ namespace Models
         public string Code { get; set; }
 
         public virtual System.Collections.Generic.IList<Request> Requests { get; set; }
+        public virtual System.Collections.Generic.IList<village> Villages { get; set; }
         public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
         public virtual System.Collections.Generic.IList<HeadOfFactor> HeadOfFactors { get; set; }
         public virtual System.Collections.Generic.IList<User> Users { get; set; }

@@ -203,8 +203,17 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.City, new { @class = "col-md-4 control-label" })
                 <div class="col-md-8" id="DivCityId">
-                    @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.City, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.City)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Village, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8" id="DivVillageId">
+                    @Html.DropDownListFor(model => model.Village, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Village)
                 </div>
             </div>
             <div class="form-group">
@@ -269,8 +278,35 @@
 
                 $("#DivCityId").append(select);
                 $('#City>option:eq(1)').prop('selected', true);
+                $("#City").attr("onchange", "onChangecity()");
             }
         });
-    }
+        }
+
+
+        function onChangecity() {
+                     $.ajax({
+            url: '/Administrator/HeadOfFactor/GetVillage',
+            type: 'post',
+            data: { cityId: $("#City").val() },
+            success: function (data) {
+
+                $("#DivVillageId").empty();
+
+                var select = $("<select class='form-control' id='village' name='village' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, village) {
+                    var option = ('<option value="' + village.Id + '"> ' + village.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivVillageId").append(select);
+            }
+        });
+        }
+
+
     </script>
 }

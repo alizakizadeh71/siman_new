@@ -1,6 +1,5 @@
-﻿
-@model ViewModels.Areas.Administrator.Cement.CementViewModel
-
+﻿@model ViewModels.Areas.Administrator.Village.IndexViewModel
+@using Utilities.PersianDate
 @{
     string strTitle =
         string.Format("{0} {1}",
@@ -100,7 +99,7 @@
                     read: {
                         type: "POST",
                         dataType: "json",
-                        url: "/Administrator/Financial/DestinationGetRequests",
+                        url: "/Administrator/Village/GetRequests",
                     },
                 },
 
@@ -159,7 +158,7 @@
 
             dataBinding: function () {
                 rowNumber =
-					(this.dataSource.page() - 1) * this.dataSource.pageSize();
+                    (this.dataSource.page() - 1) * this.dataSource.pageSize();
             },
 
             // **************************************************
@@ -182,15 +181,16 @@
                         width: "10px",
                         title: "",
                         template: function (dataItem) {
+
                             var strTemplate = "";
 
                             strTemplate +=
-                                '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Financial/DestinationEdit/'
-                            + dataItem.Id + '"><img src="../../../Content/Icon/Edit.png"/></span></a>';
+                            ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/Village/Delete/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/Delete.png"/></span></a>';
 
                             strTemplate +=
-                            ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/Financial/DestinationDelete/'
-                            + dataItem.Id + '"><img src="../../../Content/Icon/Delete.png"/></span></a>';
+                            '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Village/Edit/'
+                            + dataItem.Id + '"><img src="../../../Content/Icon/Edit.png"/></span></a>';
                             return (strTemplate);
                         },
                     },
@@ -198,83 +198,28 @@
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Cement.AmountPaid",
-                        field: "@Resources.Model.Strings.CementKeys.AmountPaid",
-                        width: "10px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProductName",
-                        field: "@Resources.Model.Strings.CementKeys.StringProductName",
+                        title: "@Resources.Model.village.stringCity",
+                        field: "@Resources.Model.Strings.villageKeys.stringCity",
                         width: "20px",
                     },
-                    {
+                     {
                         hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProductType",
-                        field: "@Resources.Model.Strings.CementKeys.StringProductType",
+                        locked: true,
+                         lockable: true,
+                         title: "@Resources.Model.village.Name",
+                         field: "@Resources.Model.Strings.villageKeys.Name",
                         width: "20px",
                     },
                     {
                         hidden: false,
                         locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringPackageType",
-                        field: "@Resources.Model.Strings.CementKeys.StringPackageType",
-                        width: "10px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringFactoryName",
-                        field: "@Resources.Model.Strings.CementKeys.StringFactoryName",
-                        width: "10px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProvince",
-                        field: "@Resources.Model.Strings.CementKeys.StringProvince",
-                        width: "10px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringCity",
-                        field: "@Resources.Model.Strings.CementKeys.StringCity",
-                        width: "10px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringVillage",
-                        field: "@Resources.Model.Strings.CementKeys.stringVillage",
-                        width: "10px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.DestinationAmountPaid",
-                        field: "@Resources.Model.Strings.CementKeys.DestinationAmountPaid",
-                        width: "10px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringInsertDateTime",
-                        field: "@Resources.Model.Strings.CementKeys.StringInsertDateTime",
+                         lockable: true,
+                        title: "@Resources.Model.village.Code",
+                        field: "@Resources.Model.Strings.villageKeys.Code",
                         width: "20px",
-                    },
-                ]
+                    }   
+                    ]
+
         });
 
         // **************************************************
@@ -296,7 +241,7 @@
                         read: {
                             type: "POST",
                             dataType: "json",
-                            url: "/Administrator/Financial/DestinationSearch",
+                            url: "/Administrator/Financial/Search",
                             data: {
                                 AmountPaid: function () {
                                     return ($("input#AmountPaid").val());
@@ -386,83 +331,7 @@
 </script>
 
 <section id="Requests" class="form-horizontal" role="form">
-    <div class="panel panel-info">
-        <div class="panel-heading" id="SearchPanelHeader">
-            جستجو ( کلیک کنید...!)
-        </div>
-        <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
-            <div class="col col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.ProductName, null,
-                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
-                        @Html.ValidationMessageFor(model => model.ProductName)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivPackageTypeId">
-                        @Html.DropDownListFor(model => model.PackageType, null,
-                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangePackageType()" })
-                        @Html.ValidationMessageFor(model => model.PackageType)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.StartDate, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FromAmount, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.FromAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.InvoiceNumber, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.InvoiceNumber, new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivProductTypeId">
-                        @Html.DropDownListFor(model => model.ProductType, null,
-                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
-                        @Html.ValidationMessageFor(model => model.ProductType)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivFactoryNameId">
-                        @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.FactoryName)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EndDate, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ToAmount, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.ToAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-3 col-md-8">
-                    <button type="button" id="btnSearch" name="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <br />
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -472,12 +341,12 @@
             <div class="col-md-12">
                 <div class="row">
                     <div style="float : right;width:49%;">
-                        <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float: right; width: 125px;"
-                           href="/Administrator/Financial/Index/"><span style="float:right;">ثبت قیمت جدید</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+                        <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;width:133px;"
+                           href="/Administrator/Village/Create/"><span style="float:right;">ثبت دهستان  جدید</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
                     </div>
                     <div style="float:left;width:49%;">
                         <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
-                           href="/HomeMain/Main/" style="float: left;width:150px;">
+                           href="/HomeMain/Main/" style="float : left;width:150px;">
                             <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
                         </a>
                     </div>

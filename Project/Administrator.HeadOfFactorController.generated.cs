@@ -82,6 +82,12 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult GetVillage()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.GetVillage);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult GetSubHeadLines()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.GetSubHeadLines);
@@ -110,6 +116,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string Delete = "Delete";
             public readonly string DeleteConfirmed = "Delete";
             public readonly string GetCities = "GetCities";
+            public readonly string GetVillage = "GetVillage";
             public readonly string GetSubHeadLines = "GetSubHeadLines";
         }
 
@@ -124,6 +131,7 @@ namespace OPS.Areas.Administrator.Controllers
             public const string Delete = "Delete";
             public const string DeleteConfirmed = "Delete";
             public const string GetCities = "GetCities";
+            public const string GetVillage = "GetVillage";
             public const string GetSubHeadLines = "GetSubHeadLines";
         }
 
@@ -177,6 +185,14 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionParamsClass_GetCities
         {
             public readonly string provinceId = "provinceId";
+        }
+        static readonly ActionParamsClass_GetVillage s_params_GetVillage = new ActionParamsClass_GetVillage();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_GetVillage GetVillageParams { get { return s_params_GetVillage; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_GetVillage
+        {
+            public readonly string cityId = "cityId";
         }
         static readonly ActionParamsClass_GetSubHeadLines s_params_GetSubHeadLines = new ActionParamsClass_GetSubHeadLines();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -280,6 +296,13 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GetCities);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "provinceId", provinceId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult GetVillage(System.Guid cityId)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GetVillage);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cityId", cityId);
             return callInfo;
         }
 

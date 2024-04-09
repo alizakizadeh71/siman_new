@@ -55,6 +55,9 @@ namespace OPS.Areas.Administrator.Controllers
 
             var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList();
             ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", cementViewModel.City);
+
+            var varVilages = UnitOfWork.VillageRepository.GetBycityId(cementViewModel.City).ToList();
+            ViewData["Village"] = new System.Web.Mvc.SelectList(varVilages, "Id", "Name", cementViewModel.Village);
         }
 
         [System.Web.Mvc.HttpPost]
@@ -242,6 +245,7 @@ namespace OPS.Areas.Administrator.Controllers
                             AmountPaid = current.FinancialManagement.AmountPaid,
                             StringProvince = current.Province.Name,
                             StringCity = current.City.Name,
+                            stringVillage = current.Village.Name,
                             DestinationAmountPaid = current.DestinationAmountPaid,
                             StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
                         })
@@ -525,6 +529,9 @@ namespace OPS.Areas.Administrator.Controllers
             var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
             ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
 
+            var varVilages = UnitOfWork.VillageRepository.GetBycityId(new Guid()).ToList();
+            ViewData["Village"] = new System.Web.Mvc.SelectList(varVilages, "Id", "Name", null);
+
             Viewdata(cementViewModel);
             ViewBag.PageMessages = null;
 
@@ -564,6 +571,8 @@ namespace OPS.Areas.Administrator.Controllers
                 var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList();
                 ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", cementViewModel.City);
 
+                var varVilages = UnitOfWork.VillageRepository.GetBycityId(new Guid()).ToList();
+                ViewData["Village"] = new System.Web.Mvc.SelectList(varVilages, "Id", "Name", null);
 
 
                 var oDestinationManagement =
@@ -575,6 +584,7 @@ namespace OPS.Areas.Administrator.Controllers
                      .Where(current => current.FinancialManagement.FactoryNameId == cementViewModel.FactoryName1)
                      .Where(current => current.ProvinceId == cementViewModel.Province)
                      .Where(current => current.CityId == cementViewModel.City)
+                     .Where(current => current.villageId == cementViewModel.Village)
                      .FirstOrDefault()
                      ;
 
@@ -592,6 +602,7 @@ namespace OPS.Areas.Administrator.Controllers
                     newDestinationManagement.FinancialManagementId = cementViewModel.Id;
                     newDestinationManagement.ProvinceId = cementViewModel.Province;
                     newDestinationManagement.CityId = cementViewModel.City;
+                    newDestinationManagement.villageId = cementViewModel.Village;
                     newDestinationManagement.DestinationAmountPaid = cementViewModel.DestinationAmountPaid;
                     UnitOfWork.DestinationManagementRepository.Insertdata(newDestinationManagement);
                     //UnitOfWork.Save();

@@ -1,0 +1,224 @@
+﻿@model ViewModels.Areas.Administrator.Village.IndexViewModel
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.Create,
+        Resources.Model.SubHeadLine.EntitiesName);
+}
+
+<script type="text/javascript">
+
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
+    function Comma(Num) {
+        Num += '';
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        x = Num.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1))
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        return x1 + x2;
+    }
+
+    $(document).ready(function () {
+
+        // create DatePicker from input HTML element
+        $('#StartDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $('#EndDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+    });
+
+    var varGrid =
+        $('div#grid').data("kendoGrid");
+    function onChangeProductName() {
+        debugger;
+        $.ajax({
+            url: '/Administrator/Cement/GetProductType',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivProductTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+                $.each(data, function (i, ProductType) {
+                    var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
+                    /// baraye inke avalin id baraye loade Select badi estefade shavad
+                    if (i == 0) {
+                        onChangeProductType(ProductType.Id);
+                    }
+                    select.append(option);
+                })
+
+                $("#DivProductTypeId").append(select);
+                $('#ProductType>option:eq(1)').prop('selected', true);
+            }
+        });
+
+        $.ajax({
+            url: '/Administrator/Cement/GetFactoryName',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivFactoryNameId").empty();
+
+                var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, FactoryName) {
+                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivFactoryNameId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#FactoryName>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
+    function onChangeProductType(ProductTypee) {
+        debugger;
+        if (ProductTypee == undefined) { /// baraye inke dafe aval az loade safhe bekhoone
+            ProductTypee = $("#ProductType").val();
+        }
+        $.ajax({
+            url: '/Administrator/Cement/GetPackageType',
+            type: 'post',
+            data: { ProductTypeId: ProductTypee },
+            success: function (data) {
+
+                $("#DivPackageTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, PackageType) {
+                    var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivPackageTypeId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#PackageType>option:eq(1)').prop('selected', true);
+                onChangePackageType();
+            }
+        });
+    }
+
+     function onChangeProvince() {
+        $.ajax({
+            url: '/Administrator/HeadOfFactor/GetCities',
+            type: 'post',
+            data: { provinceId: $("#Province").val() },
+            success: function (data) {
+
+                $("#DivCityId").empty();
+
+                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, city) {
+                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivCityId").append(select);
+                $('#City>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
+
+</script>
+
+@using (Html.BeginForm("Create", "village", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                پیام های سیستمی
+            </div>
+            <div class="panel-body">
+                @Html.Raw(ViewBag.PageMessages)
+            </div>
+        </div>
+    }
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            ثبت دهستان جدید
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Province, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.Province, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
+                    @Html.ValidationMessageFor(model => model.Province)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6" id="DivCityId">
+                    @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.City)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Code, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <input type="submit" value="@Resources.Buttons.Create" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-footer">
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.Village.Index(), new { @class = "btn btn-default col-md-2" })
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
+        </div>
+    </div>
+}

@@ -59,6 +59,7 @@
         public System.Data.Entity.DbSet<PackageType> PackageTypes{ get; set; }
         public System.Data.Entity.DbSet<FactoryName> FactoryNames{ get; set; }
         public System.Data.Entity.DbSet<newsweb> News { get; set; }
+        public System.Data.Entity.DbSet<village> villages { get; set; }
 
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {

@@ -45,21 +45,21 @@
         {
             using (Html.BeginForm("Payment", "Zarinpal", FormMethod.Post))
             {
-    <div style="color:red ; text-align:center" ; font-weight:bold" class="panel-body">
-        <p style="color:black">
-            لطفا محل تحویل را انتخاب نمایید
-        </p>
-        @Html.RadioButtonFor(model => model.Description, "M", new { @onclick = "EnablePayment()", @id = "Karkhane" })
-        @Html.Raw(ViewBag.Karkhane)
-        <br />
-        @if (ViewBag.Mahal != null)
-        {
-            @Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
-            @Html.Raw(ViewBag.Mahal)
-            <br />
-        }
+                <div style="color:red ; text-align:center" ; font-weight:bold" class="panel-body">
+                    <p style="color:black">
+                        لطفا محل تحویل را انتخاب نمایید
+                    </p>
+                    @Html.RadioButtonFor(model => model.Description, "M", new { @onclick = "EnablePayment()", @id = "Karkhane" })
+                    @Html.Raw(ViewBag.Karkhane)
+                    <br />
+                    @if (ViewBag.Mahal != null)
+                    {
+                        @Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
+                        @Html.Raw(ViewBag.Mahal)
+                        <br />
+                    }
 
-    </div>
+                </div>
 
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
@@ -140,18 +140,28 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.City, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6" id="DivCityId">
-                    @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.City)
+                    @Html.DropDownListFor(model => model.Province, null,
+                      Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = " onChangecity()" })
+                    @Html.ValidationMessageFor(model => model.Province)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6" id="DivVillageId">
+                    @Html.DropDownListFor(model => model.Village, null,
+                    Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Village)
                 </div>
             </div>
 
             @*<div class="form-group">
-                    @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-6" id="DivCityId">
-                        @Html.DropDownListFor(model => model.Village, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Village)
-                    </div>
-                </div>*@
+                @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6" id="DivCityId">
+                    @Html.DropDownListFor(model => model.Village, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Village)
+                </div>
+            </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" })
@@ -280,6 +290,7 @@
 
                 $("#DivCityId").append(select);
                 $('#City>option:eq(1)').prop('selected', true);
+                $("#City").attr("onchange", "onChangecity()");
             }
         });
     }
@@ -390,6 +401,29 @@
             }
         });
     }
+
+    function onChangecity() {
+                     $.ajax({
+            url: '/Administrator/HeadOfFactor/GetVillage',
+            type: 'post',
+            data: { cityId: $("#City").val() },
+            success: function (data) {
+
+                $("#DivVillageId").empty();
+
+                var select = $("<select class='form-control' id='village' name='village' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, village) {
+                    var option = ('<option value="' + village.Id + '"> ' + village.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivVillageId").append(select);
+            }
+        });
+        }
 
 </script>
 

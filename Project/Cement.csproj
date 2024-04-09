@@ -579,6 +579,9 @@
     <Content Include="Areas\Administrator\Views\News\Create.cshtml" />
     <Content Include="Areas\Administrator\Views\News\Edit.cshtml" />
     <Content Include="Areas\Administrator\Views\News\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Village\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Village\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Village\Delete.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">
@@ -1624,6 +1627,9 @@
     <Compile Include="Administrator.UserController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Administrator.VillageController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -1690,6 +1696,7 @@
     <Compile Include="Areas\Administrator\Controllers\UserController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Administrator\Controllers\VillageController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs">
       <SubType>Code</SubType>
     </Compile>

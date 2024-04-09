@@ -27,6 +27,7 @@ namespace OPS.Controllers
                 Tonnage = new Guid("9133daec-834a-4303-9687-5b08b479ffdf"),
                 Province = new Guid("d803f690-6de8-11e5-8295-c0f8daba7555"),
                 City = new Guid("f8b85020-ad88-4d89-9aa2-0de9e27fd9b1"),
+                Village = new Guid("b4925716-ecdb-11ee-9d3b-00155d18bab9")
             };
             ViewData(cementViewModel);
             return View(cementViewModel);
@@ -54,6 +55,9 @@ namespace OPS.Controllers
 
             var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList(); /// کرمان
             base.ViewData["City"] = new System.Web.Mvc.SelectList(City, "Id", "Name", cementViewModel.City).OrderBy(x => x.Text); /// کوهبنان
+
+            var varVilages = UnitOfWork.VillageRepository.GetBycityId(cementViewModel.City).ToList();
+            base.ViewData["Village"] = new System.Web.Mvc.SelectList(varVilages, "Id", "Name", null);
         }
 
         [System.Web.Mvc.HttpPost]
