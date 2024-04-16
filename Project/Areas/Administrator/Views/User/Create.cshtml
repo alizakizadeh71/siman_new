@@ -72,26 +72,34 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                @Html.LabelFor(model => model.creditAmount, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.creditAmount, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.creditAmount)
+                </div>
+            </div>
+
 
 
             @*<div class="form-group" style="font-family:'B Nazanin';font-size:large">
-                @Html.LabelFor(m => m.NationalCode, htmlAttributes: new { @class = "control-label col-md-2 required" })
-                <div class="col-md-10">
-                    @Html.EditorFor(m => m.NationalCode, new
+            @Html.LabelFor(m => m.NationalCode, htmlAttributes: new { @class = "control-label col-md-2 required" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.NationalCode, new
+                       {
+                           htmlAttributes = new
                            {
-                               htmlAttributes = new
-                               {
-                                   @class = "form-control",
-                                   @minlength = "10",
-                                   @maxlength = "10",
-                                   @type = "text",
-                                   @id = "OnlyNumbers",
-                                   @onkeypress = "return AllowNumbersOnly(event)"
-                               }
-                           })
-                    @Html.ValidationMessageFor(m => m.NationalCode, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+                               @class = "form-control",
+                               @minlength = "10",
+                               @maxlength = "10",
+                               @type = "text",
+                               @id = "OnlyNumbers",
+                               @onkeypress = "return AllowNumbersOnly(event)"
+                           }
+                       })
+                @Html.ValidationMessageFor(m => m.NationalCode, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
 
 
@@ -122,12 +130,12 @@
             </div>
 
             @*<div class="form-group">
-                @Html.LabelFor(model => model.IsApprovallicense, new { @class = "col-md-2 control-label" })
-                <div class="col-md-6">
-                    @Html.CheckBoxFor(model => model.IsApprovallicense, new { @class = "form-control col-md-6" })
-                    @Html.ValidationMessageFor(model => model.IsApprovallicense)
-                </div>
-            </div>*@
+            @Html.LabelFor(model => model.IsApprovallicense, new { @class = "col-md-2 control-label" })
+            <div class="col-md-6">
+                @Html.CheckBoxFor(model => model.IsApprovallicense, new { @class = "form-control col-md-6" })
+                @Html.ValidationMessageFor(model => model.IsApprovallicense)
+            </div>
+        </div>*@
 
             <div class="form-group">
                 <div class="col-md-10 col-md-offset-2">
@@ -220,9 +228,24 @@
         });
     };
 
+    function formatCreditAmount() {
+        let input = document.getElementById("creditAmount");
+        let value = input.value;
+        let formattedValue = separateNumbers(value);
+        input.value = formattedValue;
+    }
 
-
-
+    function separateNumbers(inputNumber) {
+        let numberString = inputNumber.toString().replace(/\D/g, ""); // حذف همه کاراکترهای غیرعددی
+        let length = numberString.length;
+        let separatedNumbers = [];
+        let counter = 0;
+        while (length - counter > 0) {
+            separatedNumbers.unshift(numberString.substr(Math.max(length - 3 - counter, 0), Math.min(3, length - counter)));
+            counter += 3;
+        }
+        return separatedNumbers.join(',');
+    }
 
 
 

@@ -47,6 +47,7 @@ namespace OPS.Controllers
             try
             {
                 var oFactorCement = UnitOfWork.FactorCementRepository.GetByinvoicenumber(invoiceNumber).FirstOrDefault();
+                var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
                 oFactorCement.MahalTahvil = MahalTahvil;
                 UnitOfWork.FactorCementRepository.Update(oFactorCement);
 
@@ -54,11 +55,39 @@ namespace OPS.Controllers
                 string amount = string.Empty;
                 if (oFactorCement.MahalTahvil == "Karkhane")
                 {
-                    amount = oFactorCement.AmountPaid.ToString();
+                    if (oFactorCement.AmountPaid > user.creditAmount)
+                    {
+                         amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
+                         user.creditAmount = 0;
+                         UnitOfWork.UserRepository.Update(user);
+                         UnitOfWork.Save();
+                    }
+                    else
+                    {
+                        user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
+                        TempData["Message"] = "مبلغ از طریق موجودی کیف پول شما پرداخت گردید";
+                        UnitOfWork.UserRepository.Update(user);
+                        oFactorCement.FinalApprove = true;
+                        UnitOfWork.FactorCementRepository.Update(oFactorCement);
+                        UnitOfWork.Save();
+                        // Redirect به صفحه مقصد
+                        return RedirectToAction("Index", "HomeMain");
+                    }
+                    //amount = oFactorCement.AmountPaid.ToString();
                 }
                 else if (oFactorCement.MahalTahvil == "Mahal")
                 {
-                    amount = oFactorCement.DestinationAmountPaid.ToString();
+                    if (oFactorCement.AmountPaid > user.creditAmount)
+                    {
+                        amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
+                    }
+                    else
+                    {
+                        user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
+                        TempData["Message"] = "مبلغ از طریق موجودی کیف پول شما پرداخت گردید";
+                        // Redirect به صفحه مقصد
+                        return RedirectToAction("Index", "HomeMain");
+                    }
                 }
                 string authority;
                 string description = oFactorCement.ProductName.Name + " - " + oFactorCement.PackageType.Name + " - " + oFactorCement.FactoryName.Name + " - " + oFactorCement.Tonnage.Name;

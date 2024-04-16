@@ -22,6 +22,46 @@ namespace Resources.ViewModel.Strings {
     public class User {
         
         /// <summary>
+        ///   Looks up a localized string similar to: نشانی
+        /// </summary>
+        public static string Address([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.Address;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("Address", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: احراز هویت
+        /// </summary>
+        public static string Authenticate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.Authenticate;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("Authenticate", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: تاریخ تولد
+        /// </summary>
+        public static string BirthDay([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.BirthDay;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("BirthDay", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: شهر
+        /// </summary>
+        public static string City([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.City;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("City", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: نام و نام خانوادگی
         /// </summary>
         public static string FullName([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -29,6 +69,26 @@ namespace Resources.ViewModel.Strings {
                 return global::Resources.ViewModel.User.FullName;
             }
             return global::Resources.ViewModel.User.ResourceManager.GetString("FullName", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: سریال کارت ملی
+        /// </summary>
+        public static string IdentityCertificateSerial([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.IdentityCertificateSerial;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("IdentityCertificateSerial", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: تصویر
+        /// </summary>
+        public static string Image([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.Image;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("Image", resourceCulture);
         }
         
         /// <summary>
@@ -42,6 +102,26 @@ namespace Resources.ViewModel.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: مجوز تایید پروانه ها
+        /// </summary>
+        public static string IsApprovallicense([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.IsApprovallicense;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("IsApprovallicense", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: کد ملی
+        /// </summary>
+        public static string NationalCode([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.NationalCode;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("NationalCode", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: گذرواژه
         /// </summary>
         public static string Password([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -49,6 +129,16 @@ namespace Resources.ViewModel.Strings {
                 return global::Resources.ViewModel.User.Password;
             }
             return global::Resources.ViewModel.User.ResourceManager.GetString("Password", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: کد پستی محل سکونت
+        /// </summary>
+        public static string PostalCode([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.PostalCode;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("PostalCode", resourceCulture);
         }
         
         /// <summary>
@@ -80,6 +170,16 @@ namespace Resources.ViewModel.Strings {
             }
             return global::Resources.ViewModel.User.ResourceManager.GetString("UserName", resourceCulture);
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: مبلغ اعتبار
+        /// </summary>
+        public static string creditAmount([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.creditAmount;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("creditAmount", resourceCulture);
+        }
     }
 }
 namespace Resources.ViewModel.Strings {
@@ -93,54 +193,54 @@ namespace Resources.ViewModel.Strings {
     public class UserKeys {
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: نام و نام خانوادگی
-        /// </summary>
-        public const string FullName = "FullName";   
-
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: تصویر
-        /// </summary>
-        public const string Image = "Image";  
-
-        /// <summary>
         ///   Provides access to string resource key of value similar to: نشانی
         /// </summary>
-        public const string Address = "Address"; 
-
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: کد پستی محل سکونت
-        /// </summary>
-        public const string PostalCode = "PostalCode";   
-
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: سریال کارت ملی
-        /// </summary>
-        public const string IdentityCertificateSerial = "IdentityCertificateSerial";     
+        public const string Address = "Address";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: کد ملی
+        ///   Provides access to string resource key of value similar to: احراز هویت
         /// </summary>
-        public const string NationalCode = "NationalCode";
-
+        public const string Authenticate = "Authenticate";
+        
         /// <summary>
         ///   Provides access to string resource key of value similar to: تاریخ تولد
         /// </summary>
         public const string BirthDay = "BirthDay";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: شهر
+        /// </summary>
+        public const string City = "City";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نام و نام خانوادگی
+        /// </summary>
+        public const string FullName = "FullName";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: سریال کارت ملی
+        /// </summary>
+        public const string IdentityCertificateSerial = "IdentityCertificateSerial";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: تصویر
+        /// </summary>
+        public const string Image = "Image";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: فعال
         /// </summary>
         public const string IsActive = "IsActive";
-
+        
         /// <summary>
         ///   Provides access to string resource key of value similar to: مجوز تایید پروانه ها
         /// </summary>
         public const string IsApprovallicense = "IsApprovallicense";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: احراز هویت شده
+        ///   Provides access to string resource key of value similar to: کد ملی
         /// </summary>
-        public const string Authenticate = "Authenticate";
+        public const string NationalCode = "NationalCode";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: گذرواژه
@@ -148,14 +248,14 @@ namespace Resources.ViewModel.Strings {
         public const string Password = "Password";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: استان
+        ///   Provides access to string resource key of value similar to: کد پستی محل سکونت
         /// </summary>
-        public const string Province = "Province";     
+        public const string PostalCode = "PostalCode";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: شهر
+        ///   Provides access to string resource key of value similar to: استان
         /// </summary>
-        public const string City = "City";
+        public const string Province = "Province";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: نقش کاربری
@@ -166,5 +266,10 @@ namespace Resources.ViewModel.Strings {
         ///   Provides access to string resource key of value similar to: نام کاربری
         /// </summary>
         public const string UserName = "UserName";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: مبلغ اعتبار
+        /// </summary>
+        public const string creditAmount = "creditAmount";
     }
 }

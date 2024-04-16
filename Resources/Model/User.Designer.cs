@@ -79,6 +79,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مبلغ اعتبار.
+        /// </summary>
+        public static string creditAmount {
+            get {
+                return ResourceManager.GetString("creditAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کاربر های.
         /// </summary>
         public static string EnitiesNameOf {

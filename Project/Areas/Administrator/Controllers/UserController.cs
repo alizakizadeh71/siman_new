@@ -102,6 +102,8 @@ namespace OPS.Areas.Administrator.Controllers
                          Province = current.Province != null ? current.Province.Name : "[نا مشخص]",
                          City = current.City != null ? current.City.Name : "[نا مشخص]",
                          IsActive = current.IsActived,
+                         creditAmount = current.creditAmount,
+                         
                          //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
                      })
@@ -166,6 +168,7 @@ namespace OPS.Areas.Administrator.Controllers
                              Province = current.Province != null ? current.Province.Name : "[نا مشخص]",
                              City = current.City != null ? current.City.Name : "[نا مشخص]",
                              IsActive = current.IsActived,
+                             creditAmount = current.creditAmount,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
@@ -180,6 +183,7 @@ namespace OPS.Areas.Administrator.Controllers
                              Province = current.Province,
                              City = current.City,
                              IsActive = current.IsActive,
+                             creditAmount = current.creditAmount,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
@@ -332,7 +336,9 @@ namespace OPS.Areas.Administrator.Controllers
                     oUser.RoleId = user.Role;
                     oUser.UserName = user.UserName;
                     oUser.NationalCode = user.NationalCode;
+                    oUser.creditAmount = user.creditAmount;
                     oUser.BirthDay = user.BirthDay;
+                    oUser.Authenticate = true;
                     UnitOfWork.UserRepository.Insert(oUser);
                     UnitOfWork.Save();
 
@@ -353,6 +359,11 @@ namespace OPS.Areas.Administrator.Controllers
             }
             else
             {
+                var varRoles
+                = UnitOfWork.RoleRepository.Get()
+                .Where(current => current.Code < Infrastructure.Sessions.AuthenticatedUser.RoleCode)
+                .OrderBy(current => current.Name).ToList();
+                ViewData["Role"] = new System.Web.Mvc.SelectList(varRoles, "Id", "Name", null);
                 ViewBag.PageMessages += "خطا دیتا - دیتا های وارد شده را دوباره بررسی نمایید";
                 ViewBag.PageMessages += "<br/>";
                 return View(user);

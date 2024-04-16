@@ -162,5 +162,13 @@
                 return (User.FullName);
             }
         }
-	}
+
+        public int creditAmount
+        {
+            get
+            {
+                return (User.creditAmount);
+            }
+        }
+    }
 }

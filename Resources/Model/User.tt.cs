@@ -22,6 +22,26 @@ namespace Resources.Model.Strings {
     public class User {
         
         /// <summary>
+        ///   Looks up a localized string similar to: احراز هویت
+        /// </summary>
+        public static string Authenticate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.Authenticate;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("Authenticate", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: شهر
+        /// </summary>
+        public static string City([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.City;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("City", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: کاربر های
         /// </summary>
         public static string EnitiesNameOf([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -80,7 +100,7 @@ namespace Resources.Model.Strings {
             }
             return global::Resources.Model.User.ResourceManager.GetString("IsActive", resourceCulture);
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to: مجوز تایید پروانه ها
         /// </summary>
@@ -150,6 +170,16 @@ namespace Resources.Model.Strings {
             }
             return global::Resources.Model.User.ResourceManager.GetString("UserName", resourceCulture);
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: مبلغ اعتبار
+        /// </summary>
+        public static string creditAmount([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.creditAmount;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("creditAmount", resourceCulture);
+        }
     }
 }
 namespace Resources.Model.Strings {
@@ -161,6 +191,16 @@ namespace Resources.Model.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("SmartStringResources", "1.2.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public class UserKeys {
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: احراز هویت
+        /// </summary>
+        public const string Authenticate = "Authenticate";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: شهر
+        /// </summary>
+        public const string City = "City";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: کاربر های
@@ -198,11 +238,6 @@ namespace Resources.Model.Strings {
         public const string IsApprovallicense = "IsApprovallicense";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: احراز هویت
-        /// </summary>
-        public const string Authenticate = "Authenticate";
-        
-        /// <summary>
         ///   Provides access to string resource key of value similar to: زمان آخرین ورود
         /// </summary>
         public const string LastLoginDateTime = "LastLoginDateTime";
@@ -221,11 +256,6 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: استان
         /// </summary>
         public const string Province = "Province";
-         
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: شهر
-        /// </summary>
-        public const string City = "City";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: نقش کاربری
@@ -236,5 +266,10 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: شناسه کاربری
         /// </summary>
         public const string UserName = "UserName";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: مبلغ اعتبار
+        /// </summary>
+        public const string creditAmount = "creditAmount";
     }
 }

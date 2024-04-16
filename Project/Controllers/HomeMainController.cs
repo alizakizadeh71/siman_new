@@ -17,6 +17,25 @@ namespace OPS.Controllers
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual ActionResult Index()
         {
+            if (TempData["WelcomeMessage"] != null && TempData["Balance"] != null)
+            {
+                ViewBag.WelcomeMessage = TempData["WelcomeMessage"]; // Pass the welcome message to the ViewBag
+                ViewBag.Balance = TempData["Balance"];
+            }
+
+            if (TempData["Message"] != null)
+            {
+                // اگر پیام موجود بود، آن را به ViewData انتقال داده و از آن در صفحه نمایش داده می‌شود
+               ViewBag.Message = TempData["Message"].ToString();
+            }
+            Models.User oUser;
+            if (Infrastructure.Sessions.AuthenticatedUser?.UserName != null)
+            {
+                oUser = UnitOfWork.UserRepository.GetByUserName(Infrastructure.Sessions.AuthenticatedUser.UserName);
+                ViewBag.DisplaycreditAmount = oUser.creditAmount.ToString();
+            }
+
+
             ViewBag.PageMessages = null;
             ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel
             {
@@ -122,7 +141,15 @@ namespace OPS.Controllers
                         //}
                         long AmountPaid = oFinancialManagement.AmountPaid * Tonnage; /// محاسبه مبلغ
                         int LastInvoiceNumber = UnitOfWork.FactorCementRepository.GetLastInvoiceNumber() + 1;
-                        Models.User oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
+                        Models.User oUser;
+                        if (Session.SessionID != null)
+                        {
+                            oUser = UnitOfWork.UserRepository.GetByUserName(Infrastructure.Sessions.AuthenticatedUser.UserName);
+                        }
+                        else
+                        {
+                            oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
+                        }
                         Models.FactorCement oFactorCement = new Models.FactorCement()
                         {
                             ProductNameId = cementViewModel.ProductName,

@@ -125,7 +125,7 @@ namespace OPS.Controllers
                 Models.UserLoginLog oUserLoginLog =
                     new Models.UserLoginLog();
 
-                oUserLoginLog.IP = Request.UserHostAddress;
+                oUserLoginLog.IP = Utilities.Security.Hashing.GetIPAddress();
                 oUserLoginLog.SessionId = Session.SessionID;
                 oUserLoginLog.LoginDateTime = DateTime.Now;
 
@@ -142,7 +142,10 @@ namespace OPS.Controllers
             {
                 return (RedirectToAction(MVC.HomeMain.Authenticate()));
             }
-
+            if (user.RoleId == new Guid("fc397d63-e779-443d-a53b-18900d2f9a10"))
+            {
+                return (RedirectToAction(MVC.HomeMain.Index()));
+            }
             return (RedirectToAction(MVC.HomeMain.Main()));
         }
 

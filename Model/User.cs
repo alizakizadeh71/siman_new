@@ -59,6 +59,7 @@ namespace Models
 
         public string UserName { get; set; }
         public string NationalCode { get; set; }
+        public int creditAmount { get; set; }
         public System.DateTime? BirthDay { get; set; }
 
         public string Password { get; set; }

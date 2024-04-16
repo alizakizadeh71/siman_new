@@ -1,4 +1,6 @@
-﻿namespace Utilities.Security
+﻿using System;
+
+namespace Utilities.Security
 {
 	public static class Hashing
 	{
@@ -173,6 +175,29 @@
 			}
 
 			return (strResult);
+		}
+
+		public static string GetIPAddress()
+		{
+			System.Web.HttpContext context = System.Web.HttpContext.Current;
+			try
+			{
+				string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+				if (!string.IsNullOrEmpty(ipAddress))
+				{
+					string[] addresses = ipAddress.Split(',');
+					if (addresses.Length != 0)
+					{
+						return addresses[0];
+					}
+				}
+				return context.Request.ServerVariables["REMOTE_ADDR"];
+			}
+			catch (Exception)
+			{
+				return context.Request.UserHostAddress;
+			}
 		}
 	}
 }

@@ -79,6 +79,18 @@
             </div>
         }
 
+        <!-- اگر پیامی در ViewData وجود دارد، آن را به عنوان متغیر JavaScript ارسال می‌کنیم -->
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @Html.Raw(ViewBag.Message)
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+
+
         @using (Html.BeginForm("Index", "HomeMain", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
             @Html.AntiForgeryToken()

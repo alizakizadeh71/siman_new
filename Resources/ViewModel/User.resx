@@ -129,6 +129,9 @@
   <data name="City" xml:space="preserve">
     <value>شهر</value>
   </data>
+  <data name="creditAmount" xml:space="preserve">
+    <value>مبلغ اعتبار</value>
+  </data>
   <data name="FullName" xml:space="preserve">
     <value>نام و نام خانوادگی</value>
   </data>
