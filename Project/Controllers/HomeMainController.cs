@@ -17,6 +17,21 @@ namespace OPS.Controllers
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual ActionResult Index()
         {
+            //var provinceIdList = UnitOfWork.ProvinceRepository.Get().Select(x => x.Id).ToList();
+            //foreach (var provinceid in provinceIdList)
+            //{
+            //    var CityIdList = UnitOfWork.CityRepository.GetByProvinceId(provinceid).Select(x => x.Id).ToList();
+            //    foreach (var cityid in CityIdList)
+            //    {
+            //        Models.village village = new Models.village();
+            //        village.ProvinceId = provinceid;
+            //        village.Cityid = cityid;
+            //        village.Name = "مرکزی";
+            //        village.Code = "10";
+            //        UnitOfWork.VillageRepository.Insertdata(village);
+            //    }
+            //}
+
             if (TempData["WelcomeMessage"] != null && TempData["Balance"] != null)
             {
                 ViewBag.WelcomeMessage = TempData["WelcomeMessage"]; // Pass the welcome message to the ViewBag
@@ -26,7 +41,7 @@ namespace OPS.Controllers
             if (TempData["Message"] != null)
             {
                 // اگر پیام موجود بود، آن را به ViewData انتقال داده و از آن در صفحه نمایش داده می‌شود
-               ViewBag.Message = TempData["Message"].ToString();
+                ViewBag.Message = TempData["Message"].ToString();
             }
             Models.User oUser;
             if (Infrastructure.Sessions.AuthenticatedUser?.UserName != null)
