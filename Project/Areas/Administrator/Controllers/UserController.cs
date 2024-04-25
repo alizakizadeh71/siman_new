@@ -395,6 +395,7 @@ namespace OPS.Areas.Administrator.Controllers
                     City = current.City != null ? current.City.Name : "[مشخص نشده]",
                     Role = current.Role.Name,
                     UserName = current.UserName,
+                    creditAmount = current.creditAmount,
                     Active = current.IsActived == true ? "فعال" : "غیر فعال",
                     Approvallicense = current.IsApprovallicense == true ? "دارد" : "ندارد",
                     Authenticate = current.Authenticate == true ? "احراز هویت شده" : "احراز هویت نشده",
@@ -429,6 +430,7 @@ namespace OPS.Areas.Administrator.Controllers
                     Province = current.ProvinceId.Value,
                     City = current.CityId != null ? current.CityId.Value : new Guid(),
                     Role = current.RoleId,
+                    creditAmount = current.creditAmount,
                     UserName = current.UserName,
                     IsActive = current.IsActived,
                     IsApprovallicense = current.IsApprovallicense,
@@ -550,6 +552,7 @@ namespace OPS.Areas.Administrator.Controllers
                     OlderAccount.UserName = user.UserName;
                     OlderAccount.IsActived = user.IsActive;
                     OlderAccount.IsApprovallicense = user.IsApprovallicense;
+                    OlderAccount.creditAmount = user.creditAmount;
                     if (user.Authenticate == false)
                     {
                         OlderAccount.Authenticate = user.Authenticate;

@@ -69,6 +69,13 @@ namespace ViewModels.Areas.Administrator.User
         #endregion
         public bool Authenticate { get; set; }
 
+        #region creditAmount
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.creditAmount)]
+        #endregion
+        public int creditAmount { get; set; }
+
         #region Image
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.ViewModel.User),
