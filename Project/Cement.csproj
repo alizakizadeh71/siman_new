@@ -513,7 +513,6 @@
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Areas\Administrator\Views\Request\EditIVO.cshtml" />
-    <Content Include="App_Data\certficate.p12" />
     <Content Include="Areas\Administrator\Views\ReportBuilder\ExportToExcel.cshtml" />
     <Content Include="Areas\Administrator\Views\ReportBuilder\GetParamReport.cshtml" />
     <Content Include="Areas\Administrator\Views\ReportBuilder\Index.cshtml" />
@@ -522,7 +521,6 @@
     <Content Include="Areas\Administrator\Views\Request\PrintFactor.cshtml" />
     <Content Include="Areas\Administrator\Views\Request\PrintNewFactor.cshtml" />
     <Content Include="Areas\Administrator\Views\CentralBank\Index.cshtml" />
-    <Content Include="App_Data\orgCertBundle.pfx" />
     <Content Include="Areas\Administrator\Views\Financial\Create.cshtml" />
     <Content Include="Areas\Administrator\Views\Financial\Edit.cshtml" />
     <Content Include="Areas\Administrator\Views\Financial\Delete.cshtml" />

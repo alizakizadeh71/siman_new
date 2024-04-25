@@ -80,11 +80,18 @@ namespace OPS.Controllers
                     if (oFactorCement.AmountPaid > user.creditAmount)
                     {
                         amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
+                        user.creditAmount = 0;
+                        UnitOfWork.UserRepository.Update(user);
+                        UnitOfWork.Save();
                     }
                     else
                     {
                         user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
                         TempData["Message"] = "مبلغ از طریق موجودی کیف پول شما پرداخت گردید";
+                        UnitOfWork.UserRepository.Update(user);
+                        oFactorCement.FinalApprove = true;
+                        UnitOfWork.FactorCementRepository.Update(oFactorCement);
+                        UnitOfWork.Save();
                         // Redirect به صفحه مقصد
                         return RedirectToAction("Index", "HomeMain");
                     }
