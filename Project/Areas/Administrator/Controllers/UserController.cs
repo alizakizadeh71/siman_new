@@ -102,8 +102,6 @@ namespace OPS.Areas.Administrator.Controllers
                          Province = current.Province != null ? current.Province.Name : "[نا مشخص]",
                          City = current.City != null ? current.City.Name : "[نا مشخص]",
                          IsActive = current.IsActived,
-                         creditAmount = current.creditAmount,
-                         
                          //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
                      })
@@ -168,7 +166,7 @@ namespace OPS.Areas.Administrator.Controllers
                              Province = current.Province != null ? current.Province.Name : "[نا مشخص]",
                              City = current.City != null ? current.City.Name : "[نا مشخص]",
                              IsActive = current.IsActived,
-                             creditAmount = current.creditAmount,
+                             creditAmount = current.creditAmount.ToString("N0"),
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })

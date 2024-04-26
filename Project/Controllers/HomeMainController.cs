@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Utilities.PersianDate;
+using ViewModels.Areas.Administrator.Cement;
 //using PAPUtilities;
 
 
@@ -17,37 +18,19 @@ namespace OPS.Controllers
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual ActionResult Index()
         {
-            //var provinceIdList = UnitOfWork.ProvinceRepository.Get().Select(x => x.Id).ToList();
-            //foreach (var provinceid in provinceIdList)
-            //{
-            //    var CityIdList = UnitOfWork.CityRepository.GetByProvinceId(provinceid).Select(x => x.Id).ToList();
-            //    foreach (var cityid in CityIdList)
-            //    {
-            //        Models.village village = new Models.village();
-            //        village.ProvinceId = provinceid;
-            //        village.Cityid = cityid;
-            //        village.Name = "مرکزی";
-            //        village.Code = "10";
-            //        UnitOfWork.VillageRepository.Insertdata(village);
-            //    }
-            //}
-
             if (TempData["WelcomeMessage"] != null && TempData["Balance"] != null)
             {
                 ViewBag.WelcomeMessage = TempData["WelcomeMessage"]; // Pass the welcome message to the ViewBag
                 ViewBag.Balance = TempData["Balance"];
             }
 
-            if (TempData["Message"] != null)
-            {
-                // اگر پیام موجود بود، آن را به ViewData انتقال داده و از آن در صفحه نمایش داده می‌شود
-                ViewBag.Message = TempData["Message"].ToString();
-            }
+            ViewBag.Message = "برای محاسبه قیمت و خرید اطلاعات را تکمیل نمایید";
+
             Models.User oUser;
-            if (Infrastructure.Sessions.AuthenticatedUser?.UserName != null)
+            if (Infrastructure.Sessions.AuthenticatedUser?.Id != null && Infrastructure.Sessions.AuthenticatedUser.RoleCode != 1000)
             {
-                oUser = UnitOfWork.UserRepository.GetByUserName(Infrastructure.Sessions.AuthenticatedUser.UserName);
-                ViewBag.DisplaycreditAmount = oUser.creditAmount.ToString();
+                oUser = UnitOfWork.UserRepository.GetById(Infrastructure.Sessions.AuthenticatedUser.Id);
+                ViewBag.DisplaycreditAmount = oUser.FullName + " خوش آمدید. موجودی کیف پول شما برابر است با: " + oUser.creditAmount.ToString("N0") + " ریال. ";
             }
 
 
@@ -115,13 +98,6 @@ namespace OPS.Controllers
                          .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
                          .SingleOrDefault()
                          ;
-                    var varRequest =
-                    UnitOfWork.DestinationManagementRepository.Get()
-                    .Where(x => x.IsActived && !x.IsDeleted)
-                    .Where(current => current.FinancialManagementId == oFinancialManagement.Id)
-                    .Where(current => current.ProvinceId == cementViewModel.Province)
-                    .Where(cuurrent => cuurrent.CityId == cementViewModel.City)
-                    .Select(x => x.DestinationAmountPaid).SingleOrDefault();
 
                     if (oFinancialManagement == null)
                     {
@@ -129,6 +105,14 @@ namespace OPS.Controllers
                     }
                     else
                     {
+                        var varRequest =
+                            UnitOfWork.DestinationManagementRepository.Get()
+                            .Where(x => x.IsActived && !x.IsDeleted)
+                            .Where(current => current.FinancialManagementId == oFinancialManagement.Id)
+                            .Where(current => current.ProvinceId == cementViewModel.Province)
+                            .Where(cuurrent => cuurrent.CityId == cementViewModel.City)
+                            .Select(x => x.DestinationAmountPaid).SingleOrDefault();
+
                         var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
                             .Where(x => x.Id == cementViewModel.Tonnage).FirstOrDefault().Code);
 
@@ -160,6 +144,10 @@ namespace OPS.Controllers
                         if (Infrastructure.Sessions.AuthenticatedUser?.UserName != null)
                         {
                             oUser = UnitOfWork.UserRepository.GetByUserName(Infrastructure.Sessions.AuthenticatedUser.UserName);
+                            if (oUser.creditAmount > 0)
+                            {
+                                ViewBag.DisplaycreditAmount = " پس از ورود به درگاه پرداخت مبلغ اعتبار بصورت خودکار از کیف پول کسر خواهد شد ";
+                            }
                         }
                         else
                         {
@@ -203,6 +191,15 @@ namespace OPS.Controllers
                 ViewBag.PageMessages = " خطا " + ex.Message;
             }
             ViewData(cementViewModel);
+            return View(cementViewModel);
+        }
+
+
+        public virtual ActionResult ShowFactor(int invoicenumber)
+        {
+            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+            var oFactorCement = UnitOfWork.FactorCementRepository.GetByinvoicenumber(invoicenumber).FirstOrDefault();
+            cementViewModel = ZarinpalController.ConvertCementViewModel(oFactorCement);
             return View(cementViewModel);
         }
 

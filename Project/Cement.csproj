@@ -1529,6 +1529,7 @@
     <Content Include="Views\HomeMain\Login.cshtml" />
     <Content Include="Views\Zarinpal\VerifyPayment.cshtml" />
     <Content Include="Views\HomeMain\News.cshtml" />
+    <Content Include="Views\HomeMain\ShowFactor.cshtml" />
     <None Include="Web References\ir.shaparak.sadad\MerchantUtility.disco" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -53,7 +53,7 @@ namespace ViewModels.Areas.Administrator.User
             (ResourceType = typeof(Resources.ViewModel.User),
             Name = Resources.ViewModel.Strings.UserKeys.creditAmount)]
         #endregion
-        public int creditAmount { get; set; }
+        public string creditAmount { get; set; }
 
         #region IsActive
         [System.ComponentModel.DataAnnotations.Display

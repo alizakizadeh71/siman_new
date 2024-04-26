@@ -37,9 +37,14 @@
 
 <div class="row">
     <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
-
-        <h4 class="panel-heading" style="text-align:center">برای محاسبه قیمت و خرید اطلاعات را تکمیل نمایید</h4>
-
+        @if (ViewBag.DisplaycreditAmount != null)
+        {
+            <h4 class="panel-heading" style="text-align:center ; color:forestgreen">@ViewBag.DisplaycreditAmount</h4>
+        }
+        @if (ViewBag.Message != null)
+        {
+            <h4 class="panel-heading" style="text-align:center">@ViewBag.Message</h4>
+        }
 
         @if (ViewBag.Karkhane != null && ViewBag.Karkhane != string.Empty)
         {
@@ -78,18 +83,6 @@
                 </div>
             </div>
         }
-
-        <!-- اگر پیامی در ViewData وجود دارد، آن را به عنوان متغیر JavaScript ارسال می‌کنیم -->
-        @if (ViewBag.Message != null)
-        {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                @Html.Raw(ViewBag.Message)
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        }
-
 
         @using (Html.BeginForm("Index", "HomeMain", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
@@ -152,9 +145,9 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.City, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6" id="DivCityId">
-                    @Html.DropDownListFor(model => model.Province, null,
+                    @Html.DropDownListFor(model => model.City, null,
                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = " onChangecity()" })
-                    @Html.ValidationMessageFor(model => model.Province)
+                    @Html.ValidationMessageFor(model => model.City)
                 </div>
             </div>
 

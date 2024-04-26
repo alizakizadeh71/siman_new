@@ -65,13 +65,12 @@ namespace OPS.Controllers
                     else
                     {
                         user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
-                        TempData["Message"] = "مبلغ از طریق موجودی کیف پول شما پرداخت گردید";
                         UnitOfWork.UserRepository.Update(user);
                         oFactorCement.FinalApprove = true;
                         UnitOfWork.FactorCementRepository.Update(oFactorCement);
                         UnitOfWork.Save();
                         // Redirect به صفحه مقصد
-                        return RedirectToAction("Index", "HomeMain");
+                        return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = oFactorCement.InvoiceNumber });
                     }
                     //amount = oFactorCement.AmountPaid.ToString();
                 }
@@ -87,13 +86,12 @@ namespace OPS.Controllers
                     else
                     {
                         user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
-                        TempData["Message"] = "مبلغ از طریق موجودی کیف پول شما پرداخت گردید";
                         UnitOfWork.UserRepository.Update(user);
                         oFactorCement.FinalApprove = true;
                         UnitOfWork.FactorCementRepository.Update(oFactorCement);
                         UnitOfWork.Save();
                         // Redirect به صفحه مقصد
-                        return RedirectToAction("Index", "HomeMain");
+                        return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = oFactorCement.InvoiceNumber });
                     }
                 }
                 string authority;
@@ -252,7 +250,7 @@ namespace OPS.Controllers
             return View(cementViewModel);
         }
 
-        private static ViewModels.Areas.Administrator.Cement.CementViewModel ConvertCementViewModel(Models.FactorCement oFactorCement)
+        public static ViewModels.Areas.Administrator.Cement.CementViewModel ConvertCementViewModel(Models.FactorCement oFactorCement)
         {
             ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
             cementViewModel.Id = oFactorCement.Id;
