@@ -54,14 +54,15 @@
                     <p style="color:black">
                         لطفا محل تحویل را انتخاب نمایید
                     </p>
-                    @Html.RadioButtonFor(model => model.Description, "M", new { @onclick = "EnablePayment()", @id = "Karkhane" })
+                    @Html.RadioButtonFor(model => model.Description, "M", new {  @id = "Karkhane" , @checked= "checked" })
                     @Html.Raw(ViewBag.Karkhane)
                     <br />
                     @if (ViewBag.Mahal != null)
                     {
-                        @Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
+                        @*@Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
                         @Html.Raw(ViewBag.Mahal)
-                        <br />
+                        <br />*@
+                        @Html.Raw(ViewBag.Mahal)
                     }
 
                 </div>
@@ -71,7 +72,7 @@
                 @Html.Hidden("invoiceNumber", null, new { @class = "form-controle" })
                 @Html.Hidden("MahalTahvil", null, new { @class = "form-controle" })
                 <div style="text-align:center">
-                    <input class="btn btn-success" type="submit" disabled="disabled" id="btnPayment" style="margin-right:7px ; text-align:center" value="پرداخت و دریافت فاکتور" />
+                    <input class="btn btn-success" type="submit" id="btnPayment" style="margin-right:7px ; text-align:center" value="پرداخت و دریافت فاکتور" />
                 </div>
             }
         }
@@ -436,21 +437,21 @@
 
 <script type="text/javascript">
 
-    function EnablePayment() {
-        debugger;
-        var Karkhane = document.getElementById("Karkhane");
-        var Mahal = document.getElementById("Mahal");
-        if (Karkhane.checked == true) {
-            $("#MahalTahvil").val('Karkhane');
-            $('#btnPayment').prop('disabled', false);
-        }
-        else if (Mahal.checked == true) {
-            $("#MahalTahvil").val('Mahal');
-            $('#btnPayment').prop('disabled', false);
-        }
-        else {
-            $('#btnPayment').prop('disabled', 'disabled');
-        }
-    }
+    //function EnablePayment() {
+    //    debugger;
+    //    var Karkhane = document.getElementById("Karkhane");
+    //    var Mahal = document.getElementById("Mahal");
+    //    if (Karkhane.checked == true) {
+    //        $("#MahalTahvil").val('Karkhane');
+    //        $('#btnPayment').prop('disabled', false);
+    //    }
+    //    else if (Mahal.checked == true) {
+    //        $("#MahalTahvil").val('Mahal');
+    //        $('#btnPayment').prop('disabled', false);
+    //    }
+    //    else {
+    //        $('#btnPayment').prop('disabled', 'disabled');
+    //    }
+    //}
 
 </script>

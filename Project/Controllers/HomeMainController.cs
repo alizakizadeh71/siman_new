@@ -180,7 +180,7 @@ namespace OPS.Controllers
                         ViewBag.Karkhane = "تحویل درب کارخانه: " + String.Format("{0:n0}", AmountPaid) + " ریال ";
                         if (oDestinationManagement != null)
                         {
-                            ViewBag.Mahal = "تحویل در محل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال ";
+                            ViewBag.Mahal = "قیمت تقریبی محل تحویل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال ";
                         }
 
                     }
