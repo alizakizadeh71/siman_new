@@ -264,6 +264,14 @@
       <DependentUpon>Certain.tt</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\Inventoryamount.Designer.cs">
+      <DependentUpon>Inventoryamount.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Model\Inventoryamount.tt.cs">
+      <DependentUpon>Inventoryamount.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\village.Designer.cs">
       <DependentUpon>village.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -501,6 +509,11 @@
       <DependentUpon>ExecutableCode.tt</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\Paymentwaitinglist.Designer.cs">
+      <DependentUpon>Paymentwaitinglist.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="ViewModel\IncomeRow.Designer.cs">
       <DependentUpon>IncomeRow.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -509,6 +522,9 @@
     <Compile Include="ViewModel\IncomeRow.tt.cs">
       <DependentUpon>IncomeRow.tt</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\Paymentwaitinglist.tt.cs">
+      <DependentUpon>Paymentwaitinglist.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\SubSystem.Designer.cs">
       <DependentUpon>SubSystem.resx</DependentUpon>
@@ -813,6 +829,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Certain.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Model\Inventoryamount.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Inventoryamount.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model\village.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>village.Designer.cs</LastGenOutput>
@@ -926,6 +946,10 @@
     <EmbeddedResource Include="ViewModel\ExecutableCode.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExecutableCode.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\Paymentwaitinglist.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Paymentwaitinglist.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ViewModel\IncomeRow.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1047,6 +1071,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>village.txt</LastGenOutput>
     </None>
+    <None Include="Model\Inventoryamount.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Inventoryamount.txt</LastGenOutput>
+    </None>
+    <Content Include="Model\Inventoryamount.txt">
+      <DependentUpon>Inventoryamount.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
     <Content Include="Model\village.txt">
       <DependentUpon>village.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1112,6 +1145,15 @@
       <DependentUpon>ExecutableCode.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\Paymentwaitinglist.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Paymentwaitinglist.tt</DependentUpon>
+    </Content>
+    <Content Include="ViewModel\Paymentwaitinglist.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Paymentwaitinglist.txt</LastGenOutput>
     </Content>
     <Content Include="ViewModel\IncomeRow.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

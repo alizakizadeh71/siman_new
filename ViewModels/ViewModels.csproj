@@ -109,6 +109,7 @@
     <Compile Include="Areas\Administrator\IncomeRow\DetailViewModel.cs" />
     <Compile Include="Areas\Administrator\IncomeRow\EditViewModel.cs" />
     <Compile Include="Areas\Administrator\IncomeRow\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\Inventoryamount\InventoryamountViewModel.cs" />
     <Compile Include="Areas\Administrator\ReportGenerator\ReportColumnInfo.cs" />
     <Compile Include="Areas\Administrator\ReportGenerator\ReportingResult.cs" />
     <Compile Include="Areas\Administrator\ReportGenerator\ReportParameter.cs" />

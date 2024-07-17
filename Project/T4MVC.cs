@@ -58,6 +58,7 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.HeadLineController HeadLine = new OPS.Areas.Administrator.Controllers.T4MVC_HeadLineController();
         public OPS.Areas.Administrator.Controllers.HeadOfFactorController HeadOfFactor = new OPS.Areas.Administrator.Controllers.T4MVC_HeadOfFactorController();
         public OPS.Areas.Administrator.Controllers.IncomeRowController IncomeRow = new OPS.Areas.Administrator.Controllers.T4MVC_IncomeRowController();
+        public OPS.Areas.Administrator.Controllers.InventoryamountController Inventoryamount = new OPS.Areas.Administrator.Controllers.T4MVC_InventoryamountController();
         public OPS.Areas.Administrator.Controllers.NewsController News = new OPS.Areas.Administrator.Controllers.T4MVC_NewsController();
         public OPS.Areas.Administrator.Controllers.PackageTypeController PackageType = new OPS.Areas.Administrator.Controllers.T4MVC_PackageTypeController();
         public OPS.Areas.Administrator.Controllers.ProductNameController ProductName = new OPS.Areas.Administrator.Controllers.T4MVC_ProductNameController();

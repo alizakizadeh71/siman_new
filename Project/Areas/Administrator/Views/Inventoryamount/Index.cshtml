@@ -1,0 +1,525 @@
+﻿@model ViewModels.Areas.Administrator.Inventoryamount.InventoryamountViewModel
+@using Utilities.PersianDate
+@{
+    string strTitle =
+        string.Format("{0} {1}",
+        Resources.Action.ListOf,
+        Resources.Model.Request.EntitiesName);
+}
+<style>
+    input#CompanyName {
+        color: gray;
+        padding: 6px 12px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+    // باز شدن در صفحه جدید
+    $(document).on('click', 'a.btn-blank', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        window.open(url, '_blank');
+    });
+
+    function Comma(Num) {
+        Num += '';
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        x = Num.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1))
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        return x1 + x2;
+    }
+
+
+    $(document).ready(function () {
+
+        $('input#CompanyName').val('نام شرکت باید به طور دقیق وارد شود');
+
+        $('#StartDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $('#EndDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $('#PayStartDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $('#PayEndDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $("#SearchPanelHeader").click(function () {
+            $("#SearchPanelBody").toggle(1000);
+        });
+
+        //$("#input#CompanyName").click(function () {
+        //    this.style.color.val('red')
+        //});
+
+        //*********************************
+        var varDataSource =
+            new kendo.data.DataSource({
+
+                pageSize: 10,
+
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                serverAggregates: false,
+
+                transport: {
+                    read: {
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Administrator/Inventoryamount/GetRequests",
+                    },
+                },
+
+                schema: {
+                    data: function (e) {
+                        return (e.Data);
+                    },
+                    total: function (e) {
+                        return (e.Total);
+                    },
+                },
+            });
+
+        //*********************************
+        //*********************************
+        //*********************************
+
+        $("div#grid").kendoGrid({
+            sortable: {
+                mode: "multiple",
+                allowUnsort: true,
+            },
+
+            pageable: {
+                info: true,
+                input: true,
+                refresh: true,
+                numeric: true,
+                buttonCount: 5,
+                previousNext: true,
+                pageSize: [5, 10, 25, 50, 100],
+                messages: {
+                    morePages: "صفحات بیشتر",
+                    page: "شماره صفحه",
+                }
+            },
+
+            groupable: true,
+            filterable: true,
+            scrollable: false,
+            reorderable: true,
+
+            columnMenu: {
+                columns: true,
+                filterable: true,
+                messages: {
+                    lock: "قفل شده",
+                    unlock: "قفل نشده",
+                }
+            },
+
+            navigatable: true,
+            selectable: "multiple row",
+
+            dataSource: varDataSource,
+
+            dataBinding: function () {
+                rowNumber =
+                    (this.dataSource.page() - 1) * this.dataSource.pageSize();
+            },
+
+            // **************************************************
+
+            columns:
+                [
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "20px",
+                        titel: "#",
+                        template: "#= ++rowNumber #",
+                    },
+                    {
+                        title: "جزئیات و اقدامات",
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        width: "10px",
+                        title: "",
+                        template: function (dataItem) {
+
+                            var strTemplate = "";
+
+                            strTemplate +=
+                            ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/Inventoryamount/Delete/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/Delete.png"/></span></a>';
+
+                            strTemplate +=
+                            '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Inventoryamount/Edit/'
+                            + dataItem.Id + '"><img src="../../../Content/Icon/Edit.png"/></span></a>';
+                            return (strTemplate);
+                        },
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Inventoryamount.Inventorytonnage",
+                        field: "@Resources.Model.Strings.InventoryamountKeys.Inventorytonnage",
+                        width: "20px",
+                    },
+                     {
+                        hidden: false,
+                        locked: true,
+                         lockable: true,
+                         title: "@Resources.Model.Inventoryamount.ProductName",
+                         field: "@Resources.Model.Strings.InventoryamountKeys.stringProductName",
+                        width: "20px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Inventoryamount.ProductType",
+                        field: "@Resources.Model.Strings.InventoryamountKeys.stringProductType",
+                        width: "20px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Inventoryamount.PackageType",
+                        field: "@Resources.Model.Strings.InventoryamountKeys.stringPackageType",
+                        width: "20px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Inventoryamount.FactoryName",
+                        field: "@Resources.Model.Strings.InventoryamountKeys.stringFactoryName",
+                        width: "20px",
+                    },
+                    ]
+
+        });
+
+        // **************************************************
+        // **************************************************
+
+        $("button#btnSearch").click(function () {
+            debugger;
+            var varDataSource =
+                new kendo.data.DataSource({
+
+                    pageSize: 10,
+
+                    serverPaging: true,
+                    serverSorting: true,
+                    serverFiltering: true,
+                    serverAggregates: false,
+
+                    transport: {
+                        read: {
+                            type: "POST",
+                            dataType: "json",
+                            url: "/Administrator/Financial/Search",
+                            data: {
+                                AmountPaid: function () {
+                                    return ($("input#AmountPaid").val());
+                                },
+                                InvoiceNumber: function () {
+                                    return ($("input#InvoiceNumber").val());
+                                },
+
+                                ProductName: function () {
+                                    return ($("select#ProductName").val());
+                                },
+
+                                ProductType: function () {
+                                    return ($("select#ProductType").val());
+                                },
+
+                                PackageType: function () {
+                                    return ($("select#PackageType").val());
+                                },
+
+                                FactoryName: function () {
+                                    return ($("select#FactoryName").val());
+                                },
+
+                                StartDate: function () {
+                                    return ($("input#StartDate").val());
+                                },
+                                EndDate: function () {
+                                    return ($("input#EndDate").val());
+                                },
+                                PayStartDate: function () {
+                                    return ($("input#PayStartDate").val());
+                                },
+                                PayEndDate: function () {
+                                    return ($("input#PayEndDate").val());
+                                },
+                                FromAmount: function () {
+                                    var number = $("#FromAmount").val();
+                                    for (var i = 0; i < number.split(',').length; i++) {
+                                        number = number.replace(',', '');
+                                    }
+                                    $("#FromAmount").val(number);
+                                    return (
+                                        $("input#FromAmount").val()
+                                    );
+                                },
+                                ToAmount: function () {
+                                    var number = $("#ToAmount").val();
+                                    for (var i = 0; i < number.split(',').length; i++) {
+                                        number = number.replace(',', '');
+                                    }
+                                    $("#ToAmount").val(number);
+                                    return ($("input#ToAmount").val());
+                                },
+                            },
+                        },
+                    },
+
+                    requestStart: function (e) {
+                        $("button#btnSearch").hide();
+                    },
+
+                    requestEnd: function (e) {
+                        $("button#btnSearch").show();
+                    },
+
+                    schema: {
+                        data: function (e) {
+                            return (e.Data);
+                        },
+                        total: function (e) {
+                            return (e.Total);
+                        },
+                    },
+                });
+
+            // **************************************************
+            // **************************************************
+
+            var varGrid =
+                $('div#grid').data("kendoGrid");
+
+            varGrid.setDataSource(varDataSource);
+        });
+    })
+
+</script>
+
+<section id="Requests" class="form-horizontal" role="form">
+
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="col-md-12 panel-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <div style="float : right;width:49%;">
+                        <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;width:125px;"
+                           href="/Administrator/Inventoryamount/Create/"><span style="float:right;">ثبت میزان موجودی جدید</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
+                    </div>
+                    <div style="float:left;width:49%;">
+                        <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                           href="/HomeMain/Main/" style="float : left;width:150px;">
+                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+                        </a>
+                    </div>
+                </div>
+                <br />
+                <div class="row" style="overflow-y: scroll;">
+                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1100px;">
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    @*<a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.GetData)"
+                           onclick="location.href='@Url.Action("Download", "Request")'">
+                            <span style="float:right;">@Resources.Action.GetData</span><img style="float:left;" src='../../../Content/Icon/Excel.png' />
+                        </a>
+                        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                           href="/HomeMain/Main/" style="float:left;">
+                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+                        </a>*@
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    function onChangeProvince() {
+        $.ajax({
+            url: '/Administrator/HeadOfFactor/GetCities',
+            type: 'post',
+            data: { provinceId: $("#Province").val() },
+            success: function (data) {
+
+                $("#DivCityId").empty();
+
+                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, city) {
+                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivCityId").append(select);
+                $('#City>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
+
+    function onChangeProductName() {
+        $.ajax({
+            url: '/Administrator/Cement/GetProductType',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivProductTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+                $.each(data, function (i, ProductType) {
+                    var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
+                    /// baraye inke avalin id baraye loade Select badi estefade shavad
+                    if (i == 0) {
+                        onChangeProductType(ProductType.Id);
+                    }
+                    select.append(option);
+                })
+
+                $("#DivProductTypeId").append(select);
+                $('#ProductType>option:eq(1)').prop('selected', true);
+            }
+        });
+
+        $.ajax({
+            url: '/Administrator/Cement/GetFactoryName',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivFactoryNameId").empty();
+
+                var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, FactoryName) {
+                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivFactoryNameId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#FactoryName>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
+    function onChangeProductType(ProductTypee) {
+        debugger;
+        if (ProductTypee == undefined) { /// baraye inke dafe aval az loade safhe bekhoone
+            ProductTypee = $("#ProductType").val();
+        }
+        $.ajax({
+            url: '/Administrator/Cement/GetPackageType',
+            type: 'post',
+            data: { ProductTypeId: ProductTypee },
+            success: function (data) {
+
+                $("#DivPackageTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, PackageType) {
+                    var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivPackageTypeId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#PackageType>option:eq(1)').prop('selected', true);
+                onChangePackageType();
+            }
+        });
+    }
+
+    function onChangePackageType() {
+        debugger;
+        $.ajax({
+            url: '/Administrator/Cement/GetTonnage',
+            type: 'post',
+            data: { PackageTypeId: $("#PackageType").val() },
+            success: function (data) {
+
+                $("#DivTonnageId").empty();
+
+                var select = $("<select class='form-control' id='Tonnage' name='Tonnage' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, Tonnage) {
+                    var option = ('<option value="' + Tonnage.Id + '"> ' + Tonnage.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivTonnageId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#Tonnage>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
+</script>

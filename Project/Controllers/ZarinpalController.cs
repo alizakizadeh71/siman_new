@@ -49,6 +49,14 @@ namespace OPS.Controllers
                 var oFactorCement = UnitOfWork.FactorCementRepository.GetByinvoicenumber(invoiceNumber).FirstOrDefault();
                 var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
                 oFactorCement.MahalTahvil = MahalTahvil;
+                var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
+                .Where(x => x.Id == oFactorCement.TonnageId).FirstOrDefault().Code);
+                var InventoryTonnage = UnitOfWork.InventoryamountRepository.Get()
+                    .Where(x => x.ProductNameId == oFactorCement.ProductNameId)
+                    .Where(x => x.ProductTypeId == oFactorCement.ProductTypeId)
+                    .Where(x => x.PackageTypeId == oFactorCement.PackageTypeId)
+                    .Where(x => x.FactoryNameId == oFactorCement.FactoryNameId)
+                    .FirstOrDefault();
                 UnitOfWork.FactorCementRepository.Update(oFactorCement);
 
                 string merchant = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
@@ -59,7 +67,9 @@ namespace OPS.Controllers
                     {
                          amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
                          user.creditAmount = 0;
+                            InventoryTonnage.Inventorytonnage = InventoryTonnage.Inventorytonnage - Tonnage;
                          UnitOfWork.UserRepository.Update(user);
+                        UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
                          UnitOfWork.Save();
                     }
                     else
@@ -67,6 +77,8 @@ namespace OPS.Controllers
                         user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
                         UnitOfWork.UserRepository.Update(user);
                         oFactorCement.FinalApprove = true;
+                        InventoryTonnage.Inventorytonnage = InventoryTonnage.Inventorytonnage - Tonnage;
+                        UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
                         UnitOfWork.FactorCementRepository.Update(oFactorCement);
                         UnitOfWork.Save();
                         // Redirect به صفحه مقصد

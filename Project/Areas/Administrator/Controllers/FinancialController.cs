@@ -411,22 +411,17 @@ namespace OPS.Areas.Administrator.Controllers
                 base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", cementViewModel.FactoryName1).OrderBy(x => x.Text); /// ممتازان کرمان
 
                 // **************************************************
-                OlderAccount.IsDeleted = true;
-                OlderAccount.IsActived = false;
+                OlderAccount.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
+                OlderAccount.ProductNameId = cementViewModel.ProductName1;
+                OlderAccount.ProductTypeId = cementViewModel.ProductType1;
+                OlderAccount.PackageTypeId = cementViewModel.PackageType1;
+                OlderAccount.FactoryNameId = cementViewModel.FactoryName1;
+                OlderAccount.AmountPaid = cementViewModel.AmountPaid;
                 OlderAccount.UpdateDateTime = DateTime.Now;
                 UnitOfWork.FinancialManagementRepository.Update(OlderAccount);
-                // **************************************************
-                Models.FinancialManagement financialManagement = new Models.FinancialManagement();
-                financialManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
-                financialManagement.ProductNameId = cementViewModel.ProductName1;
-                financialManagement.ProductTypeId = cementViewModel.ProductType1;
-                financialManagement.PackageTypeId = cementViewModel.PackageType1;
-                financialManagement.FactoryNameId = cementViewModel.FactoryName1;
-                financialManagement.AmountPaid = cementViewModel.AmountPaid;
-                UnitOfWork.FinancialManagementRepository.Insertdata(financialManagement);
                 UnitOfWork.Save();
 
-                // **************************************************
+                //**************************************************
                 ViewBag.PageMessages = "خدمات درخواستی شما با موفقیت ویرایش گردید  ";
 
                 return View(cementViewModel);

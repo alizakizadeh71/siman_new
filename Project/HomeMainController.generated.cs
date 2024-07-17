@@ -44,6 +44,12 @@ namespace OPS.Controllers
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ShowFactor()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.ShowFactor);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public HomeMainController Actions { get { return MVC.HomeMain; } }
@@ -61,6 +67,7 @@ namespace OPS.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string ShowFactor = "ShowFactor";
             public readonly string Login = "Login";
             public readonly string About = "About";
             public readonly string Contact = "Contact";
@@ -69,13 +76,13 @@ namespace OPS.Controllers
             public readonly string UserGuid = "UserGuid";
             public readonly string Authenticate = "Authenticate";
             public readonly string News = "News";
-            public readonly string Continue_Authenticate = "Continue_Authenticate";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string ShowFactor = "ShowFactor";
             public const string Login = "Login";
             public const string About = "About";
             public const string Contact = "Contact";
@@ -84,7 +91,6 @@ namespace OPS.Controllers
             public const string UserGuid = "UserGuid";
             public const string Authenticate = "Authenticate";
             public const string News = "News";
-            public const string Continue_Authenticate = "Continue_Authenticate";
         }
 
 
@@ -95,6 +101,14 @@ namespace OPS.Controllers
         public class ActionParamsClass_Index
         {
             public readonly string cementViewModel = "cementViewModel";
+        }
+        static readonly ActionParamsClass_ShowFactor s_params_ShowFactor = new ActionParamsClass_ShowFactor();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ShowFactor ShowFactorParams { get { return s_params_ShowFactor; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ShowFactor
+        {
+            public readonly string invoicenumber = "invoicenumber";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -114,6 +128,7 @@ namespace OPS.Controllers
                 public readonly string Login = "Login";
                 public readonly string Main = "Main";
                 public readonly string News = "News";
+                public readonly string ShowFactor = "ShowFactor";
                 public readonly string UserGuid = "UserGuid";
             }
             public readonly string About = "~/Views/HomeMain/About.cshtml";
@@ -124,6 +139,7 @@ namespace OPS.Controllers
             public readonly string Login = "~/Views/HomeMain/Login.cshtml";
             public readonly string Main = "~/Views/HomeMain/Main.cshtml";
             public readonly string News = "~/Views/HomeMain/News.cshtml";
+            public readonly string ShowFactor = "~/Views/HomeMain/ShowFactor.cshtml";
             public readonly string UserGuid = "~/Views/HomeMain/UserGuid.cshtml";
         }
     }
@@ -143,6 +159,13 @@ namespace OPS.Controllers
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cementViewModel", cementViewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ShowFactor(int invoicenumber)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ShowFactor);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "invoicenumber", invoicenumber);
             return callInfo;
         }
 
@@ -191,12 +214,6 @@ namespace OPS.Controllers
         public override System.Web.Mvc.ActionResult News()
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.News);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Continue_Authenticate()
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Continue_Authenticate);
             return callInfo;
         }
 

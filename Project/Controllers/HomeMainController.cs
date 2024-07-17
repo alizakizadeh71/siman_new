@@ -3,10 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Utilities.PersianDate;
 using ViewModels.Areas.Administrator.Cement;
+using System.Web.Routing;
+using OPS.Controllers;
 //using PAPUtilities;
 
 
@@ -32,7 +35,6 @@ namespace OPS.Controllers
                 oUser = UnitOfWork.UserRepository.GetById(Infrastructure.Sessions.AuthenticatedUser.Id);
                 ViewBag.DisplaycreditAmount = oUser.FullName + " خوش آمدید. موجودی کیف پول شما برابر است با: " + oUser.creditAmount.ToString("N0") + " ریال. ";
             }
-
 
             ViewBag.PageMessages = null;
             ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel
@@ -99,9 +101,23 @@ namespace OPS.Controllers
                          .SingleOrDefault()
                          ;
 
+                    var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
+                    .Where(x => x.Id == cementViewModel.Tonnage).FirstOrDefault().Code);
+                    var InventoryTonnage = Convert.ToInt32(UnitOfWork.InventoryamountRepository.Get()
+                        .Where(x => x.ProductNameId == cementViewModel.ProductName)
+                        .Where(x => x.ProductTypeId == cementViewModel.ProductType)
+                        .Where(x => x.PackageTypeId == cementViewModel.PackageType)
+                        .Where(x => x.FactoryNameId == cementViewModel.FactoryName)
+                        .Select(x => x.Inventorytonnage)
+                        .FirstOrDefault());
+
                     if (oFinancialManagement == null)
                     {
                         ViewBag.PageMessages = " قیمت توسط ادمین در سیستم ثبت نشده است ";
+                    }
+                    else if (Tonnage > InventoryTonnage)
+                    {
+                        ViewBag.PageMessages = "ثناژ درخواستی شما در انبار موجود نمی باشد";
                     }
                     else
                     {
@@ -112,9 +128,6 @@ namespace OPS.Controllers
                             .Where(current => current.ProvinceId == cementViewModel.Province)
                             .Where(cuurrent => cuurrent.CityId == cementViewModel.City)
                             .Select(x => x.DestinationAmountPaid).SingleOrDefault();
-
-                        var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
-                            .Where(x => x.Id == cementViewModel.Tonnage).FirstOrDefault().Code);
 
                         long? DestinationAmountPaid = varRequest;
                         var oDestinationManagement =
@@ -173,6 +186,7 @@ namespace OPS.Controllers
                             URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
                             UserId = oUser.Id,
                         };
+
                         oFactorCement.InvoiceNumber = LastInvoiceNumber;
                         UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
                         DestinationAmountPaid = varRequest + AmountPaid;
@@ -262,11 +276,11 @@ namespace OPS.Controllers
             return PartialView(get);
         }
 
-        [System.Web.Mvc.HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.None)]
-        public virtual ActionResult Continue_Authenticate()
-        {
-            return (RedirectToAction(MVC.HomeMain.Main()));
-        }
+        //[System.Web.Mvc.HttpGet]
+        //[Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.None)]
+        //public virtual ActionResult Continue_Authenticate()
+        //{
+        //    return (RedirectToAction(MVC.HomeMain.ActionNames("index")));
+        //}
     }
 }

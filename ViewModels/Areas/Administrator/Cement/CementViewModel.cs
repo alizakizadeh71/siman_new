@@ -116,6 +116,12 @@ namespace ViewModels.Areas.Administrator.Cement
         #endregion
         public Guid City { get; set; }
         public Guid City1 { get; set; }
+        #region Inventorytonnage
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Inventoryamount),
+             Name = Resources.Model.Strings.InventoryamountKeys.Inventorytonnage)]
+        #endregion
+        public Guid InventoryTonnage { get; set; }
 
         #region Village
         [System.ComponentModel.DataAnnotations.Display

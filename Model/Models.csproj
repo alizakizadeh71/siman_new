@@ -120,10 +120,12 @@
     <Compile Include="IncomeRow.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Inventoryamount.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="FactoryName.cs" />
     <Compile Include="News.cs" />
+    <Compile Include="Paymentwaitinglist.cs" />
     <Compile Include="Tonnage.cs" />
     <Compile Include="PackageType.cs" />
     <Compile Include="PaymentDetail.cs" />

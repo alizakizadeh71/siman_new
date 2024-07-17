@@ -60,7 +60,8 @@
         public System.Data.Entity.DbSet<FactoryName> FactoryNames{ get; set; }
         public System.Data.Entity.DbSet<newsweb> News { get; set; }
         public System.Data.Entity.DbSet<village> villages { get; set; }
-
+        public System.Data.Entity.DbSet<Inventoryamount> Inventoryamount { get; set; }
+        public System.Data.Entity.DbSet<Paymentwaitinglist> Paymentwaitinglist { get; set; }
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

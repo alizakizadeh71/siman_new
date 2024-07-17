@@ -9,6 +9,7 @@
         ICommodityInSubSystemRepository CommodityInSubSystemRepository { get; }
         ICommodityRepository CommodityRepository { get; }
         IServiceTariffRepository ServiceTariffRepository { get; }
+        IPaymentwaitinglistRepository PaymentwaitinglistRepository { get; }
         IUnitRepository UnitRepository { get; }
         IBankAccountRepository BankAccountRepository { get; }
         IIncomeRowRepository IncomeRowRepository { get; }
@@ -24,7 +25,7 @@
         IProvinceRepository ProvinceRepository { get; }
         ICityRepository CityRepository { get; }
         ISubSystemRepository SubSystemRepository { get; }
-
+        IInventoryamountRepository InventoryamountRepository { get; }
         IFileRepository FileRepository { get; }
         IErrorLogRepository ErrorLogRepository { get; }
         IMessageRepository MessageRepository { get; }

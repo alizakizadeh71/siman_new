@@ -321,7 +321,33 @@
                 return (_FactoryNameRepository);
             }
         }
-        
+
+        private IInventoryamountRepository _InventoryamountRepository;
+        public IInventoryamountRepository InventoryamountRepository
+        {
+            get
+            {
+                if (_InventoryamountRepository == null)
+                {
+                    _InventoryamountRepository = new InventoryamountRepository(DatabaseContext);
+                }
+                return (_InventoryamountRepository);
+            }
+        }
+
+        private IPaymentwaitinglistRepository _PaymentwaitinglistRepository;
+        public IPaymentwaitinglistRepository PaymentwaitinglistRepository
+        {
+            get
+            {
+                if (_PaymentwaitinglistRepository == null)
+                {
+                    _PaymentwaitinglistRepository = new PaymentwaitinglistRepository(DatabaseContext);
+                }
+                return (_PaymentwaitinglistRepository);
+            }
+        }
+
         private ITonnageRepository _tonnageRepository;
         public ITonnageRepository tonnageRepository
         {

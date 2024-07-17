@@ -126,7 +126,10 @@
     <Compile Include="IDestinationManagementRepository.cs" />
     <Compile Include="IFinancialManagementRepository.cs" />
     <Compile Include="IFactorCementRepository.cs" />
+    <Compile Include="IInventoryamountRepository.cs" />
     <Compile Include="INewsReopsitory.cs" />
+    <Compile Include="InventoryamountRepository.cs" />
+    <Compile Include="IPaymentwaitinglistRepository.cs" />
     <Compile Include="IRequestRepository.cs" />
     <Compile Include="ITonnageRepository.cs" />
     <Compile Include="IPackageTypeRepository.cs" />
@@ -135,6 +138,7 @@
     <Compile Include="IProductNameRepository.cs" />
     <Compile Include="IVillageRepository.cs" />
     <Compile Include="NewsReopsitory.cs" />
+    <Compile Include="PaymentwaitinglistRepository.cs" />
     <Compile Include="TonnageRepository.cs" />
     <Compile Include="PackageTypeRepository.cs" />
     <Compile Include="FactoryNameRepository.cs" />
