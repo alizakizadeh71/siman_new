@@ -37,17 +37,51 @@ namespace OPS.Controllers
             }
 
             ViewBag.PageMessages = null;
-            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel
+
+            var product = UnitOfWork.ProductNameRepository.Get()
+                .Where(x => x.Code == "10")
+                .Select(x => x.Id)
+                .FirstOrDefault();
+
+            var productTypes = UnitOfWork.ProductTypeRepository.Get()
+                .Where(x => x.ProductNameId == product)
+                .Select(x => x.Id)
+                .ToList();
+
+            Guid? productType1 = null;
+            Guid? packageType = null;
+
+            foreach (var item in productTypes)
             {
-                ProductName = new Guid("c26a5f77-5a78-4dd6-9f0a-0b647c9f7195"),
-                ProductType = new Guid("bd25dd8b-7845-4021-b91e-fcfdb7a21649"),
-                PackageType = new Guid("85fe59ba-1eab-47cb-8635-2ce297f3cbb6"),
-                FactoryName = new Guid("4ad543c7-8af2-4832-917b-88d17758a9e1"),
+                packageType = UnitOfWork.PackageTypeRepository.Get()
+                    .Where(x => x.ProductTypeId == item)
+                    .Select(x => x.Id)
+                    .FirstOrDefault();
+
+                if (packageType != Guid.Empty)
+                {
+                    productType1 = item;
+                    break;
+                }
+            }
+
+            var factoryName = UnitOfWork.FactoryNameRepository.Get()
+                .Where(x => x.ProductNameId == product)
+                .Select(x => x.Id)
+                .FirstOrDefault();
+
+            var cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel
+            {
+                ProductName = product,
+                ProductType = productType1.Value,
+                PackageType = packageType.Value,
+                FactoryName = factoryName,
                 Tonnage = new Guid("9133daec-834a-4303-9687-5b08b479ffdf"),
                 Province = new Guid("d803f690-6de8-11e5-8295-c0f8daba7555"),
                 City = new Guid("f8b85020-ad88-4d89-9aa2-0de9e27fd9b1"),
                 Village = new Guid("F4125115-F66B-11EE-87BF-D039573E90CC")
             };
+
             ViewData(cementViewModel);
             return View(cementViewModel);
         }
