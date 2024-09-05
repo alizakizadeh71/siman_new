@@ -51,6 +51,7 @@ namespace OPS.Controllers
 
             Guid? productType1 = null;
             Guid? packageType = null;
+            Guid? Tonnage = null;
 
             foreach (var item in productTypes)
             {
@@ -62,6 +63,7 @@ namespace OPS.Controllers
                 if (packageType != Guid.Empty)
                 {
                     productType1 = item;
+                    Tonnage = UnitOfWork.tonnageRepository.Get().FirstOrDefault(x => x.PackageTypeId == packageType).Id;
                     break;
                 }
             }
@@ -77,7 +79,7 @@ namespace OPS.Controllers
                 ProductType = productType1.Value,
                 PackageType = packageType.Value,
                 FactoryName = factoryName,
-                Tonnage = new Guid("9133daec-834a-4303-9687-5b08b479ffdf"),
+                Tonnage = Tonnage.Value,
                 Province = new Guid("d803f690-6de8-11e5-8295-c0f8daba7555"),
                 City = new Guid("f8b85020-ad88-4d89-9aa2-0de9e27fd9b1"),
                 Village = new Guid("F4125115-F66B-11EE-87BF-D039573E90CC")
