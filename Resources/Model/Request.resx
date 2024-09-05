@@ -336,4 +336,7 @@
   <data name="ImportRecordNumber2" xml:space="preserve">
     <value>شماره درخواست(فوب)</value>
   </data>
+  <data name="RemittanceNumber" xml:space="preserve">
+    <value>شماره حواله</value>
+  </data>
 </root>

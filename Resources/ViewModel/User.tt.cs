@@ -22,7 +22,7 @@ namespace Resources.ViewModel.Strings {
     public class User {
         
         /// <summary>
-        ///   Looks up a localized string similar to: نشانی
+        ///   Looks up a localized string similar to: آدرس
         /// </summary>
         public static string Address([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -49,6 +49,16 @@ namespace Resources.ViewModel.Strings {
                 return global::Resources.ViewModel.User.BirthDay;
             }
             return global::Resources.ViewModel.User.ResourceManager.GetString("BirthDay", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: شماره تماس
+        /// </summary>
+        public static string BuyerMobile([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.BuyerMobile;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("BuyerMobile", resourceCulture);
         }
         
         /// <summary>
@@ -193,7 +203,7 @@ namespace Resources.ViewModel.Strings {
     public class UserKeys {
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: نشانی
+        ///   Provides access to string resource key of value similar to: آدرس
         /// </summary>
         public const string Address = "Address";
         
@@ -206,6 +216,11 @@ namespace Resources.ViewModel.Strings {
         ///   Provides access to string resource key of value similar to: تاریخ تولد
         /// </summary>
         public const string BirthDay = "BirthDay";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: شماره تماس
+        /// </summary>
+        public const string BuyerMobile = "BuyerMobile";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: شهر

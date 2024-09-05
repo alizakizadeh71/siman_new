@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Address" xml:space="preserve">
-    <value>نشانی</value>
+    <value>آدرس</value>
   </data>
   <data name="Authenticate" xml:space="preserve">
     <value>احراز هویت</value>
   </data>
   <data name="BirthDay" xml:space="preserve">
     <value>تاریخ تولد</value>
+  </data>
+  <data name="BuyerMobile" xml:space="preserve">
+    <value>شماره تماس</value>
   </data>
   <data name="City" xml:space="preserve">
     <value>شهر</value>

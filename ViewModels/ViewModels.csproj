@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Account\ChangePasswordViewModel.cs" />
     <Compile Include="Account\LoginViewModel.cs" />
+    <Compile Include="Account\Rechargewallet.cs" />
     <Compile Include="Areas\Administrator\AccountNumberManage\CreateViewModel.cs" />
     <Compile Include="Areas\Administrator\AccountNumberManage\DetailViewModel.cs" />
     <Compile Include="Areas\Administrator\AccountNumberManage\EditViewModel.cs" />

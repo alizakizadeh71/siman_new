@@ -50,6 +50,18 @@ namespace OPS.Areas.Administrator.Controllers
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Search);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Edit()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Delete()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public InventoryamountController Actions { get { return MVC.Administrator.Inventoryamount; } }
@@ -70,6 +82,8 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string GetRequests = "GetRequests";
             public readonly string Search = "Search";
             public readonly string Create = "Create";
+            public readonly string Edit = "Edit";
+            public readonly string Delete = "Delete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -79,6 +93,8 @@ namespace OPS.Areas.Administrator.Controllers
             public const string GetRequests = "GetRequests";
             public const string Search = "Search";
             public const string Create = "Create";
+            public const string Edit = "Edit";
+            public const string Delete = "Delete";
         }
 
 
@@ -98,6 +114,24 @@ namespace OPS.Areas.Administrator.Controllers
         {
             public readonly string ViewModel = "ViewModel";
         }
+        static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Edit
+        {
+            public readonly string id = "id";
+            public readonly string InventoryamountViewModel = "InventoryamountViewModel";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete
+        {
+            public readonly string id = "id";
+            public readonly string InventoryamountViewModel = "InventoryamountViewModel";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -109,9 +143,13 @@ namespace OPS.Areas.Administrator.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Create = "Create";
+                public readonly string Delete = "Delete";
+                public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
             public readonly string Create = "~/Areas/Administrator/Views/Inventoryamount/Create.cshtml";
+            public readonly string Delete = "~/Areas/Administrator/Views/Inventoryamount/Delete.cshtml";
+            public readonly string Edit = "~/Areas/Administrator/Views/Inventoryamount/Edit.cshtml";
             public readonly string Index = "~/Areas/Administrator/Views/Inventoryamount/Index.cshtml";
         }
     }
@@ -150,6 +188,34 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "ViewModel", ViewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Edit(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.Inventoryamount.InventoryamountViewModel InventoryamountViewModel)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "InventoryamountViewModel", InventoryamountViewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Delete(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Delete(ViewModels.Areas.Administrator.Inventoryamount.InventoryamountViewModel InventoryamountViewModel)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "InventoryamountViewModel", InventoryamountViewModel);
             return callInfo;
         }
 

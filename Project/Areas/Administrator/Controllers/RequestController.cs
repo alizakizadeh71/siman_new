@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OPS.ir.shaparak.sadad;
+using ViewModels.Areas.Administrator.Cement;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -126,7 +127,7 @@ namespace OPS.Areas.Administrator.Controllers
                 Search = true;
             }
 
-            
+
             if (viewModel?.Province != null && viewModel.Province != Guid.Empty)
             {
                 varRequest = varRequest.Where(x => x.ProvinceId == viewModel.Province);
@@ -198,6 +199,7 @@ namespace OPS.Areas.Administrator.Controllers
                             StringProvince = current.Province.Name,
                             StringCity = current.City.Name,
                             BuyerMobile = current.BuyerMobile,
+                            RemittanceNumber = current.RemittanceNumber,
                             //FinalApprove = current.FinalApprove,
                             stringFinalApprove = current.FinalApprove == true ? "نهایی شده" : "نهایی نشده",
                             AmountPaid = current.MahalTahvil == "Karkhane" ? current.AmountPaid : current.MahalTahvil == "Mahal" ? current.DestinationAmountPaid.Value : 0,
@@ -334,7 +336,7 @@ namespace OPS.Areas.Administrator.Controllers
 
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
-        public virtual ActionResult Edit(Guid id)
+        public virtual ActionResult Display(Guid id)
         {
             try
             {
@@ -376,6 +378,82 @@ namespace OPS.Areas.Administrator.Controllers
             {
                 Utilities.Net.LogHandler.Report(GetType(), null, ex);
                 return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
+            }
+        }
+
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
+        public virtual ActionResult Edit(Guid id)
+        {
+            CementViewModel CementViewModel
+            = UnitOfWork.FactorCementRepository.Get()
+            .Where(current => current.Id == id)
+            .ToList()
+            .Select(current => new CementViewModel()
+            {
+                Id = current.Id,
+                InvoiceNumber = current.InvoiceNumber,
+                StringProductName = current.ProductName.Name,
+                StringProductType = current.ProductType.Name,
+                StringPackageType = current.PackageType.Name,
+                StringFactoryName = current.FactoryName.Name,
+                StringTonnage = current.Tonnage.Name,
+                StringProvince = current.Province.Name,
+                StringCity = current.City.Name,
+                BuyerMobile = current.BuyerMobile,
+                AmountPaid = current.MahalTahvil == "Karkhane" ? current.AmountPaid : current.MahalTahvil == "Mahal" ? current.DestinationAmountPaid.Value : 0,
+                MahalTahvil = current.MahalTahvil == "Karkhane" ? "درب کارخانه" : current.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ",
+                StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
+                Description = current.Description,
+                RemittanceNumber = current.RemittanceNumber
+            })
+            .FirstOrDefault();
+
+
+            ViewBag.PageMessages = null;
+
+            return (View(CementViewModel));
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
+        public virtual System.Web.Mvc.ActionResult Edit(CementViewModel cementViewModel)
+        {
+            ViewBag.PageMessages = null;
+
+            try
+            {
+                var OlderAccount =
+                    UnitOfWork.FactorCementRepository
+                    .Get()
+                    .Where(current => current.Id == cementViewModel.Id)
+                    .FirstOrDefault()
+                    ;
+                // **************************************************
+                OlderAccount.InvoiceNumber = cementViewModel.InvoiceNumber;
+                OlderAccount.ProductName.Name = cementViewModel.StringProductName;
+                OlderAccount.ProductType.Name = cementViewModel.StringProductType;
+                OlderAccount.PackageType.Name = cementViewModel.StringPackageType;
+                OlderAccount.FactoryName.Name = cementViewModel.StringFactoryName;
+                OlderAccount.Tonnage.Name = cementViewModel.StringTonnage;
+                OlderAccount.Province.Name = cementViewModel.StringProvince;
+                OlderAccount.City.Name = cementViewModel.StringCity;
+                OlderAccount.BuyerMobile = cementViewModel.BuyerMobile;
+                OlderAccount.AmountPaid = cementViewModel.AmountPaid;
+                OlderAccount.MahalTahvil = cementViewModel.MahalTahvil;
+                OlderAccount.RemittanceNumber = cementViewModel.RemittanceNumber;
+                OlderAccount.UpdateDateTime = DateTime.Now;
+                UnitOfWork.FactorCementRepository.Update(OlderAccount);
+                UnitOfWork.Save();
+
+                // **************************************************
+                ViewBag.PageMessages = "خدمات درخواستی شما با موفقیت ویرایش گردید  ";
+                return View(cementViewModel);
+            }
+
+            catch (Exception ex)
+            {
+                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
             }
         }
 
@@ -899,498 +977,6 @@ namespace OPS.Areas.Administrator.Controllers
                 return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
             }
         }
-
-        [System.Web.Mvc.HttpPost]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
-        public virtual System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.Request.EditViewModel request, string submit)
-        {
-            try
-            {
-                var asaasas = submit;
-                ViewBag.PageMessages = null;
-                string RetMessage = string.Empty;
-                DAL.UnitOfWork UnitOfWork = new DAL.UnitOfWork();
-                Models.Request oRequestNew = null;
-
-                var oRequest =
-                    UnitOfWork.RequestRepository.GetById(request.Id)
-                    ;
-
-                switch (submit)
-                {
-                    case "اعلام نواقصی":
-                        {
-                            Infrastructure.WebServiceClass oWebServiceClass = new Infrastructure.WebServiceClass();
-
-                            #region Change State in OPS
-                            oRequest.RequestState = (int)Enums.RequestStates.Incomplete;
-                            UnitOfWork.RequestRepository.Update(oRequest);
-                            RetMessage = " اعلام نواقصی در سیستم پرداخت ثبت شد.";
-                            RetMessage += "<br/>";
-                            #endregion
-
-                            #region Chage State in IVO By Webservice
-                            //if (!(oRequest.SubSystemId == new Guid("c3001c61-fc9b-11ea-9f5e-0050568d5b96") || oRequest.SubSystemId == new Guid("c3002c61-fc9b-11ea-9f5e-0050568d5b96"))) // اگر خالف پروانه ها یا گواهی حق ثبت بود
-                            //{
-                            //    RetMessage += oWebServiceClass.Insert_Incomplete(oRequest.RecordNumber, request.SystemMessage);
-                            //}
-                            #endregion
-
-                            #region Insert New Message
-                            Models.Message oMessage = new Models.Message();
-                            oMessage.UserId = Infrastructure.Sessions.AuthenticatedUser.Id;
-                            oMessage.LastState = oRequest.RequestState;
-                            oMessage.MessageText = Resources.Message.Request.Message_Incomplete + " - " + request.SystemMessage;
-                            oMessage.NewState = (int)Enums.RequestStates.Incomplete;
-                            oMessage.RequestId = oRequest.Id;
-                            UnitOfWork.MessageRepository.Insert(oMessage);
-                            #endregion
-
-                            UnitOfWork.Save();
-
-                            #region Refresh View
-                            ViewBag.PageMessages = RetMessage;
-
-                            var oNewRequest =
-                              UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                              .Where(current => current.InvoiceNumber == oRequest.InvoiceNumber)
-                              .ToList()
-                              .Select(current => new ViewModels.Areas.Administrator.Request.EditViewModel()
-                              {
-                                  Id = current.Id,
-                                  SubSystem = current.SubSystem.Name,
-                                  CompanyName = current.CompanyName,
-                                  CompanyNationalCode = current.CompanyNationalCode,
-                                  RecordNumber = current.RecordNumber,
-                                  RecordDate = current.RecordDate,
-                                  InvoiceNumber = current.InvoiceNumber,
-                                  InvoiceDate = new Infrastructure.Calander(current.InvoiceDate).Persion(),
-                                  CurrencyValue = current.CurrencyValue,
-                                  CurrencyRation = current.CurrencyRation,
-                                  BaseCurrencyValue = current.BaseCurrencyValue.ToString(),
-                                  AmountPaid = current.AmountPaid,
-                                  RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, current.RequestState),
-                                  RequestStateCode = current.RequestState,
-                                  Bank_TraceNo = current.Bank_TraceNo,
-                                  Bank_ShamsiDate = current.Bank_ShamsiDate,
-                                  SystemMessage = string.Empty
-                              })
-                              .FirstOrDefault();
-
-                            if (oNewRequest == null)
-                            {
-                                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-                            }
-                            ViewBag.MessageList = UnitOfWork.MessageRepository.MetMessageByRequestId(oNewRequest.Id);
-
-                            return View(oNewRequest);
-                            #endregion
-                        }
-                    case "لغو تایید پرداخت":
-                        {
-                            #region Change State in OPS
-                            oRequest.RequestState = (int)Enums.RequestStates.InitialRequet;
-                            UnitOfWork.RequestRepository.Update(oRequest);
-                            RetMessage = " لغو تایید پرداخت در سیستم پرداخت ثبت شد.";
-                            RetMessage += "<br/>";
-                            #endregion
-
-                            #region Insert New Message
-                            Models.Message oMessage = new Models.Message();
-                            oMessage.UserId = Infrastructure.Sessions.AuthenticatedUser.Id;
-                            oMessage.LastState = oRequest.RequestState;
-                            oMessage.MessageText = " لغو تایید پرداخت انجام شد " + " - " + request.SystemMessage;
-                            oMessage.NewState = (int)Enums.RequestStates.InitialRequet;
-                            oMessage.RequestId = oRequest.Id;
-                            UnitOfWork.MessageRepository.Insert(oMessage);
-                            #endregion
-
-                            UnitOfWork.Save();
-
-                            #region Refresh View
-                            ViewBag.PageMessages = RetMessage;
-
-                            var oNewRequest =
-                              UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                              .Where(current => current.RecordNumber == oRequest.RecordNumber)
-                              .ToList()
-                              .Select(current => new ViewModels.Areas.Administrator.Request.EditViewModel()
-                              {
-                                  Id = current.Id,
-                                  SubSystem = current.SubSystem.Name,
-                                  CompanyName = current.CompanyName,
-                                  CompanyNationalCode = current.CompanyNationalCode,
-                                  RecordNumber = current.RecordNumber,
-                                  RecordDate = current.RecordDate,
-                                  InvoiceNumber = current.InvoiceNumber,
-                                  InvoiceDate = new Infrastructure.Calander(current.InvoiceDate).Persion(),
-                                  CurrencyValue = current.CurrencyValue,
-                                  CurrencyRation = current.CurrencyRation,
-                                  BaseCurrencyValue = current.BaseCurrencyValue.ToString(),
-                                  AmountPaid = current.AmountPaid,
-                                  RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, current.RequestState),
-                                  RequestStateCode = current.RequestState,
-                                  Bank_TraceNo = current.Bank_TraceNo,
-                                  Bank_ShamsiDate = current.Bank_ShamsiDate,
-                                  SystemMessage = string.Empty
-                              })
-                              .FirstOrDefault();
-
-                            if (oNewRequest == null)
-                            {
-                                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-                            }
-                            ViewBag.MessageList = UnitOfWork.MessageRepository.MetMessageByRequestId(oNewRequest.Id);
-
-                            return View(oNewRequest);
-                            #endregion
-                        }
-                    case "لغو دستور پرداخت":
-                        {
-                            #region Change State in OPS
-                            oRequest.RequestState = (int)Enums.RequestStates.InitialRequet;
-                            UnitOfWork.RequestRepository.Update(oRequest);
-                            RetMessage = " لغو دستور پرداخت در سیستم پرداخت ثبت شد.";
-                            RetMessage += "<br/>";
-                            #endregion
-
-                            #region Insert New Message
-                            Models.Message oMessage = new Models.Message();
-                            oMessage.UserId = Infrastructure.Sessions.AuthenticatedUser.Id;
-                            oMessage.LastState = oRequest.RequestState;
-                            oMessage.MessageText = " لغو دستور پرداخت انجام شد " + " - " + request.SystemMessage;
-                            oMessage.NewState = (int)Enums.RequestStates.InitialRequet;
-                            oMessage.RequestId = oRequest.Id;
-                            UnitOfWork.MessageRepository.Insert(oMessage);
-                            #endregion
-
-                            UnitOfWork.Save();
-
-                            #region Refresh View
-                            ViewBag.PageMessages = RetMessage;
-
-                            var oNewRequest =
-                              UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                              .Where(current => current.RecordNumber == oRequest.RecordNumber)
-                              .ToList()
-                              .Select(current => new ViewModels.Areas.Administrator.Request.EditViewModel()
-                              {
-                                  Id = current.Id,
-                                  SubSystem = current.SubSystem.Name,
-                                  CompanyName = current.CompanyName,
-                                  CompanyNationalCode = current.CompanyNationalCode,
-                                  RecordNumber = current.RecordNumber,
-                                  RecordDate = current.RecordDate,
-                                  InvoiceNumber = current.InvoiceNumber,
-                                  InvoiceDate = new Infrastructure.Calander(current.InvoiceDate).Persion(),
-                                  CurrencyValue = current.CurrencyValue,
-                                  CurrencyRation = current.CurrencyRation,
-                                  BaseCurrencyValue = current.BaseCurrencyValue.ToString(),
-                                  AmountPaid = current.AmountPaid,
-                                  RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, current.RequestState),
-                                  RequestStateCode = current.RequestState,
-                                  Bank_TraceNo = current.Bank_TraceNo,
-                                  Bank_ShamsiDate = current.Bank_ShamsiDate,
-                                  SystemMessage = string.Empty
-                              })
-                              .FirstOrDefault();
-
-                            if (oNewRequest == null)
-                            {
-                                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-                            }
-                            ViewBag.MessageList = UnitOfWork.MessageRepository.MetMessageByRequestId(oNewRequest.Id);
-
-                            return View(oNewRequest);
-                            #endregion
-                        }
-                    case "استعلام مجدد":
-                        {
-                            #region استعلام مجدد
-                            var oAccountNumber =
-                                UnitOfWork.AccountNumberManageRepository.Get()
-                                .Where(current => current.ProvinceId == oRequest.ProvinceId)
-                                .Where(current => current.SubSystemId == oRequest.SubSystemId)
-                                .FirstOrDefault()
-                                .AccountNumber
-                                ;
-
-                            OPS.ir.shaparak.sadad.CheckStatusResult _AppStatusCode
-                                = oMerchantUtility.GetRequestStatusResult
-                                (oRequest.InvoiceNumber, oAccountNumber.MerchantId
-                                , oAccountNumber.Terminal, oAccountNumber.TranKey
-                                , oRequest.Bank_RequestKey, oRequest.AmountPaid)
-                                ;
-
-                            DateTime ddddd = DateTime.Now;
-
-                            try
-                            {
-                                ddddd = Convert.ToDateTime(_AppStatusCode.RealTransactionDateTime);
-                            }
-
-                            catch (Exception ex)
-                            {
-                            }
-
-                            oRequest.AmountPaidDate = DateTime.Now;
-                            oRequest.Bank_AppStatus = _AppStatusCode.AppStatus;
-                            oRequest.Bank_AppStatusCode = _AppStatusCode.AppStatusCode;
-                            oRequest.Bank_AppStatusDescription = _AppStatusCode.AppStatusDescription;
-                            oRequest.Bank_BankReciptNumber = _AppStatusCode.BankReciptNumber;
-                            oRequest.Bank_CardHolderAccNumber = _AppStatusCode.CardHolderAccNumber;
-                            oRequest.Bank_CardHolderName = _AppStatusCode.CardHolderName;
-                            oRequest.Bank_CustomerCardNumber = _AppStatusCode.CustomerCardNumber;
-                            oRequest.Bank_FailCode = _AppStatusCode.FailCode;
-                            oRequest.Bank_NewlyCommitted = _AppStatusCode.NewlyCommitted;
-                            oRequest.Bank_RealTransactionDateTime = DateTime.Now;
-                            oRequest.Bank_RefrenceNumber = _AppStatusCode.RefrenceNumber;
-                            oRequest.Bank_ResponseCode = _AppStatusCode.ResponseCode;
-                            oRequest.Bank_ShamsiDate = _AppStatusCode.ShamsiDate;
-                            oRequest.Bank_TraceNo = _AppStatusCode.TraceNo;
-                            oRequest.Bank_Terminal = oAccountNumber.Terminal;
-                            oRequest.Bank_MerchantId = oAccountNumber.MerchantId;
-                            oRequest.UpdateDateTime = DateTime.Now;
-
-                            if (_AppStatusCode.AppStatusCode == 0 && _AppStatusCode.AppStatusDescription == "COMMIT")
-                            {
-                                #region Insert PaymentMessage
-                                Models.Message oMessageP = new Models.Message();
-                                oMessageP.UserId = oRequest.UserId;
-                                oMessageP.LastState = oRequest.RequestState;
-                                oMessageP.MessageText = Resources.Message.Request.Message_Paymented;
-                                oMessageP.NewState = (int)Enums.RequestStates.Payment;
-                                oMessageP.RequestId = oRequest.Id;
-                                UnitOfWork.MessageRepository.Insert(oMessageP);
-                                #endregion
-
-                                if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Drug_Import && oRequest.CurrencyCode == (int)Enums.CurrencyUnits.Rails)
-                                    oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-
-                                else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Drug_Import && oRequest.CurrencyCode != (int)Enums.CurrencyUnits.Rails)
-                                    oRequest.RequestState = (int)Enums.RequestStates.Payment;
-
-                                else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Drug_Clearance)
-                                    oRequest.RequestState = (int)Enums.RequestStates.Payment;
-
-                                else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Certificate)
-                                    oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-
-                                else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Lims)
-                                    oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-
-                                else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Quarantine_Import)
-                                    oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-
-                                else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Quarantine_Clearance)
-                                    oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-
-                                else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Quarantine_Export)
-                                    oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-
-                                else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Quarantine_Internal)
-                                    oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-
-                                else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Quarantine_Transit)
-                                    oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-
-                                if (oRequest.RequestState > (int)Enums.RequestStates.Payment)
-                                {
-                                    #region Insert Payment Confirm Message
-                                    Models.Message oMessage = new Models.Message();
-                                    oMessage.UserId = oRequest.UserId;
-                                    oMessage.LastState = (int)Enums.RequestStates.Payment;
-                                    oMessage.MessageText = Resources.Message.Request.Message_PaymentConfirmation + " - " + request.SystemMessage;
-                                    oMessage.NewState = (int)Enums.RequestStates.PaymentConfirmation;
-                                    oMessage.RequestId = oRequest.Id;
-                                    UnitOfWork.MessageRepository.Insert(oMessage);
-                                    #endregion
-                                }
-                            }
-
-                            else
-                            {
-                                #region Insert Not Payment Message
-                                Models.Message oMessage = new Models.Message();
-                                oMessage.UserId = oRequest.UserId;
-                                oMessage.LastState = oRequest.RequestState;
-                                oMessage.MessageText = Resources.Message.Request.Message_NoPaymented + " - " + request.SystemMessage;
-                                oMessage.NewState = (int)Enums.RequestStates.PaymentOrder;
-                                oMessage.RequestId = oRequest.Id;
-                                UnitOfWork.MessageRepository.Insert(oMessage);
-                                #endregion
-
-                                oRequest.RequestState = (int)Enums.RequestStates.PaymentOrder;
-                            }
-
-                            string LogValue = string.Empty;
-                            LogValue += Environment.NewLine;
-                            LogValue += "AmountPaidDate" + oRequest.AmountPaidDate;
-                            LogValue += "*********************************";
-                            LogValue += Environment.NewLine;
-                            LogValue += "Bank_RealTransactionDateTime" + oRequest.Bank_RealTransactionDateTime;
-                            LogValue += "*********************************";
-                            LogValue += Environment.NewLine;
-                            LogValue += "InsertDateTime" + oRequest.InsertDateTime;
-                            LogValue += "*********************************";
-                            LogValue += Environment.NewLine;
-                            LogValue += "InvoiceDate" + oRequest.InvoiceDate;
-                            LogValue += "*********************************";
-                            LogValue += Environment.NewLine;
-                            LogValue += "UpdateDateTime" + oRequest.UpdateDateTime;
-                            LogValue += "*********************************";
-
-                            Utilities.Net.LogHandler.LogToFile(LogValue);
-
-                            UnitOfWork.RequestRepository.Update(oRequest);
-                            UnitOfWork.Save();
-
-                            #endregion 
-                            #region Refresh View
-                            ViewBag.PageMessages = RetMessage;
-
-                            var oNewRequest =
-                              UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                              .Where(current => current.RecordNumber == oRequest.RecordNumber)
-                              .ToList()
-                              .Select(current => new ViewModels.Areas.Administrator.Request.EditViewModel()
-                              {
-                                  Id = current.Id,
-                                  SubSystem = current.SubSystem.Name,
-                                  CompanyName = current.CompanyName,
-                                  CompanyNationalCode = current.CompanyNationalCode,
-                                  RecordNumber = current.RecordNumber,
-                                  RecordDate = current.RecordDate,
-                                  InvoiceNumber = current.InvoiceNumber,
-                                  InvoiceDate = new Infrastructure.Calander(current.InvoiceDate).Persion(),
-                                  CurrencyValue = current.CurrencyValue,
-                                  CurrencyRation = current.CurrencyRation,
-                                  BaseCurrencyValue = current.BaseCurrencyValue.ToString(),
-                                  AmountPaid = current.AmountPaid,
-                                  RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, current.RequestState),
-                                  RequestStateCode = current.RequestState,
-                                  Bank_TraceNo = current.Bank_TraceNo,
-                                  Bank_ShamsiDate = current.Bank_ShamsiDate,
-                                  SystemMessage = string.Empty
-                              })
-                              .FirstOrDefault();
-
-                            if (oNewRequest == null)
-                            {
-                                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-                            }
-                            ViewBag.MessageList = UnitOfWork.MessageRepository.MetMessageByRequestId(oNewRequest.Id);
-
-                            return View(oNewRequest);
-                            #endregion
-                        }
-
-                    default:
-                        {
-                            #region Change State in OPS
-
-                            var vv = request.DepositNumber;
-
-                            switch (oRequest.RequestState)
-                            {
-                                case -1:
-                                case 0:
-                                case 1:
-                                    {
-                                        oRequest.RequestState = 1;
-                                        UnitOfWork.RequestRepository.Update(oRequest);
-                                        ViewBag.PageMessages += " دستور پرداخت برای این درخواست در سیستم ثبت شد.";
-
-
-                                        #region Insert New Message
-                                        Models.Message oMessage = new Models.Message();
-                                        oMessage.UserId = Infrastructure.Sessions.AuthenticatedUser.Id;
-                                        oMessage.LastState = oRequest.RequestState;
-                                        oMessage.MessageText = Resources.Message.Request.Message_PaymentOrder + " - " + request.SystemMessage;
-                                        oMessage.NewState = (int)Enums.RequestStates.PaymentOrder;
-                                        oMessage.RequestId = oRequest.Id;
-                                        oMessage.UserIPAddress = Request.UserHostAddress;
-                                        oMessage.Browser = Request.Browser.Type; // مدل و ورژن مرورگر
-                                        UnitOfWork.MessageRepository.Insert(oMessage);
-                                        #endregion
-
-                                        UnitOfWork.Save();
-
-                                        break;
-                                    }
-
-                                case 2:
-                                case 3:
-                                    {
-                                        oRequest.RequestState = 3;
-                                        UnitOfWork.RequestRepository.Update(oRequest);
-                                        ViewBag.PageMessages += " تایید پرداخت برای این درخواست در سیستم ثبت شد.";
-
-                                        #region Insert New Message
-                                        Models.Message oMessage = new Models.Message();
-                                        oMessage.UserId = Infrastructure.Sessions.AuthenticatedUser.Id;
-                                        oMessage.LastState = oRequest.RequestState;
-                                        oMessage.MessageText = Resources.Message.Request.Message_PaymentConfirmation + " - " + request.SystemMessage;
-                                        oMessage.NewState = (int)Enums.RequestStates.PaymentConfirmation;
-                                        oMessage.RequestId = oRequest.Id;
-                                        UnitOfWork.MessageRepository.Insert(oMessage);
-                                        #endregion
-
-                                        UnitOfWork.Save();
-
-                                        break;
-
-                                    }
-                            }
-                            #endregion
-
-                            #region Refresh View
-                            var oCurrency = UnitOfWork.CurrencyUnitRepository.GetByCode(oRequest.CurrencyCode);
-
-                            var oNewRequest =
-                             UnitOfWork.RequestRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                             .Where(current => current.Id == oRequest.Id)
-                             .ToList()
-                             .Select(current => new ViewModels.Areas.Administrator.Request.EditViewModel()
-                             {
-                                 Id = current.Id,
-                                 SubSystem = current.SubSystem.Name,
-                                 CompanyName = current.CompanyName,
-                                 CompanyNationalCode = current.CompanyNationalCode,
-                                 RecordNumber = current.RecordNumber,
-                                 RecordDate = current.RecordDate,
-                                 InvoiceNumber = current.InvoiceNumber,
-                                 InvoiceDate = new Infrastructure.Calander(current.InvoiceDate).Persion(),
-                                 CurrencyValue = current.CurrencyValue,
-                                 CurrencyRation = current.CurrencyRation,
-                                 BaseCurrencyValue = (current.BaseCurrencyValue ?? (current.CurrencyValue * current.CurrencyRation)) + " " + oCurrency.Name,
-                                 AmountPaid = current.AmountPaid,
-                                 RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, current.RequestState),
-                                 RequestStateCode = current.RequestState,
-                                 Bank_TraceNo = current.Bank_TraceNo,
-                                 Bank_ShamsiDate = current.Bank_ShamsiDate
-                             })
-                             .FirstOrDefault();
-
-                            if (oNewRequest == null)
-                            {
-                                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-                            }
-                            ViewBag.MessageList = UnitOfWork.MessageRepository.MetMessageByRequestId(oNewRequest.Id);
-
-                            return View(oNewRequest);
-                            #endregion
-                        }
-                }
-            }
-
-            catch (Exception ex)
-            {
-                Utilities.Net.LogHandler.Report(GetType(), null, ex);
-                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
-            }
-        }
-
 
         [System.Web.Mvc.HttpPost]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
@@ -1924,6 +1510,8 @@ namespace OPS.Areas.Administrator.Controllers
                 cementViewModel.StringFactoryName = factorCement.FactoryName.Name;
                 cementViewModel.StringTonnage = factorCement.Tonnage.Name;
                 cementViewModel.AmountPaid = factorCement.AmountPaid;
+                cementViewModel.Address = factorCement.Address;
+                cementViewModel.RemittanceNumber = factorCement.RemittanceNumber;
                 cementViewModel.DestinationAmountPaid = factorCement.DestinationAmountPaid != null ? factorCement.DestinationAmountPaid.Value : 0;
                 cementViewModel.MahalTahvil = factorCement.MahalTahvil == "Karkhane" ? "درب کارخانه" : factorCement.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ";
                 cementViewModel.ref_id = factorCement.ref_id.ToString();

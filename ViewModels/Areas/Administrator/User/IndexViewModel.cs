@@ -68,6 +68,19 @@ namespace ViewModels.Areas.Administrator.User
         #endregion
         public bool IsApprovallicense { get; set; }
 
+        #region BuyerMobile
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.BuyerMobile)]
+        #endregion
+        public string BuyerMobile { get; set; }
+        #region Address
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.Address)]
+        #endregion
+        public string Address { get; set; }
+
 
         #region IsApprovallicense
         [System.ComponentModel.DataAnnotations.Display

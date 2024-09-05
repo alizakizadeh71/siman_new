@@ -56,6 +56,7 @@
                         <td>@Html.DisplayNameFor(model => model.BuyerMobile)</td>
                         <td class="BorderStyle">استان</td>
                         <td>شهرستان</td>
+                        <td class="BorderStyle">ادرس</td>
                     </tr>
                     <tr class="BorderStyle">
                         <td>@Html.DisplayFor(model => model.BuyerName)</td>
@@ -63,6 +64,7 @@
                         <td>@Html.DisplayFor(model => model.BuyerMobile)</td>
                         <td class="BorderStyle">@Html.DisplayFor(model => model.StringProvince)</td>
                         <td>@Html.DisplayFor(model => model.StringCity)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.Address)</td>
                     </tr>
                 </table>
                 <br />
@@ -102,6 +104,7 @@
                         }
                         <td class="BorderStyle">شماره تراكنش</td>
                         <td>شماره کارت خریدار</td>
+                        <td class="BorderStyle">@Html.DisplayNameFor(model => model.RemittanceNumber)</td>
                     </tr>
                     <tr class="BorderStyle">
                         <td class="BorderStyle">@Html.DisplayFor(model => model.MahalTahvil)</td>
@@ -115,6 +118,7 @@
                         }
                         <td class="BorderStyle">@Html.DisplayFor(model => model.ref_id)</td>
                         <td>@Html.DisplayFor(model => model.card_pan)</td>
+                        <td class="BorderStyle">@Html.DisplayFor(x => x.RemittanceNumber)</td>
                     </tr>
                 </table>
                 <br />
@@ -128,6 +132,27 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var addressCell = document.getElementById('addressCell');
+            var addressText = addressCell.textContent.trim();
+            var words = addressText.split(' ');
+            var formattedText = '';
+            var lineLength = 0;
+
+            for (var i = 0; i < words.length; i++) {
+                if (lineLength + words[i].length + 1 > 50) {
+                    formattedText += '<br>';
+                    lineLength = 0;
+                }
+                formattedText += words[i] + ' ';
+                lineLength += words[i].length + 1;
+            }
+
+            addressCell.innerHTML = formattedText.trim();
+        });
+    </script>
 }
 
 

@@ -365,7 +365,12 @@ namespace Models
         public int? Tariffs { get; set; }
 
         public string LicenseNumber { get; set; }
-
+        #region RemittanceNumber
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.RemittanceNumber)]
+        #endregion
+        public string RemittanceNumber { get; set; }
         public System.DateTime? LicenseDate { get; set; }
 
         #region Bank Data Filed

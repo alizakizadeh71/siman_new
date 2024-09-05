@@ -102,6 +102,8 @@ namespace OPS.Areas.Administrator.Controllers
                          Province = current.Province != null ? current.Province.Name : "[نا مشخص]",
                          City = current.City != null ? current.City.Name : "[نا مشخص]",
                          IsActive = current.IsActived,
+                         Address = current.Address,
+                         BuyerMobile = current.BuyerMobile,
                          //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
                      })
@@ -116,6 +118,8 @@ namespace OPS.Areas.Administrator.Controllers
                          Province = current.Province,
                          City = current.City,
                          IsActive = current.IsActive,
+                         BuyerMobile = current.BuyerMobile,
+                         Address = current.Address,
                          //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
                      })
@@ -167,6 +171,8 @@ namespace OPS.Areas.Administrator.Controllers
                              City = current.City != null ? current.City.Name : "[نا مشخص]",
                              IsActive = current.IsActived,
                              creditAmount = current.creditAmount.ToString("N0"),
+                             BuyerMobile = current.BuyerMobile,
+                             Address = current.Address,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
@@ -182,6 +188,8 @@ namespace OPS.Areas.Administrator.Controllers
                              City = current.City,
                              IsActive = current.IsActive,
                              creditAmount = current.creditAmount,
+                             BuyerMobile = current.BuyerMobile,
+                             Address = current.Address,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
@@ -550,6 +558,8 @@ namespace OPS.Areas.Administrator.Controllers
                     OlderAccount.UserName = user.UserName;
                     OlderAccount.IsActived = user.IsActive;
                     OlderAccount.IsApprovallicense = user.IsApprovallicense;
+                    OlderAccount.Address = user.Address;
+                    OlderAccount.BuyerMobile = user.BuyerMobile;
                     OlderAccount.creditAmount = user.creditAmount;
                     if (user.Authenticate == false)
                     {

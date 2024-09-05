@@ -1,0 +1,21 @@
+﻿@model ViewModels.Account.Rechargewallet
+@{
+    ViewBag.Title = "Rechargewallet";
+}
+
+@using (Html.BeginForm("Rechargewallet", "HomeMain", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.Chargeamount, new { @class = "col-md-3 control-label" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(model => model.Chargeamount, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Chargeamount)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10 col-md-offset-2">
+            <input type="submit" value="@Resources.Buttons.Create" class="btn btn-primary" />
+        </div>
+    </div>
+}
+

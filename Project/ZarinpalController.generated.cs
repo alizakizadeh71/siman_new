@@ -50,6 +50,12 @@ namespace OPS.Controllers
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Payment);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Paymentwallet()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Paymentwallet);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ZarinpalController Actions { get { return MVC.Zarinpal; } }
@@ -68,6 +74,8 @@ namespace OPS.Controllers
         {
             public readonly string Payment = "Payment";
             public readonly string VerifyPayment = "VerifyPayment";
+            public readonly string Paymentwallet = "Paymentwallet";
+            public readonly string VerifyPaymentWallet = "VerifyPaymentWallet";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -75,6 +83,8 @@ namespace OPS.Controllers
         {
             public const string Payment = "Payment";
             public const string VerifyPayment = "VerifyPayment";
+            public const string Paymentwallet = "Paymentwallet";
+            public const string VerifyPaymentWallet = "VerifyPaymentWallet";
         }
 
 
@@ -87,6 +97,15 @@ namespace OPS.Controllers
             public readonly string invoiceNumber = "invoiceNumber";
             public readonly string MahalTahvil = "MahalTahvil";
         }
+        static readonly ActionParamsClass_Paymentwallet s_params_Paymentwallet = new ActionParamsClass_Paymentwallet();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Paymentwallet PaymentwalletParams { get { return s_params_Paymentwallet; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Paymentwallet
+        {
+            public readonly string Chargeamount = "Chargeamount";
+            public readonly string invoiceNumber = "invoiceNumber";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -98,8 +117,10 @@ namespace OPS.Controllers
             public class _ViewNamesClass
             {
                 public readonly string VerifyPayment = "VerifyPayment";
+                public readonly string VerifyPaymentWallet = "VerifyPaymentWallet";
             }
             public readonly string VerifyPayment = "~/Views/Zarinpal/VerifyPayment.cshtml";
+            public readonly string VerifyPaymentWallet = "~/Views/Zarinpal/VerifyPaymentWallet.cshtml";
         }
     }
 
@@ -119,6 +140,20 @@ namespace OPS.Controllers
         public override System.Web.Mvc.ActionResult VerifyPayment()
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.VerifyPayment);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Paymentwallet(int Chargeamount, int invoiceNumber)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Paymentwallet);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Chargeamount", Chargeamount);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "invoiceNumber", invoiceNumber);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult VerifyPaymentWallet()
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.VerifyPaymentWallet);
             return callInfo;
         }
 

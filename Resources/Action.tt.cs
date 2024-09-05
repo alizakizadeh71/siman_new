@@ -192,7 +192,17 @@ namespace Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to: تماس با ما
+        ///   Looks up a localized string similar to: مبلغ اعتبار
+        /// </summary>
+        public static string Chargeamount([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Action.Chargeamount;
+            }
+            return global::Resources.Action.ResourceManager.GetString("Chargeamount", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: پشتیبانی
         /// </summary>
         public static string Contact([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -1944,7 +1954,12 @@ namespace Resources.Strings {
         public const string ChangePassword = "ChangePassword";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: تماس با ما
+        ///   Provides access to string resource key of value similar to: مبلغ اعتبار
+        /// </summary>
+        public const string Chargeamount = "Chargeamount";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: پشتیبانی
         /// </summary>
         public const string Contact = "Contact";
         

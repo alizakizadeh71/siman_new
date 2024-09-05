@@ -251,8 +251,12 @@ namespace Models
              Name = Resources.Model.Strings.CementKeys.DestinationAmountPaid)]
         #endregion
         public long? DestinationAmountPaid { get; set; }
-
-
+        #region RemittanceNumber
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.RemittanceNumber)]
+        #endregion
+        public string RemittanceNumber { get; set; }
 
         public virtual System.Collections.Generic.IList<File> Files { get; set; }
         public virtual System.Collections.Generic.IList<Message> Messages { get; set; }

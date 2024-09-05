@@ -58,6 +58,12 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Display()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Display);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Edit()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
@@ -142,6 +148,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string GetRequests = "GetRequests";
             public readonly string Search = "Search";
             public readonly string DetailsInvoiceNumber = "DetailsInvoiceNumber";
+            public readonly string Display = "Display";
             public readonly string Edit = "Edit";
             public readonly string EditIVO = "EditIVO";
             public readonly string GetTransactionReportByPageNumber = "GetTransactionReportByPageNumber";
@@ -163,6 +170,7 @@ namespace OPS.Areas.Administrator.Controllers
             public const string GetRequests = "GetRequests";
             public const string Search = "Search";
             public const string DetailsInvoiceNumber = "DetailsInvoiceNumber";
+            public const string Display = "Display";
             public const string Edit = "Edit";
             public const string EditIVO = "EditIVO";
             public const string GetTransactionReportByPageNumber = "GetTransactionReportByPageNumber";
@@ -194,6 +202,14 @@ namespace OPS.Areas.Administrator.Controllers
         {
             public readonly string id = "id";
         }
+        static readonly ActionParamsClass_Display s_params_Display = new ActionParamsClass_Display();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Display DisplayParams { get { return s_params_Display; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Display
+        {
+            public readonly string id = "id";
+        }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
@@ -201,8 +217,7 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string id = "id";
-            public readonly string request = "request";
-            public readonly string submit = "submit";
+            public readonly string cementViewModel = "cementViewModel";
         }
         static readonly ActionParamsClass_EditIVO s_params_EditIVO = new ActionParamsClass_EditIVO();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -299,6 +314,7 @@ namespace OPS.Areas.Administrator.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string display = "display";
                 public readonly string Edit = "Edit";
                 public readonly string EditIVO = "EditIVO";
                 public readonly string Incomplete = "Incomplete";
@@ -309,6 +325,7 @@ namespace OPS.Areas.Administrator.Controllers
                 public readonly string PrintNewFactor = "PrintNewFactor";
                 public readonly string UpAmountPaid = "UpAmountPaid";
             }
+            public readonly string display = "~/Areas/Administrator/Views/Request/display.cshtml";
             public readonly string Edit = "~/Areas/Administrator/Views/Request/Edit.cshtml";
             public readonly string EditIVO = "~/Areas/Administrator/Views/Request/EditIVO.cshtml";
             public readonly string Incomplete = "~/Areas/Administrator/Views/Request/Incomplete.cshtml";
@@ -352,10 +369,24 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
+        public override System.Web.Mvc.ActionResult Display(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Display);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Edit(System.Guid id)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "cementViewModel", cementViewModel);
             return callInfo;
         }
 
@@ -393,14 +424,6 @@ namespace OPS.Areas.Administrator.Controllers
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Incomplete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "RecordNumber", RecordNumber);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "SystemMessage", SystemMessage);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.Request.EditViewModel request, string submit)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "request", request);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "submit", submit);
             return callInfo;
         }
 

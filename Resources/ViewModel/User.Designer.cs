@@ -61,7 +61,7 @@ namespace Resources.ViewModel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to نشانی.
+        ///   Looks up a localized string similar to آدرس.
         /// </summary>
         public static string Address {
             get {
@@ -84,6 +84,15 @@ namespace Resources.ViewModel {
         public static string BirthDay {
             get {
                 return ResourceManager.GetString("BirthDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره تماس.
+        /// </summary>
+        public static string BuyerMobile {
+            get {
+                return ResourceManager.GetString("BuyerMobile", resourceCulture);
             }
         }
         

@@ -61,11 +61,29 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آدرس.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to احراز هویت.
         /// </summary>
         public static string Authenticate {
             get {
                 return ResourceManager.GetString("Authenticate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره تماس.
+        /// </summary>
+        public static string BuyerMobile {
+            get {
+                return ResourceManager.GetString("BuyerMobile", resourceCulture);
             }
         }
         

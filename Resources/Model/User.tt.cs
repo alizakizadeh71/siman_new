@@ -22,6 +22,16 @@ namespace Resources.Model.Strings {
     public class User {
         
         /// <summary>
+        ///   Looks up a localized string similar to: آدرس
+        /// </summary>
+        public static string Address([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.Address;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("Address", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: احراز هویت
         /// </summary>
         public static string Authenticate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -29,6 +39,16 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.User.Authenticate;
             }
             return global::Resources.Model.User.ResourceManager.GetString("Authenticate", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: شماره تماس
+        /// </summary>
+        public static string BuyerMobile([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.BuyerMobile;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("BuyerMobile", resourceCulture);
         }
         
         /// <summary>
@@ -193,9 +213,19 @@ namespace Resources.Model.Strings {
     public class UserKeys {
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: آدرس
+        /// </summary>
+        public const string Address = "Address";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: احراز هویت
         /// </summary>
         public const string Authenticate = "Authenticate";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: شماره تماس
+        /// </summary>
+        public const string BuyerMobile = "BuyerMobile";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: شهر

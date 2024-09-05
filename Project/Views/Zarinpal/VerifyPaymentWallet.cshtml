@@ -1,5 +1,4 @@
 ﻿
-
 @model ViewModels.Areas.Administrator.Cement.CementViewModel
 
 @{
@@ -33,7 +32,7 @@
                 <div class="panel-heading ">
                     <center style="text-align:center">
                         <b3>
-                            فاکتور خرید مصالح ساختمانی
+                            فاکتور افزایش موجودی کیف پول
                             <hr />
                             شماره فاکتور : @Html.DisplayFor(model => model.InvoiceNumber)
                             <hr />
@@ -52,71 +51,26 @@
                             <td>نام شرکت/شخص</td>
                             <td class="BorderStyle">شناسه ملی/کد ملی</td>
                             <td>@Html.DisplayNameFor(model => model.BuyerMobile)</td>
-                            <td class="BorderStyle">استان</td>
-                            <td>شهرستان</td>
-                            <td class="BorderStyle">ادرس</td>
                         </tr>
                         <tr class="BorderStyle">
                             <td>@Html.DisplayFor(model => model.BuyerName)</td>
                             <td class="BorderStyle">@Html.DisplayFor(model => model.BuyerNationalCode)</td>
                             <td>@Html.DisplayFor(model => model.BuyerMobile)</td>
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.StringProvince)</td>
-                            <td>@Html.DisplayFor(model => model.StringCity)</td>
-                            <td class="BorderStyle" id="addressCell">@Html.DisplayFor(model => model.Address)</td>
                         </tr>
                     </table>
                     <br />
-                    <table class="col-md-12 BorderStyle" align="center">
-                        <caption style="background-color: lightblue;" class="BorderStyle">
-                            <span>اطلاعات کالا</span>
-                        </caption>
-                        <tr class="BorderStyle">
-                            <td>@Html.DisplayNameFor(model => model.ProductName)</td>
-                            <td class="BorderStyle">@Html.DisplayNameFor(model => model.ProductType)</td>
-                            <td>@Html.DisplayNameFor(model => model.PackageType)</td>
-                            <td class="BorderStyle">@Html.DisplayNameFor(model => model.FactoryName)</td>
-                            <td>@Html.DisplayNameFor(model => model.Tonnage)</td>
-                        </tr>
-                        <tr class="BorderStyle">
-                            <td>@Html.DisplayFor(model => model.StringProductName)</td>
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.StringProductType)</td>
-                            <td>@Html.DisplayFor(model => model.StringPackageType)</td>
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.StringFactoryName)</td>
-                            <td>@Html.DisplayFor(model => model.StringTonnage)</td>
-                        </tr>
-                    </table>
                     <br />
                     <table class="col-md-12 BorderStyle" align="center">
                         <caption style="background-color: lightblue;" class="BorderStyle">
                             <span>اطلاعات پرداخت</span>
                         </caption>
                         <tr class="BorderStyle">
-                            <td class="BorderStyle">محل تحویل</td>
-                            @if (Model.MahalTahvil == "درب کارخانه")
-                            {
-                                <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
-                            }
-                            else if (Model.MahalTahvil == "مقصد خریدار")
-                            {
-                                <td>@Html.DisplayNameFor(model => model.DestinationAmountPaid)</td>
-                            }
                             <td class="BorderStyle">شماره تراكنش</td>
                             <td>شماره کارت خریدار</td>
-                            <td class="BorderStyle">@Html.DisplayNameFor(model => model.RemittanceNumber)</td>
                         </tr>
                         <tr class="BorderStyle">
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.MahalTahvil)</td>
-                            @if (Model.MahalTahvil == "درب کارخانه")
-                            {
-                                <td>@Html.DisplayFor(model => model.AmountPaid)</td>
-                            }
-                            else if (Model.MahalTahvil == "مقصد خریدار")
-                            {
-                                <td>@Html.DisplayFor(model => model.DestinationAmountPaid)</td>
-                            }
                             <td class="BorderStyle">@Html.DisplayFor(model => model.ref_id)</td>
                             <td>@Html.DisplayFor(model => model.card_pan)</td>
-                            <td class="BorderStyle">@Html.DisplayFor(x => x.RemittanceNumber)</td>
                         </tr>
                     </table>
                     <br />
@@ -148,26 +102,6 @@
             </center>
         }
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var addressCell = document.getElementById('addressCell');
-            var addressText = addressCell.textContent.trim();
-            var words = addressText.split(' ');
-            var formattedText = '';
-            var lineLength = 0;
-
-            for (var i = 0; i < words.length; i++) {
-                if (lineLength + words[i].length + 1 > 50) {
-                    formattedText += '<br>';
-                    lineLength = 0;
-                }
-                formattedText += words[i] + ' ';
-                lineLength += words[i].length + 1;
-            }
-
-            addressCell.innerHTML = formattedText.trim();
-        });
-    </script>
 }
 
 

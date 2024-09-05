@@ -171,6 +171,9 @@
   <data name="Province" xml:space="preserve">
     <value>استان تخلیه</value>
   </data>
+  <data name="RemittanceNumber" xml:space="preserve">
+    <value>شماره حواله</value>
+  </data>
   <data name="startDateNews" xml:space="preserve">
     <value>تاریخ شروع </value>
   </data>
@@ -218,6 +221,9 @@
   </data>
   <data name="Tonnage" xml:space="preserve">
     <value>تناژ</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>نام کاربری</value>
   </data>
   <data name="Village" xml:space="preserve">
     <value>بخش تخلیه</value>

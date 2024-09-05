@@ -262,9 +262,19 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.FinalApprove)]
         #endregion
         public string stringFinalApprove { get; set; }
-
-
+        #region RemittanceNumber
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.RemittanceNumber)]
+        #endregion
+        public string RemittanceNumber { get; set; }
         public Guid FinancialManagementId { get; set; }
+        #region UserName
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.UserName)]
+        #endregion
+        public string UserName { get; set; }
 
     }
 }

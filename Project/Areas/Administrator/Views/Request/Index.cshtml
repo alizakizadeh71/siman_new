@@ -191,8 +191,12 @@
                             var strTemplate = "";
 
                             strTemplate +=
-                                '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/Request/Edit/'
-                            + dataItem.Id + '"><img class="k-icon" src="../../../Content/Icon/display.png"/></span></a>';
+                                '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/Request/display/'
+                                + dataItem.Id + '"><img class="k-icon" src="../../../Content/Icon/display.png"/></span></a>';
+
+                                 strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Request/Edit/'
+                                + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a> | ';
                             @*if (dataItem.RequestState_Value <2 && (@Infrastructure.Sessions.AuthenticatedUser.RoleCode==800|| @Infrastructure.Sessions.AuthenticatedUser.RoleCode==1000))
                             {
                                     strTemplate +=
@@ -208,6 +212,14 @@
                         lockable: true,
                         title: "@Resources.Model.Cement.InvoiceNumber",
                         field: "@Resources.Model.Strings.CementKeys.InvoiceNumber",
+                        width: "20px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.Cement.RemittanceNumber",
+                        field: "@Resources.Model.Strings.CementKeys.RemittanceNumber",
                         width: "20px",
                     },
                     {

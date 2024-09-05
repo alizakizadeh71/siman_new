@@ -153,6 +153,7 @@
     <Compile Include="User.cs" />
     <Compile Include="UserLoginLog.cs" />
     <Compile Include="village.cs" />
+    <Compile Include="walletFactor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

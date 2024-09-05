@@ -223,6 +223,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شماره حواله.
+        /// </summary>
+        public static string RemittanceNumber {
+            get {
+                return ResourceManager.GetString("RemittanceNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تاریخ شروع .
         /// </summary>
         public static string startDateNews {
@@ -363,6 +372,15 @@ namespace Resources.Model {
         public static string Tonnage {
             get {
                 return ResourceManager.GetString("Tonnage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام کاربری.
+        /// </summary>
+        public static string UserName {
+            get {
+                return ResourceManager.GetString("UserName", resourceCulture);
             }
         }
         

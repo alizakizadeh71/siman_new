@@ -35,6 +35,7 @@ public static class MVC
     public static OPS.Controllers.PaymentController Payment = new OPS.Controllers.T4MVC_PaymentController();
     public static OPS.Controllers.ZarinpalController Zarinpal = new OPS.Controllers.T4MVC_ZarinpalController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
+    public static T4MVC.WalletController Wallet = new T4MVC.WalletController();
 }
 
 namespace T4MVC

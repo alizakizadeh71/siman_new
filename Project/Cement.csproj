@@ -134,7 +134,7 @@
     <Content Include="Areas\Administrator\Views\IncomeRow\Detail.cshtml" />
     <Content Include="Areas\Administrator\Views\IncomeRow\Edit.cshtml" />
     <Content Include="Areas\Administrator\Views\IncomeRow\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Request\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\display.cshtml" />
     <Content Include="Areas\Administrator\Views\Request\Incomplete.cshtml" />
     <Content Include="Areas\Administrator\Views\Request\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\Request\PaymentReport.cshtml" />
@@ -584,6 +584,7 @@
     <Content Include="Areas\Administrator\Views\Inventoryamount\Create.cshtml" />
     <Content Include="Areas\Administrator\Views\Inventoryamount\Edit.cshtml" />
     <Content Include="Areas\Administrator\Views\Inventoryamount\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\Edit.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">
@@ -1534,6 +1535,8 @@
     <Content Include="Views\Zarinpal\VerifyPayment.cshtml" />
     <Content Include="Views\HomeMain\News.cshtml" />
     <Content Include="Views\HomeMain\ShowFactor.cshtml" />
+    <Content Include="Views\HomeMain\Rechargewallet.cshtml" />
+    <Content Include="Views\Zarinpal\VerifyPaymentWallet.cshtml" />
     <None Include="Web References\ir.shaparak.sadad\MerchantUtility.disco" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1862,6 +1865,9 @@
     <Compile Include="User.SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="WalletController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Web References\ir.shaparak.sadad\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1898,6 +1904,7 @@
     <Folder Include="Areas\User\Controllers\" />
     <Folder Include="Files\Old\" />
     <Folder Include="Files\PersonImage\" />
+    <Folder Include="Views\Wallet\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

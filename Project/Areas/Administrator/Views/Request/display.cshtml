@@ -1,0 +1,291 @@
+﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
+@{
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+
+    bool? IsApprovallicense = ViewBag.IsApprovallicense;
+    bool? IsFaVA = ViewBag.IsFaVA;
+}
+
+
+<script type="text/javascript">
+    @*=> دستگاه کارتخوان => *@
+    $(document).ready(function () {
+
+        $("#btnSendToPosId").click(function () {
+            SendToPos();
+        });
+
+        $("#PaymentInquiryId").click(function () {
+            debugger;
+            var btn = document.getElementById("PaymentInquiryId");
+                btn.innerHTML = "لطفا صبر کنید";
+            $('#PaymentInquiryId').attr('disabled', true);
+            PaymentInquiry();
+        });
+
+        $('#Bank_ShamsiDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+    })
+    @*<= دستگاه کارتخوان <= *@
+
+
+    function ViewFile() {
+        $.ajax({
+            url: '/Administrator/Request/ViewFiles',
+            type: 'post',
+            data: { Id: $("#Id").val() },
+            success: function (data) {
+                $("#ModalFooter ul").empty();
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].FileAddress.toLowerCase().indexOf(".pdf") >= 0) {
+                        $("#ModalFooter ul").append('<li class="col-md-3"><a href="javascript:;" onclick="ViewMasterFile(\'' + data[i].FileAddress + '\')" class="thumbnail"><img src="' + data[i].FileAddress + '" alt="' + data[i].Name + '"></a></li>')
+                    }
+
+                    else {
+                        $("#ModalFooter ul").append('<li class="col-md-3"><a href="javascript:;" onclick="ViewMasterFile(\'' + data[i].FileAddress + '\')" class="thumbnail"><img src="' + data[i].FileAddress + '" alt="' + data[i].Name + '"></a></li>')
+                    }
+                }
+            }
+        });
+    }
+
+
+    function PaymentInquiry() {
+        debugger;
+            $.ajax({
+                url: '/Administrator/CentralBank/PaymentInquiry/',
+                type: 'Get',
+                data: { Id: @Model.InvoiceNumber},
+                success: function (result) {
+                    debugger;
+            if (result.success == true) {
+                alert(result.Message);
+                location.reload();
+            }
+            else {
+                alert('خطا');
+            }
+        }
+    })
+
+    }
+
+    @*=> دستگاه کارتخوان => *@
+
+    //sendToPos
+    @*function SendToPos() {
+
+
+        var req_params = {};
+        req_params.PR = "000000";
+
+
+        req_params.AM = ["PECSingleAmount", @Model.AmountPaid];
+                req_params.SV = '@Model.DepositNumber'.substr(0, 15);
+                req_params.SG = '@Model.DepositNumber'.substr(15, 15);
+
+
+        req_params.CU = "364";
+        req_params.R1 = "";
+        req_params.R2 = "";
+        req_params.T1 = '@Model.CompanyName';
+        req_params.T2 = "";
+        req_params.AD = "";
+        req_params.PD = "1";
+        var settel_str = "";
+        var keyval_str = "";
+
+        $('#settelment').val(settel_str.slice(0, -1));
+        req_params.ST = $('#settelment').val().split(",");
+        $('#key_value').val(keyval_str.slice(0, -1));
+        req_params.AV = $('#key_value').val().split(",");
+
+        var paymentCart = null;
+        $.ajax({
+            url: $('#pcpos_url').val(),
+            type: 'post',
+            data: JSON.stringify(req_params),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            timeout: 120 * 1000,
+            success: function (data) {
+                $('#result').empty();
+                $('#result').append(JSON.stringify(data, null, "\t"));
+                if (data.resp_tagID != null) {
+                    $.ajax({
+                        url: '/Administrator/Request/AddPayment/@Model.Id',
+                        type: 'post',
+                        data: JSON.stringify(data, null, "\t"),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.success == 'true') {
+                                alert('پرداخت با موفقیت انجام شد');
+                                location.reload();
+                            }
+                            else {
+                                alert('خطا');
+                            }
+                        }
+                    })
+                }
+            },
+            failure: function (errMsg) {
+                alert(errMsg);
+            }
+        }).done(function () {
+        })
+    }*@
+    @*<= دستگاه کارتخوان <= *@
+
+    function ViewMasterFile(href) {
+        debugger;
+        var link = document.createElement('a');
+        link.href = href;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        return;
+        if (href.toLowerCase().indexOf(".pdf") >= 0) {
+            var iframe = '<object type="application/pdf" data="' + href + '" width="100%" height="500">No Support</object>';
+            $("#ModelBody").empty();
+            $("#ModelBody").append(iframe)
+        }
+
+        else {
+            var iframe = '<object type="application/jpg" data="' + href + '" width="100%" height="500">No Support</object>';
+            $("#ModelBody").empty();
+            $("#ModelBody").append(iframe)
+        }
+    }
+
+</script>
+
+@using (Html.BeginForm("Edit", "Request", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                پیام های سیستمی
+            </div>
+            <div class="panel-body">
+                @Html.Raw(ViewBag.PageMessages)
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="panel panel-info">
+            @*<div class="panel-heading">
+                    <h4>@strTitel</h4>
+                    <div style="text-align:center ; color:brown">
+                        با توجه به مشکل پیش آمده پس از باز کردن صفحه دوباره افزونه CSP
+                        <img src="~/Content/Images/CSP.png" /> را فعال نمایید و با زدن دکمه F5 صفحه را رفرش کنید تا شرکت تجارت الکترونیک پارسیان راه حل جدیدی ارايه دهد
+                    </div>
+                    <br />
+                    <div style="text-align:center ; color:brown">
+                        <a style="color:#4e6cff ; font-weight:bold" href="https://ops.ivo.ir/CSP.pdf">برای دانلود راه حل جدید شرکت تجارت الکترونیک پارسیان کلیک کنید - در صورت نیاز میتوانید از این روش به جای روش بالا استفاده نمایید</a>
+                    </div>
+                </div>*@
+            <div class="panel-body">
+                @Html.HiddenFor(model => model.Id)
+                <dl class="dl-horizontal">
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
+                    <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.ProductName)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringProductName)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.ProductType)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringProductType)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.PackageType)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringPackageType)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.FactoryName)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringFactoryName)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.Tonnage)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringTonnage)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.Province)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringProvince)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.City)</dt>
+                    <dd>@Html.DisplayFor(model => model.StringCity)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.BuyerMobile)</dt>
+                    <dd>@Html.DisplayFor(model => model.BuyerMobile)</dd>
+                    <br />
+                    <dt>مبلغ پرداختی</dt>
+                    <dd>@Html.DisplayFor(model => model.AmountPaid)</dd>
+                    <br />
+                    <dt>@Html.DisplayNameFor(model => model.MahalTahvil)</dt>
+                    <dd>@Html.DisplayFor(model => model.MahalTahvil)</dd>
+                    <br />
+                    <dt>زمان ثبت</dt>
+                    <dd>@Html.DisplayFor(model => model.StringInsertDateTime)</dd>
+                    <br />
+                    <div class="form-group">
+                        @Html.Label("توضیحات", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.Raw(Model.Description)
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.Label("گردش کار درخواست", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-9">
+                            @Html.Raw(ViewBag.MessageList)
+                        </div>
+                    </div>
+                    <br />
+                    <dt></dt>
+                    <dd>
+                        @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success" })
+                    </dd>
+                    <br />
+                </dl>
+            </div>
+            <div class="panel-footer">
+                <div class="container">
+                    <div class="col-md-11" style="margin-right:15px;">
+                        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                           href="/HomeMain/Main/" style="float:left;">
+                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div id="ModelBody" class="modal-body">
+                برای مشهاده هریک از موارد روی نام مدرک مورد نظر کلیک نمایید
+            </div>
+            <div id="ModalFooter" class="modal-footer">
+                <div class="row">
+                    <ul class="list-inline"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

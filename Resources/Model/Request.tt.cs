@@ -32,6 +32,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: تاریخ پرداخت
+        /// </summary>
+        public static string AmountPaidDate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.AmountPaidDate;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("AmountPaidDate", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: کد 17 رقمی بانک
         /// </summary>
         public static string BankDigitCode([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -132,6 +142,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: نوع ارز
+        /// </summary>
+        public static string CurrencyUnit([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.CurrencyUnit;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("CurrencyUnit", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: میزان ارز پرداختی شرکت
         /// </summary>
         public static string CurrencyValue([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -162,7 +182,7 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to: تا تاریخ
+        ///   Looks up a localized string similar to: تا تاریخ صدور
         /// </summary>
         public static string EndDate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -222,6 +242,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: از مبلغ
+        /// </summary>
+        public static string FromAmount([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.FromAmount;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("FromAmount", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: شماره درخواست ثبت سفارش
         /// </summary>
         public static string ImportRecordNumber([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -229,6 +259,16 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.Request.ImportRecordNumber;
             }
             return global::Resources.Model.Request.ResourceManager.GetString("ImportRecordNumber", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: شماره درخواست(فوب)
+        /// </summary>
+        public static string ImportRecordNumber2([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.ImportRecordNumber2;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("ImportRecordNumber2", resourceCulture);
         }
         
         /// <summary>
@@ -312,6 +352,26 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: تا تاریخ پرداخت
+        /// </summary>
+        public static string PayEndDate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.PayEndDate;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("PayEndDate", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: از تاریخ پرداخت
+        /// </summary>
+        public static string PayStartDate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.PayStartDate;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("PayStartDate", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: پرداخت ها
         /// </summary>
         public static string Payments([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -382,6 +442,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: شماره حواله
+        /// </summary>
+        public static string RemittanceNumber([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.RemittanceNumber;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("RemittanceNumber", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: وضعیت درخواست
         /// </summary>
         public static string RequestState([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -422,7 +492,7 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to: از تاریخ
+        ///   Looks up a localized string similar to: از تاریخ صدور
         /// </summary>
         public static string StartDate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -469,6 +539,16 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.Request.Tarefeh;
             }
             return global::Resources.Model.Request.ResourceManager.GetString("Tarefeh", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: تا مبلغ
+        /// </summary>
+        public static string ToAmount([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.ToAmount;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("ToAmount", resourceCulture);
         }
         
         /// <summary>
@@ -706,6 +786,11 @@ namespace Resources.Model.Strings {
         public const string AmountPaid = "AmountPaid";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: تاریخ پرداخت
+        /// </summary>
+        public const string AmountPaidDate = "AmountPaidDate";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: کد 17 رقمی بانک
         /// </summary>
         public const string BankDigitCode = "BankDigitCode";
@@ -756,6 +841,11 @@ namespace Resources.Model.Strings {
         public const string CurrencyRation = "CurrencyRation";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: نوع ارز
+        /// </summary>
+        public const string CurrencyUnit = "CurrencyUnit";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: میزان ارز پرداختی شرکت
         /// </summary>
         public const string CurrencyValue = "CurrencyValue";
@@ -774,22 +864,7 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: تا تاریخ صدور
         /// </summary>
         public const string EndDate = "EndDate";
-
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: تا تاریخ پرداخت
-        /// </summary>
-        public const string PayEndDate = "PayEndDate";
-
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: از مبلغ
-        /// </summary>
-        public const string FromAmount = "FromAmount";
-
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: تا مبلغ
-        /// </summary>
-        public const string ToAmount = "ToAmount";
-
+        
         /// <summary>
         ///   Provides access to string resource key of value similar to: درخواست های
         /// </summary>
@@ -816,19 +891,24 @@ namespace Resources.Model.Strings {
         public const string FileStream = "FileStream";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: از مبلغ
+        /// </summary>
+        public const string FromAmount = "FromAmount";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: شماره درخواست ثبت سفارش
         /// </summary>
         public const string ImportRecordNumber = "ImportRecordNumber";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: شماره درخواست(فوب)
+        /// </summary>
+        public const string ImportRecordNumber2 = "ImportRecordNumber2";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: تاریخ فاکتور
         /// </summary>
         public const string InvoiceDate = "InvoiceDate";
-        
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: تاریخ پرداخت
-        /// </summary>
-        public const string AmountPaidDate = "AmountPaidDate";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: شماره فاکتور
@@ -866,6 +946,16 @@ namespace Resources.Model.Strings {
         public const string OrganDigitCode = "OrganDigitCode";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: تا تاریخ پرداخت
+        /// </summary>
+        public const string PayEndDate = "PayEndDate";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: از تاریخ پرداخت
+        /// </summary>
+        public const string PayStartDate = "PayStartDate";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: پرداخت ها
         /// </summary>
         public const string Payments = "Payments";
@@ -901,9 +991,9 @@ namespace Resources.Model.Strings {
         public const string RecordNumber = "RecordNumber";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: شماره درخواست (فوب)
+        ///   Provides access to string resource key of value similar to: شماره حواله
         /// </summary>
-        public const string ImportRecordNumber2 = "ImportRecordNumber2";
+        public const string RemittanceNumber = "RemittanceNumber";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: وضعیت درخواست
@@ -929,10 +1019,6 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: از تاریخ صدور
         /// </summary>
         public const string StartDate = "StartDate";
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: از تاریخ پرداخت
-        /// </summary>
-        public const string PayStartDate = "PayStartDate";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: زیرسیستم
@@ -955,6 +1041,11 @@ namespace Resources.Model.Strings {
         public const string Tarefeh = "Tarefeh";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: تا مبلغ
+        /// </summary>
+        public const string ToAmount = "ToAmount";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: میزان کالا
         /// </summary>
         public const string TotalValue = "TotalValue";
@@ -973,16 +1064,7 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: کد مجازی سیستم
         /// </summary>
         public const string VirtualCode = "VirtualCode";
-
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: نوع ارز
-        /// </summary>
-        public const string CurrencyUnit = "CurrencyUnit";
-        /// <summary>
-        ///   Provides access to string resource key of value similar to: پیگیري بانکی
-        /// </summary>
-        public const string Bank_TraceNo = "Bank_TraceNo";
-
+        
         /// <summary>
         ///   Provides access to string resource keys.
         /// </summary>

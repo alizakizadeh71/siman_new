@@ -10,6 +10,7 @@ using Utilities.PersianDate;
 using ViewModels.Areas.Administrator.Cement;
 using System.Web.Routing;
 using OPS.Controllers;
+using ViewModels.Account;
 //using PAPUtilities;
 
 
@@ -308,6 +309,44 @@ namespace OPS.Controllers
             var get = UnitOfWork.NewsReopsitory.Get().Where(s => s.IsActived && !s.IsDeleted && s.StartDate <= date1 && s.EndDate >= date1);
             ViewBag.count = get.Count();
             return PartialView(get);
+        }
+
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.None)]
+        public virtual ActionResult Rechargewallet()
+        {
+            return View();
+        }
+
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.None)]
+        public virtual ActionResult Rechargewallet(Rechargewallet rechargewallet)
+        {
+            Models.User oUser;
+            int LastInvoiceNumber = UnitOfWork.walletFactorRepository.GetLastInvoiceNumber() + 1;
+            if (Infrastructure.Sessions.AuthenticatedUser?.UserName != null)
+            {
+                oUser = UnitOfWork.UserRepository.GetByUserName(Infrastructure.Sessions.AuthenticatedUser.UserName);
+            }
+            else
+            {
+                oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
+            }
+            Models.walletFactor OwalletFactor = new Models.walletFactor()
+            {
+                Id = Guid.NewGuid(),
+                UserId = oUser.Id,
+                UserIPAddress = Request.UserHostAddress,
+                Browser = Request.Browser.Type, // مدل و ورژن مرورگر
+                URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
+                Chargeamount = rechargewallet.Chargeamount,
+                BuyerMobile = oUser.BuyerMobile
+            };
+
+            OwalletFactor.InvoiceNumber = LastInvoiceNumber;
+            UnitOfWork.walletFactorRepository.Insertdata(OwalletFactor);
+            return RedirectToAction("Paymentwallet", "Zarinpal", new { Chargeamount = rechargewallet.Chargeamount, invoiceNumber = LastInvoiceNumber });
+
         }
 
         //[System.Web.Mvc.HttpGet]

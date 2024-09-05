@@ -59,6 +59,7 @@ namespace Models
 
         public string UserName { get; set; }
         public string NationalCode { get; set; }
+        public string BuyerMobile { get; set; }
         public int creditAmount { get; set; }
         public System.DateTime? BirthDay { get; set; }
 
@@ -79,6 +80,7 @@ namespace Models
         public virtual System.Collections.Generic.IList<UserLoginLog> UserLoginLogs { get; set; }
         public virtual System.Collections.Generic.IList<CurrencyUnit> CurrencyUnits { get; set; }
         public virtual System.Collections.Generic.IList<FactorCement> FactorCements { get; set; }
+        public virtual System.Collections.Generic.IList<walletFactor> walletFactor { get; set; }
         public virtual System.Collections.Generic.IList<FinancialManagement> FinancialManagements { get; set; }
         public virtual System.Collections.Generic.IList<DestinationManagement> DestinationManagements { get; set; }
     }

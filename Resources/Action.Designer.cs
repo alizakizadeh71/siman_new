@@ -214,6 +214,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مبلغ اعتبار.
+        /// </summary>
+        public static string Chargeamount {
+            get {
+                return ResourceManager.GetString("Chargeamount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to پشتیبانی.
         /// </summary>
         public static string Contact {
@@ -1119,6 +1128,15 @@ namespace Resources {
         public static string ReadRssSocialNews {
             get {
                 return ResourceManager.GetString("ReadRssSocialNews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شارژ کیف پول.
+        /// </summary>
+        public static string Rechargewallet {
+            get {
+                return ResourceManager.GetString("Rechargewallet", resourceCulture);
             }
         }
         

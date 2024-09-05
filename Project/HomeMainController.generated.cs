@@ -76,6 +76,7 @@ namespace OPS.Controllers
             public readonly string UserGuid = "UserGuid";
             public readonly string Authenticate = "Authenticate";
             public readonly string News = "News";
+            public readonly string Rechargewallet = "Rechargewallet";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -91,6 +92,7 @@ namespace OPS.Controllers
             public const string UserGuid = "UserGuid";
             public const string Authenticate = "Authenticate";
             public const string News = "News";
+            public const string Rechargewallet = "Rechargewallet";
         }
 
 
@@ -110,6 +112,14 @@ namespace OPS.Controllers
         {
             public readonly string invoicenumber = "invoicenumber";
         }
+        static readonly ActionParamsClass_Rechargewallet s_params_Rechargewallet = new ActionParamsClass_Rechargewallet();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Rechargewallet RechargewalletParams { get { return s_params_Rechargewallet; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Rechargewallet
+        {
+            public readonly string rechargewallet = "rechargewallet";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -128,6 +138,7 @@ namespace OPS.Controllers
                 public readonly string Login = "Login";
                 public readonly string Main = "Main";
                 public readonly string News = "News";
+                public readonly string Rechargewallet = "Rechargewallet";
                 public readonly string ShowFactor = "ShowFactor";
                 public readonly string UserGuid = "UserGuid";
             }
@@ -139,6 +150,7 @@ namespace OPS.Controllers
             public readonly string Login = "~/Views/HomeMain/Login.cshtml";
             public readonly string Main = "~/Views/HomeMain/Main.cshtml";
             public readonly string News = "~/Views/HomeMain/News.cshtml";
+            public readonly string Rechargewallet = "~/Views/HomeMain/Rechargewallet.cshtml";
             public readonly string ShowFactor = "~/Views/HomeMain/ShowFactor.cshtml";
             public readonly string UserGuid = "~/Views/HomeMain/UserGuid.cshtml";
         }
@@ -214,6 +226,19 @@ namespace OPS.Controllers
         public override System.Web.Mvc.ActionResult News()
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.News);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Rechargewallet()
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Rechargewallet);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Rechargewallet(ViewModels.Account.Rechargewallet rechargewallet)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Rechargewallet);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "rechargewallet", rechargewallet);
             return callInfo;
         }
 

@@ -554,7 +554,20 @@
                 return (_FactorCementRepository);
             }
         }
-        
+
+        private IwalletFactorRepository _walletFactorRepository;
+        public IwalletFactorRepository walletFactorRepository
+        {
+            get
+            {
+                if (_walletFactorRepository == null)
+                {
+                    _walletFactorRepository = new walletFactorRepository(DatabaseContext);
+                }
+                return (_walletFactorRepository);
+            }
+        }
+
         private IFinancialManagementRepository _FinancialManagementRepository;
         public IFinancialManagementRepository FinancialManagementRepository
         {

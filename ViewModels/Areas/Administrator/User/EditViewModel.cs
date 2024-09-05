@@ -82,6 +82,18 @@ namespace ViewModels.Areas.Administrator.User
             Name = Resources.ViewModel.Strings.UserKeys.Image)]
         #endregion
         public string Image { get; set; }
+        #region BuyerMobile
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.BuyerMobile)]
+        #endregion
+        public string BuyerMobile { get; set; }
+        #region Address
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.Address)]
+        #endregion
+        public string Address { get; set; }
 
         //#region IsDelete
         //[System.ComponentModel.DataAnnotations.Display

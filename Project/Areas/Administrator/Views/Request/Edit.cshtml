@@ -1,177 +1,162 @@
 ﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
 @{
-    string strTitel =
+    string strTitle =
         string.Format("{0} {1}",
-        Resources.Action.DetailsOf,
-        Resources.Model.Request.EntityName);
+        Resources.Action.Edit,
+        Resources.ViewModel.AccountNumberManage.EntitiesName);
 
-    bool? IsApprovallicense = ViewBag.IsApprovallicense;
-    bool? IsFaVA = ViewBag.IsFaVA;
+    //string  QstrTitle = Model.BaseAccountNumber;
+    // if (ViewBag.BaseAccountNumber != null)
+    // {
+    //     QstrTitle = ViewBag.BaseAccountNumber;
+    // }
 }
-
-
 <script type="text/javascript">
-    @*=> دستگاه کارتخوان => *@
+
+    $(document).ready(function () {
+        $('#ProductName').prop('disabled', true);
+        $('#ProductType').prop('disabled', true);
+        $('#PackageType').prop('disabled', true);
+        $('#FactoryName').prop('disabled', true);
+    })
+
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
     $(document).ready(function () {
 
-        $("#btnSendToPosId").click(function () {
-            SendToPos();
-        });
-
-        $("#PaymentInquiryId").click(function () {
-            debugger;
-            var btn = document.getElementById("PaymentInquiryId");
-                btn.innerHTML = "لطفا صبر کنید";
-            $('#PaymentInquiryId').attr('disabled', true);
-            PaymentInquiry();
-        });
-
-        $('#Bank_ShamsiDate').datepicker({
+        // create DatePicker from input HTML element
+        $('#StartDate').datepicker({
             dateFormat: 'yy/mm/dd',
             autoSize: true,
             showyear: true,
             changeYear: true
         });
-    })
-    @*<= دستگاه کارتخوان <= *@
+
+        $('#EndDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+    });
+
+    function Comma(Num) {
+        Num += '';
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+        x = Num.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1))
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        return x1 + x2;
+    }
 
 
-    function ViewFile() {
+    function onChangeProductName() {
+        debugger;
         $.ajax({
-            url: '/Administrator/Request/ViewFiles',
+            url: '/Administrator/Cement/GetProductType',
             type: 'post',
-            data: { Id: $("#Id").val() },
+            data: { ProductNameId: $("#ProductName").val() },
             success: function (data) {
-                $("#ModalFooter ul").empty();
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].FileAddress.toLowerCase().indexOf(".pdf") >= 0) {
-                        $("#ModalFooter ul").append('<li class="col-md-3"><a href="javascript:;" onclick="ViewMasterFile(\'' + data[i].FileAddress + '\')" class="thumbnail"><img src="' + data[i].FileAddress + '" alt="' + data[i].Name + '"></a></li>')
-                    }
 
-                    else {
-                        $("#ModalFooter ul").append('<li class="col-md-3"><a href="javascript:;" onclick="ViewMasterFile(\'' + data[i].FileAddress + '\')" class="thumbnail"><img src="' + data[i].FileAddress + '" alt="' + data[i].Name + '"></a></li>')
+                $("#DivProductTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+                $.each(data, function (i, ProductType) {
+                    var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
+                    /// baraye inke avalin id baraye loade Select badi estefade shavad
+                    if (i == 0) {
+                        onChangeProductType(ProductType.Id);
                     }
-                }
+                    select.append(option);
+                })
+
+                $("#DivProductTypeId").append(select);
+                $('#ProductType>option:eq(1)').prop('selected', true);
+            }
+        });
+
+        $.ajax({
+            url: '/Administrator/Cement/GetFactoryName',
+            type: 'post',
+            data: { ProductNameId: $("#ProductName").val() },
+            success: function (data) {
+
+                $("#DivFactoryNameId").empty();
+
+                var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, FactoryName) {
+                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivFactoryNameId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#FactoryName>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
+    function onChangeProductType(ProductTypee) {
+        debugger;
+        if (ProductTypee == undefined) { /// baraye inke dafe aval az loade safhe bekhoone
+            ProductTypee = $("#ProductType").val();
+        }
+        $.ajax({
+            url: '/Administrator/Cement/GetPackageType',
+            type: 'post',
+            data: { ProductTypeId: ProductTypee },
+            success: function (data) {
+
+                $("#DivPackageTypeId").empty();
+
+                var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
+                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
+                select.append(option1);
+
+                $.each(data, function (i, PackageType) {
+                    var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
+                    select.append(option);
+                })
+
+                $("#DivPackageTypeId").append(select);
+                // baraye az ghabl entekhab shodane item
+                $('#PackageType>option:eq(1)').prop('selected', true);
+                onChangePackageType();
             }
         });
     }
 
 
-    function PaymentInquiry() {
-        debugger;
-            $.ajax({
-                url: '/Administrator/CentralBank/PaymentInquiry/',
-                type: 'Get',
-                data: { Id: @Model.InvoiceNumber},
-                success: function (result) {
-                    debugger;
-            if (result.success == true) {
-                alert(result.Message);
-                location.reload();
-            }
-            else {
-                alert('خطا');
-            }
-        }
-    })
-
-    }
-
-    @*=> دستگاه کارتخوان => *@
-
-    //sendToPos
-    @*function SendToPos() {
-
-
-        var req_params = {};
-        req_params.PR = "000000";
-
-
-        req_params.AM = ["PECSingleAmount", @Model.AmountPaid];
-                req_params.SV = '@Model.DepositNumber'.substr(0, 15);
-                req_params.SG = '@Model.DepositNumber'.substr(15, 15);
-
-
-        req_params.CU = "364";
-        req_params.R1 = "";
-        req_params.R2 = "";
-        req_params.T1 = '@Model.CompanyName';
-        req_params.T2 = "";
-        req_params.AD = "";
-        req_params.PD = "1";
-        var settel_str = "";
-        var keyval_str = "";
-
-        $('#settelment').val(settel_str.slice(0, -1));
-        req_params.ST = $('#settelment').val().split(",");
-        $('#key_value').val(keyval_str.slice(0, -1));
-        req_params.AV = $('#key_value').val().split(",");
-
-        var paymentCart = null;
-        $.ajax({
-            url: $('#pcpos_url').val(),
-            type: 'post',
-            data: JSON.stringify(req_params),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            timeout: 120 * 1000,
-            success: function (data) {
-                $('#result').empty();
-                $('#result').append(JSON.stringify(data, null, "\t"));
-                if (data.resp_tagID != null) {
-                    $.ajax({
-                        url: '/Administrator/Request/AddPayment/@Model.Id',
-                        type: 'post',
-                        data: JSON.stringify(data, null, "\t"),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (result) {
-                            if (result.success == 'true') {
-                                alert('پرداخت با موفقیت انجام شد');
-                                location.reload();
-                            }
-                            else {
-                                alert('خطا');
-                            }
-                        }
-                    })
-                }
-            },
-            failure: function (errMsg) {
-                alert(errMsg);
-            }
-        }).done(function () {
-        })
-    }*@
-    @*<= دستگاه کارتخوان <= *@
-
-    function ViewMasterFile(href) {
-        debugger;
-        var link = document.createElement('a');
-        link.href = href;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        return;
-        if (href.toLowerCase().indexOf(".pdf") >= 0) {
-            var iframe = '<object type="application/pdf" data="' + href + '" width="100%" height="500">No Support</object>';
-            $("#ModelBody").empty();
-            $("#ModelBody").append(iframe)
-        }
-
-        else {
-            var iframe = '<object type="application/jpg" data="' + href + '" width="100%" height="500">No Support</object>';
-            $("#ModelBody").empty();
-            $("#ModelBody").append(iframe)
-        }
-    }
-
 </script>
-
-@using (Html.BeginForm("Edit", "Request", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Edit", "request", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    @Html.HiddenFor(x => x.InvoiceNumber)
+    @Html.HiddenFor(x => x.StringProductName)
+    @Html.HiddenFor(x => x.StringProductType)
+    @Html.HiddenFor(x => x.StringPackageType)
+    @Html.HiddenFor(x => x.StringFactoryName)
+    @Html.HiddenFor(x => x.StringTonnage)
+    @Html.HiddenFor(x => x.StringProvince)
+    @Html.HiddenFor(x => x.StringCity)
+    @Html.HiddenFor(x => x.BuyerMobile)
+    @Html.HiddenFor(x => x.AmountPaid)
+    @Html.HiddenFor(x => x.MahalTahvil)
 
     if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
     {
@@ -184,108 +169,121 @@
             </div>
         </div>
     }
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            ویرایش موجودی
+        </div>
+        <div class="panel-body">
+            @*@Html.HiddenFor(model => model.TitleNews)
+                @Html.HiddenFor(model => model.TextNews)*@
 
-    <div class="row">
-        <div class="panel panel-info">
-            @*<div class="panel-heading">
-                    <h4>@strTitel</h4>
-                    <div style="text-align:center ; color:brown">
-                        با توجه به مشکل پیش آمده پس از باز کردن صفحه دوباره افزونه CSP
-                        <img src="~/Content/Images/CSP.png" /> را فعال نمایید و با زدن دکمه F5 صفحه را رفرش کنید تا شرکت تجارت الکترونیک پارسیان راه حل جدیدی ارايه دهد
-                    </div>
-                    <br />
-                    <div style="text-align:center ; color:brown">
-                        <a style="color:#4e6cff ; font-weight:bold" href="https://ops.ivo.ir/CSP.pdf">برای دانلود راه حل جدید شرکت تجارت الکترونیک پارسیان کلیک کنید - در صورت نیاز میتوانید از این روش به جای روش بالا استفاده نمایید</a>
-                    </div>
-                </div>*@
-            <div class="panel-body">
-                @Html.HiddenFor(model => model.Id)
-                <dl class="dl-horizontal">
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.InvoiceNumber)</dt>
-                    <dd>@Html.DisplayFor(model => model.InvoiceNumber)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.ProductName)</dt>
-                    <dd>@Html.DisplayFor(model => model.StringProductName)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.ProductType)</dt>
-                    <dd>@Html.DisplayFor(model => model.StringProductType)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.PackageType)</dt>
-                    <dd>@Html.DisplayFor(model => model.StringPackageType)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.FactoryName)</dt>
-                    <dd>@Html.DisplayFor(model => model.StringFactoryName)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.Tonnage)</dt>
-                    <dd>@Html.DisplayFor(model => model.StringTonnage)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.Province)</dt>
-                    <dd>@Html.DisplayFor(model => model.StringProvince)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.City)</dt>
-                    <dd>@Html.DisplayFor(model => model.StringCity)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.BuyerMobile)</dt>
-                    <dd>@Html.DisplayFor(model => model.BuyerMobile)</dd>
-                    <br />
-                    <dt>مبلغ پرداختی</dt>
-                    <dd>@Html.DisplayFor(model => model.AmountPaid)</dd>
-                    <br />
-                    <dt>@Html.DisplayNameFor(model => model.MahalTahvil)</dt>
-                    <dd>@Html.DisplayFor(model => model.MahalTahvil)</dd>
-                    <br />
-                    <dt>زمان ثبت</dt>
-                    <dd>@Html.DisplayFor(model => model.StringInsertDateTime)</dd>
-                    <br />
-                    <div class="form-group">
-                        @Html.Label("توضیحات", new { @class = "col-md-2 control-label" })
-                        <div class="col-md-9">
-                            @Html.Raw(Model.Description)
-                        </div>
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        @Html.Label("گردش کار درخواست", new { @class = "col-md-2 control-label" })
-                        <div class="col-md-9">
-                            @Html.Raw(ViewBag.MessageList)
-                        </div>
-                    </div>
-                    <br />
-                    <dt></dt>
-                    <dd>
-                        @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success" })
-                    </dd>
-                    <br />
-                </dl>
-            </div>
-            <div class="panel-footer">
-                <div class="container">
-                    <div class="col-md-11" style="margin-right:15px;">
-                        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
-                           href="/HomeMain/Main/" style="float:left;">
-                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
-                        </a>
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.InvoiceNumber, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.InvoiceNumber, new { @class = "form-control", @disabled = "disabled" })
                 </div>
             </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.StringProductName, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.StringProductType, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.StringPackageType, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.StringFactoryName, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.StringTonnage, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.StringProvince, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.StringCity, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">مبلغ پرداختی</label>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.AmountPaid, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.MahalTahvil, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.MahalTahvil, new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RemittanceNumber, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.RemittanceNumber, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <input type="submit" value="@Resources.Buttons.Edit" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="panel-footer">
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.Request.Index(), new { @class = "btn btn-default" })
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+               href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
         </div>
     </div>
+
+    <script type="text/javascript">
+        function onChange() {
+            $.ajax({
+                url: '/Administrator/AccountNumberManage/FindAccountNumber',
+                type: 'post',
+                data: { accountnumber: $("#AccountNumber").val() },
+                success: function (data) {
+                    //$("#BaseAccountNumber").empty();
+                    //var ddddd = $("#BaseAccountNumber");
+                    //sasas
+                    //$("#BaseAccountNumber") = data;
+                    //$.each(data, function (i, city) {
+                    //    $("#LocationCityId").append('<option value="' + city.Id + '"> ' + city.Name + '</option>')
+                    //})
+                }
+            });
+        }
+    </script>
 }
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            </div>
-            <div id="ModelBody" class="modal-body">
-                برای مشهاده هریک از موارد روی نام مدرک مورد نظر کلیک نمایید
-            </div>
-            <div id="ModalFooter" class="modal-footer">
-                <div class="row">
-                    <ul class="list-inline"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
