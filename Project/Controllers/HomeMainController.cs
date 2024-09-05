@@ -40,7 +40,7 @@ namespace OPS.Controllers
             ViewBag.PageMessages = null;
 
             var product = UnitOfWork.ProductNameRepository.Get()
-                .Where(x => x.Code == "10")
+                .Where(x => x.Code == "1")
                 .Select(x => x.Id)
                 .FirstOrDefault();
 
