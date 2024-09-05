@@ -392,6 +392,10 @@ namespace OPS.Controllers
                 {
                     parameters.amount = oFactorCement.Chargeamount.ToString();
                 }
+                else
+                {
+                    parameters.amount = oFactorCement.Chargeamount.ToString();
+                }
 
                 var client = new RestClient(URLs.verifyUrl);
                 Method method = Method.Post;
