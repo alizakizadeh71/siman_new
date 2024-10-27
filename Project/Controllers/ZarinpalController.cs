@@ -67,15 +67,12 @@ namespace OPS.Controllers
                     if (oFactorCement.AmountPaid > user.creditAmount && user.UserName != "Guest")
                     {
                         amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
-                        user.creditAmount = 0;
-                        UnitOfWork.UserRepository.Update(user);
-                        UnitOfWork.Save();
                     }
                     else if(user.UserName == "Guest")
                     {
                         amount = oFactorCement.AmountPaid.ToString();
                     }
-                    else if (user.UserName != "Guest")
+                    else if (oFactorCement.AmountPaid < user.creditAmount && user.UserName != "Guest" )
                     {
                         user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
                         UnitOfWork.UserRepository.Update(user);
@@ -195,13 +192,15 @@ namespace OPS.Controllers
                 parameters.authority = oFactorCement.Authority;
                 if (oFactorCement.MahalTahvil == "Karkhane")
                 {
-                    parameters.amount = oFactorCement.AmountPaid.ToString();
+                    var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
+                    parameters.amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
                 }
                 else if (oFactorCement.MahalTahvil == "Mahal")
                 {
                     parameters.amount = oFactorCement.DestinationAmountPaid.ToString();
                 }
                 parameters.merchant_id = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
+
 
                 //if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
                 //{
@@ -259,6 +258,12 @@ namespace OPS.Controllers
 
                         InventoryTonnage.Inventorytonnage = InventoryTonnage.Inventorytonnage - Tonnage;
                         UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
+                        UnitOfWork.Save();
+
+                        var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
+                        string amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
+                        user.creditAmount = 0;
+                        UnitOfWork.UserRepository.Update(user);
                         UnitOfWork.Save();
 
                         cementViewModel = ConvertCementViewModel(oFactorCement);

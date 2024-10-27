@@ -438,6 +438,8 @@ namespace OPS.Areas.Administrator.Controllers
                     Role = current.RoleId,
                     creditAmount = current.creditAmount,
                     UserName = current.UserName,
+                    Address = current.Address,
+                    BuyerMobile = current.BuyerMobile,
                     IsActive = current.IsActived,
                     IsApprovallicense = current.IsApprovallicense,
                     Authenticate = current.Authenticate,

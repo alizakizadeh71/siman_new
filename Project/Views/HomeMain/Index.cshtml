@@ -9,7 +9,6 @@
     }
 
     .example::after {
-        
         position: absolute;
         top: 100px;
         white-space: pre;
@@ -22,9 +21,10 @@
     #loginFrom .row {
         width: 100%;
     }
+
     .panel-body #Mahal {
-        margin-right : 6px;
-        margin-left : 3px;
+        margin-right: 6px;
+        margin-left: 3px;
     }
 </style>
 
@@ -54,14 +54,14 @@
                     <p style="color:black">
                         لطفا محل تحویل را انتخاب نمایید
                     </p>
-                    @Html.RadioButtonFor(model => model.Description, "M", new {  @id = "Karkhane" , @checked= "checked" })
+                    @Html.RadioButtonFor(model => model.Description, "M", new { @id = "Karkhane", @checked = "checked" })
                     @Html.Raw(ViewBag.Karkhane)
                     <br />
                     @if (ViewBag.Mahal != null)
                     {
                         @*@Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
-                        @Html.Raw(ViewBag.Mahal)
-                        <br />*@
+                            @Html.Raw(ViewBag.Mahal)
+                            <br />*@
                         @Html.Raw(ViewBag.Mahal)
                     }
 
@@ -72,7 +72,7 @@
                 @Html.Hidden("invoiceNumber", null, new { @class = "form-controle" })
                 @Html.Hidden("MahalTahvil", null, new { @class = "form-controle" })
                 <div style="text-align:center">
-                    <input class="btn btn-success" type="submit" id="btnPayment" style="margin-right:7px ; text-align:center" value="پرداخت و دریافت فاکتور" onclick="EnablePayment()"/>
+                    <input class="btn btn-success" type="submit" id="btnPayment" style="margin-right:7px ; text-align:center" value="پرداخت و دریافت فاکتور" onclick="EnablePayment()" />
                 </div>
             }
         }
@@ -162,17 +162,17 @@
             </div>
 
             @*<div class="form-group">
-                @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6" id="DivCityId">
-                    @Html.DropDownListFor(model => model.Village, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Village)
-                </div>
-            </div>*@
+                    @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6" id="DivCityId">
+                        @Html.DropDownListFor(model => model.Village, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Village)
+                    </div>
+                </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6">
-                    @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
+                        @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control",@onkeypress = "return AllowNumbersOnly(event)" })
                     @Html.ValidationMessageFor(model => model.BuyerMobile)
                 </div>
             </div>
@@ -194,7 +194,7 @@
         }
     </section>
 
-        @Html.Action("News")
+    @Html.Action("News")
 
 </div>
 <div class="row">

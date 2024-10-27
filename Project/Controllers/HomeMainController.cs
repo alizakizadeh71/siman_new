@@ -11,6 +11,7 @@ using ViewModels.Areas.Administrator.Cement;
 using System.Web.Routing;
 using OPS.Controllers;
 using ViewModels.Account;
+using Models;
 //using PAPUtilities;
 
 
@@ -29,8 +30,7 @@ namespace OPS.Controllers
             }
 
             ViewBag.Message = "برای محاسبه قیمت و خرید اطلاعات را تکمیل نمایید";
-
-            Models.User oUser;
+            var oUser = new User();
             if (Infrastructure.Sessions.AuthenticatedUser?.Id != null && Infrastructure.Sessions.AuthenticatedUser.RoleCode != 1000)
             {
                 oUser = UnitOfWork.UserRepository.GetById(Infrastructure.Sessions.AuthenticatedUser.Id);
@@ -73,6 +73,20 @@ namespace OPS.Controllers
                 .Select(x => x.Id)
                 .FirstOrDefault();
 
+            Guid? province = null;
+            Guid? city = null;
+            string address = string.Empty;
+            string buyerMobile = string.Empty;
+            if (Infrastructure.Sessions.AuthenticatedUser?.Id != null && Infrastructure.Sessions.AuthenticatedUser.RoleCode != 1000)
+            {
+                var user = UnitOfWork.UserRepository.GetById(Infrastructure.Sessions.AuthenticatedUser.Id);
+                province = user.ProvinceId;
+                city = user.CityId;
+                address = user.Address;
+                buyerMobile = user.BuyerMobile;
+            }
+
+
             var cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel
             {
                 ProductName = product,
@@ -80,9 +94,11 @@ namespace OPS.Controllers
                 PackageType = packageType.Value,
                 FactoryName = factoryName,
                 Tonnage = Tonnage.Value,
-                Province = new Guid("d803f690-6de8-11e5-8295-c0f8daba7555"),
-                City = new Guid("f8b85020-ad88-4d89-9aa2-0de9e27fd9b1"),
-                Village = new Guid("F4125115-F66B-11EE-87BF-D039573E90CC")
+                Province = province ?? new Guid("d803f690-6de8-11e5-8295-c0f8daba7555"), // مقدار پیش‌فرض
+                City = city ?? new Guid("f8b85020-ad88-4d89-9aa2-0de9e27fd9b1"), // مقدار پیش‌فرض
+                Village = new Guid("F4125115-F66B-11EE-87BF-D039573E90CC"),
+                Address = address,
+                BuyerMobile = buyerMobile
             };
 
             ViewData(cementViewModel);
