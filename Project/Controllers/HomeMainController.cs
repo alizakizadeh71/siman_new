@@ -330,8 +330,8 @@ namespace OPS.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.None)]
-        public virtual ActionResult Rechargewallet()
+        [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
+        public virtual ActionResult Rechargewallet(string userName)
         {
             return View();
         }

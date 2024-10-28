@@ -452,4 +452,11 @@
         //}
     }
 
+    function copyLink() {
+        var copyText = document.getElementById("linkInput");
+        copyText.select();
+        document.execCommand("copy");
+        alert("لینک کپی شد: " + copyText.value);
+    }
+
 </script>

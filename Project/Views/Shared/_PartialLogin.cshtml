@@ -12,6 +12,11 @@
         {
             //strDisplayName =Infrastructure.Sessions.AuthenticatedUser.EmailAddress;
         }
+
+        var baseUrl = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
+        var actionUrl = Url.Action("Rechargewallet", "HomeMain", new { userName = User.Identity.Name });
+        var fullUrl = string.Format("{0}{1}", baseUrl, actionUrl);
+
         <li>
             @Html.ActionLink(strDisplayName, MVC.Account.ChangePassword(), new { style = "color:white;" })
         </li>
@@ -19,7 +24,12 @@
             @Html.ActionLink(Resources.Action.Logout, MVC.Account.Logout(), new { style = "color:white;" })
         </li>
         <li>
-            @Html.ActionLink(Resources.Action.Rechargewallet, MVC.HomeMain.Rechargewallet(), new { style = "color:white;" })
+            @Html.ActionLink(Resources.Action.Rechargewallet, "Rechargewallet", "HomeMain", new { userName = User.Identity.Name }, new { style = "color:white;" })
+        </li>
+        <li class="d-flex align-items-center mb-1">
+            <input type="text" id="linkInput" class="form-control me-2" style="width: 300px;"
+                   value="@fullUrl" readonly>
+            <button onclick="copyLink()" class="btn btn-primary">کپی لینک</button>
         </li>
     }
     else

@@ -72,7 +72,7 @@ namespace OPS.Controllers
                     {
                         amount = oFactorCement.AmountPaid.ToString();
                     }
-                    else if (oFactorCement.AmountPaid < user.creditAmount && user.UserName != "Guest" )
+                    else if (oFactorCement.AmountPaid <= user.creditAmount && user.UserName != "Guest" )
                     {
                         user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
                         UnitOfWork.UserRepository.Update(user);

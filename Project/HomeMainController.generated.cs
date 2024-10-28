@@ -50,6 +50,12 @@ namespace OPS.Controllers
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.ShowFactor);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Rechargewallet()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Rechargewallet);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public HomeMainController Actions { get { return MVC.HomeMain; } }
@@ -118,6 +124,7 @@ namespace OPS.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Rechargewallet
         {
+            public readonly string userName = "userName";
             public readonly string rechargewallet = "rechargewallet";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -229,9 +236,10 @@ namespace OPS.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Rechargewallet()
+        public override System.Web.Mvc.ActionResult Rechargewallet(string userName)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Rechargewallet);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userName", userName);
             return callInfo;
         }
 
