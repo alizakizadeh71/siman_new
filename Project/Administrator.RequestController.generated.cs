@@ -118,6 +118,12 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult PrintNewFactorWallet()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.PrintNewFactorWallet);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult PrintDepositNumber()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.PrintDepositNumber);
@@ -159,6 +165,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string Download = "Download";
             public readonly string GetCities = "GetCities";
             public readonly string PrintNewFactor = "PrintNewFactor";
+            public readonly string PrintNewFactorWallet = "PrintNewFactorWallet";
             public readonly string PrintDepositNumber = "PrintDepositNumber";
             public readonly string AddPayment = "AddPayment";
         }
@@ -181,6 +188,7 @@ namespace OPS.Areas.Administrator.Controllers
             public const string Download = "Download";
             public const string GetCities = "GetCities";
             public const string PrintNewFactor = "PrintNewFactor";
+            public const string PrintNewFactorWallet = "PrintNewFactorWallet";
             public const string PrintDepositNumber = "PrintDepositNumber";
             public const string AddPayment = "AddPayment";
         }
@@ -284,6 +292,14 @@ namespace OPS.Areas.Administrator.Controllers
         public ActionParamsClass_PrintNewFactor PrintNewFactorParams { get { return s_params_PrintNewFactor; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_PrintNewFactor
+        {
+            public readonly string invoiceNumber = "invoiceNumber";
+        }
+        static readonly ActionParamsClass_PrintNewFactorWallet s_params_PrintNewFactorWallet = new ActionParamsClass_PrintNewFactorWallet();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_PrintNewFactorWallet PrintNewFactorWalletParams { get { return s_params_PrintNewFactorWallet; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_PrintNewFactorWallet
         {
             public readonly string invoiceNumber = "invoiceNumber";
         }
@@ -464,6 +480,13 @@ namespace OPS.Areas.Administrator.Controllers
         public override System.Web.Mvc.ActionResult PrintNewFactor(int invoiceNumber)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.PrintNewFactor);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "invoiceNumber", invoiceNumber);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult PrintNewFactorWallet(int invoiceNumber)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.PrintNewFactorWallet);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "invoiceNumber", invoiceNumber);
             return callInfo;
         }

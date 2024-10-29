@@ -121,6 +121,7 @@
     <Compile Include="Areas\Administrator\Request\IndexViewModel.cs" />
     <Compile Include="Areas\Administrator\Request\SearchViewModel.cs" />
     <Compile Include="Areas\Administrator\Request\UpAmountPaidViewModel.cs" />
+    <Compile Include="Areas\Administrator\Request\WalletViewModel.cs" />
     <Compile Include="Areas\Administrator\ServiceTariff\CreateViewModel.cs" />
     <Compile Include="Areas\Administrator\ServiceTariff\DetailViewModel.cs" />
     <Compile Include="Areas\Administrator\ServiceTariff\EditViewModel.cs" />

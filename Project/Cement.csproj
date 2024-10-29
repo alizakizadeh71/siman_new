@@ -585,6 +585,7 @@
     <Content Include="Areas\Administrator\Views\Inventoryamount\Edit.cshtml" />
     <Content Include="Areas\Administrator\Views\Inventoryamount\Delete.cshtml" />
     <Content Include="Areas\Administrator\Views\Request\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\PrintNewFactorWallet.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">

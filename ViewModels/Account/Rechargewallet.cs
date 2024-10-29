@@ -17,6 +17,7 @@ namespace ViewModels.Account
              Name = Resources.Strings.ActionKeys.Chargeamount)]
         #endregion
         public int Chargeamount { get; set; }
+        public string UserName { get; set; }
 
     }
 }

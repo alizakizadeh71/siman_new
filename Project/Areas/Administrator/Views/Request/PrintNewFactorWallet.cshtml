@@ -1,0 +1,113 @@
+﻿@model ViewModels.Areas.Administrator.Request.WalletViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layouts/_SiteForPrint.cshtml";
+    string strTitel =
+        string.Format("{0} {1}",
+        Resources.Action.DetailsOf,
+        Resources.Model.Request.EntityName);
+
+    List<Infrastructure.PageMessage> PageMessageList = ViewBag.PageMessages;
+
+    string url = System.Configuration.ConfigurationSettings.AppSettings["IVOReferrUrl"].ToString();
+}
+
+<style>
+    .BorderStyle {
+        border-color: green;
+        border-style: solid;
+        border-width: 1px;
+    }
+</style>
+@{
+    <div class="row">
+        <div class="panel panel-info" style="font-family: BYekan, Tahoma;">
+            <div class="panel-heading ">
+                <div style="margin-right:5%">
+                    <img src="~/Content/Images/Cement.png" />
+                </div>
+
+                <center style="margin-top:-2%">
+                    <b>
+                        فاکتور خرید مصالح ساختمانی
+                    </b>
+                </center>
+
+                <div style="margin-right:80%; margin-top:-5%">
+                    @Html.DisplayNameFor(model => model.InvoiceNumber) : @Html.DisplayFor(model => model.InvoiceNumber)
+                    <br />
+                    تاریخ فاکتور :  @Html.DisplayFor(model => model.StringInsertDateTime)
+                </div>
+                <br />
+            </div>
+            <div class="panel-body">
+                @Html.HiddenFor(model => model.Id)
+                @*@{
+                        string RequestState = Infrastructure.Utility.EnumValue(Enums.EnumTypes.RequestStates, Model.RequestState);
+                    }*@
+                <br />
+                <table class="col-md-12 BorderStyle" align="center">
+                    <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
+                        <span>اطلاعات خریدار</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td>نام شرکت/شخص</td>
+                        <td>@Html.DisplayNameFor(model => model.BuyerMobile)</td>
+                        <td>توضیحات</td>
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td>@Html.DisplayFor(model => model.BuyerName)</td>
+                        <td>@Html.DisplayFor(model => model.BuyerMobile)</td>
+                        <td>شارژ کیف پول</td>
+                    </tr>
+                </table>
+                <br />
+                <table class="col-md-12 BorderStyle" align="center">
+                    <caption style="background-color: lightblue; width:864px;" class="BorderStyle">
+                        <span>اطلاعات پرداخت</span>
+                    </caption>
+                    <tr class="BorderStyle">
+                        <td class="BorderStyle">شماره تراكنش</td>
+                        <td>شماره کارت خریدار</td>
+                        @*<td class="BorderStyle">@Html.DisplayNameFor(model => model.RemittanceNumber)</td>*@
+                    </tr>
+                    <tr class="BorderStyle">
+                        <td class="BorderStyle">@Html.DisplayFor(model => model.ref_id)</td>
+                        <td>@Html.DisplayFor(model => model.card_pan)</td>
+                    </tr>
+                </table>
+                <br />
+                <div style="margin-right:70%">
+                    سامانه خرید آنلاین مصالح ساختمانی
+                </div>
+            </div>
+            <div class="panel-footer">
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var addressCell = document.getElementById('addressCell');
+            var addressText = addressCell.textContent.trim();
+            var words = addressText.split(' ');
+            var formattedText = '';
+            var lineLength = 0;
+
+            for (var i = 0; i < words.length; i++) {
+                if (lineLength + words[i].length + 1 > 50) {
+                    formattedText += '<br>';
+                    lineLength = 0;
+                }
+                formattedText += words[i] + ' ';
+                lineLength += words[i].length + 1;
+            }
+
+            addressCell.innerHTML = formattedText.trim();
+        });
+    </script>
+}
+
+

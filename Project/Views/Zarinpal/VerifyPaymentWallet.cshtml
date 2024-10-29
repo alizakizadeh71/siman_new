@@ -9,8 +9,6 @@
         Resources.Model.Request.EntityName);
 
     List<Infrastructure.PageMessage> PageMessageList = ViewBag.PageMessages;
-
-    string url = System.Configuration.ConfigurationSettings.AppSettings["IVOReferrUrl"].ToString();
 }
 
 <style>
@@ -78,14 +76,14 @@
                         سامانه خرید آنلاین مصالح ساختمانی
                     </div>
                 </div>
-                @using (Html.BeginForm("PrintNewFactor", "Request", routeValues: new { Area = "Administrator", @class = "form-horizontal", role = "form" }, method: FormMethod.Get))
+                @using (Html.BeginForm("PrintNewFactorWallet", "Request", routeValues: new { Area = "Administrator", @class = "form-horizontal", role = "form" }, method: FormMethod.Get))
                 {
                     @Html.AntiForgeryToken()
                     <hr />
                     @Html.ValidationSummary(true)
                     <center class="form-group row">
                         <div class="col-md-offset-2">
-                            @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success" })
+                            @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactorWallet(Model.InvoiceNumber.Value), new { @class = "btn btn-success" })
                         </div>
                     </center>
                 }

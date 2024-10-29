@@ -333,7 +333,9 @@ namespace OPS.Controllers
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual ActionResult Rechargewallet(string userName)
         {
-            return View();
+            Rechargewallet test = new Rechargewallet();
+            test.UserName = userName;
+            return View(test);
         }
 
         [System.Web.Mvc.HttpPost]
@@ -342,14 +344,7 @@ namespace OPS.Controllers
         {
             Models.User oUser;
             int LastInvoiceNumber = UnitOfWork.walletFactorRepository.GetLastInvoiceNumber() + 1;
-            if (Infrastructure.Sessions.AuthenticatedUser?.UserName != null)
-            {
-                oUser = UnitOfWork.UserRepository.GetByUserName(Infrastructure.Sessions.AuthenticatedUser.UserName);
-            }
-            else
-            {
-                oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
-            }
+            oUser = UnitOfWork.UserRepository.GetByUserName(rechargewallet.UserName);
             Models.walletFactor OwalletFactor = new Models.walletFactor()
             {
                 Id = Guid.NewGuid(),

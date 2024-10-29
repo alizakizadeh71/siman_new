@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using OPS.ir.shaparak.sadad;
 using ViewModels.Areas.Administrator.Cement;
+using ViewModels.Areas.Administrator.Request;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -1529,6 +1530,41 @@ namespace OPS.Areas.Administrator.Controllers
                 return null;
             }
         }
+
+
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: true)]
+        public virtual ActionResult PrintNewFactorWallet(int invoiceNumber)
+        {
+            try
+            {
+                var factorCement =
+                UnitOfWork.walletFactorRepository.Get()
+                .Where(current => current.InvoiceNumber == invoiceNumber)
+                .FirstOrDefault();
+
+                WalletViewModel factor = new WalletViewModel();
+                factor.Id = factorCement.Id;
+                factor.InvoiceNumber = factorCement.InvoiceNumber;
+                factor.StringInsertDateTime = factorCement.InsertDateTime.ToString();
+                factor.BuyerName = factorCement.User.FullName;
+                factor.BuyerMobile = factorCement.BuyerMobile;
+                factor.ref_id = factorCement.ref_id.ToString();
+                factor.card_pan = factorCement.card_pan;
+
+                var File = new Rotativa.MVC.ViewAsPdf("PrintNewFactorWallet", factor)
+                {
+                    FileName = factorCement.InvoiceNumber + ".pdf"
+                };
+                return File;
+            }
+
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
 
 
         [System.Web.Mvc.HttpGet]

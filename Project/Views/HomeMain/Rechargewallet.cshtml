@@ -5,6 +5,7 @@
 
 @using (Html.BeginForm("Rechargewallet", "HomeMain", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
+    @Html.HiddenFor(model => model.UserName)
     <div class="form-group">
         @Html.LabelFor(model => model.Chargeamount, new { @class = "col-md-3 control-label" })
         <div class="col-md-6">
