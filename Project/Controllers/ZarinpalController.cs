@@ -262,7 +262,8 @@ namespace OPS.Controllers
 
                         var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
                         string amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
-                        user.creditAmount = 0;
+                        user.AmountOfTonnagePurchased = int.Parse(oFactorCement.Tonnage.Code);
+                        user.creditAmount += (user.AmountOfTonnagePurchased / 50) * 10000000;
                         UnitOfWork.UserRepository.Update(user);
                         UnitOfWork.Save();
 

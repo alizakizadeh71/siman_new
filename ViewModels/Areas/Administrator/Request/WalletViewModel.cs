@@ -15,5 +15,6 @@ namespace ViewModels.Areas.Administrator.Request
         public string BuyerName { get; set; }
         public string ref_id { get; set; }
         public string card_pan { get; set; }
+        public string AmountPaid { get; set; }
     }
 }

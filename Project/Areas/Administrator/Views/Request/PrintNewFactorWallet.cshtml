@@ -52,13 +52,13 @@
                     </caption>
                     <tr class="BorderStyle">
                         <td>نام شرکت/شخص</td>
-                        <td>@Html.DisplayNameFor(model => model.BuyerMobile)</td>
+                        <td class="text-center">شماره تماس</td>
                         <td>توضیحات</td>
                     </tr>
                     <tr class="BorderStyle">
                         <td>@Html.DisplayFor(model => model.BuyerName)</td>
                         <td>@Html.DisplayFor(model => model.BuyerMobile)</td>
-                        <td>شارژ کیف پول</td>
+                        <td class="text-center">شارژ کیف</td>
                     </tr>
                 </table>
                 <br />
@@ -69,11 +69,14 @@
                     <tr class="BorderStyle">
                         <td class="BorderStyle">شماره تراكنش</td>
                         <td>شماره کارت خریدار</td>
+                        <td class="text-center">مبلغ شارژ</td>
                         @*<td class="BorderStyle">@Html.DisplayNameFor(model => model.RemittanceNumber)</td>*@
                     </tr>
                     <tr class="BorderStyle">
                         <td class="BorderStyle">@Html.DisplayFor(model => model.ref_id)</td>
                         <td>@Html.DisplayFor(model => model.card_pan)</td>
+                        <td class="text-center">@Html.DisplayFor(model => model.AmountPaid)</td>
+                        
                     </tr>
                 </table>
                 <br />

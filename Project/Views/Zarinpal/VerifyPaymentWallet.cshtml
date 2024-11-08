@@ -64,11 +64,13 @@
                         </caption>
                         <tr class="BorderStyle">
                             <td class="BorderStyle">شماره تراكنش</td>
-                            <td>شماره کارت خریدار</td>
+                            <td class="BorderStyle">شماره کارت خریدار</td>
+                            <td class="text-center">مبلغ شارژ</td>
                         </tr>
                         <tr class="BorderStyle">
                             <td class="BorderStyle">@Html.DisplayFor(model => model.ref_id)</td>
-                            <td>@Html.DisplayFor(model => model.card_pan)</td>
+                            <td class="BorderStyle">@Html.DisplayFor(model => model.card_pan)</td>
+                            <td class="text-center">@Html.DisplayFor(model => model.AmountPaid)</td>
                         </tr>
                     </table>
                     <br />

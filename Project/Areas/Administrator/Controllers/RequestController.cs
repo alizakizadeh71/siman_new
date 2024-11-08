@@ -1549,6 +1549,7 @@ namespace OPS.Areas.Administrator.Controllers
                 factor.StringInsertDateTime = factorCement.InsertDateTime.ToString();
                 factor.BuyerName = factorCement.User.FullName;
                 factor.BuyerMobile = factorCement.BuyerMobile;
+                factor.AmountPaid = factorCement.Chargeamount.ToString();
                 factor.ref_id = factorCement.ref_id.ToString();
                 factor.card_pan = factorCement.card_pan;
 

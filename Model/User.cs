@@ -72,6 +72,7 @@ namespace Models
         public string Address { get; set; }
         public string Image { get; set; }
         public string IdentityCertificateSerial { get; set; }
+        public int AmountOfTonnagePurchased { get; set; }
 
         public virtual System.Collections.Generic.IList<Request> Requests { get; set; }
         public virtual System.Collections.Generic.IList<HeadOfFactor> HeadOfFactors { get; set; }
