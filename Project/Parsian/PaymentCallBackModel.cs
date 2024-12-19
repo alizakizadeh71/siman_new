@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OPS.Parsian
 {
@@ -31,5 +27,5 @@ namespace OPS.Parsian
         public string TspToken { get; set; }
 
         public string InvoiceNumber { get; set; }
-	}
+    }
 }

@@ -1,5 +1,5 @@
-using System.Web;
 using Infrastructure.Helpers;
+using System.Web;
 
 namespace Infrastructure.Kendo
 {
@@ -16,8 +16,8 @@ namespace Infrastructure.Kendo
                 this.Take = curRequest["take"].Parse<int>(5);
                 this.SortOrd = curRequest["sort[0][dir]"];
                 this.SortOn = curRequest["sort[0][field]"];
-				this.FilterValue = curRequest.Params["filter[filters][" + 0+ "][value]"];
-				this.Export = "yes";// curRequest["export"];
+                this.FilterValue = curRequest.Params["filter[filters][" + 0 + "][value]"];
+                this.Export = "yes";// curRequest["export"];
             }
         }
 
@@ -30,6 +30,6 @@ namespace Infrastructure.Kendo
 
         public string Export { get; set; }
 
-		public string FilterValue { get; set; }
-	}
+        public string FilterValue { get; set; }
+    }
 }

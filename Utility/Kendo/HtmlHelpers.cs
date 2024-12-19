@@ -3,11 +3,11 @@ using System.Linq.Dynamic;
 
 namespace Utilities.Kendo
 {
-	public static class HtmlHelpers
-	{
-		static HtmlHelpers()
-		{
-		}
+    public static class HtmlHelpers
+    {
+        static HtmlHelpers()
+        {
+        }
 
         public static GridResult<T> ParseGridData<T>(System.Linq.IQueryable<T> collection)
         {
@@ -22,10 +22,10 @@ namespace Utilities.Kendo
 
             try
             {
-				oGridData = collection.Skip(oGridPost.Skip).Take(oGridPost.Take).ToList();
+                oGridData = collection.Skip(oGridPost.Skip).Take(oGridPost.Take).ToList();
 
-			}
-			catch
+            }
+            catch
             {
                 collection.OrderBy("ID ASC");
 
@@ -84,5 +84,5 @@ namespace Utilities.Kendo
             return (oGridResult);
         }
 
-	}
+    }
 }

@@ -1,16 +1,15 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using Models;
+﻿using Models;
 using System;
+using System.Linq;
 
 namespace DAL
 {
     public class FactoryNameRepository : Repository<Models.FactoryName>, IFactoryNameRepository
     {
         public FactoryNameRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.FactoryName> GetFactoryNames()
         {

@@ -1,13 +1,13 @@
 ﻿namespace Models
 {
-	public class ProjectAction : BaseAreaControllerAction
-	{
-		#region Configuration
-		internal class Configuration :
-			System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ProjectAction>
-		{
-			public Configuration()
-			{
+    public class ProjectAction : BaseAreaControllerAction
+    {
+        #region Configuration
+        internal class Configuration :
+            System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ProjectAction>
+        {
+            public Configuration()
+            {
                 Property(current => current.Action).HasMaxLength(50);
                 Property(current => current.Area).HasMaxLength(50);
                 Property(current => current.Controller).HasMaxLength(50);
@@ -23,13 +23,13 @@
                         current.MapLeftKey("ProjectActionId");
                         current.MapRightKey("RoleId");
                     });
-			}
-		}
-		#endregion /Configuration
+            }
+        }
+        #endregion /Configuration
 
-		public ProjectAction()
-		{
-		}
+        public ProjectAction()
+        {
+        }
 
         public bool IsPublic { get; set; }
         public string Area { get; set; }
@@ -37,5 +37,5 @@
         public string Action { get; set; }
 
         public virtual System.Collections.Generic.IList<Role> Roles { get; set; }
-	}
+    }
 }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.CurrencyUnit
+﻿namespace ViewModels.Areas.Administrator.CurrencyUnit
 {
-   public class IndexViewModel: System.Object
+    public class IndexViewModel : System.Object
     {
         public IndexViewModel()
         { }
@@ -15,8 +9,8 @@ namespace ViewModels.Areas.Administrator.CurrencyUnit
 
         #region Name
         [System.ComponentModel.DataAnnotations.Display
-           (ResourceType=typeof(Resources.ViewModel.CurrencyUnit),
-           Name=Resources.ViewModel.Strings.CurrencyUnitKeys.Name)]
+           (ResourceType = typeof(Resources.ViewModel.CurrencyUnit),
+           Name = Resources.ViewModel.Strings.CurrencyUnitKeys.Name)]
         #endregion
         public string Name { get; set; }
 
@@ -31,7 +25,7 @@ namespace ViewModels.Areas.Administrator.CurrencyUnit
         [System.ComponentModel.DataAnnotations.Display
            (ResourceType = typeof(Resources.ViewModel.CurrencyUnit),
            Name = Resources.ViewModel.Strings.CurrencyUnitKeys.Ratio)]
-       #endregion
+        #endregion
         public decimal Ratio { get; set; }
 
         #region InsertDateTime

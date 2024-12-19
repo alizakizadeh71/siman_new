@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.User
+﻿namespace ViewModels.Areas.Administrator.User
 {
     public class IndexViewModel : System.Object
     {
@@ -40,7 +34,7 @@ namespace ViewModels.Areas.Administrator.User
             Name = Resources.ViewModel.Strings.UserKeys.Province)]
         #endregion
         public string Province { get; set; }
-        
+
         #region City
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.ViewModel.User),
@@ -74,6 +68,12 @@ namespace ViewModels.Areas.Administrator.User
             Name = Resources.ViewModel.Strings.UserKeys.BuyerMobile)]
         #endregion
         public string BuyerMobile { get; set; }
+        #region InitialCredit
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.InitialCredit)]
+        #endregion
+        public int InitialCredit { get; set; }
         #region Address
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.ViewModel.User),

@@ -1,10 +1,8 @@
-﻿using ClosedXML.Excel;
-using Enums;
+﻿using Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OPS.Areas.Administrator.Controllers
@@ -40,10 +38,10 @@ namespace OPS.Areas.Administrator.Controllers
         {
             try
             {
-            
 
 
-            // connect to report server
+
+                // connect to report server
                 QueryBuilder.Service.Common.LoginData LoginData = new QueryBuilder.Service.Common.LoginData
                 {
                     Username = "admin",
@@ -334,7 +332,7 @@ namespace OPS.Areas.Administrator.Controllers
 
                 ViewBag.ReportId = reportId;
                 int totalPage;
-              var reportData = GetDataReports(reportId, reportParameterValues, out totalPage, 5);
+                var reportData = GetDataReports(reportId, reportParameterValues, out totalPage, 5);
                 OpenXml.ObjectsToXls excel = new OpenXml.ObjectsToXls();
                 excel.DataTableToJSONWithJavaScriptSerializer(reportData.DataTable, "reportResult");
                 excel.WriteToHttpResponse("Export.xlsx");

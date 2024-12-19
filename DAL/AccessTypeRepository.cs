@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace DAL
+﻿namespace DAL
 {
     public class AccessTypeRepository : Repository<Models.AccessType>, IAccessTypeRepository
-	{
-		public AccessTypeRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
-	}
+    {
+        public AccessTypeRepository(Models.DatabaseContext databaseContext)
+            : base(databaseContext)
+        {
+        }
+    }
 }

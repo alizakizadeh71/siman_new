@@ -147,6 +147,9 @@
   <data name="FullName" xml:space="preserve">
     <value>نام و نام خانوادگی</value>
   </data>
+  <data name="InitialCredit" xml:space="preserve">
+    <value>موجودی اولیه</value>
+  </data>
   <data name="IsActive" xml:space="preserve">
     <value>فعال</value>
   </data>

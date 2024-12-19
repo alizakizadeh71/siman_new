@@ -1,14 +1,10 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Models;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -80,7 +76,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             var varResult =
                 Utilities.Kendo.HtmlHelpers
-                .ParseGridData<ViewModels.Areas.Administrator.ServiceTariff.IndexViewModel>(ViewModelsvarServiceTariffs,true, out dataSource);
+                .ParseGridData<ViewModels.Areas.Administrator.ServiceTariff.IndexViewModel>(ViewModelsvarServiceTariffs, true, out dataSource);
 
             Infrastructure.Sessions.SearchDataSource = dataSource;
             return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
@@ -130,7 +126,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             if (oFindServiceTariff != null)
             {
-                
+
                 ViewBag.PageMessages += "خدمات مشابه با همین ویژگی ها در سیستم ثبت شده است.";
                 ViewBag.PageMessages += "<br/>";
                 return View();
@@ -217,8 +213,8 @@ namespace OPS.Areas.Administrator.Controllers
             // دسترسی ویرایش فقط به غلامی و pap
             //if (Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("BA4C5D09-258F-4287-B093-9C8CF2865EBA")  // غلامی
             if (Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("BA4C5D09-258F-4287-B093-9C8CF2865EBB")  // کمرای
-              ||Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("84879792-772E-11EA-9132-0050568D5B96")  // بزمونه
-              ||Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("F2C863BA-D829-4B4F-AA35-0036287CE8FD")  // pap-ict.ir
+              || Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("84879792-772E-11EA-9132-0050568D5B96")  // بزمونه
+              || Infrastructure.Sessions.AuthenticatedUser.User.Id == new Guid("F2C863BA-D829-4B4F-AA35-0036287CE8FD")  // pap-ict.ir
                 )
             {
 
@@ -240,21 +236,21 @@ namespace OPS.Areas.Administrator.Controllers
                 .FirstOrDefault()
                 ;
 
-            if (oServiceTariff == null)
-            {
-                return (RedirectToAction
-                    (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-            }
-            var varUnits = UnitOfWork.UnitRepository.Get().ToList();
-            ViewData["Unit"] = new System.Web.Mvc.SelectList(varUnits, "Id", "Name", oServiceTariff.Unit);
+                if (oServiceTariff == null)
+                {
+                    return (RedirectToAction
+                        (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+                }
+                var varUnits = UnitOfWork.UnitRepository.Get().ToList();
+                ViewData["Unit"] = new System.Web.Mvc.SelectList(varUnits, "Id", "Name", oServiceTariff.Unit);
 
-            var varSubHeadLines = UnitOfWork.SubHeadLineRepository.Get().ToList();
-            ViewData["SubHeadLine"] = new System.Web.Mvc.SelectList(varSubHeadLines, "Id", "Name", oServiceTariff.SubHeadLine);
+                var varSubHeadLines = UnitOfWork.SubHeadLineRepository.Get().ToList();
+                ViewData["SubHeadLine"] = new System.Web.Mvc.SelectList(varSubHeadLines, "Id", "Name", oServiceTariff.SubHeadLine);
 
-            var varBankAccounts = UnitOfWork.BankAccountRepository.Get().ToList();
-            ViewData["BankAccount"] = new System.Web.Mvc.SelectList(varBankAccounts, "Id", "AccountTitel", oServiceTariff.BankAccount);
+                var varBankAccounts = UnitOfWork.BankAccountRepository.Get().ToList();
+                ViewData["BankAccount"] = new System.Web.Mvc.SelectList(varBankAccounts, "Id", "AccountTitel", oServiceTariff.BankAccount);
 
-            return (View(oServiceTariff));
+                return (View(oServiceTariff));
             }
             else
             {
@@ -420,8 +416,8 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var fileDownloadName = String.Format("FileName.xlsx");
             const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            
-            var newDataSource = Infrastructure.Sessions.SearchDataSource 
+
+            var newDataSource = Infrastructure.Sessions.SearchDataSource
                 as List<ViewModels.Areas.Administrator.ServiceTariff.IndexViewModel>;
 
             // Pass your ef data to method
@@ -501,7 +497,7 @@ namespace OPS.Areas.Administrator.Controllers
                 = WorkSheet.Cells[2, 8].Style.Border.Bottom.Style
                 = WorkSheet.Cells[2, 8].Style.Border.Right.Style
                 = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-            
+
             #endregion
 
 

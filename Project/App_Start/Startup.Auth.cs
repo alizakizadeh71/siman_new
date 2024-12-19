@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
-using Microsoft.Owin.Builder;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 

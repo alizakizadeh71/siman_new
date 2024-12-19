@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class BankAccountRepository : Repository<Models.BankAccount>, IBankAccountRepository
-	{
+    {
         public BankAccountRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.BankAccount> GetBankAccounts()
         {
@@ -17,5 +16,5 @@ namespace DAL
             return list;
         }
 
-	}
+    }
 }

@@ -9,12 +9,12 @@
         {
             //base.Seed(databaseContext);
 
-            try 
+            try
             {
-               // DatabaseContextInitializer.Seed(databaseContext);
+                // DatabaseContextInitializer.Seed(databaseContext);
             }
 
-            catch(System.Exception ex)
+            catch (System.Exception ex)
             {
                 Utilities.Net.LogHandler.Report(GetType(), null, ex);
             }

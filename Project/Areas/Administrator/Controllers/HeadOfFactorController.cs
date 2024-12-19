@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Models;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -85,7 +82,7 @@ namespace OPS.Areas.Administrator.Controllers
             }
             if (Code == "3")
             {
-                varHeadLines = UnitOfWork.HeadLineRepository.Get().Where(x => x.Code == "7" || x.Code == "8" || x.Code == "9"|| x.Code == "11"|| x.Code == "12"|| x.Code == "13"|| x.Code == "14"|| x.Code == "15"|| x.Code == "16").ToList();
+                varHeadLines = UnitOfWork.HeadLineRepository.Get().Where(x => x.Code == "7" || x.Code == "8" || x.Code == "9" || x.Code == "11" || x.Code == "12" || x.Code == "13" || x.Code == "14" || x.Code == "15" || x.Code == "16").ToList();
                 TempData["Codee"] = Code;
             }
             if (Code == "23")
@@ -194,10 +191,10 @@ namespace OPS.Areas.Administrator.Controllers
                     SubHeadLine = current.SubHeadLine.Name,
                     CompanyName = current.CompanyName,
                     Province = current.Province.Name,
-                    City = current.City!=null?current.City.Name:"-",
+                    City = current.City != null ? current.City.Name : "-",
                     CompanyNationalCode = current.CompanyNationalCode,
                     InvoiceNumber = current.InvoiceNumber,
-                    InvoiceDate = Infrastructure.Utility.DisplayDateTime(current.InvoiceDate,true),
+                    InvoiceDate = Infrastructure.Utility.DisplayDateTime(current.InvoiceDate, true),
                     Description = current.Description,
                     CellPhoneNumber = current.CellPhoneNumber,
                 })
@@ -227,7 +224,7 @@ namespace OPS.Areas.Administrator.Controllers
                 = UnitOfWork.HeadOfFactorRepository.Get()
                 .Where(current => current.Id == id)
                 .ToList()
-                .Select(current=>new ViewModels.Areas.Administrator.HeadOfFactor.EditViewModel()
+                .Select(current => new ViewModels.Areas.Administrator.HeadOfFactor.EditViewModel()
                 {
                     Id = current.Id,
                     HeadLine = current.HeadLineId,
@@ -237,7 +234,7 @@ namespace OPS.Areas.Administrator.Controllers
                     City = current.CityId,
                     CompanyNationalCode = current.CompanyNationalCode,
                     InvoiceNumber = current.InvoiceNumber,
-                    InvoiceDate = Infrastructure.Utility.DisplayDateTime(current.InvoiceDate,true),
+                    InvoiceDate = Infrastructure.Utility.DisplayDateTime(current.InvoiceDate, true),
                     Description = current.Description,
                     CellPhoneNumber = current.CellPhoneNumber,
                 })

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Models;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -106,7 +100,7 @@ namespace OPS.Areas.Administrator.Controllers
         {
             ViewBag.PageMessages = null;
 
-            if (id==null)
+            if (id == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
@@ -118,7 +112,7 @@ namespace OPS.Areas.Administrator.Controllers
                 .ToList()
                 .Select(current => new ViewModels.Areas.Administrator.Bank.DetailViewModel()
                 {
-                    Id=current.Id,
+                    Id = current.Id,
                     Name = current.Name,
                     Code = current.Code,
                     InsertDateTime = Infrastructure.Utility.DisplayDateTime(current.InsertDateTime, true)
@@ -141,7 +135,7 @@ namespace OPS.Areas.Administrator.Controllers
         {
             ViewBag.PageMessages = null;
 
-            if (id==null)
+            if (id == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
@@ -174,7 +168,7 @@ namespace OPS.Areas.Administrator.Controllers
         public virtual System.Web.Mvc.ActionResult Edit(ViewModels.Areas.Administrator.Bank.EditViewModel Bank)
         {
             ViewBag.PageMessages = null;
-        
+
             try
             {
                 var OldValue =
@@ -234,12 +228,12 @@ namespace OPS.Areas.Administrator.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]       
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
         public virtual System.Web.Mvc.ActionResult Delete(System.Guid id)
         {
             ViewBag.PageMessages = null;
 
-            if (id==null)
+            if (id == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));

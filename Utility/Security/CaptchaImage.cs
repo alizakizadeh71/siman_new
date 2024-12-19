@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Utilities.Security
+﻿namespace Utilities.Security
 {
     public class CaptchaImage
     {
         CaptchaImage()
         { }
 
-        
+
     }
 }

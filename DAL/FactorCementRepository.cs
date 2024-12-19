@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using System.Data.Entity;
+﻿using Models;
 using System;
-using System.Collections.Generic;
-using Models;
+using System.Linq;
 
 namespace DAL
 {

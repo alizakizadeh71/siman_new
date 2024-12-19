@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.CentralBank
+﻿namespace ViewModels.Areas.Administrator.CentralBank
 {
     public class bankTransactionViewModel : System.Object
     {
@@ -18,7 +12,7 @@ namespace ViewModels.Areas.Administrator.CentralBank
         //public string Description;
         //public string PaymentCode;
 
-        public bankTransactionViewModel() 
+        public bankTransactionViewModel()
         { }
         public System.Guid Id { get; set; }
 

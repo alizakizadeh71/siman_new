@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Models;
+using System;
 using System.Linq;
-using System.Web;
-using Models;
 
 namespace Infrastructure
 {
@@ -100,7 +98,7 @@ namespace Infrastructure
 
                 else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Certificate)
                     oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-                
+
                 else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Lims)
                     oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
 
@@ -147,5 +145,5 @@ namespace Infrastructure
             }
         }
     }
-    
+
 }

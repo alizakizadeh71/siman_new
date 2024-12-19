@@ -1,6 +1,5 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using System;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace OPS.Controllers

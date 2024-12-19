@@ -1,18 +1,14 @@
 ﻿//using PecPGW.Samples.WebApp.MVC.ParsianPGWSalePaymentServices;
 //using PecPGW.Samples.WebApp.MVC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Infrastructure;
 using log4net;
-using System.IO;
+using OPS.ir.shaparak.sadad;
 //using PecPGW.Samples.WebApp.MVC.Models.SalePayment;
 //using PecPGW.Samples.Common;
 using OPS.Parsian;
-using WebGrease;
-using OPS.ir.shaparak.sadad;
-using Infrastructure;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace OPS.Controllers
 {
@@ -394,12 +390,12 @@ namespace OPS.Controllers
                         //   ;
                         //if (oRequest == null)
                         //{
-                            oRequest =
-                                UnitOfWork.RequestRepository.Get()
-                               .Where(current => current.InvoiceNumber == NewOrderId)
-                               .FirstOrDefault()
-                               ;
-                            ErrorCount = 4;
+                        oRequest =
+                            UnitOfWork.RequestRepository.Get()
+                           .Where(current => current.InvoiceNumber == NewOrderId)
+                           .FirstOrDefault()
+                           ;
+                        ErrorCount = 4;
 
                         //}
                         var oAccountNumber =
@@ -545,7 +541,7 @@ namespace OPS.Controllers
 
                             else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Registration)
                                 oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-                            
+
                             else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Lims)
                                 oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
 
@@ -560,12 +556,12 @@ namespace OPS.Controllers
                             //    .FirstOrDefault();
                             //if (oRequestNew == null)
                             //{
-                                ErrorCount = 8;
+                            ErrorCount = 8;
 
-                                oRequestNew =
-                                    UnitOfWork.RequestRepository.Get()
-                                    .Where(current => current.InvoiceNumber == NewOrderId)
-                                    .FirstOrDefault();
+                            oRequestNew =
+                                UnitOfWork.RequestRepository.Get()
+                                .Where(current => current.InvoiceNumber == NewOrderId)
+                                .FirstOrDefault();
                             //}
 
                             return View("~/Views/Payment/MerchantCommitByInvoiceNumber.cshtml", oRequestNew);
@@ -614,10 +610,10 @@ namespace OPS.Controllers
 
                 //if (oRequestNew == null)
                 //{
-                    oRequestNew =
-                UnitOfWork.RequestRepository.Get()
-                .Where(current => current.InvoiceNumber == NewOrderId)
-                .FirstOrDefault();
+                oRequestNew =
+            UnitOfWork.RequestRepository.Get()
+            .Where(current => current.InvoiceNumber == NewOrderId)
+            .FirstOrDefault();
                 //}
 
 

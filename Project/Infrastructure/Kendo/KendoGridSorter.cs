@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web;
 
 namespace Infrastructure.Kendo
@@ -22,12 +21,12 @@ namespace Infrastructure.Kendo
             var collection = BuildEmptyCollection();
 
             var idex = 0;
-            while(true)
+            while (true)
             {
                 var sorter = new KendoGridSorter()
                 {
                     Field = request.Params["sort[" + idex + "][field]"],
-                    Direction = request.Params["sort[" + idex + "][dir]"] 
+                    Direction = request.Params["sort[" + idex + "][dir]"]
                 };
 
                 if (sorter.Field == null) { break; }

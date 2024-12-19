@@ -1,9 +1,7 @@
-﻿using Models;
-
-namespace DAL
+﻿namespace DAL
 {
     public interface IFactorCementRepository : IRepository<Models.FactorCement>
-	{
+    {
         int GetLastInvoiceNumber();
         System.Linq.IQueryable<Models.FactorCement> GetByUser(Models.User user);
         System.Linq.IQueryable<Models.FactorCement> GetByinvoicenumber(int invoicenumber);

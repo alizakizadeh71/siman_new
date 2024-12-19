@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace Models
+﻿namespace Models
 {
     public class HeadOfFactor : BaseExtendedEntity
     {
@@ -13,7 +10,7 @@ namespace Models
             {
                 Property(current => current.InvoiceNumber)
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-                
+
                 Property(current => current.CompanyName).HasMaxLength(100);
                 Property(current => current.CompanyNationalCode).HasMaxLength(11);
                 Property(current => current.CellPhoneNumber).HasMaxLength(11);
@@ -70,7 +67,7 @@ namespace Models
             Name = Resources.Model.Strings.HeadOfFactorKeys.Request)]
         #endregion
         public virtual Request Request { get; set; }
-        
+
 
         /// <summary>
         /// سرفصل
@@ -105,7 +102,7 @@ namespace Models
             Name = Resources.Model.Strings.HeadOfFactorKeys.SubHeadLine)]
         #endregion
         public System.Guid SubHeadLineId { get; set; }
-        
+
         #region User
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.HeadOfFactor),

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.HeadOfFactor
+﻿namespace ViewModels.Areas.Administrator.HeadOfFactor
 {
-   public class DisplayViewModel: System.Object
+    public class DisplayViewModel : System.Object
     {
-       public DisplayViewModel()
+        public DisplayViewModel()
         { }
 
         public System.Guid Id { get; set; }

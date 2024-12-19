@@ -1,7 +1,7 @@
 ﻿namespace DAL
 {
     public interface IFactoryNameRepository : IRepository<Models.FactoryName>
-	{
+    {
 
         System.Linq.IQueryable<Models.FactoryName> GetFactoryNames();
 

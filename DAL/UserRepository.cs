@@ -1,15 +1,14 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using System;
+﻿using System;
+using System.Linq;
 
 namespace DAL
 {
-	public class UserRepository : Repository<Models.User>, IUserRepository
-	{
-		public UserRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+    public class UserRepository : Repository<Models.User>, IUserRepository
+    {
+        public UserRepository(Models.DatabaseContext databaseContext)
+            : base(databaseContext)
+        {
+        }
 
         public Models.User GetByUserName(string username)
         {
@@ -29,7 +28,7 @@ namespace DAL
                 throw ex;
             }
         }
-        
+
         public IQueryable<Models.User> Get(Models.User user)
         {
             try
@@ -38,7 +37,7 @@ namespace DAL
 
                 if ((int)user.Role.Code == (int)Enums.Roles.ProvinceExpert00)
                 {
-                    retValue 
+                    retValue
                         = Get()
                         .Where(current => current.Role.Code <= (int)user.Role.CodeEnum)
                         .Where(current => current.ProvinceId == user.ProvinceId);
@@ -46,7 +45,7 @@ namespace DAL
 
                 else if ((int)user.Role.Code == (int)Enums.Roles.SoperAdmin)
                 {
-                    retValue 
+                    retValue
                         = Get()
                         .Where(current => current.Role.Code <= (int)user.Role.CodeEnum);
                 }
@@ -65,5 +64,5 @@ namespace DAL
                 throw ex;
             }
         }
-	}
+    }
 }

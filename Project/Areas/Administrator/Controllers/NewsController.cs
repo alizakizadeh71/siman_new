@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ViewModels.Areas.Administrator.Cement;
 using Utilities.PersianDate;
+using ViewModels.Areas.Administrator.Cement;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -69,7 +66,7 @@ namespace OPS.Areas.Administrator.Controllers
             }
         }
 
-        
+
 
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
@@ -97,7 +94,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             else if (cementViewModel.TitleNews == null || cementViewModel.TextNews == null)
                 ViewBag.PageMessages = "فیلد های عنوان خبر و کد نباید خالی باشد ";
-            else if(cementViewModel.startDateNews == null || cementViewModel.EndDateNews == null)
+            else if (cementViewModel.startDateNews == null || cementViewModel.EndDateNews == null)
                 ViewBag.PageMessages = "باید تاریخ شروع و پایان خبر مشخص شود";
             else
             {
@@ -108,7 +105,7 @@ namespace OPS.Areas.Administrator.Controllers
                 //newsweb.StartDate = SD;
                 //var ED = DateTime.Parse(cementViewModel.EndDateNews.ConvertToShamsi());
                 //newsweb.EndDate = ED;
-                                var SD = DateTime.Parse(cementViewModel.StringstartDateNews);
+                var SD = DateTime.Parse(cementViewModel.StringstartDateNews);
                 newsweb.StartDate = SD;
                 var ED = DateTime.Parse(cementViewModel.StringEndDateNews);
                 newsweb.EndDate = ED;
@@ -126,7 +123,7 @@ namespace OPS.Areas.Administrator.Controllers
         public virtual System.Web.Mvc.ActionResult Edit(System.Guid id)
         {
             ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel
-                 =UnitOfWork.NewsReopsitory.Get()
+                 = UnitOfWork.NewsReopsitory.Get()
                 .Where(current => current.Id == id)
                 .ToList()
                 .Select(current => new ViewModels.Areas.Administrator.Cement.CementViewModel()
@@ -135,7 +132,7 @@ namespace OPS.Areas.Administrator.Controllers
                     TitleNews = current.Title,
                     TextNews = current.newsText,
                     StringstartDateNews = current.StartDate.ConvertToShamsi(),
-                    StringEndDateNews  = current.EndDate.ConvertToShamsi(),
+                    StringEndDateNews = current.EndDate.ConvertToShamsi(),
                     StringInsertDateTime = new Infrastructure.Calander(current.InsertDateTime).Persion(),
                 })
                 .FirstOrDefault()

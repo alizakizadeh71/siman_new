@@ -1,22 +1,21 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class CityRepository : Repository<Models.City>, ICityRepository
-	{
+    {
         public CityRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
-        public Models.City GetByCode(string code , System.Guid ProvinceId)
+        public Models.City GetByCode(string code, System.Guid ProvinceId)
         {
             Models.City oCity =
                 Get()
                 .Where(x => x.IsActived && !x.IsDeleted)
-                .Where(current =>current.Code==code)
-                .Where(current =>current.ProvinceId== ProvinceId)
+                .Where(current => current.Code == code)
+                .Where(current => current.ProvinceId == ProvinceId)
                 .FirstOrDefault();
 
             return (oCity);
@@ -41,7 +40,7 @@ namespace DAL
                     retValue
                         = Get()
                         .Where(x => x.IsActived && !x.IsDeleted)
-                        .OrderBy(current=>current.Name);
+                        .OrderBy(current => current.Name);
                 }
 
                 return retValue;
@@ -59,12 +58,12 @@ namespace DAL
             {
                 IQueryable<Models.City> retValue;
 
-                    retValue
-                        = Get()
-                        //.Where(x => x.IsActived && !x.IsDeleted)
-                        .Where(x => !x.IsDeleted)
-                        .Where(current => current.ProvinceId == provinceId);
-               
+                retValue
+                    = Get()
+                    //.Where(x => x.IsActived && !x.IsDeleted)
+                    .Where(x => !x.IsDeleted)
+                    .Where(current => current.ProvinceId == provinceId);
+
 
                 return retValue;
             }
@@ -74,5 +73,5 @@ namespace DAL
                 throw ex;
             }
         }
-	}
+    }
 }

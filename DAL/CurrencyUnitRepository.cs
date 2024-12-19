@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class CurrencyUnitRepository : Repository<Models.CurrencyUnit>, ICurrencyUnitRepository
-	{
+    {
         public CurrencyUnitRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.CurrencyUnit> GetCurrencyUnits(Models.User user)
         {
@@ -16,8 +15,8 @@ namespace DAL
 
             //if(user.Role.Code<(int)Enums.Roles.Programmer)
             //{
-                CurrencyUnits = Get();
-                CurrencyUnits = CurrencyUnits.Where(current => current.UserId == user.Id);
+            CurrencyUnits = Get();
+            CurrencyUnits = CurrencyUnits.Where(current => current.UserId == user.Id);
             //}
 
             return CurrencyUnits;
@@ -32,5 +31,5 @@ namespace DAL
 
             return oCurrencyUnit;
         }
-	}
+    }
 }

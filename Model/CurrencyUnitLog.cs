@@ -30,7 +30,7 @@
 
         public System.Guid UserId { get; set; }
 
-		public string UserIPAddress { get; set; }
-		public string Browser { get; set; }
-	}
+        public string UserIPAddress { get; set; }
+        public string Browser { get; set; }
+    }
 }

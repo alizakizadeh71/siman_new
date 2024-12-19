@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace DAL
+﻿namespace DAL
 {
     public class FileRepository : Repository<Models.File>, IFileRepository
-	{
-		public FileRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
-	}
+    {
+        public FileRepository(Models.DatabaseContext databaseContext)
+            : base(databaseContext)
+        {
+        }
+    }
 }

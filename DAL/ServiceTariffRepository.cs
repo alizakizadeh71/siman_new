@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class ServiceTariffRepository : Repository<Models.ServiceTariff>, IServiceTariffRepository
-	{
+    {
         public ServiceTariffRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.ServiceTariff> GetServiceTariffs()
         {
@@ -29,14 +28,14 @@ namespace DAL
                 .ToList()
                 ;
 
-            IQueryable<Models.ServiceTariff> list = 
+            IQueryable<Models.ServiceTariff> list =
                 DatabaseContext.ServiceTariffInSubSystems
-                .Where(x=>!x.IsDeleted)
+                .Where(x => !x.IsDeleted)
                 .Where(x => x.IsActived)
                 .Where(x => !x.ServiceTariff.IsDeleted)
-                .Where(x=>x.ServiceTariff.IsActived)
+                .Where(x => x.ServiceTariff.IsActived)
                 .Where(x => x.SubSystemId == subsystemId)
-                .Select(x=>x.ServiceTariff)
+                .Select(x => x.ServiceTariff)
                 .ToList()
                 .AsQueryable()
                 ;
@@ -62,5 +61,5 @@ namespace DAL
 
             return oServiceTariff;
         }
-	}
+    }
 }

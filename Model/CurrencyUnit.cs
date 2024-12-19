@@ -9,9 +9,9 @@
             public Configuration()
             {
                 Property(current => current.Name).HasMaxLength(30);
-				Property(current => current.Ratio).HasPrecision(18, 3);
-		      
-				
+                Property(current => current.Ratio).HasPrecision(18, 3);
+
+
                 HasRequired(current => current.User)
                     .WithMany(user => user.CurrencyUnits)
                     .HasForeignKey(current => current.UserId)
@@ -23,7 +23,7 @@
 
         public CurrencyUnit()
         { }
-        
+
         public string Name { get; set; }
         public string NameString
         {
@@ -43,9 +43,9 @@
 
         public System.Guid UserId { get; set; }
 
-		public string UserIPAddress { get; set; }
-		public string Browser { get; set; }
+        public string UserIPAddress { get; set; }
+        public string Browser { get; set; }
 
-		//public virtual System.Collections.Generic.IList<DetailOfFactor> DetailOfFactors { get; set; }
-	}
+        //public virtual System.Collections.Generic.IList<DetailOfFactor> DetailOfFactors { get; set; }
+    }
 }

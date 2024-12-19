@@ -1,25 +1,23 @@
-﻿using System.Collections.Generic;
-
-namespace Models
+﻿namespace Models
 {
     public class Province : BaseExtendedEntity
-	{
-		#region Configuration
-		internal class Configuration :
+    {
+        #region Configuration
+        internal class Configuration :
             System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Province>
-		{
-			public Configuration()
-			{
+        {
+            public Configuration()
+            {
                 Property(current => current.Name).HasMaxLength(50);
                 Property(current => current.Code).HasMaxLength(10);
                 Property(current => current.BankCode).HasMaxLength(2);
-			}
-		}
-		#endregion /Configuration
+            }
+        }
+        #endregion /Configuration
 
         public Province()
-		{
-		}
+        {
+        }
 
         public string Name { get; set; }
 

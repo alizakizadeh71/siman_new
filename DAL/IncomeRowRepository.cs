@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class IncomeRowRepository : Repository<Models.IncomeRow>, IIncomeRowRepository
-	{
+    {
         public IncomeRowRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.IncomeRow> GetIncomeRows()
         {
@@ -26,5 +25,5 @@ namespace DAL
 
             return oIncomeRow;
         }
-	}
+    }
 }

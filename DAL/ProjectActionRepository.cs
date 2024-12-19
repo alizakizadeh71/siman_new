@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
@@ -12,12 +11,12 @@ namespace DAL
 
         public Models.ProjectAction GetAction(string areaString, string controllerString, string actionString)
         {
-          var  Action = Get()
-                .Where(current => current.Area == areaString)
-                .Where(current => current.Controller == controllerString)
-                .Where(current => current.Action == actionString)
-                .FirstOrDefault()
-                ;
+            var Action = Get()
+                  .Where(current => current.Area == areaString)
+                  .Where(current => current.Controller == controllerString)
+                  .Where(current => current.Action == actionString)
+                  .FirstOrDefault()
+                  ;
 
             return Action;
         }

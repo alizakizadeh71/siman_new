@@ -42,7 +42,7 @@
 
         public int NewState { get; set; }
 
-		public string UserIPAddress { get; set; }
-		public string Browser { get; set; }
-	}
+        public string UserIPAddress { get; set; }
+        public string Browser { get; set; }
+    }
 }

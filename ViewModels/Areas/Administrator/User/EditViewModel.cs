@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ViewModels.Areas.Administrator.User
 {
-   public class EditViewModel: System.Object
+    public class EditViewModel : System.Object
     {
         public EditViewModel()
         { }
@@ -94,6 +90,13 @@ namespace ViewModels.Areas.Administrator.User
             Name = Resources.ViewModel.Strings.UserKeys.Address)]
         #endregion
         public string Address { get; set; }
+
+        #region InitialCredit
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.InitialCredit)]
+        #endregion
+        public int InitialCredit { get; set; }
 
         //#region IsDelete
         //[System.ComponentModel.DataAnnotations.Display

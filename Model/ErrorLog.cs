@@ -16,7 +16,7 @@ namespace Models
         }
         #endregion
 
-       public ErrorLog()
+        public ErrorLog()
         {
         }
 

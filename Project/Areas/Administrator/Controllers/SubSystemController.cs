@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Models;
+using System;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Models;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -64,7 +59,7 @@ namespace OPS.Areas.Administrator.Controllers
         public virtual System.Web.Mvc.ActionResult Create(ViewModels.Areas.Administrator.SubSystem.CreateViewModel subsystem)
         {
             ViewBag.PageMessages = null;
-            
+
             Models.SubSystem oFindedSubSystem = new Models.SubSystem();
 
             oFindedSubSystem =
@@ -136,7 +131,7 @@ namespace OPS.Areas.Administrator.Controllers
         {
             ViewBag.PageMessages = null;
 
-            if (id==null)
+            if (id == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
@@ -148,7 +143,7 @@ namespace OPS.Areas.Administrator.Controllers
                 .ToList()
                 .Select(current => new ViewModels.Areas.Administrator.SubSystem.DetailViewModel()
                 {
-                    Id=current.Id,
+                    Id = current.Id,
                     Name = current.Name,
                     Code = current.Code,
                     UrlFrom = current.UrlFrom,
@@ -174,7 +169,7 @@ namespace OPS.Areas.Administrator.Controllers
         {
             ViewBag.PageMessages = null;
 
-            if (id==null)
+            if (id == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
@@ -264,12 +259,12 @@ namespace OPS.Areas.Administrator.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]     
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
         public virtual System.Web.Mvc.ActionResult Delete(System.Guid id)
         {
             ViewBag.PageMessages = null;
 
-            if (id==null)
+            if (id == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));

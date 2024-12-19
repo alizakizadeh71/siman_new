@@ -1,9 +1,6 @@
-﻿using System;
+﻿using ClosedXML.Excel;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using ClosedXML.Excel;
 
 
 namespace OpenXml
@@ -36,7 +33,7 @@ namespace OpenXml
         {
             get
             {
-                if (this.Columns.Any(x=>x == col))
+                if (this.Columns.Any(x => x == col))
                 {
                     int index = this.Columns.IndexOf(col);
                     return this[index + 1];

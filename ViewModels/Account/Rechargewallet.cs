@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Account
+﻿namespace ViewModels.Account
 {
-    public  class Rechargewallet : System.Object
+    public class Rechargewallet : System.Object
     {
         public Rechargewallet()
         {

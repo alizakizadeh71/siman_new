@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace Models
+﻿namespace Models
 {
     /// <summary>
     /// عنوان حساب - شامل : تمامی اطلاعات پایه برای کد 17 رقمی

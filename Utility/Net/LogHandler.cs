@@ -14,7 +14,7 @@
             oResult.Append("**************************************************");
             oResult.Append(System.Environment.NewLine);
             oResult.Append("**************************************************");
-            
+
             strMessage = string.Format("Timestamp: {0:yyyy/MM/dd - HH:mm:ss}", System.DateTime.Now);
 
             oResult.Append(System.Environment.NewLine);
@@ -38,7 +38,7 @@
                     oResult.Append(System.Environment.NewLine);
                     oResult.Append("**********");
                 }
-                
+
                 string strAbsoluteUri = System.Web.HttpContext.Current.Request.Url.AbsoluteUri;
                 if (string.IsNullOrEmpty(strAbsoluteUri) == false)
                 {
@@ -50,7 +50,7 @@
                     oResult.Append(System.Environment.NewLine);
                     oResult.Append("**********");
                 }
-                
+
 
                 string strHttpReferer = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_REFERER"];
                 if (string.IsNullOrEmpty(strHttpReferer) == false)
@@ -88,7 +88,7 @@
                 oResult.Append("********************");
                 oResult.Append(System.Environment.NewLine);
                 oResult.Append("Parameter(s)");
-                
+
                 foreach (System.Collections.DictionaryEntry oEntry in parameters)
                 {
                     oResult.Append(System.Environment.NewLine);
@@ -132,7 +132,7 @@
             oResult.Append("********************");
             oResult.Append(System.Environment.NewLine);
             oResult.Append("Exception(s)");
-           
+
             string strTabs = string.Empty;
             System.Exception oException = ex;
             while (oException != null)
@@ -141,13 +141,13 @@
                 strTabs += "\t";
                 oException = oException.InnerException;
             }
-           
+
             oResult.Append(System.Environment.NewLine);
             oResult.Append(System.Environment.NewLine);
             oResult.Append("/Exception(s)");
             oResult.Append(System.Environment.NewLine);
             oResult.Append("********************");
-            
+
             oResult.Append(System.Environment.NewLine);
             oResult.Append(System.Environment.NewLine);
             oResult.Append("**************************************************");
@@ -225,19 +225,19 @@
         {
             bool blnResult = false;
 
-            string strLogPathName =Setting.ApplicationSettings.GetValue("ApplicationLogRootRelativePathName");
+            string strLogPathName = Setting.ApplicationSettings.GetValue("ApplicationLogRootRelativePathName");
 
             if (string.IsNullOrEmpty(strLogPathName) == false)
             {
-                if ((System.Web.HttpContext.Current != null) &&(System.Web.HttpContext.Current.Server != null) &&(System.Web.HttpContext.Current.Application != null))
+                if ((System.Web.HttpContext.Current != null) && (System.Web.HttpContext.Current.Server != null) && (System.Web.HttpContext.Current.Application != null))
                 {
-                    strLogPathName =System.Web.HttpContext.Current.Server.MapPath(strLogPathName);
+                    strLogPathName = System.Web.HttpContext.Current.Server.MapPath(strLogPathName);
                     System.Web.HttpContext.Current.Application.Lock();
                 }
 
                 blnResult = Utilities.IO.File.Append(strLogPathName, message);
 
-                if ((System.Web.HttpContext.Current != null) &&(System.Web.HttpContext.Current.Server != null) &&(System.Web.HttpContext.Current.Application != null))
+                if ((System.Web.HttpContext.Current != null) && (System.Web.HttpContext.Current.Server != null) && (System.Web.HttpContext.Current.Application != null))
                 {
                     System.Web.HttpContext.Current.Application.UnLock();
                 }
@@ -272,7 +272,7 @@
             }
         }
 
-        public static string Report(System.Type type,System.Collections.Hashtable parameters,System.Exception ex)
+        public static string Report(System.Type type, System.Collections.Hashtable parameters, System.Exception ex)
         {
             Enums.LogTypes enmLogType = Enums.LogTypes.Both;
 
@@ -288,9 +288,9 @@
             return (Report(type, parameters, ex, enmLogType));
         }
 
-        public static string Report(System.Type type,System.Collections.Hashtable parameters,System.Exception ex,Enums.LogTypes logType)
+        public static string Report(System.Type type, System.Collections.Hashtable parameters, System.Exception ex, Enums.LogTypes logType)
         {
-            string strErrorMessage =GetErrorMessage(type, parameters, ex);
+            string strErrorMessage = GetErrorMessage(type, parameters, ex);
 
             switch (logType)
             {

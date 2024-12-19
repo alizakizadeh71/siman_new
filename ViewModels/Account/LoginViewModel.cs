@@ -1,11 +1,11 @@
 ﻿
 namespace ViewModels.Account
 {
-	public class LoginViewModel : System.Object
-	{
-		public LoginViewModel()
-		{
-		}
+    public class LoginViewModel : System.Object
+    {
+        public LoginViewModel()
+        {
+        }
         #region UserName
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.User),
@@ -16,7 +16,7 @@ namespace ViewModels.Account
             ErrorMessageResourceType = typeof(Resources.Message.Global),
             ErrorMessageResourceName = Resources.Message.Strings.GlobalKeys.Required)]
         #endregion
-		public string UserName { get; set; }
+        public string UserName { get; set; }
 
         #region Password
         [System.ComponentModel.DataAnnotations.Display
@@ -31,10 +31,10 @@ namespace ViewModels.Account
             ErrorMessageResourceType = typeof(Resources.Message.Global),
             ErrorMessageResourceName = Resources.Message.Strings.GlobalKeys.Required)]
         #endregion
-		public string Password { get; set; }
+        public string Password { get; set; }
 
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [System.ComponentModel.DataAnnotations.Display(Name = "حاصل جمع")]
         public string Captcha { get; set; }
-	}
+    }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data;
-using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace OPS.Areas.Administrator.Controllers
@@ -78,7 +77,7 @@ namespace OPS.Areas.Administrator.Controllers
             ViewBag.PageMessages = null;
 
             var varServiceTariffs = UnitOfWork.DetailOfFactorRepository.GetServiceTariff(headoffactorid).ToList()
-          //ViewData["ServiceTariff"] = new System.Web.Mvc.SelectList(varServiceTariffs, "Id", "NameString", null).OrderBy(p => p.Text);
+                //ViewData["ServiceTariff"] = new System.Web.Mvc.SelectList(varServiceTariffs, "Id", "NameString", null).OrderBy(p => p.Text);
                 .Select(x => new ViewModels.ComboboxItemGuid
                 {
                     Id = x.Id,
@@ -86,7 +85,7 @@ namespace OPS.Areas.Administrator.Controllers
                 })
                 .OrderBy(current => current.Name)
                 .ToList();
-                ViewBag.ServiceTariff = varServiceTariffs;
+            ViewBag.ServiceTariff = varServiceTariffs;
 
 
             var varCurrencyUnit = UnitOfWork.CurrencyUnitRepository.Get().ToList()
@@ -344,11 +343,11 @@ namespace OPS.Areas.Administrator.Controllers
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
         public virtual ActionResult PrintFactor(Guid headoffactorid)
-            {
-            List<Models.DetailOfFactor> list= null;
+        {
+            List<Models.DetailOfFactor> list = null;
             try
             {
-				var headRow =
+                var headRow =
                      UnitOfWork.HeadOfFactorRepository.Get()
                      .Where(current => current.Id == headoffactorid)
                      .FirstOrDefault()
@@ -371,7 +370,7 @@ namespace OPS.Areas.Administrator.Controllers
                      .Where(current => current.HeadOfFactorId == headoffactorid).FirstOrDefault().CurrencyRatio;
 
 
-                var InvoiceNumber = row.HeadOfFactor.InvoiceNumber.ToString() ;
+                var InvoiceNumber = row.HeadOfFactor.InvoiceNumber.ToString();
 
                 Models.Request oRequest = UnitOfWork.RequestRepository.Get()
                     .Where(x => x.IsActived == true)
@@ -410,7 +409,7 @@ namespace OPS.Areas.Administrator.Controllers
                     oRequest.Province = row.HeadOfFactor.Province;
                     oRequest.ProvinceId = row.HeadOfFactor.ProvinceId;
                     oRequest.RecordDate = Infrastructure.Utility.Persion(DateTime.Now);
-                    oRequest.RecordNumber = row.HeadOfFactor.InvoiceNumber.ToString()+"000";
+                    oRequest.RecordNumber = row.HeadOfFactor.InvoiceNumber.ToString() + "000";
                     oRequest.RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder);
                     oRequest.ServiceTariff = row.ServiceTariff;
                     oRequest.ServiceTariffId = row.ServiceTariffId;
@@ -484,10 +483,10 @@ namespace OPS.Areas.Administrator.Controllers
                     }
                     #endregion
                     oRequest.SubSystemId = subSystem.Id;
-					/////////////////////////////////////////////
-					oRequest.UserIPAddress = Request.UserHostAddress;
-					oRequest.Browser = Request.Browser.Type; // مدل و ورژن مرورگر
-					oRequest.TotalValue = 0;
+                    /////////////////////////////////////////////
+                    oRequest.UserIPAddress = Request.UserHostAddress;
+                    oRequest.Browser = Request.Browser.Type; // مدل و ورژن مرورگر
+                    oRequest.TotalValue = 0;
                     oRequest.UpdateDateTime = DateTime.Now;
                     oRequest.URLAddress = UnitOfWork.SubSystemRepository.Get().FirstOrDefault().UrlTo;
                     oRequest.User = row.HeadOfFactor.User;
@@ -500,13 +499,13 @@ namespace OPS.Areas.Administrator.Controllers
                 UnitOfWork.Save();
 
                 list =
-					UnitOfWork.DetailOfFactorRepository.Get(headoffactorid)
-					.ToList();
+                    UnitOfWork.DetailOfFactorRepository.Get(headoffactorid)
+                    .ToList();
 
-                var File = new Rotativa.MVC.ViewAsPdf("PrintFactor", list) 
-                    { 
-                        FileName = list.FirstOrDefault().HeadOfFactor.CompanyName + "-" + list.FirstOrDefault().HeadOfFactor.InvoiceNumber + ".pdf"
-                    };
+                var File = new Rotativa.MVC.ViewAsPdf("PrintFactor", list)
+                {
+                    FileName = list.FirstOrDefault().HeadOfFactor.CompanyName + "-" + list.FirstOrDefault().HeadOfFactor.InvoiceNumber + ".pdf"
+                };
 
                 try
                 {
@@ -535,6 +534,6 @@ namespace OPS.Areas.Administrator.Controllers
                 return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
             }
         }
-		
+
     }
 }

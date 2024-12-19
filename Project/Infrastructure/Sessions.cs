@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
     public static class Sessions
     {
@@ -69,7 +64,7 @@ namespace Infrastructure
         {
             get
             {
-                AuthenticatedUser oAuthenticatedUser 
+                AuthenticatedUser oAuthenticatedUser
                     = System.Web.HttpContext.Current.Session[AuthenticatedUserKeyName] as AuthenticatedUser;
 
                 return (oAuthenticatedUser);
@@ -92,7 +87,7 @@ namespace Infrastructure
         {
             get
             {
-                string oCaptach= System.Web.HttpContext.Current.Session[CaptachKeyName] as string;
+                string oCaptach = System.Web.HttpContext.Current.Session[CaptachKeyName] as string;
                 return (oCaptach);
             }
             set

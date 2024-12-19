@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class UnitRepository : Repository<Models.Unit>, IUnitRepository
-	{
+    {
         public UnitRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.Unit> GetUnits()
         {
@@ -16,5 +15,5 @@ namespace DAL
             list = Get();
             return list;
         }
-	}
+    }
 }

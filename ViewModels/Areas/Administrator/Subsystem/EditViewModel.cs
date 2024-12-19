@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.SubSystem
+﻿namespace ViewModels.Areas.Administrator.SubSystem
 {
     public class EditViewModel : System.Object
     {
@@ -31,7 +25,7 @@ namespace ViewModels.Areas.Administrator.SubSystem
         [System.ComponentModel.DataAnnotations.Display
            (ResourceType = typeof(Resources.ViewModel.SubSystem),
            Name = Resources.ViewModel.Strings.SubSystemKeys.UrlFrom)]
-     //   [System.ComponentModel.DataAnnotations.Required]
+        //   [System.ComponentModel.DataAnnotations.Required]
         #endregion
         public string UrlFrom { get; set; }
 
@@ -39,7 +33,7 @@ namespace ViewModels.Areas.Administrator.SubSystem
         [System.ComponentModel.DataAnnotations.Display
            (ResourceType = typeof(Resources.ViewModel.SubSystem),
            Name = Resources.ViewModel.Strings.SubSystemKeys.UrlTo)]
-  //      [System.ComponentModel.DataAnnotations.Required]
+        //      [System.ComponentModel.DataAnnotations.Required]
         #endregion
         public string UrlTo { get; set; }
     }

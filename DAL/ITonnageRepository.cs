@@ -1,7 +1,7 @@
 ﻿namespace DAL
 {
     public interface ITonnageRepository : IRepository<Models.Tonnage>
-	{
+    {
 
         System.Linq.IQueryable<Models.Tonnage> GetTonnages();
 

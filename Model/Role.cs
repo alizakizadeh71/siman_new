@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace Models
 {
@@ -53,7 +52,7 @@ namespace Models
 
         public Enums.Roles CodeEnum
         {
-            get 
+            get
             {
                 return ((Enums.Roles)Code);
             }
@@ -64,7 +63,7 @@ namespace Models
         [System.Web.Mvc.AllowHtml]
         [System.ComponentModel.DataAnnotations.DataType
         (System.ComponentModel.DataAnnotations.DataType.MultilineText)]
-        public string  Description { get; set; }
+        public string Description { get; set; }
 
         public virtual System.Collections.Generic.IList<User> Users { get; set; }
         public virtual System.Collections.Generic.IList<ProjectAction> ProjectActions { get; set; }

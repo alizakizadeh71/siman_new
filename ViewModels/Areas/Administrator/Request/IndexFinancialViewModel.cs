@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.Request
+﻿namespace ViewModels.Areas.Administrator.Request
 {
-   public class IndexFinancialViewModel: System.Object
+    public class IndexFinancialViewModel : System.Object
     {
-       public IndexFinancialViewModel()
+        public IndexFinancialViewModel()
         { }
 
         public System.Guid Id { get; set; }

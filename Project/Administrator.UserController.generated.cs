@@ -94,12 +94,6 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult GetPersonImage()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.GetPersonImage);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult CheckPostalCodeValidation()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.CheckPostalCodeValidation);
@@ -109,6 +103,12 @@ namespace OPS.Areas.Administrator.Controllers
         public System.Web.Mvc.ActionResult Authenticate()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Authenticate);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DownloadUserExcelGetByid()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DownloadUserExcelGetByid);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -138,9 +138,10 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string ChangePassword = "ChangePassword";
             public readonly string AccessManagement = "AccessManagement";
             public readonly string CheckPersonValidation = "CheckPersonValidation";
-            public readonly string GetPersonImage = "GetPersonImage";
             public readonly string CheckPostalCodeValidation = "CheckPostalCodeValidation";
             public readonly string Authenticate = "Authenticate";
+            public readonly string DownloadUserExcel = "DownloadUserExcel";
+            public readonly string DownloadUserExcelGetByid = "DownloadUserExcelGetByid";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -158,9 +159,10 @@ namespace OPS.Areas.Administrator.Controllers
             public const string ChangePassword = "ChangePassword";
             public const string AccessManagement = "AccessManagement";
             public const string CheckPersonValidation = "CheckPersonValidation";
-            public const string GetPersonImage = "GetPersonImage";
             public const string CheckPostalCodeValidation = "CheckPostalCodeValidation";
             public const string Authenticate = "Authenticate";
+            public const string DownloadUserExcel = "DownloadUserExcel";
+            public const string DownloadUserExcelGetByid = "DownloadUserExcelGetByid";
         }
 
 
@@ -239,15 +241,6 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string NationalCode = "NationalCode";
             public readonly string birthDate = "birthDate";
         }
-        static readonly ActionParamsClass_GetPersonImage s_params_GetPersonImage = new ActionParamsClass_GetPersonImage();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_GetPersonImage GetPersonImageParams { get { return s_params_GetPersonImage; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_GetPersonImage
-        {
-            public readonly string NationalCode = "NationalCode";
-            public readonly string IdentityCertificateSerial = "IdentityCertificateSerial";
-        }
         static readonly ActionParamsClass_CheckPostalCodeValidation s_params_CheckPostalCodeValidation = new ActionParamsClass_CheckPostalCodeValidation();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_CheckPostalCodeValidation CheckPostalCodeValidationParams { get { return s_params_CheckPostalCodeValidation; } }
@@ -263,6 +256,14 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionParamsClass_Authenticate
         {
             public readonly string authenticateViewModel = "authenticateViewModel";
+        }
+        static readonly ActionParamsClass_DownloadUserExcelGetByid s_params_DownloadUserExcelGetByid = new ActionParamsClass_DownloadUserExcelGetByid();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DownloadUserExcelGetByid DownloadUserExcelGetByidParams { get { return s_params_DownloadUserExcelGetByid; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DownloadUserExcelGetByid
+        {
+            public readonly string id = "id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -399,14 +400,6 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult GetPersonImage(string NationalCode, string IdentityCertificateSerial)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GetPersonImage);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "NationalCode", NationalCode);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "IdentityCertificateSerial", IdentityCertificateSerial);
-            return callInfo;
-        }
-
         public override System.Web.Mvc.ActionResult CheckPostalCodeValidation(string PostalCode)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.CheckPostalCodeValidation);
@@ -418,6 +411,19 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Authenticate);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "authenticateViewModel", authenticateViewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DownloadUserExcel()
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DownloadUserExcel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DownloadUserExcelGetByid(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DownloadUserExcelGetByid);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 

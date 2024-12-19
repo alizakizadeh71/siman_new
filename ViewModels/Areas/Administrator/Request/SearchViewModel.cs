@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Data.Entity;
 
 namespace ViewModels.Areas.Administrator.Request
 {
@@ -112,7 +110,7 @@ namespace ViewModels.Areas.Administrator.Request
             Name = Resources.Model.Strings.RequestKeys.EndDate)]
         #endregion
         public DateTime? EndDate { get; set; }
-        
+
         #region StartDate
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),

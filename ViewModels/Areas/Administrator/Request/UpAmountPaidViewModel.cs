@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.Request
+﻿namespace ViewModels.Areas.Administrator.Request
 {
-   public class UpAmountPaidViewModel: System.Object
+    public class UpAmountPaidViewModel : System.Object
     {
-       public UpAmountPaidViewModel()
+        public UpAmountPaidViewModel()
         { }
 
         public System.Guid Id { get; set; }

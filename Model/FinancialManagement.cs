@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace Models
 {
@@ -43,7 +40,7 @@ namespace Models
                     .HasForeignKey(current => current.FactoryNameId)
                     .WillCascadeOnDelete(false)
                     ;
-    
+
             }
         }
 

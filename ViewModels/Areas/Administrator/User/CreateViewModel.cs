@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Data.Entity;
 
 namespace ViewModels.Areas.Administrator.User
 {
@@ -15,7 +13,7 @@ namespace ViewModels.Areas.Administrator.User
             Name = Resources.ViewModel.Strings.UserKeys.Province)]
         #endregion
         public Guid Province { get; set; }
-        
+
         #region City
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.ViewModel.User),
@@ -70,6 +68,12 @@ namespace ViewModels.Areas.Administrator.User
             Name = Resources.ViewModel.Strings.UserKeys.Password)]
         #endregion
         public string Password { get; set; }
+        #region InitialCredit
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.InitialCredit)]
+        #endregion
+        public int InitialCredit { get; set; }
 
         #region IsApprovallicense
         [System.ComponentModel.DataAnnotations.Display

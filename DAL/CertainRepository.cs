@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class CertainRepository : Repository<Models.Certain>, ICertainRepository
-	{
+    {
         public CertainRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.Certain> GetCertains()
         {
@@ -26,5 +25,5 @@ namespace DAL
 
             return oCertain;
         }
-	}
+    }
 }

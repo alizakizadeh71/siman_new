@@ -1,37 +1,14 @@
-﻿using OPS.ir.shaparak.sadad;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Security.Cryptography.X509Certificates;
-using System.Net;
-using OPS.CBINasimService;
-using Rotativa;
-using OPS.Parsian;
-using log4net;
-using System.Text;
-using System.Security.Cryptography;
-using ViewModels.Areas.Administrator.ZarinPal;
-
-
-//using Microsoft.AspNetCore.Mvc;
+﻿//using Microsoft.AspNetCore.Mvc;
 //using Microsoft.AspNetCore.WebUtilities;
 //using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OPS.CBINasimService;
+using OPS.ir.shaparak.sadad;
 using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp;
-using Models;
+using System.Web.Mvc;
+using ViewModels.Areas.Administrator.ZarinPal;
 
 namespace OPS.Controllers
 {
@@ -68,11 +45,11 @@ namespace OPS.Controllers
                     {
                         amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
                     }
-                    else if(user.UserName == "Guest")
+                    else if (user.UserName == "Guest")
                     {
                         amount = oFactorCement.AmountPaid.ToString();
                     }
-                    else if (oFactorCement.AmountPaid <= user.creditAmount && user.UserName != "Guest" )
+                    else if (oFactorCement.AmountPaid <= user.creditAmount && user.UserName != "Guest")
                     {
                         user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
                         UnitOfWork.UserRepository.Update(user);
@@ -261,9 +238,9 @@ namespace OPS.Controllers
                         UnitOfWork.Save();
 
                         var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
-                        string amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
-                        user.AmountOfTonnagePurchased = int.Parse(oFactorCement.Tonnage.Code);
-                        user.creditAmount += (user.AmountOfTonnagePurchased / 50) * 10000000;
+                        //string amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
+                        //user.AmountOfTonnagePurchased = int.Parse(oFactorCement.Tonnage.Code);
+                        //user.creditAmount += (user.AmountOfTonnagePurchased / 50) * 10000000;
                         UnitOfWork.UserRepository.Update(user);
                         UnitOfWork.Save();
 
@@ -442,7 +419,7 @@ namespace OPS.Controllers
                         oFactorCement.FinalApprove = true;
                         UnitOfWork.walletFactorRepository.Update(oFactorCement);
                         var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
-                        user.creditAmount  += oFactorCement.Chargeamount;
+                        user.creditAmount += oFactorCement.Chargeamount;
                         UnitOfWork.UserRepository.Update(user);
                         UnitOfWork.Save();
 

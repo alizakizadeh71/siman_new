@@ -1,7 +1,7 @@
 ﻿namespace DAL
 {
     public interface IProductNameRepository : IRepository<Models.ProductName>
-	{
+    {
 
         System.Linq.IQueryable<Models.ProductName> GetProductNames();
 

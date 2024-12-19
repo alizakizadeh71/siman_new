@@ -1,16 +1,13 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace DAL
+﻿namespace DAL
 {
     public class ErrorLogRepository : Repository<Models.ErrorLog>, IErrorLogRepository
-	{
+    {
         public ErrorLogRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
-        public void InsertErrorLog(string userName,string errorMessage,string description1,string description2)
+        public void InsertErrorLog(string userName, string errorMessage, string description1, string description2)
         {
             try
             {
@@ -28,5 +25,5 @@ namespace DAL
                 throw ex;
             }
         }
-	}
+    }
 }

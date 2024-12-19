@@ -126,9 +126,9 @@
                                 '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/User/Edit/'
                                 + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a> | ';
 
-                           // strTemplate +=
-                              //  '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Delete)" href="/Administrator/User/Delete/'
-                              //  + dataItem.Id + '"><img src="../../../Content/Icon/delete.png"/></a> | ';
+                            strTemplate +=
+                              '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ExportToExcel)" href="/Administrator/User/DownloadUserExcelGetByid/'
+                            + dataItem.Id + '"><img src="../../../Content/Images/Exel.png" width="20px" height="20px"/></a> | ';
 
                             strTemplate +=
                                 '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ChangePassword)" href="/Administrator/User/ChangePassword/'
@@ -191,6 +191,14 @@
                           lockable: true,
                           title: "@Resources.Model.User.creditAmount",
                           field: "@Resources.Model.Strings.UserKeys.creditAmount",
+                        width: "150px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.InitialCredit",
+                        field: "@Resources.Model.Strings.UserKeys.InitialCredit",
                         width: "150px",
                     },
                     {
@@ -316,12 +324,12 @@
                     </div>
                 </div>
                 @*<div class="form-group">
-                    @Html.LabelFor(model => model.City, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-6" id="DivCityId">
-                        @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.City)
-                    </div>
-                </div>*@
+                        @Html.LabelFor(model => model.City, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-6" id="DivCityId">
+                            @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.City)
+                        </div>
+                    </div>*@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Role, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
@@ -360,11 +368,15 @@
         <div class="col-md-12 panel-body">
             <div class="col-md-12">
                 <div class="row">
-                    <div style="float : right;width:49%;">
+                    <div style="float : right;width:27%;">
                         <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;width:125px;"
                            href="/Administrator/User/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
                     </div>
-                    <div style="float:left;width:49%;">
+                    <div style="float : right;width:24%;">
+                        <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ExportToExcel)" style="float:right;width:125px;"
+                           href="/Administrator/User/DownloadUserExcel/"><span style="float:right;">@Resources.Action.ExportToExcel</span><img style="float:left;width:20px;height:20px;" src='../../../Content/Images/Exel.png' /></a>
+                    </div>
+                    <div style="float:left;width:37%;">
                         <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float: left; width: 150px;"
                            href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float: left; " src='../../../Content/Icon/Back.png' /></a>
                     </div>

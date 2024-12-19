@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using System.Data.Entity;
+﻿using Models;
 using System;
 using System.Collections.Generic;
-using Models;
+using System.Data.Entity;
+using System.Linq;
 
 namespace DAL
 {
@@ -24,7 +24,7 @@ namespace DAL
                     retValue = Get()
                         .Where(current => current.IsDeleted == false)
                         .Where(current => current.IsActived == true)
-                        .Where(current => ((current.UserId == user.Id)||((current.CityId == user.CityId) &&(user.CityId != null))));
+                        .Where(current => ((current.UserId == user.Id) || ((current.CityId == user.CityId) && (user.CityId != null))));
                 }
                 else if (user.Role.Code <= (int)Enums.Roles.ProvinceExpert00)
                 {
@@ -111,7 +111,7 @@ namespace DAL
                 throw ex;
             }
         }
-        
+
         public string GetVirtualCode()
         {
             try
@@ -123,7 +123,7 @@ namespace DAL
                 var LastRow = Get()
                     //.Where(current => current.IsDeleted == false)
                     //.Where(current => current.IsActived == true)
-                    .Where(current => current.VirtualCode.CompareTo("9610000000") < 0 ) // برای فاکتور های سال 1400
+                    .Where(current => current.VirtualCode.CompareTo("9610000000") < 0) // برای فاکتور های سال 1400
                     .OrderByDescending(x => x.VirtualCode)
                     .FirstOrDefault()
                     ;
@@ -166,7 +166,7 @@ namespace DAL
                     .Where(current => !current.IsDeleted)
                     .Where(current => current.IsActived)
                     .Where(current => current.SubSystemId == request.SubSystemId)
-                    .Select(current=>current.ServiceTariff)
+                    .Select(current => current.ServiceTariff)
                     .FirstOrDefault();
 
                 request.ServiceTariffId = request.ServiceTariff.Id;
@@ -179,8 +179,8 @@ namespace DAL
                 // کد ردیف درامدی
                 request.ServiceTariff.BankAccount.IncomeRow.Code, // 6 رقم بعدی 
 
-		     	// کد معین
-				request.ServiceTariff.BankAccount.Certain.Code); // 2 رقم بعدی
+                // کد معین
+                request.ServiceTariff.BankAccount.Certain.Code); // 2 رقم بعدی
 
 
             // شامل 13 عدد میشود
@@ -192,7 +192,7 @@ namespace DAL
             request.VirtualCode = VirtualCode;
             request.OrganDigitCode = e;
 
-			var b1String = string.Format(
+            var b1String = string.Format(
                 "{0}{1}{2}{3}{4}",
                 request.ServiceTariff.BankAccount.Bank.Code,
                 request.ServiceTariff.BankAccount.ExecutableCode.Code,
@@ -207,14 +207,14 @@ namespace DAL
             b2String = Reverse(b2String);
             amount = Reverse(amount);
 
-			// For Test
-			//b1String = "2038354140201007009710208753000000482133969";
-			//b2String = Reverse("2038354140201007009710208753");
-			//amount = "482133969";
+            // For Test
+            //b1String = "2038354140201007009710208753000000482133969";
+            //b2String = Reverse("2038354140201007009710208753");
+            //amount = "482133969";
 
 
 
-			int b1 = GetVerhoefCode(b1String);
+            int b1 = GetVerhoefCode(b1String);
             int b2 = GetVerhoefCode(string.Format("{0}{1}", b2String, amount));
 
             string controlcode = string.Format("{0}{1}", b1, b2);
@@ -231,14 +231,14 @@ namespace DAL
                 request.ServiceTariff.BankAccount.Bank.Code, // عدد 2
                 controlcode, // دو رقم
                 request.ServiceTariff.BankAccount.ExecutableCode.Code, // 0383
-				d,e);
+                d, e);
 
-			//if (DepositNumber.Trim().Length != 30)
-			//{
-			//    throw new Exception("طول شناسه واریز کمتر از 30 کاراکتر است.");
-			//}
+            //if (DepositNumber.Trim().Length != 30)
+            //{
+            //    throw new Exception("طول شناسه واریز کمتر از 30 کاراکتر است.");
+            //}
 
-			request.BankDigitCode = banckdigit.Trim();
+            request.BankDigitCode = banckdigit.Trim();
 
             var OldAmount = new DatabaseContext().Requests
                 .Where(current => !current.IsDeleted)
@@ -271,12 +271,12 @@ namespace DAL
 
         private string GetValidAmount(decimal amountpaid)
         {
-			if (amountpaid <= 0 || amountpaid > 999999999999999)
-			{
-				throw new Exception();
-			}
+            if (amountpaid <= 0 || amountpaid > 999999999999999)
+            {
+                throw new Exception();
+            }
 
-			var amount = amountpaid.ToString(new string('0', 15));
+            var amount = amountpaid.ToString(new string('0', 15));
 
             return amount;
         }

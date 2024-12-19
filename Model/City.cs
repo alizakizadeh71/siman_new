@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace Models
+﻿namespace Models
 {
     public class City : BaseExtendedEntity
-	{
-		#region Configuration
-		internal class Configuration :
+    {
+        #region Configuration
+        internal class Configuration :
             System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<City>
-		{
-			public Configuration()
-			{
+        {
+            public Configuration()
+            {
                 Property(current => current.Name).HasMaxLength(50);
                 Property(current => current.Code).HasMaxLength(10);
 
@@ -19,13 +17,13 @@ namespace Models
                     .WillCascadeOnDelete(false)
                     ;
 
-			}
-		}
-		#endregion /Configuration
+            }
+        }
+        #endregion /Configuration
 
         public City()
-		{
-		}
+        {
+        }
 
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.City),

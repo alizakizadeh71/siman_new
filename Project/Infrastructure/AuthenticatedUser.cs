@@ -1,7 +1,7 @@
 ﻿namespace Infrastructure
 {
-	public class AuthenticatedUser :System.Object,Models.IAuthenticatedUser
-	{
+    public class AuthenticatedUser : System.Object, Models.IAuthenticatedUser
+    {
 
         public static bool IsAuthenticated
         {
@@ -48,11 +48,11 @@
             {
                 if (Infrastructure.Sessions.AuthenticatedUser != null)
                 {
-                    System.Guid sUserId =Infrastructure.Sessions.AuthenticatedUser.Id;
+                    System.Guid sUserId = Infrastructure.Sessions.AuthenticatedUser.Id;
 
-                    string strSessionId =System.Web.HttpContext.Current.Session.SessionID;
+                    string strSessionId = System.Web.HttpContext.Current.Session.SessionID;
 
-                    oUnitOfWork =new DAL.UnitOfWork();
+                    oUnitOfWork = new DAL.UnitOfWork();
 
                     Models.UserLoginLog oUserLoginLog =
                         oUnitOfWork.UserLoginLogRepository
@@ -84,7 +84,7 @@
             Sessions.AuthenticatedUser = null;
             //Session.Remove(Infrastructure.Sessions.AuthenticatedUserKeyName);
         }
-        public AuthenticatedUser(Models.User user) 
+        public AuthenticatedUser(Models.User user)
         {
             User = user;
         }
@@ -139,8 +139,8 @@
                     //    }
                     //    else
                     //    {
-                            _role = oUser.Role.CodeEnum;
-                        //}
+                    _role = oUser.Role.CodeEnum;
+                    //}
                     //}
                 }
                 return (_role.Value);

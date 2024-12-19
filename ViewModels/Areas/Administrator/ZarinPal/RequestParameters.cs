@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.ZarinPal
+﻿namespace ViewModels.Areas.Administrator.ZarinPal
 {
     public class RequestParameters
     {
@@ -15,18 +10,18 @@ namespace ViewModels.Areas.Administrator.ZarinPal
 
         public string[] metadata { get; set; }
 
-        public RequestParameters(string merchant_id, string amount, string description, string callback_url,string mobile,string email )
+        public RequestParameters(string merchant_id, string amount, string description, string callback_url, string mobile, string email)
         {
             this.merchant_id = merchant_id;
             this.amount = amount;
             this.description = description;
             this.callback_url = callback_url;
             this.metadata = new string[2];
-            if (mobile!=null)
+            if (mobile != null)
             {
                 this.metadata[0] = mobile;
             }
-            if (email!=null)
+            if (email != null)
             {
                 this.metadata[1] = email;
             }

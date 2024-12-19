@@ -25,7 +25,7 @@
             System.IO.StreamReader oStream = null;
             try
             {
-                oStream =new System.IO.StreamReader(pathName, System.Text.Encoding.UTF8);
+                oStream = new System.IO.StreamReader(pathName, System.Text.Encoding.UTF8);
                 strResult = oStream.ReadToEnd();
             }
             catch
@@ -66,7 +66,7 @@
             System.IO.StreamWriter oStream = null;
             try
             {
-                oStream =new System.IO.StreamWriter(pathName, append, System.Text.Encoding.UTF8);
+                oStream = new System.IO.StreamWriter(pathName, append, System.Text.Encoding.UTF8);
                 oStream.Write(text);
                 return (true);
             }
@@ -102,7 +102,7 @@
         public static string GetFileNameByCulture(string name, string cultureName, string extension)
         {
             string strFileName = name;
-            strFileName =string.Format("{0}.{1}.{2}",strFileName, cultureName, extension);
+            strFileName = string.Format("{0}.{1}.{2}", strFileName, cultureName, extension);
             return (strFileName);
         }
 
@@ -113,9 +113,9 @@
 
         public static string GetPathNameByCulture(string rootRelativePath, string name, string cultureName, string extension)
         {
-            string strFileName =GetFileNameByCulture(name, cultureName, extension);
-            string strRootRelativePathName =string.Format("{0}/{1}", rootRelativePath, strFileName);
-            string strPathName =System.Web.HttpContext.Current.Server.MapPath(strRootRelativePathName);
+            string strFileName = GetFileNameByCulture(name, cultureName, extension);
+            string strRootRelativePathName = string.Format("{0}/{1}", rootRelativePath, strFileName);
+            string strPathName = System.Web.HttpContext.Current.Server.MapPath(strRootRelativePathName);
             return (strPathName);
         }
 
@@ -134,7 +134,7 @@
                 return (strErrorMessage);
             }
 
-            string strExtension =System.IO.Path.GetExtension(postedFile.FileName).ToLower();
+            string strExtension = System.IO.Path.GetExtension(postedFile.FileName).ToLower();
             string VideoFormat = ".dat/.mp3/.mpg";
             string PictuerFormat = ".gif/.png/.jpg/.jpeg";
             string ArticelFormat = ".pdf/.txt/.doc/.docx/.ppt/.xls/.xlsx";

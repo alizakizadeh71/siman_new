@@ -112,6 +112,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: موجودی اولیه
+        /// </summary>
+        public static string InitialCredit([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.InitialCredit;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("InitialCredit", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: فعال
         /// </summary>
         public static string IsActive([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -256,6 +266,11 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: نام و نام خانوادگی
         /// </summary>
         public const string FullName = "FullName";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: موجودی اولیه
+        /// </summary>
+        public const string InitialCredit = "InitialCredit";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: فعال

@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace DAL
+﻿namespace DAL
 {
     public class RoleRepository : Repository<Models.Role>, IRoleRepository
-	{
-		public RoleRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
-	}
+    {
+        public RoleRepository(Models.DatabaseContext databaseContext)
+            : base(databaseContext)
+        {
+        }
+    }
 }

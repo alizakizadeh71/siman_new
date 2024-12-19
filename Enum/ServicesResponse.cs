@@ -5,13 +5,13 @@
         Success = 1,
         NotResponse = 0,
         Error = -1,
-        
-        InsertError=-2,
-        UpdateError=-3,
+
+        InsertError = -2,
+        UpdateError = -3,
         ConflictError = -4,
         DeleteError = -5,
-        ModelStateError=-6,
+        ModelStateError = -6,
 
-        NotFoundError=-20,
+        NotFoundError = -20,
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
     public static class WebServiceSetting_Sadad
     {
@@ -11,8 +6,8 @@ namespace Infrastructure
         {
             //ServiceURL = "https://sadad.shaparak.ir/MerchantUtility.asmx";
             //ReturnURL_Last = "http://localhost:42932/Payment/MerchantCommit";
-           // ReturnURL_CBI = "http://localhost:42932/Payment/VerifyTransaction";
-            
+            // ReturnURL_CBI = "http://localhost:42932/Payment/VerifyTransaction";
+
 
             ServiceURL = "https://sadad.shaparak.ir/MerchantUtility.asmx";
             ReturnURL_Last = "http://localhost:6014/Payment/MerchantCommit";
@@ -20,7 +15,7 @@ namespace Infrastructure
             //ReturnURL_CBI = "http://localhost:8085/Payment/VerifyTransaction";
             ReturnURL_CBI = "http://localhost:6014/Payment/VerifyTransaction";
         }
-        
+
 
         public static string TranKey { get; set; }
         public static string MerchantId { get; set; }

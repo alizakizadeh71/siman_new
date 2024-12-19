@@ -1,9 +1,4 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
-
-namespace Models
+﻿namespace Models
 {
     public class User : BaseExtendedEntity
     {
@@ -62,6 +57,7 @@ namespace Models
         public string BuyerMobile { get; set; }
         public int creditAmount { get; set; }
         public System.DateTime? BirthDay { get; set; }
+        public int InitialCredit { get; set; }
 
         public string Password { get; set; }
 

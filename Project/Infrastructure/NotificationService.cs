@@ -1,26 +1,23 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
-	public static class NotificationService
-	{
-		private static class Email
-		{
-			static Email()
-			{
-			}
+    public static class NotificationService
+    {
+        private static class Email
+        {
+            static Email()
+            {
+            }
 
-			private static string EmailsBodyPath
-			{
-				get
-				{
-					return ("~/App_Data/LocalizedTemplates/Email");
-				}
-			}
+            private static string EmailsBodyPath
+            {
+                get
+                {
+                    return ("~/App_Data/LocalizedTemplates/Email");
+                }
+            }
 
-			public static void SendNewPassword(Models.User user, string newPassword)
-			{
+            public static void SendNewPassword(Models.User user, string newPassword)
+            {
                 //System.Globalization.CultureInfo oCultureInfo =
                 //    System.Threading.Thread.CurrentThread.CurrentCulture;
 
@@ -44,15 +41,15 @@ namespace Infrastructure
                 //    new System.Net.Mail.MailAddress
                 //        (user.EmailAddress, user.EmailAddress, System.Text.Encoding.UTF8);
 
-				
+
                 //    Utilities.Net.MailMessage.Send
                 //        (oMailAddress, "New Password!", strEmailBody,
                 //        System.Net.Mail.MailPriority.High);
-				
-			}
 
-			public static void NotifyUserAfterUpdatingProfile(Models.User user)
-			{
+            }
+
+            public static void NotifyUserAfterUpdatingProfile(Models.User user)
+            {
                 //System.Globalization.CultureInfo oCultureInfo =
                 //    System.Threading.Thread.CurrentThread.CurrentCulture;
 
@@ -72,16 +69,16 @@ namespace Infrastructure
                 //Utilities.Net.MailMessage.Send
                 //    (oMailAddress, "Notify User After Updating Profile!",
                 //    strEmailBody, System.Net.Mail.MailPriority.High);
-			}
-		}
+            }
+        }
 
-		static NotificationService()
-		{
-		}
+        static NotificationService()
+        {
+        }
 
-		public static void NotifyUserAfterUpdatingProfile(Models.User user)
-		{
-			Email.NotifyUserAfterUpdatingProfile(user);
-		}
-	}
+        public static void NotifyUserAfterUpdatingProfile(Models.User user)
+        {
+            Email.NotifyUserAfterUpdatingProfile(user);
+        }
+    }
 }

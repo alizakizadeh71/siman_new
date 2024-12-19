@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Models
+﻿namespace Models
 {
     /// <summary>
     /// نام کالا 
@@ -21,7 +19,7 @@ namespace Models
 
         public ProductName()
         { }
-        
+
         public string Name { get; set; }
 
         public string Code { get; set; }

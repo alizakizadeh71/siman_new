@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ViewModels
 {
-	public class BaseEntity 
+    public class BaseEntity
     {
-		public BaseEntity()
-		{
-			this.IsActive = true;
+        public BaseEntity()
+        {
+            this.IsActive = true;
 
-			this.IsDeleted = false;
+            this.IsDeleted = false;
 
-			Id = Guid.NewGuid();
-		}
+            Id = Guid.NewGuid();
+        }
         //[System.ComponentModel.DataAnnotations.Display
         //    (ResourceType = typeof(Resources.BaseEntity),
         //    Name = Resources.Strings.BaseEntityKeys.Id)]
@@ -34,14 +30,14 @@ namespace ViewModels
 
         public System.DateTime? UpdateTime { get; set; }
 
-		 // [System.ComponentModel.DataAnnotations.Display
-			//(ResourceType = typeof(Resources.BaseEntity),
-			//Name = Resources.Strings.BaseEntityKeys.IsActive)]
-		public bool IsActive { get; set; }
+        // [System.ComponentModel.DataAnnotations.Display
+        //(ResourceType = typeof(Resources.BaseEntity),
+        //Name = Resources.Strings.BaseEntityKeys.IsActive)]
+        public bool IsActive { get; set; }
 
-		//[System.ComponentModel.DataAnnotations.Display
-		//	(ResourceType = typeof(Resources.BaseEntity),
-		//	Name = Resources.Strings.BaseEntityKeys.IsDeleted)]
-		public bool IsDeleted { get; set; }
+        //[System.ComponentModel.DataAnnotations.Display
+        //	(ResourceType = typeof(Resources.BaseEntity),
+        //	Name = Resources.Strings.BaseEntityKeys.IsDeleted)]
+        public bool IsDeleted { get; set; }
     }
 }

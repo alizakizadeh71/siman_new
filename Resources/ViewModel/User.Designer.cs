@@ -142,6 +142,15 @@ namespace Resources.ViewModel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to موجودی اولیه.
+        /// </summary>
+        public static string InitialCredit {
+            get {
+                return ResourceManager.GetString("InitialCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to فعال.
         /// </summary>
         public static string IsActive {

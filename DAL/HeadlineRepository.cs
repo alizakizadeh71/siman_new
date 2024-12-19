@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class HeadLineRepository : Repository<Models.HeadLine>, IHeadLineRepository
-	{
+    {
         public HeadLineRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.HeadLine> GetHeadLines()
         {
@@ -26,5 +25,5 @@ namespace DAL
 
             return oHeadLine;
         }
-	}
+    }
 }

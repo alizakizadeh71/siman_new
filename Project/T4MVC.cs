@@ -1003,6 +1003,7 @@ namespace Links
             public static readonly string Dampezeshki_logo_LimooGraphic_png = Url("Dampezeshki-logo-LimooGraphic.png");
             public static readonly string download_jpg = Url("download.jpg");
             public static readonly string downloadguid_jpg = Url("downloadguid.jpg");
+            public static readonly string Exel_png = Url("Exel.png");
             public static readonly string getty_590617706_2000150020009280408_361885_jpg = Url("getty_590617706_2000150020009280408_361885.jpg");
             public static readonly string Guid_jpg = Url("Guid.jpg");
             public static readonly string images__11__jpg = Url("images (11).jpg");

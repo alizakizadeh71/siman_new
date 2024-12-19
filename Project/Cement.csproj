@@ -251,6 +251,7 @@
     <Content Include="Content\Images\Dampezeshki-logo-LimooGraphic.png" />
     <Content Include="Content\Images\download.jpg" />
     <Content Include="Content\Images\downloadguid.jpg" />
+    <Content Include="Content\Images\Exel.png" />
     <Content Include="Content\Images\getty_590617706_2000150020009280408_361885.jpg" />
     <Content Include="Content\Images\Guid.jpg" />
     <Content Include="Content\Images\images %2811%29.jpg" />
@@ -588,6 +589,7 @@
     <Content Include="Areas\Administrator\Views\Request\PrintNewFactorWallet.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
+    <Content Include="Scripts\num2persian.js" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -1948,14 +1950,14 @@
       <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ClosedXML, Version=0.65.2.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
-      <HintPath>..\packages\ClosedXML.0.65.2\lib\net40-client\ClosedXML.dll</HintPath>
+    <Reference Include="ClosedXML, Version=0.66.1.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.66.1\lib\net40-client\ClosedXML.dll</HintPath>
     </Reference>
     <Reference Include="ClosedXml.Generic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXml.Generic.1.0.4\lib\net40\ClosedXml.Generic.dll</HintPath>
     </Reference>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.8.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.2.8.1\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.1.0\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>

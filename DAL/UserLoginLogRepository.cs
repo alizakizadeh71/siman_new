@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class UserLoginLogRepository : Repository<Models.UserLoginLog>, IUserLoginLogRepository
-	{
-		public UserLoginLogRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+    {
+        public UserLoginLogRepository(Models.DatabaseContext databaseContext)
+            : base(databaseContext)
+        {
+        }
 
         public System.Linq.IQueryable<Models.UserLoginLog> GetAuthenticatedUsers()
         {
@@ -59,5 +58,5 @@ namespace DAL
 
             return (varResult);
         }
-	}
+    }
 }

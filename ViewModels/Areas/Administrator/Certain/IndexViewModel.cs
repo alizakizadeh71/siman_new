@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.Certain
+﻿namespace ViewModels.Areas.Administrator.Certain
 {
-   public class IndexViewModel: System.Object
+    public class IndexViewModel : System.Object
     {
         public IndexViewModel()
         { }
@@ -15,8 +9,8 @@ namespace ViewModels.Areas.Administrator.Certain
 
         #region Name
         [System.ComponentModel.DataAnnotations.Display
-           (ResourceType=typeof(Resources.ViewModel.Certain),
-           Name=Resources.ViewModel.Strings.CertainKeys.Name)]
+           (ResourceType = typeof(Resources.ViewModel.Certain),
+           Name = Resources.ViewModel.Strings.CertainKeys.Name)]
         #endregion
         public string Name { get; set; }
 

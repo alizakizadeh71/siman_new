@@ -1,9 +1,8 @@
-﻿using System.Linq;
-namespace ViewModels.Areas.Administrator.ReportGenerator
+﻿namespace ViewModels.Areas.Administrator.ReportGenerator
 {
-	public class ReportParameterValue
-	{
-		public string ParameterName { get; set; }
-		public object Value { get; set; }
-	}
+    public class ReportParameterValue
+    {
+        public string ParameterName { get; set; }
+        public object Value { get; set; }
+    }
 }

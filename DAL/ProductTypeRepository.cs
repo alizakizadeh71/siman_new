@@ -1,16 +1,15 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using Models;
+﻿using Models;
 using System;
+using System.Linq;
 
 namespace DAL
 {
     public class ProductTypeRepository : Repository<Models.ProductType>, IProductTypeRepository
     {
         public ProductTypeRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.ProductType> GetProductTypes()
         {
@@ -37,7 +36,7 @@ namespace DAL
 
                 retValue
                     = Get()
-                    .Where(x=>x.IsActived && !x.IsDeleted)
+                    .Where(x => x.IsActived && !x.IsDeleted)
                     .Where(current => current.ProductNameId == ProductNameId);
 
 

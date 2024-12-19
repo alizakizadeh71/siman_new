@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace Models
+﻿namespace Models
 {
     public class Request : BaseExtendedEntity
     {
@@ -73,7 +70,7 @@ namespace Models
                     .HasForeignKey(current => current.SubSystemId)
                     .WillCascadeOnDelete(false)
                     ;
-			}
+            }
         }
 
         #endregion
@@ -166,15 +163,15 @@ namespace Models
         public virtual SubSystem SubSystem { get; set; }
 
 
-		#region SubSystemId
-		[System.ComponentModel.DataAnnotations.Display
+        #region SubSystemId
+        [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.SubSystem)]
         #endregion
         public System.Guid SubSystemId { get; set; }
 
-		#region Province
-		[System.ComponentModel.DataAnnotations.Display
+        #region Province
+        [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.Province)]
         #endregion
@@ -352,11 +349,11 @@ namespace Models
         public string URLAddress { get; set; }
         public string UserIPAddress { get; set; }
         public string Browser { get; set; }
-		public decimal? Ratio { get; set; }
+        public decimal? Ratio { get; set; }
 
 
-		#region
-		[System.ComponentModel.DataAnnotations.Display
+        #region
+        [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.Description)]
         #endregion

@@ -2,14 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
-using System.Data;
-using System.Data.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
 
 namespace WCFServiceLibrary
 {
@@ -353,7 +345,7 @@ namespace WCFServiceLibrary
                     message =
                         oUnitOfWork.MessageRepository.Get()
                         .Where(current => current.RequestId == oRequest.Id)
-                        .OrderByDescending(current => current.InsertDateTime).Select(x=>x.MessageText).FirstOrDefault();
+                        .OrderByDescending(current => current.InsertDateTime).Select(x => x.MessageText).FirstOrDefault();
                     return oRequest.RequestState;
                 }
             }

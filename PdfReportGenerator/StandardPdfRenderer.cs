@@ -9,11 +9,10 @@
 
 namespace ReportManagement
 {
-    using System.IO;
-
     using iTextSharp.text;
     using iTextSharp.text.html.simpleparser;
     using iTextSharp.text.pdf;
+    using System.IO;
 
     /// <summary>
     /// This class is responsible for rendering a html text string to a PDF document using the html renderer of iTextSharp.

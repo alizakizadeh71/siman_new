@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace Models
+﻿namespace Models
 {
     public class DetailOfFactor : BaseExtendedEntity
     {
@@ -12,7 +9,7 @@ namespace Models
             public Configuration()
             {
                 Property(current => current.CommodityDescription).HasMaxLength(100);
-                
+
                 HasRequired(current => current.ServiceTariff)
                     .WithMany(servicetariff => servicetariff.DetailOfFactors)
                     .HasForeignKey(current => current.ServiceTariffId)
@@ -25,11 +22,11 @@ namespace Models
                     .WillCascadeOnDelete(false)
                     ;
 
-				//HasRequired(current => current.CurrencyUnit)
-				//	.WithMany(servicetariff => servicetariff.DetailOfFactors)
-				//	.WillCascadeOnDelete(false)
-				//	;
-			}
+                //HasRequired(current => current.CurrencyUnit)
+                //	.WithMany(servicetariff => servicetariff.DetailOfFactors)
+                //	.WillCascadeOnDelete(false)
+                //	;
+            }
         }
 
         #endregion
@@ -55,13 +52,13 @@ namespace Models
         #endregion
         public System.Guid HeadOfFactorId { get; set; }
 
-		//public virtual CurrencyUnit CurrencyUnit { get; set; }
+        //public virtual CurrencyUnit CurrencyUnit { get; set; }
 
-		/// <summary>
-		/// تعرفه خدمات
-		/// </summary>
-		#region OfficeService
-		[System.ComponentModel.DataAnnotations.Display
+        /// <summary>
+        /// تعرفه خدمات
+        /// </summary>
+        #region OfficeService
+        [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.DetailOfFactor),
             Name = Resources.Model.Strings.DetailOfFactorKeys.ServiceTariff)]
         #endregion
@@ -80,7 +77,7 @@ namespace Models
             Name = Resources.Model.Strings.DetailOfFactorKeys.CommodityDescription)]
         #endregion
         public string CommodityDescription { get; set; }
-        
+
         #region
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.DetailOfFactor),

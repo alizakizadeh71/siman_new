@@ -1,6 +1,6 @@
 ﻿namespace DAL
 {
-	public interface IUnitOfWork : System.IDisposable
+    public interface IUnitOfWork : System.IDisposable
     {
         IDetailOfFactorRepository DetailOfFactorRepository { get; }
         IFactorMessageRepository FactorMessageRepository { get; }
@@ -34,7 +34,7 @@
         IProjectActionRepository ProjectActionRepository { get; }
         IAccessTypeRepository AccessTypeRepository { get; }
         IUserLoginLogRepository UserLoginLogRepository { get; }
-		
-		void Save();
-	}
+
+        void Save();
+    }
 }

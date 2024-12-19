@@ -179,7 +179,7 @@
 
                 try
                 {
-                    intSmtpClientEnableSsl =System.Convert.ToInt32(Setting.ApplicationSettings.GetValue("SmtpClientEnableSsl", intSmtpClientEnableSsl.ToString()));
+                    intSmtpClientEnableSsl = System.Convert.ToInt32(Setting.ApplicationSettings.GetValue("SmtpClientEnableSsl", intSmtpClientEnableSsl.ToString()));
                 }
                 catch
                 {
@@ -198,7 +198,7 @@
 
                 try
                 {
-                    intSmtpClientTimeout =System.Convert.ToInt32(Setting.ApplicationSettings.GetValue("SmtpClientTimeout", intSmtpClientTimeout.ToString()));
+                    intSmtpClientTimeout = System.Convert.ToInt32(Setting.ApplicationSettings.GetValue("SmtpClientTimeout", intSmtpClientTimeout.ToString()));
                 }
                 catch
                 {
@@ -207,15 +207,15 @@
                 oSmtpClient.Timeout = intSmtpClientTimeout;
 
 
-                oSmtpClient.DeliveryMethod =System.Net.Mail.SmtpDeliveryMethod.Network;
+                oSmtpClient.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
 
-                oSmtpClient.Host =Setting.ApplicationSettings.GetValue("SmtpClientHostAddress");
+                oSmtpClient.Host = Setting.ApplicationSettings.GetValue("SmtpClientHostAddress");
 
                 int intSmtpClientPortNumber = 25;
 
                 try
                 {
-                    intSmtpClientPortNumber =System.Convert.ToInt32(Setting.ApplicationSettings.GetValue("SmtpClientPortNumber", intSmtpClientPortNumber.ToString()));
+                    intSmtpClientPortNumber = System.Convert.ToInt32(Setting.ApplicationSettings.GetValue("SmtpClientPortNumber", intSmtpClientPortNumber.ToString()));
                 }
                 catch
                 {
@@ -227,16 +227,16 @@
 
                 string strSenderEmailAddress = Setting.ApplicationSettings.GetValue("SenderEmailAddress");
 
-                string strSenderEmailPassword =Setting.ApplicationSettings.GetValue("SenderEmailPassword");
+                string strSenderEmailPassword = Setting.ApplicationSettings.GetValue("SenderEmailPassword");
 
-                System.Net.NetworkCredential oNetworkCredential =new System.Net.NetworkCredential(strSenderEmailAddress, strSenderEmailPassword);
+                System.Net.NetworkCredential oNetworkCredential = new System.Net.NetworkCredential(strSenderEmailAddress, strSenderEmailPassword);
 
                 oSmtpClient.Credentials = oNetworkCredential;
                 #endregion
 
                 oSmtpClient.Send(oMailMessage);
             }
-            
+
             catch (System.Exception ex)
             {
                 System.Collections.Hashtable oHashtable =
@@ -252,7 +252,7 @@
                 oHashtable.Add("Body", body);
 
                 LogHandler.Report(typeof(MailMessage), oHashtable, ex, Enums.LogTypes.LogToFile);
-                string strErrorMessage =Resources.Utility.Net.MailMessage.ErrorOnSendingEmail;
+                string strErrorMessage = Resources.Utility.Net.MailMessage.ErrorOnSendingEmail;
                 throw (new Setting.ApplicationException(strErrorMessage));
             }
 
@@ -273,7 +273,7 @@
         }
 
         public static void Send
-            (   IMailSettings mailSettings,
+            (IMailSettings mailSettings,
                 System.Net.Mail.MailAddress sender,
                 System.Net.Mail.MailAddressCollection recipients,
                 string subject,
@@ -494,7 +494,7 @@
                 // **************************************************
 
                 LogHandler.Report(typeof(Net.MailMessage), oHashtable, ex, Enums.LogTypes.LogToFile);
-                string strErrorMessage =Resources.Utility.Net.MailMessage.ErrorOnSendingEmail;
+                string strErrorMessage = Resources.Utility.Net.MailMessage.ErrorOnSendingEmail;
                 throw (new Setting.ApplicationException(strErrorMessage));
             }
 

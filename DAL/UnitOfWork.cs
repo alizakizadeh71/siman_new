@@ -63,7 +63,7 @@
                 return (_HeadOfFactorRepository);
             }
         }
-        
+
 
         private IServiceTariffInSubSystemRepository _ServiceTariffInSubSystemRepository;
         public IServiceTariffInSubSystemRepository ServiceTariffInSubSystemRepository
@@ -257,7 +257,7 @@
                 return (_SubHeadLineRepository);
             }
         }
-        
+
         private IProductNameRepository _ProductNameRepository;
         public IProductNameRepository ProductNameRepository
         {
@@ -270,7 +270,7 @@
                 return (_ProductNameRepository);
             }
         }
-        
+
         private IProductTypeRepository _ProductTypeRepository;
         public IProductTypeRepository ProductTypeRepository
         {
@@ -308,7 +308,7 @@
                 return (_PackageTypeRepository);
             }
         }
-        
+
         private IFactoryNameRepository _FactoryNameRepository;
         public IFactoryNameRepository FactoryNameRepository
         {
@@ -527,7 +527,7 @@
                 return (_MessageRepository);
             }
         }
-        
+
 
         private IRequestRepository _RequestRepository;
         public IRequestRepository RequestRepository
@@ -635,7 +635,7 @@
                 return (_ProjectActionRepository);
             }
         }
-        
+
 
         private IAccessTypeRepository _AccessTypeRepository;
         public IAccessTypeRepository AccessTypeRepository

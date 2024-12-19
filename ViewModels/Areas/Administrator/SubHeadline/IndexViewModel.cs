@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.SubHeadLine
+﻿namespace ViewModels.Areas.Administrator.SubHeadLine
 {
-   public class IndexViewModel: System.Object
+    public class IndexViewModel : System.Object
     {
         public IndexViewModel()
         { }
@@ -15,8 +9,8 @@ namespace ViewModels.Areas.Administrator.SubHeadLine
 
         #region Name
         [System.ComponentModel.DataAnnotations.Display
-           (ResourceType=typeof(Resources.Model.SubHeadLine),
-           Name=Resources.Model.Strings.SubHeadLineKeys.Name)]
+           (ResourceType = typeof(Resources.Model.SubHeadLine),
+           Name = Resources.Model.Strings.SubHeadLineKeys.Name)]
         #endregion
         public string Name { get; set; }
 

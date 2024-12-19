@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ViewModels.Areas.Administrator.Request
 {
@@ -121,7 +117,7 @@ namespace ViewModels.Areas.Administrator.Request
             Name = Resources.Model.Strings.RequestKeys.DepositNumber)]
         #endregion
         public string DepositNumber { get; set; }
-		public long Token { get; set; }
+        public long Token { get; set; }
 
 
         #region Bank_TraceNo

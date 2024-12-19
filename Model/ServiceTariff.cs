@@ -44,12 +44,13 @@
             (ResourceType = typeof(Resources.Model.ServiceTariff),
             Name = Resources.Model.Strings.ServiceTariffKeys.Name)]
         public string Name { get; set; }
-        public string NameString {
-			get
-			{
-				return this.Name + " - " + this.Amount;
-			}
-		}
+        public string NameString
+        {
+            get
+            {
+                return this.Name + " - " + this.Amount;
+            }
+        }
 
 
         [System.ComponentModel.DataAnnotations.Display

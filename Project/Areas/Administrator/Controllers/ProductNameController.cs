@@ -1,9 +1,6 @@
 ﻿using DAL;
-using Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using ViewModels.Areas.Administrator.Cement;
 
@@ -50,7 +47,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             var varRequest =
                 UnitOfWork.ProductNameRepository.Get()
-                .Where(x=>x.IsActived && !x.IsDeleted)
+                .Where(x => x.IsActived && !x.IsDeleted)
                 ;
 
             try
@@ -98,7 +95,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             var ofindsubheadline =
                  UnitOfWork.ProductNameRepository.Get()
-                 .Where(x=>x.IsActived && !x.IsDeleted)
+                 .Where(x => x.IsActived && !x.IsDeleted)
                  .Where(model => model.Name == cementViewModel.StringProductName)
                  //.Where(model => model.Code == cementViewModel.code)
                  .FirstOrDefault();

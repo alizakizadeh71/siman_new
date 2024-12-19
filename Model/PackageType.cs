@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Models
+﻿namespace Models
 {
     /// <summary>
     /// نوع بسته بندی
@@ -27,7 +25,7 @@ namespace Models
 
         public PackageType()
         { }
-        
+
         public string Name { get; set; }
 
         public string Code { get; set; }

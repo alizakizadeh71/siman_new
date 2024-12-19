@@ -1,9 +1,7 @@
-﻿using Models;
-
-namespace DAL
+﻿namespace DAL
 {
     public interface IRequestRepository : IRepository<Models.Request>
-	{
+    {
         System.Linq.IQueryable<Models.Request> Get(Models.User user);
 
         void Insert(Models.Request request);

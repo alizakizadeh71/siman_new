@@ -10,10 +10,9 @@
 
 namespace ReportManagement
 {
-    using System;
-
     using iTextSharp.text;
     using iTextSharp.text.pdf;
+    using System;
 
     /// <summary>
     /// This class represents the standard header and footer for a PDF print.

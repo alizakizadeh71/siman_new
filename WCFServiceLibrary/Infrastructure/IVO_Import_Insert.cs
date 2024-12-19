@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Web;
 
 namespace WCFServiceLibrary.Infrastructure
 {
@@ -53,7 +50,7 @@ namespace WCFServiceLibrary.Infrastructure
         public string CellPhoneNumber { get; set; }
 
         [DataMember]
-        public int  CurrencyCode { get; set; }
+        public int CurrencyCode { get; set; }
 
         [DataMember]
         public decimal CurrencyValue { get; set; }
@@ -75,6 +72,6 @@ namespace WCFServiceLibrary.Infrastructure
 
         [DataMember]
         public List<string> FileList { get; set; }
-        
+
     }
 }

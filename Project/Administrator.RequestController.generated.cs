@@ -339,6 +339,7 @@ namespace OPS.Areas.Administrator.Controllers
                 public readonly string PrintDepositNumber = "PrintDepositNumber";
                 public readonly string PrintFactor = "PrintFactor";
                 public readonly string PrintNewFactor = "PrintNewFactor";
+                public readonly string PrintNewFactorWallet = "PrintNewFactorWallet";
                 public readonly string UpAmountPaid = "UpAmountPaid";
             }
             public readonly string display = "~/Areas/Administrator/Views/Request/display.cshtml";
@@ -350,6 +351,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string PrintDepositNumber = "~/Areas/Administrator/Views/Request/PrintDepositNumber.cshtml";
             public readonly string PrintFactor = "~/Areas/Administrator/Views/Request/PrintFactor.cshtml";
             public readonly string PrintNewFactor = "~/Areas/Administrator/Views/Request/PrintNewFactor.cshtml";
+            public readonly string PrintNewFactorWallet = "~/Areas/Administrator/Views/Request/PrintNewFactorWallet.cshtml";
             public readonly string UpAmountPaid = "~/Areas/Administrator/Views/Request/UpAmountPaid.cshtml";
         }
     }

@@ -2,13 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
-using System.Data;
-using System.Data.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WCFServiceLibrary
 {
@@ -119,8 +112,8 @@ namespace WCFServiceLibrary
                     Infrastructure.Utility.InsertErrorLog(UserName, message, InputData, string.Empty);
                 }
 
-                if (info.InvoiceGoods==null || info.InvoiceGoods.Count==0 
-                    || info.InvoiceGoods.Sum(x=>x.Amount)<= 0)
+                if (info.InvoiceGoods == null || info.InvoiceGoods.Count == 0
+                    || info.InvoiceGoods.Sum(x => x.Amount) <= 0)
                 {
                     message = string.Format(Resources.Message.Global.MissDataFormat, Resources.Model.Request.AmountPaid);
                     messageCode = (int)Enums.RequestStates.Error;
@@ -180,7 +173,7 @@ namespace WCFServiceLibrary
                     RecordDate = info.RecordDate,
                     InvoiceDate = DateTime.Now,
                     CellPhoneNumber = info.CellPhoneNumber,
-                    AmountPaid = (long)info.InvoiceGoods.Sum(y=>y.Amount),
+                    AmountPaid = (long)info.InvoiceGoods.Sum(y => y.Amount),
                     CurrencyCode = currency.Code,
                     CurrencyRation = currency.Ratio,
                     CurrencyValue = (long)info.InvoiceGoods.Sum(y => y.Amount),
@@ -394,7 +387,7 @@ namespace WCFServiceLibrary
 
                 if (request != null && request.RequestState <= (int)Enums.RequestStates.InitialRequet)
                 {
-                    request.BaseCurrencyValue = info.InvoiceGoods.Sum(y=>y.BaseAmount);
+                    request.BaseCurrencyValue = info.InvoiceGoods.Sum(y => y.BaseAmount);
                     request.CurrencyCode = info.Currency;
                     request.CurrencyRation = currency.Ratio;
                     request.CurrencyValue = info.InvoiceGoods.Sum(y => y.Amount);
@@ -432,7 +425,7 @@ namespace WCFServiceLibrary
                     request.ServiceTariff = oServiceTariffInSubSystem.ServiceTariff;
                     request.ProvinceId = province.Id;
                     request.CommodityType = info.InvoiceGoods.FirstOrDefault().CommodityType;
-                    request.TotalValue = info.InvoiceGoods.Sum(x=>x.TotalValue);
+                    request.TotalValue = info.InvoiceGoods.Sum(x => x.TotalValue);
                     request.CommodityUnit = info.InvoiceGoods.FirstOrDefault().CommodityUnit;
                     request.SecDate = info.SecDate;
                     request.SecNumber = info.SecNumber;
@@ -559,7 +552,7 @@ namespace WCFServiceLibrary
             var currency = oUnitOfWork.CurrencyUnitRepository.GetByCode(info.Currency);
 
             var subsystem = oUnitOfWork.SubSystemRepository.Get()
-                .Where(x=>x.Code == (int)Enums.SubSystems.Drug_Clearance23)
+                .Where(x => x.Code == (int)Enums.SubSystems.Drug_Clearance23)
                 .FirstOrDefault();
 
             var oServiceTariffInSubSystem = oUnitOfWork.ServiceTariffInSubSystemRepository.Get()

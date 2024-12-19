@@ -1,7 +1,4 @@
 ﻿using System.Linq;
-using System.Data.Entity;
-using System;
-using System.Collections.Generic;
 
 namespace DAL
 {
@@ -25,15 +22,15 @@ namespace DAL
                         .Where(current => current.IsActived == true)
                         .Where(current => current.ProvinceId == user.ProvinceId);
                 }
-				if (user.Role.Code == (int)Enums.Roles.ExporterOFInvoice)
-				{
-					retValue = Get()
-						.Where(current => current.IsDeleted == false)
-						.Where(current => current.IsActived == true)
-						.Where(current => current.UserId == user.Id);
-				}
+                if (user.Role.Code == (int)Enums.Roles.ExporterOFInvoice)
+                {
+                    retValue = Get()
+                        .Where(current => current.IsDeleted == false)
+                        .Where(current => current.IsActived == true)
+                        .Where(current => current.UserId == user.Id);
+                }
 
-				else
+                else
                     retValue = Get()
                          .Where(current => current.IsDeleted == false)
                          .Where(current => current.IsActived == true);

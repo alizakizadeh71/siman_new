@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class ExecutableCodeRepository : Repository<Models.ExecutableCode>, IExecutableCodeRepository
-	{
+    {
         public ExecutableCodeRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.ExecutableCode> GetExecutableCodes()
         {
@@ -26,5 +25,5 @@ namespace DAL
 
             return oExecutableCode;
         }
-	}
+    }
 }

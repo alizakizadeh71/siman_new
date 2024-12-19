@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace OpenXml.Reader
 {
@@ -12,7 +12,7 @@ namespace OpenXml.Reader
         protected WorkbookPart WbPart { get; set; }
         protected WorksheetPart WsPart { get; set; }
         protected List<string> Columns { get; set; }
-        
+
 
         public OpenXLRow() { }
 

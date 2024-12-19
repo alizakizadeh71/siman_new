@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using ViewModels.Areas.Administrator.Cement;
 using ViewModels.Areas.Administrator.Village;
 
 namespace OPS.Areas.Administrator.Controllers
@@ -15,7 +12,7 @@ namespace OPS.Areas.Administrator.Controllers
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
         public virtual ActionResult Index()
         {
-            ViewModels.Areas.Administrator.Village.IndexViewModel  villageViewModel = new ViewModels.Areas.Administrator.Village.IndexViewModel();
+            ViewModels.Areas.Administrator.Village.IndexViewModel villageViewModel = new ViewModels.Areas.Administrator.Village.IndexViewModel();
             Viewdata(villageViewModel);
             return View(villageViewModel);
         }
@@ -112,7 +109,7 @@ namespace OPS.Areas.Administrator.Controllers
             else
             {
                 Models.village village = new Models.village();
-                village.ProvinceId =  villageViewModel.Province;
+                village.ProvinceId = villageViewModel.Province;
                 village.Cityid = villageViewModel.City;
                 village.Name = villageViewModel.Name;
                 village.Code = villageViewModel.Code;

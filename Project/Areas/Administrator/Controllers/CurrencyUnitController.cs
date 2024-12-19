@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Models;
+using System;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Models;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -25,7 +20,7 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var varCurrencyUnits =
                 UnitOfWork.CurrencyUnitRepository.Get()
-                .Where(x=>x.IsActived && !x.IsDeleted)
+                .Where(x => x.IsActived && !x.IsDeleted)
                 ;
 
             var ViewModelsvarCurrencyUnits
@@ -57,7 +52,7 @@ namespace OPS.Areas.Administrator.Controllers
         {
             ViewBag.PageMessages = null;
 
-            if (id==null)
+            if (id == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
@@ -69,7 +64,7 @@ namespace OPS.Areas.Administrator.Controllers
                 .ToList()
                 .Select(current => new ViewModels.Areas.Administrator.CurrencyUnit.DetailViewModel()
                 {
-                    Id=current.Id,
+                    Id = current.Id,
                     Name = current.Name,
                     Code = current.Code.ToString(),
                     Ratio = current.Ratio,
@@ -94,7 +89,7 @@ namespace OPS.Areas.Administrator.Controllers
         {
             ViewBag.PageMessages = null;
 
-            if (id==null)
+            if (id == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
@@ -121,13 +116,13 @@ namespace OPS.Areas.Administrator.Controllers
                 .FirstOrDefault()
                 ;
 
-            if (oCurrencyUnit == null)
-            {
-                return (RedirectToAction
-                    (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-            }
+                if (oCurrencyUnit == null)
+                {
+                    return (RedirectToAction
+                        (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+                }
 
-            return (View(oCurrencyUnit));
+                return (View(oCurrencyUnit));
             }
             else
             {
@@ -173,9 +168,9 @@ namespace OPS.Areas.Administrator.Controllers
                     oCurrencyUnitLog.Ratio = OldValue.Ratio;
                     oCurrencyUnitLog.UpdateDateTime = OldValue.UpdateDateTime;
                     oCurrencyUnitLog.UserId = Infrastructure.Sessions.AuthenticatedUser.Id;
-					oCurrencyUnitLog.UserIPAddress = Request.UserHostAddress;
-					oCurrencyUnitLog.Browser = Request.Browser.Type; // مدل و ورژن مرورگر
-				}
+                    oCurrencyUnitLog.UserIPAddress = Request.UserHostAddress;
+                    oCurrencyUnitLog.Browser = Request.Browser.Type; // مدل و ورژن مرورگر
+                }
                 UnitOfWork.CurrencyUnitLogRepository.Insert(oCurrencyUnitLog);
                 UnitOfWork.Save();
 
@@ -213,9 +208,9 @@ namespace OPS.Areas.Administrator.Controllers
                     oFindedCurrency.Ratio = currencyunit.Ratio;
                     oFindedCurrency.ExpireDateTime = currencyunit.ExpireDateTime;
                     oFindedCurrency.UpdateDateTime = DateTime.Now;
-					oFindedCurrency.UserIPAddress = Request.UserHostAddress;
-					oFindedCurrency.Browser = Request.Browser.Type; // مدل و ورژن مرورگر
-					UnitOfWork.CurrencyUnitRepository.Update(oFindedCurrency);
+                    oFindedCurrency.UserIPAddress = Request.UserHostAddress;
+                    oFindedCurrency.Browser = Request.Browser.Type; // مدل و ورژن مرورگر
+                    UnitOfWork.CurrencyUnitRepository.Update(oFindedCurrency);
                     UnitOfWork.Save();
 
                     ViewBag.PageMessages += "ارز درخواستی شما با موفقیت ثبت گردید  ";
@@ -231,12 +226,12 @@ namespace OPS.Areas.Administrator.Controllers
         }
 
         [System.Web.Mvc.HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]       
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
         public virtual System.Web.Mvc.ActionResult Delete(System.Guid id)
         {
             ViewBag.PageMessages = null;
 
-            if (id==null)
+            if (id == null)
             {
                 return (RedirectToAction
                     (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));

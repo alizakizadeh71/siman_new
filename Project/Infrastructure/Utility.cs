@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ViewModels.Areas.Administrator.ReportGenerator;
@@ -356,7 +355,7 @@ namespace Infrastructure
                             .ToList();
                         break;
                     }
-                    
+
                 case Enums.EnumTypes.FinalApprove:
                     {
                         EnumRowList =
@@ -630,31 +629,31 @@ namespace Infrastructure
             //return jsSerializer.DeserializeObject(strList) as List<object>;
         }
 
-      internal static List<string> GetFieldColumnsINfo(DataTable dataTable)
-      {
-         var result = new List<string>();
+        internal static List<string> GetFieldColumnsINfo(DataTable dataTable)
+        {
+            var result = new List<string>();
 
-         for (int i = 0; i < dataTable.Columns.Count; i++)
-         {
-            result.Add("Field" + i);
-         }
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+            {
+                result.Add("Field" + i);
+            }
 
-         return result;
-      }
+            return result;
+        }
 
-      internal static List<string> GetresourcesName(DataTable dataTable)
-      {
-         var result = new List<string>();
+        internal static List<string> GetresourcesName(DataTable dataTable)
+        {
+            var result = new List<string>();
 
-         for (int i = 0; i < dataTable.Columns.Count; i++)
-         {
-            result.Add(dataTable.Columns[i].ColumnName);
-         }
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+            {
+                result.Add(dataTable.Columns[i].ColumnName);
+            }
 
-         return result;
-      }
+            return result;
+        }
 
 
 
-   }
+    }
 }

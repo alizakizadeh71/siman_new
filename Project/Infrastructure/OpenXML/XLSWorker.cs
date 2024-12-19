@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using ClosedXML.Excel;
 
 namespace OpenXml
 {
@@ -50,10 +50,10 @@ namespace OpenXml
             }
 
             var xWorker = new XLSWorker
-                              {
-                                  WorkBookPath = path,
-                                  WorkBook = new XLWorkbook(path)
-                              };
+            {
+                WorkBookPath = path,
+                WorkBook = new XLWorkbook(path)
+            };
             xWorker.WorkSheets = xWorker.WorkBook.Worksheets;
             xWorker.CurrentSheet = xWorker.WorkSheets.FirstOrDefault();
 
@@ -110,7 +110,7 @@ namespace OpenXml
         /// <returns></returns>
         public static XLSWorker CreateOrOpen(string path)
         {
-            if(File.Exists(path))
+            if (File.Exists(path))
             {
                 return Open(path);
             }
@@ -184,13 +184,13 @@ namespace OpenXml
         {
             get
             {
-                if(_rowStyle == null)
+                if (_rowStyle == null)
                 {
                     _rowStyle = new XLSStyle
                     {
                         BackgroundColor = XLColor.Ivory,
                         FontColor = XLColor.Black
-                    };                    
+                    };
                 }
                 return _rowStyle;
             }
@@ -250,7 +250,7 @@ namespace OpenXml
             for (int i = 0; i < colNames.Count(); i++)
             {
                 IXLCell xlCell = hRow[i + 1];
-				xlCell.Value = resourcesName==null?colNames[i]:resourcesName[i];
+                xlCell.Value = resourcesName == null ? colNames[i] : resourcesName[i];
                 this.HeaderStyle.ApplyTo(xlCell.Style);
             }
 
@@ -271,7 +271,7 @@ namespace OpenXml
 
                 this._rows = this.CurrentSheet.RowsUsed()
                     .Skip(this.HeaderRowNum)
-                    .Select(x=> new XLSRow(this.Columns, x))
+                    .Select(x => new XLSRow(this.Columns, x))
                     .ToList();
 
                 return this._rows;
@@ -310,9 +310,9 @@ namespace OpenXml
             var xRow = this.CurrentSheet.Row(rowNumber).InsertRowsAbove(1).FirstOrDefault();
             var xlsRow = new XLSRow(this.Columns, xRow);
             this.Rows.Add(xlsRow);
-            return xlsRow;            
+            return xlsRow;
         }
-        
+
         /// <summary>
         /// Filter Row Collection on a specific Column
         /// </summary>
@@ -321,8 +321,8 @@ namespace OpenXml
             this.Rows = this.Rows.Where(x => x[columnName].GetValue<string>().Contains(filterString)).ToList();
         }
 
-        #endregion   
- 
+        #endregion
+
         #region Writing Data
 
         public void WriteToCell(string CellID, object Value)
@@ -341,8 +341,8 @@ namespace OpenXml
 
         public void SaveAs(string path)
         {
-           // this.WorkSheets.ForEach(x => x.Rows().AdjustToContents());
-           // this.WorkSheets.ForEach(x => x.Columns().AdjustToContents());
+            // this.WorkSheets.ForEach(x => x.Rows().AdjustToContents());
+            // this.WorkSheets.ForEach(x => x.Columns().AdjustToContents());
 
             this.WorkBook.SaveAs(path);
             this.WorkBookPath = path;
@@ -360,8 +360,8 @@ namespace OpenXml
             //TODO: Make this not use a real file!  -- Looser.
             var tempDir = HttpContext.Current.Server.MapPath("/temp/");
             this.SaveAs(tempDir + fileName);
-          //  HttpContext.Current.Response.ContentType = "application/ms-excel";
-           // HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+            //  HttpContext.Current.Response.ContentType = "application/ms-excel";
+            // HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
             //HttpContext.Current.Response.WriteFile(tempDir + fileName);
         }
 

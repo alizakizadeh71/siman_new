@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OPS.Areas.Administrator.Controllers
@@ -59,9 +57,9 @@ namespace OPS.Areas.Administrator.Controllers
                     ;
             }
 
-            if (viewModel.Bank != null && viewModel.Bank!= new Guid())
+            if (viewModel.Bank != null && viewModel.Bank != new Guid())
             {
-                varBankAccount = varBankAccount.Where(current => current.BankId== viewModel.Bank);
+                varBankAccount = varBankAccount.Where(current => current.BankId == viewModel.Bank);
             }
 
             if (viewModel.Certain != null && viewModel.Certain != new Guid())

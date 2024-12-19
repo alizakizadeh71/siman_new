@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.IncomeRow
+﻿namespace ViewModels.Areas.Administrator.IncomeRow
 {
     public class DetailViewModel : System.Object
     {

@@ -1,18 +1,12 @@
-﻿using OPS.ir.shaparak.sadad;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Security.Cryptography.X509Certificates;
-using System.Net;
+﻿using log4net;
 using OPS.CBINasimService;
-using Rotativa;
+using OPS.ir.shaparak.sadad;
 using OPS.Parsian;
-using log4net;
-using System.Text;
-using System.Security.Cryptography;
+using System;
+using System.Linq;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Web.Mvc;
 
 namespace OPS.Controllers
 {
@@ -188,7 +182,7 @@ namespace OPS.Controllers
                      .Where(current => current.CompanyNationalCode == NationalCode)
                      .Where(current => current.RequestState == 3)
                      .OrderByDescending(x => x.InsertDateTime)
-                     .Select(x=>x.InvoiceNumber)
+                     .Select(x => x.InvoiceNumber)
                      .Take(10)
                      .ToList();
                 if (oRequest.Count == 0)
@@ -693,7 +687,7 @@ namespace OPS.Controllers
 
                         else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Certificate)
                             oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-                        
+
                         else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Lims)
                             oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
 
@@ -866,7 +860,7 @@ namespace OPS.Controllers
 
                     else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Certificate)
                         oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-                    
+
                     else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Lims)
                         oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
 
@@ -1035,7 +1029,7 @@ namespace OPS.Controllers
 
                 else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Certificate)
                     oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
-                
+
                 else if (oRequest.SubSystem.Code == (int)Enums.SubSystems.Lims)
                     oRequest.RequestState = (int)Enums.RequestStates.PaymentConfirmation;
 

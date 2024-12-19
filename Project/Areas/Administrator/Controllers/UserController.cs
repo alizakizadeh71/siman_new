@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using OPS.PersonInfoServices;
+﻿using ClosedXML.Excel;
 using OPS.GetPostinfoServices;
+using OPS.PersonInfoServices;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -104,6 +105,7 @@ namespace OPS.Areas.Administrator.Controllers
                          IsActive = current.IsActived,
                          Address = current.Address,
                          BuyerMobile = current.BuyerMobile,
+                         InitialCredit = current.InitialCredit,
                          //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
                      })
@@ -173,6 +175,7 @@ namespace OPS.Areas.Administrator.Controllers
                              creditAmount = current.creditAmount.ToString("N0"),
                              BuyerMobile = current.BuyerMobile,
                              Address = current.Address,
+                             InitialCredit = current.InitialCredit,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
@@ -190,6 +193,7 @@ namespace OPS.Areas.Administrator.Controllers
                              creditAmount = current.creditAmount,
                              BuyerMobile = current.BuyerMobile,
                              Address = current.Address,
+                             InitialCredit = current.InitialCredit,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
@@ -345,6 +349,7 @@ namespace OPS.Areas.Administrator.Controllers
                     oUser.creditAmount = user.creditAmount;
                     oUser.BirthDay = user.BirthDay;
                     oUser.Authenticate = true;
+                    oUser.InitialCredit = user.InitialCredit;
                     UnitOfWork.UserRepository.Insert(oUser);
                     UnitOfWork.Save();
 
@@ -409,6 +414,8 @@ namespace OPS.Areas.Administrator.Controllers
                     BirthDay = current.BirthDay,
                     Address = current.Address,
                     Image = current.Image,
+                    InitialCredit = current.InitialCredit
+
                 })
                 .FirstOrDefault()
                 ;
@@ -444,6 +451,7 @@ namespace OPS.Areas.Administrator.Controllers
                     IsApprovallicense = current.IsApprovallicense,
                     Authenticate = current.Authenticate,
                     Image = current.Image,
+                    InitialCredit = current.InitialCredit
                 })
                 .FirstOrDefault()
                 ;
@@ -563,6 +571,7 @@ namespace OPS.Areas.Administrator.Controllers
                     OlderAccount.Address = user.Address;
                     OlderAccount.BuyerMobile = user.BuyerMobile;
                     OlderAccount.creditAmount = user.creditAmount;
+                    OlderAccount.InitialCredit = user.InitialCredit;
                     if (user.Authenticate == false)
                     {
                         OlderAccount.Authenticate = user.Authenticate;
@@ -770,37 +779,6 @@ namespace OPS.Areas.Administrator.Controllers
 
         }
 
-        public virtual ActionResult GetPersonImage(string NationalCode, string IdentityCertificateSerial)
-        {
-            try
-            {
-                NationalCode = changePersianNumbersToEnglish(NationalCode);
-                IdentityCertificateSerial = changePersianNumbersToEnglish(IdentityCertificateSerial);
-
-                if (NationalCode == string.Empty || IdentityCertificateSerial == string.Empty)
-                {
-                    return Json(new { success = false, CodeMessage = "کد ملی و سریال کارت ملی را وارد نمایید" }, JsonRequestBehavior.AllowGet);
-                }
-                GetingPersonByNationalIdAndBirthDateSoapClient person = new GetingPersonByNationalIdAndBirthDateSoapClient();
-                var personImage = person.GetPersonImage("payDam", "nRm491HdB", NationalCode, IdentityCertificateSerial);
-                if (personImage.Err == 0)
-                {
-                    string path = "/files/PersonImage/" + NationalCode + ".png";
-                    using (var fs = new System.IO.FileStream(Server.MapPath(path), System.IO.FileMode.Create, System.IO.FileAccess.Write))
-                    {
-                        fs.Write(personImage.image, 0, personImage.image.Length);
-                    }
-                    return Json(new { success = true, image = path }, JsonRequestBehavior.AllowGet);
-                }
-                return Json(new { success = false, CodeMessage = "خطا- قبل از تلاش مجدد کدملی و سریال کارت ملی را مجدد بررسی نمایید- متن خطا ثبت احوال: " + personImage.Msg }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, CodeMessage = "خطا در ارتباط با سرویس دریافت تصویر اشخاص - لطفا دقایقی بعد دوباره تلاش نمایید" }, JsonRequestBehavior.AllowGet);
-            }
-
-        }
-
 
         public virtual ActionResult CheckPostalCodeValidation(string PostalCode)
         {
@@ -865,5 +843,138 @@ namespace OPS.Areas.Administrator.Controllers
 
             return (RedirectToAction(MVC.HomeMain.Main()));
         }
+
+        public virtual ActionResult DownloadUserExcel()
+        {
+            var users = UnitOfWork.UserRepository.Get()
+                .ToList();
+
+            // مرتب‌سازی کاربران
+            var sortedUsers = users.OrderBy(u => u.FullName, StringComparer.Create(new CultureInfo("fa-IR"), false)).ToList();
+
+            using (var workbook = new XLWorkbook())
+            {
+                // ایجاد شیت
+                var worksheet = workbook.Worksheets.Add("فایل موجودی");
+                worksheet.Cell(1, 1).Value = "نام و نام خانوادگی";
+                worksheet.Cell(1, 2).Value = "مبلغ اعتبار";
+                worksheet.Cell(1, 3).Value = "مبلغ موجودی اولیه";
+                worksheet.Cell(1, 4).Value = "مبلغ موجودی باقی مانده";
+
+                for (int i = 0; i < sortedUsers.Count; i++)
+                {
+                    worksheet.Cell(i + 2, 1).Value = sortedUsers[i].FullName;
+                    worksheet.Cell(i + 2, 2).Value = sortedUsers[i].creditAmount;
+                    worksheet.Cell(i + 2, 3).Value = sortedUsers[i].InitialCredit;
+                    worksheet.Cell(i + 2, 4).Value = sortedUsers[i].InitialCredit - sortedUsers[i].creditAmount;
+                }
+                // گرفتن تاریخ روز به فرمت شمسی
+                var persianCalendar = new System.Globalization.PersianCalendar();
+                var now = DateTime.Now;
+                var persianDate = $"{persianCalendar.GetYear(now)}/{persianCalendar.GetMonth(now):00}/{persianCalendar.GetDayOfMonth(now):00}";
+
+                // ساخت نام فایل
+                var fileName = $"فایل موجودی تاریخ {persianDate}.xlsx";
+
+                // استفاده از MemoryStream برای نگهداری داده‌های Excel
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream); // فایل Excel در استریم ذخیره می‌شود
+                    stream.Seek(0, SeekOrigin.Begin); // بازگشت به ابتدای استریم
+
+                    // بازگشت فایل به کاربر برای دانلود
+                    return File(
+                        stream.ToArray(),
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        fileName
+                    );
+                }
+            }
+        }
+        [HttpGet]
+        public virtual ActionResult DownloadUserExcelGetByid(System.Guid id)
+        {
+            // بازیابی نام کاربر از دیتابیس
+            var user = UnitOfWork.UserRepository.GetById(id);
+            var userName = user?.FullName ?? "User"; // فرض اینکه نام کامل کاربر در `FullName` ذخیره شده است
+
+            // تاریخ روز به صورت فرمت شده
+            var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+            // بازیابی اطلاعات واریزی و برداشت
+            var usersdeposit = UnitOfWork.walletFactorRepository.Get()
+                .Where(u => u.UserId == id)
+                .OrderByDescending(x => x.InsertDateTime)
+                .ToList();
+
+            var userswithdrawal = UnitOfWork.FactorCementRepository.Get()
+                .Where(u => u.UserId == id)
+                .OrderByDescending(x => x.InsertDateTime)
+                .ToList();
+
+            var depositList = usersdeposit.Select(d => new
+            {
+                Amount = d.Chargeamount,
+                Type = "Deposit",
+                Date = d.InsertDateTime
+            }).ToList();
+
+            var withdrawalList = userswithdrawal.Select(w => new
+            {
+                Amount = (int)w.AmountPaid,
+                Type = "Withdrawal",
+                Date = w.InsertDateTime
+            }).ToList();
+
+            var transactions = depositList;
+            transactions.AddRange(withdrawalList);
+            transactions = transactions.OrderByDescending(t => t.Date).ToList();
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Transactions");
+
+                // تنظیم هدر‌ها
+                worksheet.Cell(1, 1).Value = "تاریخ";
+                worksheet.Cell(1, 2).Value = "نوع تراکنش";
+                worksheet.Cell(1, 3).Value = "مبلغ";
+
+                // اضافه کردن اطلاعات تراکنش‌ها
+                for (int i = 0; i < transactions.Count; i++)
+                {
+                    var row = i + 2;
+                    worksheet.Cell(row, 1).Value = transactions[i].Date.ToString("yyyy-MM-dd HH:mm");
+                    worksheet.Cell(row, 2).Value = transactions[i].Type == "Deposit" ? "واریزی" : "برداشت";
+                    worksheet.Cell(row, 3).Value = transactions[i].Amount;
+
+                    // رنگ‌بندی پس‌زمینه براساس نوع تراکنش
+                    var rowRange = worksheet.Range(row, 1, row, 3); // کل ردیف
+                    if (transactions[i].Type == "Deposit")
+                    {
+                        rowRange.Style.Fill.BackgroundColor = XLColor.LightGreen; // سبز برای واریزی‌ها
+                    }
+                    else
+                    {
+                        rowRange.Style.Fill.BackgroundColor = XLColor.LightCoral; // قرمز برای برداشت‌ها
+                    }
+                }
+
+                // ساختن نام فایل
+                var fileName = $"{userName}_{currentDate}.xlsx";
+
+                // ذخیره به استریم و بازگشت فایل
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    stream.Seek(0, SeekOrigin.Begin);
+
+                    return File(stream.ToArray(),
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                fileName);
+                }
+            }
+        }
+
     }
+
 }

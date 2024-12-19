@@ -144,6 +144,9 @@
   <data name="Image" xml:space="preserve">
     <value>تصویر</value>
   </data>
+  <data name="InitialCredit" xml:space="preserve">
+    <value>موجودی اولیه</value>
+  </data>
   <data name="IsActive" xml:space="preserve">
     <value>فعال</value>
   </data>

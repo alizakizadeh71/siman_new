@@ -1,14 +1,13 @@
 ﻿using System.Linq;
-using System.Data.Entity;
 
 namespace DAL
 {
     public class SubHeadLineRepository : Repository<Models.SubHeadLine>, ISubHeadLineRepository
-	{
+    {
         public SubHeadLineRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+            : base(databaseContext)
+        {
+        }
 
         public IQueryable<Models.SubHeadLine> GetSubHeadLines()
         {
@@ -46,5 +45,5 @@ namespace DAL
                 throw ex;
             }
         }
-	}
+    }
 }

@@ -18,7 +18,7 @@
 
         public Commodity()
         { }
-        
+
         public string Name { get; set; }
 
         public int Code { get; set; }

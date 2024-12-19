@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using System;
-using System.Collections.Generic;
+﻿using System.Data.Entity;
+using System.Linq;
 
 namespace DAL
 {
@@ -24,7 +22,7 @@ namespace DAL
 
                 IQueryable<Models.DetailOfFactor> retValue;
 
-                if (HFactor==null)
+                if (HFactor == null)
                 {
                     return null;
                 }

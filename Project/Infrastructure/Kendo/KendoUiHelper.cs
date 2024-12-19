@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Infrastructure.Helpers;
 using OpenXml;
-using Infrastructure.Helpers;
+using System.Collections.Generic;
+using System.Linq;
 namespace Infrastructure.Kendo
 {
     public class KendoUiHelper
@@ -15,22 +15,23 @@ namespace Infrastructure.Kendo
             if (requestParams.Export.IsNotEmpty())
             {
                 ReturnXlsExport<T>(collection, requestParams);
-            }else
+            }
+            else
             {
                 return ReturnGridData<T>(requestParams, ref collection);
             }
 
             return null;
         }
-  
-        
+
+
         private static void ReturnXlsExport<T>(IQueryable<T> collection, KendoGridPost requestParams)
         {
             var o2x = new ObjectsToXls();
             o2x.AddSheet((IEnumerable<object>)collection, requestParams.Export);
             o2x.WriteToHttpResponse(requestParams.Export + ".xlsx");
         }
-  
+
         private static KendoGridResult<T> ReturnGridData<T>(KendoGridPost requestParams, ref IQueryable<T> collection)
         {
             //If the sort Order is provided perform a sort on the specified column

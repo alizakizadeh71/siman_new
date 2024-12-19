@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Data.Entity;
-
-namespace Models.Migrations
+﻿namespace Models.Migrations
 {
     internal sealed class Configuration : System.Data.Entity.Migrations.DbMigrationsConfiguration<Models.DatabaseContext>
     {

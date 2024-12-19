@@ -1,7 +1,7 @@
 ﻿namespace Models
 {
     [System.Serializable]
-    public abstract class BaseEntity:System.Object
+    public abstract class BaseEntity : System.Object
     {
         #region Create Guid
         [System.Runtime.InteropServices.DllImport("rpcrt4.dll", SetLastError = true)]

@@ -1,7 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
     public class BaseControllerWithUnitOfWork : BaseController
     {

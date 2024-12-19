@@ -1,22 +1,22 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using Models;
+﻿using Models;
 using System;
+using System.Data.Entity;
+using System.Linq;
 
 namespace DAL
 {
     public class ProvinceRepository : Repository<Models.Province>, IProvinceRepository
-	{
-		public ProvinceRepository(Models.DatabaseContext databaseContext)
-			: base(databaseContext)
-		{
-		}
+    {
+        public ProvinceRepository(Models.DatabaseContext databaseContext)
+            : base(databaseContext)
+        {
+        }
 
         public Models.Province GetByCode(string code)
         {
             Models.Province oProvince =
                 Get()
-                .Where(current =>current.Code==code)
+                .Where(current => current.Code == code)
                 .FirstOrDefault();
 
             return (oProvince);
@@ -39,7 +39,7 @@ namespace DAL
                 {
                     retValue
                         = Get()
-                        .OrderBy(current=>current.Name);
+                        .OrderBy(current => current.Name);
                 }
 
                 return retValue;

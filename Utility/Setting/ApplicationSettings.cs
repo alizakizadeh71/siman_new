@@ -31,7 +31,7 @@
 
             try
             {
-                string strData =System.Configuration.ConfigurationManager.AppSettings[key];
+                string strData = System.Configuration.ConfigurationManager.AppSettings[key];
 
                 if (string.IsNullOrEmpty(strData))
                 {

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewModels.Areas.Administrator.Bank
+﻿namespace ViewModels.Areas.Administrator.Bank
 {
-   public class IndexViewModel: System.Object
+    public class IndexViewModel : System.Object
     {
         public IndexViewModel()
         { }
@@ -15,8 +9,8 @@ namespace ViewModels.Areas.Administrator.Bank
 
         #region Name
         [System.ComponentModel.DataAnnotations.Display
-           (ResourceType=typeof(Resources.ViewModel.Bank),
-           Name=Resources.ViewModel.Strings.BankKeys.Name)]
+           (ResourceType = typeof(Resources.ViewModel.Bank),
+           Name = Resources.ViewModel.Strings.BankKeys.Name)]
         #endregion
         public string Name { get; set; }
 

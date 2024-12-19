@@ -81,9 +81,9 @@ namespace Infrastructure.Helpers
                 if (KnownMaps.Any(x => x.Item1 == baseType && x.Item2 == destinationType) != true)
                 {
                     KnownMaps.Add(new Tuple<Type, Type>(baseType, destinationType));
-                 //   Mapper.CreateMap(baseType, destinationType);
-               Mapper.Initialize(cfg => cfg.CreateMap(baseType, destinationType));
-            }
+                    //   Mapper.CreateMap(baseType, destinationType);
+                    Mapper.Initialize(cfg => cfg.CreateMap(baseType, destinationType));
+                }
 
                 return Mapper.Map<T>(baseObject);
             }
@@ -104,9 +104,9 @@ namespace Infrastructure.Helpers
                 if (KnownMaps.Any(x => x.Item1 == baseType && x.Item2 == destinationType) != true)
                 {
                     KnownMaps.Add(new Tuple<Type, Type>(baseType, destinationType));
-                   // Mapper.CreateMap(baseType, destinationType);
-               Mapper.Initialize(cfg => cfg.CreateMap(baseType, destinationType));
-            }
+                    // Mapper.CreateMap(baseType, destinationType);
+                    Mapper.Initialize(cfg => cfg.CreateMap(baseType, destinationType));
+                }
 
                 Mapper.Map(baseObject, destinationObject, baseType, destinationType);
             }

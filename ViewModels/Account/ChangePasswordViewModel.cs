@@ -1,10 +1,10 @@
 ﻿namespace ViewModels.Account
 {
-	public class ChangePasswordViewModel : System.Object
-	{
-		public ChangePasswordViewModel()
-		{
-		}
+    public class ChangePasswordViewModel : System.Object
+    {
+        public ChangePasswordViewModel()
+        {
+        }
 
         #region CurrentPassword
         [System.ComponentModel.DataAnnotations.Display
@@ -19,7 +19,7 @@
             ErrorMessageResourceType = typeof(Resources.Message.Global),
             ErrorMessageResourceName = Resources.Message.Strings.GlobalKeys.Required)]
         #endregion
-		public string CurrentPassword { get; set; }
+        public string CurrentPassword { get; set; }
 
         #region NewPassword
         [System.ComponentModel.DataAnnotations.Display
@@ -34,7 +34,7 @@
             ErrorMessageResourceType = typeof(Resources.Message.Global),
             ErrorMessageResourceName = Resources.Message.Strings.GlobalKeys.Required)]
         #endregion
-		public string NewPassword { get; set; }
+        public string NewPassword { get; set; }
 
         #region ConfirmNewPassword
         [System.ComponentModel.DataAnnotations.Display
@@ -49,6 +49,6 @@
             ErrorMessageResourceType = typeof(Resources.Message.Global),
             ErrorMessageResourceName = Resources.Message.Strings.GlobalKeys.Required)]
         #endregion
-		public string ConfirmNewPassword { get; set; }
-	}
+        public string ConfirmNewPassword { get; set; }
+    }
 }

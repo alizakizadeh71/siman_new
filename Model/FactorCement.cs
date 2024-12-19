@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using System;
+﻿using System;
 
 namespace Models
 {

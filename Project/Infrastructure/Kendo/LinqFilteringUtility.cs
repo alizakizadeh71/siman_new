@@ -16,7 +16,7 @@ namespace Infrastructure.Kendo
 
             IEnumerable<T> filteredquery = from item in data select item;
 
-            for (int i = 0; i < filterExpressions.Count; i++ )
+            for (int i = 0; i < filterExpressions.Count; i++)
             {
                 var index = i;
 

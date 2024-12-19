@@ -14,7 +14,7 @@
 
         public DatabaseContext()
         {
-           // ((System.Data.Entity.Infrastructure.IObjectContextAdapter)this).ObjectContext.CommandTimeout = 120;
+            // ((System.Data.Entity.Infrastructure.IObjectContextAdapter)this).ObjectContext.CommandTimeout = 120;
         }
 
         public System.Data.Entity.DbSet<DetailOfFactor> DetailOfFactors { get; set; }
@@ -51,13 +51,13 @@
         public System.Data.Entity.DbSet<ProjectAction> ProjectActions { get; set; }
         public System.Data.Entity.DbSet<AccessType> AccessTypes { get; set; }
         public System.Data.Entity.DbSet<UserLoginLog> UserLoginLogs { get; set; }
-        public System.Data.Entity.DbSet<ProductName> ProductNames{ get; set; }
-        public System.Data.Entity.DbSet<ProductType> ProductTypes{ get; set; }
+        public System.Data.Entity.DbSet<ProductName> ProductNames { get; set; }
+        public System.Data.Entity.DbSet<ProductType> ProductTypes { get; set; }
         public System.Data.Entity.DbSet<FactorCement> FactorCements { get; set; }
         public System.Data.Entity.DbSet<FinancialManagement> FinancialManagements { get; set; }
         public System.Data.Entity.DbSet<DestinationManagement> DestinationManagements { get; set; }
-        public System.Data.Entity.DbSet<PackageType> PackageTypes{ get; set; }
-        public System.Data.Entity.DbSet<FactoryName> FactoryNames{ get; set; }
+        public System.Data.Entity.DbSet<PackageType> PackageTypes { get; set; }
+        public System.Data.Entity.DbSet<FactoryName> FactoryNames { get; set; }
         public System.Data.Entity.DbSet<newsweb> News { get; set; }
         public System.Data.Entity.DbSet<village> villages { get; set; }
         public System.Data.Entity.DbSet<Inventoryamount> Inventoryamount { get; set; }

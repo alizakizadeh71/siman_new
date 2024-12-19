@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel.Web;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WCFServiceLibrary
 {
@@ -96,9 +91,9 @@ namespace WCFServiceLibrary
         int IVO_Clearance_New
            (string UserName, string Password, string CompanyName, string CompanyNationalCode, string ProvinceCode
            , string CommodityType, decimal TotalValue, string CommodityUnit, string RecordNumber, string RecordDate, string ImportRecordNumber
-           , string SecNumber, string SecDate, string CellPhoneNumber, int CurrencyCode, decimal CurrencyValue,long CustomsValue, string PerformNumber
+           , string SecNumber, string SecDate, string CellPhoneNumber, int CurrencyCode, decimal CurrencyValue, long CustomsValue, string PerformNumber
            , string PerformDate, decimal BaseCurrencyValue, string Description, List<string> FileList, out string message);
-        
+
 
         [OperationContract]
         int IVO_Clearance_Insert_Base

@@ -1,6 +1,5 @@
-﻿using System.Linq;
-using System.Data.Entity;
-using DAL;
+﻿using DAL;
+using System.Linq;
 
 namespace Infrastructure
 {
@@ -26,11 +25,11 @@ namespace Infrastructure
             filterContext.Result =
                 new System.Web.Mvc.RedirectToRouteResult(
                 new System.Web.Routing.RouteValueDictionary
-					{
-						{ "area", areaNameBase },
-						{ "controller", controllerNameBase },
-						{ "action", actionNameBase }
-					});
+                    {
+                        { "area", areaNameBase },
+                        { "controller", controllerNameBase },
+                        { "action", actionNameBase }
+                    });
         }
 
         public override void OnActionExecuting(System.Web.Mvc.ActionExecutingContext filterContext)
@@ -152,7 +151,7 @@ namespace Infrastructure
 
                 Models.Role oUserRole = Infrastructure.Sessions.AuthenticatedUser.User.Role;
                 var asasas = oAction.Roles.Select(current => current.Id).ToList();
-                if (!oAction.Roles.Select(current=>current.Id).Contains(oUserRole.Id))
+                if (!oAction.Roles.Select(current => current.Id).Contains(oUserRole.Id))
                 {
                     RedirectToRouteResult
                         (

@@ -80,7 +80,13 @@
                 </div>
             </div>
 
-
+            <div class="form-group">
+                @Html.LabelFor(model => model.InitialCredit, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.InitialCredit, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.InitialCredit)
+                </div>
+            </div>
 
             @*<div class="form-group" style="font-family:'B Nazanin';font-size:large">
             @Html.LabelFor(m => m.NationalCode, htmlAttributes: new { @class = "control-label col-md-2 required" })

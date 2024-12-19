@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Models
+﻿namespace Models
 {
     /// <summary>
     /// نام کارخانه
@@ -27,7 +25,7 @@ namespace Models
 
         public FactoryName()
         { }
-        
+
         public string Name { get; set; }
 
         public string Code { get; set; }

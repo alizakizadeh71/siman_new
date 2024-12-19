@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-namespace Models
+﻿namespace Models
 {
     public class PaymentHeader : BaseExtendedEntity
     {
-        internal class Configuration  : 
+        internal class Configuration :
             System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<PaymentHeader>
         {
             public Configuration()
