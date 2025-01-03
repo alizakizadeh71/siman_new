@@ -169,6 +169,15 @@ namespace Resources.ViewModel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to وضعیت ارسال پیامک.
+        /// </summary>
+        public static string isSendSmS {
+            get {
+                return ResourceManager.GetString("isSendSmS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کد ملی.
         /// </summary>
         public static string NationalCode {

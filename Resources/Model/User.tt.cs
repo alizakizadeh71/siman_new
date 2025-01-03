@@ -210,6 +210,16 @@ namespace Resources.Model.Strings {
             }
             return global::Resources.Model.User.ResourceManager.GetString("creditAmount", resourceCulture);
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: وضعیت ارسال پیامک
+        /// </summary>
+        public static string isSendSmS([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.isSendSmS;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("isSendSmS", resourceCulture);
+        }
     }
 }
 namespace Resources.Model.Strings {
@@ -316,5 +326,10 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: مبلغ اعتبار
         /// </summary>
         public const string creditAmount = "creditAmount";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: وضعیت ارسال پیامک
+        /// </summary>
+        public const string isSendSmS = "isSendSmS";
     }
 }

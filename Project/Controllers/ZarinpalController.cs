@@ -7,7 +7,9 @@ using OPS.ir.shaparak.sadad;
 using RestSharp;
 using System;
 using System.Linq;
+using System.ServiceModel;
 using System.Web.Mvc;
+using Utilities.PersianDate;
 using ViewModels.Areas.Administrator.ZarinPal;
 
 namespace OPS.Controllers
@@ -58,6 +60,7 @@ namespace OPS.Controllers
                         UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
                         UnitOfWork.FactorCementRepository.Update(oFactorCement);
                         UnitOfWork.Save();
+                        PaymentSMS(user.BuyerMobile , oFactorCement);
                         // Redirect به صفحه مقصد
                         return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = oFactorCement.InvoiceNumber });
                     }
@@ -243,7 +246,8 @@ namespace OPS.Controllers
                         //user.creditAmount += (user.AmountOfTonnagePurchased / 50) * 10000000;
                         UnitOfWork.UserRepository.Update(user);
                         UnitOfWork.Save();
-
+                        string mobile = oFactorCement.BuyerMobile;
+                        PaymentSMS(mobile, oFactorCement);
                         cementViewModel = ConvertCementViewModel(oFactorCement);
                     }
                 }
@@ -295,6 +299,7 @@ namespace OPS.Controllers
             string callbackurl = "https://masalehpakhsh.com/Zarinpal/VerifyPaymentWallet";
             string merchant = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
             string mobile = oFactorCement.BuyerMobile;
+        //    PaymentSMSWallet(mobile, oFactorCement);
             if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
             {
                 callbackurl = "http://localhost:6066/Zarinpal/VerifyPaymentWallet";
@@ -422,7 +427,8 @@ namespace OPS.Controllers
                         user.creditAmount += oFactorCement.Chargeamount;
                         UnitOfWork.UserRepository.Update(user);
                         UnitOfWork.Save();
-
+                        string mobile = oFactorCement.BuyerMobile;
+                        PaymentSMSWallet(mobile, oFactorCement);
                         cementViewModel = ConvertCementViewModel(oFactorCement);
                     }
                 }
@@ -453,6 +459,157 @@ namespace OPS.Controllers
             cementViewModel.card_pan = oFactorCement.card_pan;
             cementViewModel.BuyerNationalCode = oFactorCement.User.NationalCode;
             return cementViewModel;
+        }
+
+        public ActionResult PaymentSMS(string phoneNumber, Models.FactorCement factor)
+        {
+            try
+            {
+                var user = UnitOfWork.UserRepository.GetByPhoneNumebr(phoneNumber);
+                const string username = "989926932699";
+                const string password = "#57PD";
+                const int bodyId = 284290;
+                string to = user?.BuyerMobile?.ToString() ?? phoneNumber;
+
+                string accountStatus = "متعادل";
+                string balanceDetails = "0"; // جزئیات بدهکاری یا طلبکاری
+
+                if (user != null)
+                {
+                    int balanceAmount = user.InitialCredit - user.creditAmount;
+
+                    if (balanceAmount > 0)
+                    {
+                        accountStatus = "بدهکار";
+                        balanceDetails = $"{Math.Abs(balanceAmount).ToString("N0")}";
+                    }
+                    else if (balanceAmount < 0)
+                    {
+                        accountStatus = "طلبکار";
+                        balanceDetails = $"{Math.Abs(balanceAmount).ToString("N0")}";
+                    }
+                    else
+                    {
+                        accountStatus = "";
+                    }
+                }
+
+
+
+                string[] text = user != null && user.isSendSms
+                    ? new string[] {
+                user.UserName,
+                factor.Tonnage?.Name ?? "N/A",
+                factor.PackageType?.Name ?? "N/A",
+                factor.FactoryName?.Name ?? "N/A",
+                factor.ProductType?.Name ?? "N/A",
+                factor.AmountPaid.ToString("N0"),
+                balanceDetails,
+                accountStatus
+                    }
+                    : new string[] {
+                "ثبت نام نشده",
+                factor.Tonnage?.Name ?? "N/A",
+                factor.PackageType?.Name ?? "N/A",
+                factor.FactoryName?.Name ?? "N/A",
+                factor.ProductType?.Name ?? "N/A",
+                factor.AmountPaid.ToString("N0"),
+                "0",
+                ""
+                    };
+
+                var binding = new BasicHttpBinding
+                {
+                    Security = new BasicHttpSecurity
+                    {
+                        Mode = BasicHttpSecurityMode.Transport
+                    }
+                };
+
+                var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
+                var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
+                var result = soapClient.SendByBaseNumber(username, password, text, to, bodyId);
+
+                // بازگرداندن نتیجه به صورت جاوا اسکریپت
+                return Content($"<script>console.log('پیامک با موفقیت ارسال شد. نتیجه: {result}');</script>", "text/html");
+            }
+            catch (Exception ex)
+            {
+                // بازگرداندن خطا به صورت جاوا اسکریپت
+                return Content($"<script>console.error('خطا در ارسال پیامک: {ex.Message}');</script>", "text/html");
+            }
+        }
+
+
+        public void PaymentSMSWallet(string phoneNumber, Models.walletFactor factor)
+        {
+            try
+            {
+                var user = UnitOfWork.UserRepository.GetByPhoneNumebr(phoneNumber);
+                if (user != null && user.isSendSms == true)
+                {
+                    const string username = "989926932699";
+                    const string password = "#57PD";
+                    const int bodyId = 284335;
+                    string to = user.BuyerMobile.ToString();
+
+                    string accountStatus = "متعادل";
+                    string balanceDetails = "0"; // جزئیات بدهکاری یا طلبکاری
+
+                    if (user != null)
+                    {
+                        int balanceAmount = user.InitialCredit - user.creditAmount;
+
+                        if (balanceAmount > 0)
+                        {
+                            accountStatus = "بدهکار";
+                            balanceDetails = $"{Math.Abs(balanceAmount).ToString("N0")}";
+                        }
+                        else if (balanceAmount < 0)
+                        {
+                            accountStatus = "طلب کار";
+                            balanceDetails = $"{Math.Abs(balanceAmount).ToString("N0")}";
+                        }
+                        else
+                        {
+                            accountStatus = "";
+                        }
+                    }
+
+                    // string text = $"{user.UserName};{factor.Tonnage.Name};{factor.PackageType.Name};{factor.FactoryName.Name};{factor.ProductType.Name};{factor.AmountPaid};{user.InitialCredit}";
+                    string[] text = {
+                        user.UserName,
+                        factor.Chargeamount.ToString("N0"),
+                        balanceDetails,
+                        accountStatus
+                    };
+
+                    const bool isFlash = false;
+
+                    // تنظیمات BasicHttpBinding برای پشتیبانی از HTTPS
+                    var binding = new BasicHttpBinding
+                    {
+                        Security = new BasicHttpSecurity
+                        {
+                            Mode = BasicHttpSecurityMode.Transport // برای پشتیبانی از HTTPS
+                        }
+                    };
+
+                    // آدرس Endpoint با استفاده از HTTPS
+                    var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
+
+                    // ایجاد کلاینت SOAP
+                     var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
+
+                    // ارسال پیامک
+                     var result = soapClient.SendByBaseNumber(username, password, text, to, bodyId);
+                     Console.WriteLine($"پیامک با موفقیت ارسال شد. نتیجه: {result}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"خطا رخ داد: {ex.Message}");
+            }
         }
     }
 }

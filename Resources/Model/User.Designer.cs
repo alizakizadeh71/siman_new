@@ -178,6 +178,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to وضعیت ارسال پیامک.
+        /// </summary>
+        public static string isSendSmS {
+            get {
+                return ResourceManager.GetString("isSendSmS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to زمان آخرین ورود.
         /// </summary>
         public static string LastLoginDateTime {

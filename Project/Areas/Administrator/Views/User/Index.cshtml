@@ -212,6 +212,15 @@
                     },
                     {
                         hidden: false,
+                        width: "90px",
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.IsActive",
+                        field: "@Resources.Model.Strings.UserKeys.IsActive",
+                        template: '<input type="checkbox" #= @Resources.Model.Strings.UserKeys.IsActive ? checked="checked" : "" # disabled="disabled" ></input>'
+                    },
+                    {
+                        hidden: false,
                         locked: true,
                         lockable: true,
                         title: "@Resources.Model.User.Address",

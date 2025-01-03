@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Linq;
 
 namespace DAL
@@ -59,6 +60,23 @@ namespace DAL
                 return retValue;
             }
 
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public User GetByPhoneNumebr(string phoneNumeber)
+        {
+            try
+            {
+                User user =
+                    Get()
+                    .Where(u => u.BuyerMobile == phoneNumeber)
+                    .FirstOrDefault();
+
+                return user;
+            }
             catch (System.Exception ex)
             {
                 throw ex;

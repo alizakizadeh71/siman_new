@@ -121,6 +121,12 @@ namespace ViewModels.Areas.Administrator.User
             Name = Resources.ViewModel.Strings.UserKeys.InitialCredit)]
         #endregion
         public int InitialCredit { get; set; }
+        #region isSendSmS
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.isSendSmS)]
+        #endregion
+        public string isSendSmS { get; set; }
 
     }
 }

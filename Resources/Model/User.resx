@@ -156,6 +156,9 @@
   <data name="IsApprovallicense" xml:space="preserve">
     <value>مجوز تایید پروانه ها</value>
   </data>
+  <data name="isSendSmS" xml:space="preserve">
+    <value>وضعیت ارسال پیامک</value>
+  </data>
   <data name="LastLoginDateTime" xml:space="preserve">
     <value>زمان آخرین ورود</value>
   </data>

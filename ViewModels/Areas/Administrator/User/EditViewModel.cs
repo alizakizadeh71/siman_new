@@ -98,6 +98,13 @@ namespace ViewModels.Areas.Administrator.User
         #endregion
         public int InitialCredit { get; set; }
 
+        #region isSendSmS
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.isSendSmS)]
+        #endregion
+        public bool isSendSmS { get; set; }
+
         //#region IsDelete
         //[System.ComponentModel.DataAnnotations.Display
         //    (ResourceType = typeof(Resources.ViewModel.User),

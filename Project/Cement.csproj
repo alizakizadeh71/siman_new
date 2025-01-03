@@ -642,6 +642,31 @@
     <None Include="Service References\BehdadService\AccountService.wsdl" />
     <None Include="Service References\BehdadService\AccountServiceImplService.wsdl" />
     <None Include="Service References\GetPostinfoServices\postServices.wsdl" />
+    <Content Include="Service References\MelipayamakService\OPS.MelipayamakService.GetMultiDeliveryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\MelipayamakService\OPS.MelipayamakService.MessagesBL.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\MelipayamakService\OPS.MelipayamakService.ReceptionsRecID.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\MelipayamakService\OPS.MelipayamakService.SendByBaseNumber4Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\MelipayamakService\OPS.MelipayamakService.SendMultipleSMS2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\MelipayamakService\OPS.MelipayamakService.SendMultipleSMSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\MelipayamakService\OPS.MelipayamakService.SendSms2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\MelipayamakService\OPS.MelipayamakService.SendSmsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\MelipayamakService\Send.wsdl" />
     <None Include="Service References\PersonInfoServices\GetingPersonByNationalIdAndBirthDate.disco" />
     <None Include="Service References\PersonInfoServices\configuration91.svcinfo" />
     <None Include="Service References\PersonInfoServices\configuration.svcinfo" />
@@ -649,6 +674,13 @@
     <None Include="Service References\GetPostinfoServices\configuration91.svcinfo" />
     <None Include="Service References\GetPostinfoServices\configuration.svcinfo" />
     <None Include="Service References\GetPostinfoServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\MelipayamakService\Send.disco" />
+    <None Include="Service References\MelipayamakService\configuration91.svcinfo" />
+    <None Include="Service References\MelipayamakService\configuration.svcinfo" />
+    <None Include="Service References\MelipayamakService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -1821,6 +1853,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\MelipayamakService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ParsianPGWBilPaymentlServices\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1937,6 +1974,7 @@
     <WCFMetadataStorage Include="Service References\GetPostinfoServices\" />
     <WCFMetadataStorage Include="Service References\GovermentSaleServices\" />
     <WCFMetadataStorage Include="Service References\IVOServices\" />
+    <WCFMetadataStorage Include="Service References\MelipayamakService\" />
     <WCFMetadataStorage Include="Service References\ParsianPGWBilPaymentlServices\" />
     <WCFMetadataStorage Include="Service References\ParsianPGWReversalServices\" />
     <WCFMetadataStorage Include="Service References\ParsianPGWSaleServices\" />
@@ -2019,6 +2057,9 @@
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="mpNuget, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Melipayamak.RestClient.1.0.0\lib\netstandard2.0\mpNuget.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>

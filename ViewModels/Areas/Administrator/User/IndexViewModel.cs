@@ -81,6 +81,13 @@
         #endregion
         public string Address { get; set; }
 
+        #region isSendSmS
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.isSendSmS)]
+        #endregion
+        public bool isSendSmS { get; set; }
+
 
         #region IsApprovallicense
         [System.ComponentModel.DataAnnotations.Display

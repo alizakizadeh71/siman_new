@@ -106,6 +106,7 @@ namespace OPS.Areas.Administrator.Controllers
                          Address = current.Address,
                          BuyerMobile = current.BuyerMobile,
                          InitialCredit = current.InitialCredit,
+                         isSendSmS = current.isSendSms,
                          //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
                      })
@@ -176,6 +177,7 @@ namespace OPS.Areas.Administrator.Controllers
                              BuyerMobile = current.BuyerMobile,
                              Address = current.Address,
                              InitialCredit = current.InitialCredit,
+                             isSendSmS = current.isSendSms,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
@@ -194,6 +196,7 @@ namespace OPS.Areas.Administrator.Controllers
                              BuyerMobile = current.BuyerMobile,
                              Address = current.Address,
                              InitialCredit = current.InitialCredit,
+                             isSendSmS = current.isSendSmS,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
@@ -350,6 +353,7 @@ namespace OPS.Areas.Administrator.Controllers
                     oUser.BirthDay = user.BirthDay;
                     oUser.Authenticate = true;
                     oUser.InitialCredit = user.InitialCredit;
+                    oUser.isSendSms = user.isSendSmS;
                     UnitOfWork.UserRepository.Insert(oUser);
                     UnitOfWork.Save();
 
@@ -414,6 +418,7 @@ namespace OPS.Areas.Administrator.Controllers
                     BirthDay = current.BirthDay,
                     Address = current.Address,
                     Image = current.Image,
+                    isSendSmS = current.isSendSms == true ? "فعال" : "غیر فعال",
                     InitialCredit = current.InitialCredit
 
                 })
@@ -450,7 +455,9 @@ namespace OPS.Areas.Administrator.Controllers
                     IsActive = current.IsActived,
                     IsApprovallicense = current.IsApprovallicense,
                     Authenticate = current.Authenticate,
+                    isSendSmS = current.isSendSms,
                     Image = current.Image,
+                    
                     InitialCredit = current.InitialCredit
                 })
                 .FirstOrDefault()
@@ -572,6 +579,7 @@ namespace OPS.Areas.Administrator.Controllers
                     OlderAccount.BuyerMobile = user.BuyerMobile;
                     OlderAccount.creditAmount = user.creditAmount;
                     OlderAccount.InitialCredit = user.InitialCredit;
+                    OlderAccount.isSendSms = user.isSendSmS;
                     if (user.Authenticate == false)
                     {
                         OlderAccount.Authenticate = user.Authenticate;
@@ -857,7 +865,7 @@ namespace OPS.Areas.Administrator.Controllers
                 // ایجاد شیت
                 var worksheet = workbook.Worksheets.Add("فایل موجودی");
                 worksheet.Cell(1, 1).Value = "نام و نام خانوادگی";
-                worksheet.Cell(1, 2).Value = "مبلغ اعتبار";
+                worksheet.Cell(1, 2).Value = "قدرت خرید";
                 worksheet.Cell(1, 3).Value = "مبلغ موجودی اولیه";
                 worksheet.Cell(1, 4).Value = "مبلغ موجودی باقی مانده";
 
