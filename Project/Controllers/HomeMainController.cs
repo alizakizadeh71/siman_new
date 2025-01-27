@@ -1,6 +1,7 @@
 ﻿using DAL;
 using Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using ViewModels.Account;
@@ -35,20 +36,28 @@ namespace OPS.Controllers
                 .Where(x => x.Code == "1")
                 .Select(x => x.Id)
                 .FirstOrDefault();
+            //ترتیب لیست نوع کالا
+            var productTypist = new List<string> { "تیپ 2", "تیپ 5", "پوزولانی", "مرکب" };
+
 
             var productTypes = UnitOfWork.ProductTypeRepository.Get()
                 .Where(x => x.ProductNameId == product)
-                .Select(x => x.Id)
                 .ToList();
+
+            var SortedproductTypes =
+                    productTypes.Where(x => productTypist.Contains(x.Name))
+                    .OrderBy(x => productTypist.IndexOf(x.Name))
+                    .Select(x => x.Id)
+                    .ToList();
 
             Guid? productType1 = null;
             Guid? packageType = null;
             Guid? Tonnage = null;
 
-            foreach (var item in productTypes)
+            foreach (var item in SortedproductTypes)
             {
                 packageType = UnitOfWork.PackageTypeRepository.Get()
-                    .Where(x => x.ProductTypeId == item)
+                    .Where(x => x.ProductTypeId == item && x.Name == "کیسه")
                     .Select(x => x.Id)
                     .FirstOrDefault();
 
@@ -86,9 +95,9 @@ namespace OPS.Controllers
                 PackageType = packageType.Value,
                 FactoryName = factoryName,
                 Tonnage = Tonnage.Value,
-                Province = province ?? new Guid("d803f690-6de8-11e5-8295-c0f8daba7555"), // مقدار پیش‌فرض
-                City = city ?? new Guid("f8b85020-ad88-4d89-9aa2-0de9e27fd9b1"), // مقدار پیش‌فرض
-                Village = new Guid("F4125115-F66B-11EE-87BF-D039573E90CC"),
+                Province = province ?? new Guid("C9CEA679-6DE8-11E5-8295-C0F8DABA7555"), // مقدار پیش‌فرض
+                City = city ?? new Guid("F99E8A31-0562-4918-8295-2CBFC78D6269"), // مقدار پیش‌فرض
+                Village = new Guid("7189A747-02F3-11EF-9994-7C8AE1A25092"),
                 Address = address,
                 BuyerMobile = buyerMobile
             };
