@@ -16,11 +16,11 @@ namespace DAL
             return list;
         }
 
-        public Models.Bank GetByCode(string code)
+        public Models.Bank GetByName(string Name)
         {
             Models.Bank oBank =
                 Get()
-                .Where(currenct => currenct.Code == code)
+                .Where(currenct => currenct.Name == Name)
                 .FirstOrDefault();
 
             return oBank;

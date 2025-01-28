@@ -20,6 +20,12 @@
            Name = Resources.ViewModel.Strings.BankKeys.Code)]
         #endregion
         public string Code { get; set; }
+        #region Balance
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.Bank),
+            Name = Resources.ViewModel.Strings.BankKeys.Balance)]
+        #endregion
+        public int Balance { get; set; }
 
         #region InsertDateTime
         [System.ComponentModel.DataAnnotations.Display

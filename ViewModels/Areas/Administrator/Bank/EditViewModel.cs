@@ -19,10 +19,8 @@
         #region Code
         [System.ComponentModel.DataAnnotations.Display
            (ResourceType = typeof(Resources.ViewModel.Bank),
-           Name = Resources.ViewModel.Strings.BankKeys.Code)]
-        [System.ComponentModel.DataAnnotations.MaxLength(1)]
-        [System.ComponentModel.DataAnnotations.Required]
+           Name = Resources.ViewModel.Strings.BankKeys.Balance)]
         #endregion
-        public string Code { get; set; }
+        public int Balance { get; set; }
     }
 }

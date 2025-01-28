@@ -5,6 +5,6 @@
 
         System.Linq.IQueryable<Models.Bank> GetBanks();
 
-        Models.Bank GetByCode(string code);
+        Models.Bank GetByName(string code);
     }
 }

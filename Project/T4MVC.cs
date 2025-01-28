@@ -863,6 +863,8 @@ namespace Links
                       
         public static readonly string modernizr_2_6_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/modernizr-2.6.2.min.js") ? Url("modernizr-2.6.2.min.js") : Url("modernizr-2.6.2.js");
                       
+        public static readonly string num2persian_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/num2persian.min.js") ? Url("num2persian.min.js") : Url("num2persian.js");
+                      
         public static readonly string popover_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/popover.min.js") ? Url("popover.min.js") : Url("popover.js");
                       
         public static readonly string respond_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/respond.min.js") ? Url("respond.min.js") : Url("respond.js");

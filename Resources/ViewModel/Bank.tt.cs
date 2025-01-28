@@ -22,6 +22,16 @@ namespace Resources.ViewModel.Strings {
     public class Bank {
         
         /// <summary>
+        ///   Looks up a localized string similar to: موجودی
+        /// </summary>
+        public static string Balance([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.Bank.Balance;
+            }
+            return global::Resources.ViewModel.Bank.ResourceManager.GetString("Balance", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: کد
         /// </summary>
         public static string Code([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -111,6 +121,11 @@ namespace Resources.ViewModel.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("SmartStringResources", "1.2.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public class BankKeys {
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: موجودی
+        /// </summary>
+        public const string Balance = "Balance";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: کد

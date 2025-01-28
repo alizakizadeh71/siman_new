@@ -79,7 +79,6 @@
             modelBuilder.Configurations.Add(new Certain.Configuration());
             modelBuilder.Configurations.Add(new IncomeRow.Configuration());
             modelBuilder.Configurations.Add(new ExecutableCode.Configuration());
-            modelBuilder.Configurations.Add(new Bank.Configuration());
             modelBuilder.Configurations.Add(new SubHeadLine.Configuration());
             modelBuilder.Configurations.Add(new HeadLine.Configuration());
             modelBuilder.Configurations.Add(new CurrencyUnit.Configuration());

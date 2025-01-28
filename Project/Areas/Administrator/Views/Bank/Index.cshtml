@@ -118,10 +118,6 @@
                             var strTemplate = "";
 
                             strTemplate +=
-                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/Bank/Detail/'
-                                + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></a> | ';
-
-                            strTemplate +=
                                 '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Bank/Edit/'
                                 + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a>  ';
 
@@ -142,8 +138,8 @@
                         hidden: false,
                         locked: false,
                         lockable: true,
-                        title: "@Resources.ViewModel.Bank.Code",
-                        field: "@Resources.ViewModel.Strings.BankKeys.Code",
+                        title: "@Resources.ViewModel.Bank.Balance",
+                        field: "@Resources.ViewModel.Strings.BankKeys.Balance",
                     },
                     {
                         hidden: false,

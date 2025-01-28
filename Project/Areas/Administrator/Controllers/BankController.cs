@@ -29,7 +29,7 @@ namespace OPS.Areas.Administrator.Controllers
                     {
                         Id = current.Id,
                         Name = current.Name,
-                        Code = current.Code.ToString(),
+                        Balance = current.Balance,
                         InsertDateTime = Infrastructure.Utility.DisplayDateTime(current.InsertDateTime, true),
                     })
                     .AsQueryable();
@@ -62,7 +62,7 @@ namespace OPS.Areas.Administrator.Controllers
             var oFindBank =
                  UnitOfWork.BankRepository
                  .Get()
-                 .Where(current => current.Code == Bank.Code)
+                 .Where(current => current.Name == Bank.Name)
                  .FirstOrDefault()
                  ;
 
@@ -80,7 +80,7 @@ namespace OPS.Areas.Administrator.Controllers
                 oBank.IsDeleted = false;
                 oBank.IsSystem = false;
                 oBank.IsVerified = true;
-                oBank.Code = Bank.Code;
+                oBank.Balance = Bank.Balance;
                 oBank.InsertDateTime = DateTime.Now;
                 oBank.UpdateDateTime = DateTime.Now;
 
@@ -91,42 +91,6 @@ namespace OPS.Areas.Administrator.Controllers
             }
 
             return View(Bank);
-        }
-
-
-        [System.Web.Mvc.HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
-        public virtual System.Web.Mvc.ActionResult Detail(System.Guid id)
-        {
-            ViewBag.PageMessages = null;
-
-            if (id == null)
-            {
-                return (RedirectToAction
-                    (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
-            }
-
-            ViewModels.Areas.Administrator.Bank.DetailViewModel oBank
-                = UnitOfWork.BankRepository.Get()
-                .Where(current => current.Id == id)
-                .ToList()
-                .Select(current => new ViewModels.Areas.Administrator.Bank.DetailViewModel()
-                {
-                    Id = current.Id,
-                    Name = current.Name,
-                    Code = current.Code,
-                    InsertDateTime = Infrastructure.Utility.DisplayDateTime(current.InsertDateTime, true)
-                })
-                .FirstOrDefault()
-                ;
-
-            if (oBank == null)
-            {
-                return (RedirectToAction
-                    (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-            }
-
-            return (View(oBank));
         }
 
         [System.Web.Mvc.HttpGet]
@@ -149,7 +113,7 @@ namespace OPS.Areas.Administrator.Controllers
                 {
                     Id = current.Id,
                     Name = current.Name,
-                    Code = current.Code,
+                    Balance = current.Balance
                 })
                 .FirstOrDefault()
                 ;
@@ -184,7 +148,6 @@ namespace OPS.Areas.Administrator.Controllers
                 oFindedOther =
                     UnitOfWork.BankRepository
                     .Get()
-                    .Where(current => current.Code == Bank.Code)
                     .Where(current => current.Id != Bank.Id)
                     .FirstOrDefault()
                     ;
@@ -210,8 +173,7 @@ namespace OPS.Areas.Administrator.Controllers
                 {
                     oFindedBank.UpdateDateTime = DateTime.Now;
                     oFindedBank.Name = Bank.Name;
-                    oFindedBank.Code = Bank.Code;
-
+                    oFindedBank.Balance = Bank.Balance;
                     UnitOfWork.BankRepository.Update(oFindedBank);
                     UnitOfWork.Save();
 
@@ -227,71 +189,70 @@ namespace OPS.Areas.Administrator.Controllers
             }
         }
 
-        [System.Web.Mvc.HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
-        public virtual System.Web.Mvc.ActionResult Delete(System.Guid id)
-        {
-            ViewBag.PageMessages = null;
+        //[System.Web.Mvc.HttpGet]
+        //[Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
+        //public virtual System.Web.Mvc.ActionResult Delete(System.Guid id)
+        //{
+        //    ViewBag.PageMessages = null;
 
-            if (id == null)
-            {
-                return (RedirectToAction
-                    (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
-            }
+        //    if (id == null)
+        //    {
+        //        return (RedirectToAction
+        //            (MVC.Error.Display(System.Net.HttpStatusCode.BadRequest)));
+        //    }
 
-            ViewModels.Areas.Administrator.Bank.DetailViewModel oBank
-                = UnitOfWork.BankRepository.Get()
-                .Where(current => current.Id == id)
-                .ToList()
-                .Select(current => new ViewModels.Areas.Administrator.Bank.DetailViewModel()
-                {
-                    Id = current.Id,
-                    Name = current.Name,
-                    Code = current.Code,
-                    InsertDateTime = Infrastructure.Utility.DisplayDateTime(current.InsertDateTime, true),
-                })
-                .FirstOrDefault()
-                ;
+        //    ViewModels.Areas.Administrator.Bank.DetailViewModel oBank
+        //        = UnitOfWork.BankRepository.Get()
+        //        .Where(current => current.Id == id)
+        //        .ToList()
+        //        .Select(current => new ViewModels.Areas.Administrator.Bank.DetailViewModel()
+        //        {
+        //            Id = current.Id,
+        //            Name = current.Name,
+        //            InsertDateTime = Infrastructure.Utility.DisplayDateTime(current.InsertDateTime, true),
+        //        })
+        //        .FirstOrDefault()
+        //        ;
 
-            if (oBank == null)
-            {
-                return (RedirectToAction
-                    (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-            }
+        //    if (oBank == null)
+        //    {
+        //        return (RedirectToAction
+        //            (MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+        //    }
 
-            return (View(oBank));
-        }
+        //    return (View(oBank));
+        //}
 
-        [System.Web.Mvc.HttpPost]
-        [System.Web.Mvc.ActionName("Delete")]
-        [System.Web.Mvc.ValidateAntiForgeryToken]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
-        public virtual System.Web.Mvc.ActionResult DeleteConfirmed(System.Guid id)
-        {
-            try
-            {
-                var varBanks =
-                    UnitOfWork.BankRepository.Get()
-                    .Where(current => current.Id == id)
-                    .FirstOrDefault();
+        //[System.Web.Mvc.HttpPost]
+        //[System.Web.Mvc.ActionName("Delete")]
+        //[System.Web.Mvc.ValidateAntiForgeryToken]
+        //[Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
+        //public virtual System.Web.Mvc.ActionResult DeleteConfirmed(System.Guid id)
+        //{
+        //    try
+        //    {
+        //        var varBanks =
+        //            UnitOfWork.BankRepository.Get()
+        //            .Where(current => current.Id == id)
+        //            .FirstOrDefault();
 
-                ViewBag.PageMessages = string.Empty;
+        //        ViewBag.PageMessages = string.Empty;
 
-                if (varBanks != null)
-                {
-                    UnitOfWork.BankRepository.Delete(varBanks);
-                    UnitOfWork.Save();
-                    return (RedirectToAction(MVC.Administrator.Bank.Index()));
-                }
+        //        if (varBanks != null)
+        //        {
+        //            UnitOfWork.BankRepository.Delete(varBanks);
+        //            UnitOfWork.Save();
+        //            return (RedirectToAction(MVC.Administrator.Bank.Index()));
+        //        }
 
-                else
-                    return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-            }
+        //        else
+        //            return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+        //    }
 
-            catch (Exception ex)
-            {
-                return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        return (RedirectToAction(MVC.Error.Display(System.Net.HttpStatusCode.NotFound)));
+        //    }
+        //}
     }
 }

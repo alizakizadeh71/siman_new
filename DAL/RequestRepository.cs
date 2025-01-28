@@ -194,13 +194,11 @@ namespace DAL
 
             var b1String = string.Format(
                 "{0}{1}{2}{3}{4}",
-                request.ServiceTariff.BankAccount.Bank.Code,
                 request.ServiceTariff.BankAccount.ExecutableCode.Code,
                 d, e, amount);
 
             var b2String = string.Format(
                 "{0}{1}{2}{3}",
-                request.ServiceTariff.BankAccount.Bank.Code,
                 request.ServiceTariff.BankAccount.ExecutableCode.Code,
                 d, e);
 
@@ -220,15 +218,13 @@ namespace DAL
             string controlcode = string.Format("{0}{1}", b1, b2);
 
             string banckdigit = string.Format(
-                "{0}{1}{2}{3}",
-                request.ServiceTariff.BankAccount.Bank.Code,  // رقم اول که معمولا با 2 شروع میشود
+                "{0}{1}{2}{3}", // رقم اول که معمولا با 2 شروع میشود
                 controlcode, // دو رقم بعدی
                 request.ServiceTariff.BankAccount.ExecutableCode.Code, // چهار رقم بعدی که معمولا 0383 هست
                 d);
 
             string DepositNumber = string.Format(
-                "{0}{1}{2}{3}{4}",
-                request.ServiceTariff.BankAccount.Bank.Code, // عدد 2
+                "{0}{1}{2}{3}{4}", // عدد 2
                 controlcode, // دو رقم
                 request.ServiceTariff.BankAccount.ExecutableCode.Code, // 0383
                 d, e);

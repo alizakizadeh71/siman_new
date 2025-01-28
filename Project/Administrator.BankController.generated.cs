@@ -46,27 +46,9 @@ namespace OPS.Areas.Administrator.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Detail()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Detail);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Edit()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Delete()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult DeleteConfirmed()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -87,10 +69,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string Index = "Index";
             public readonly string GetBanks = "GetBanks";
             public readonly string Create = "Create";
-            public readonly string Detail = "Detail";
             public readonly string Edit = "Edit";
-            public readonly string Delete = "Delete";
-            public readonly string DeleteConfirmed = "Delete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -99,10 +78,7 @@ namespace OPS.Areas.Administrator.Controllers
             public const string Index = "Index";
             public const string GetBanks = "GetBanks";
             public const string Create = "Create";
-            public const string Detail = "Detail";
             public const string Edit = "Edit";
-            public const string Delete = "Delete";
-            public const string DeleteConfirmed = "Delete";
         }
 
 
@@ -114,14 +90,6 @@ namespace OPS.Areas.Administrator.Controllers
         {
             public readonly string Bank = "Bank";
         }
-        static readonly ActionParamsClass_Detail s_params_Detail = new ActionParamsClass_Detail();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Detail DetailParams { get { return s_params_Detail; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Detail
-        {
-            public readonly string id = "id";
-        }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
@@ -130,22 +98,6 @@ namespace OPS.Areas.Administrator.Controllers
         {
             public readonly string id = "id";
             public readonly string Bank = "Bank";
-        }
-        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Delete
-        {
-            public readonly string id = "id";
-        }
-        static readonly ActionParamsClass_DeleteConfirmed s_params_DeleteConfirmed = new ActionParamsClass_DeleteConfirmed();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_DeleteConfirmed DeleteConfirmedParams { get { return s_params_DeleteConfirmed; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DeleteConfirmed
-        {
-            public readonly string id = "id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -201,13 +153,6 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Detail(System.Guid id)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Detail);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            return callInfo;
-        }
-
         public override System.Web.Mvc.ActionResult Edit(System.Guid id)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
@@ -219,20 +164,6 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Bank", Bank);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Delete(System.Guid id)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult DeleteConfirmed(System.Guid id)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
