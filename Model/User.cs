@@ -55,9 +55,9 @@
         public string UserName { get; set; }
         public string NationalCode { get; set; }
         public string BuyerMobile { get; set; }
-        public int creditAmount { get; set; }
+        public long creditAmount { get; set; }
         public System.DateTime? BirthDay { get; set; }
-        public int InitialCredit { get; set; }
+        public long InitialCredit { get; set; }
 
         public string Password { get; set; }
 

@@ -6,6 +6,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using Models;
+using OPS.Controllers;
+using Utilities.PersianDate;
+using ViewModels.Areas.Administrator.User;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -27,6 +31,7 @@ namespace OPS.Areas.Administrator.Controllers
             var varCities = UnitOfWork.CityRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
             ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
             ViewModels.Areas.Administrator.User.SearchViewModel searchViewModel = new ViewModels.Areas.Administrator.User.SearchViewModel();
+            ViewBag.PageMessages = null;
             return View(searchViewModel);
         }
 
@@ -205,7 +210,7 @@ namespace OPS.Areas.Administrator.Controllers
                 var varResult =
                     Utilities.Kendo.HtmlHelpers
                     .ParseGridData<ViewModels.Areas.Administrator.User.IndexViewModel>(ViewModelsUser);
-
+                ViewBag.PageMessages = null;
                 return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
             }
             catch (Exception ex)
@@ -911,12 +916,12 @@ namespace OPS.Areas.Administrator.Controllers
 
             // بازیابی اطلاعات واریزی و برداشت
             var usersdeposit = UnitOfWork.walletFactorRepository.Get()
-                .Where(u => u.UserId == id)
+                .Where(u => u.UserId == id && u.FinalApprove == true)
                 .OrderByDescending(x => x.InsertDateTime)
                 .ToList();
 
             var userswithdrawal = UnitOfWork.FactorCementRepository.Get()
-                .Where(u => u.UserId == id)
+                .Where(u => u.UserId == id && u.FinalApprove == true)
                 .OrderByDescending(x => x.InsertDateTime)
                 .ToList();
 
@@ -981,8 +986,95 @@ namespace OPS.Areas.Administrator.Controllers
                                 fileName);
                 }
             }
-        }
 
+
+        }
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual ActionResult Paymentwallet(System.Guid id)
+        {
+            ViewBag.PageMessages = null;
+            RechargewalletUser model = new RechargewalletUser();
+            model.PhoneNumber = UnitOfWork.UserRepository.GetById(id).BuyerMobile;
+            return View(model);
+        }
+        [System.Web.Mvc.HttpPost]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual ActionResult Paymentwallet(RechargewalletUser rechargewalletUser)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = UnitOfWork.UserRepository.GetByPhoneNumebr(rechargewalletUser.PhoneNumber);
+                    if (user != null)
+                    {
+                        walletFactor OwalletFactor = new walletFactor()
+                        {
+                            Id = Guid.NewGuid(),
+                            UserId = user.Id,
+                            Chargeamount = rechargewalletUser.ChargeAmount,
+                            BuyerMobile = user.BuyerMobile,
+                            FinalApprove = true,
+                            Authority = "",
+                            InvoiceNumber = 0,
+                            Bankcode = 100,
+                            card_pan = "",
+                            ref_id = 0,
+                            AmountPaidDate = DateTime.Now,
+                            IsActived = true,
+                            IsVerified = true,
+                            IsDeleted = false,
+                            IsSystem = false,
+                            InsertDateTime = DateTime.Now
+                        };
+                        UnitOfWork.walletFactorRepository.Insertdata(OwalletFactor);
+                        user.creditAmount += rechargewalletUser.ChargeAmount;
+                        UnitOfWork.UserRepository.Update(user);
+                        UnitOfWork.Save();
+                        //ارسال پیامک
+                        ZarinpalController pyment = new ZarinpalController();
+                        pyment.PaymentSMSWallet(user.BuyerMobile, OwalletFactor);
+                        ViewBag.PageMessages= "افزایش موجودی با موفقیت افزایش یافت";
+                        return View();
+                    }
+                }
+                catch (Exception e)
+                {
+                    ViewBag.PageMessages= "خطا دیتا - دیتا های وارد شده را دوباره بررسی نمایید";
+                    return View();
+                }
+                
+            }
+            ViewBag.PageMessages = "خطا دیتا - دیتا های وارد شده را دوباره بررسی نمایید";
+            return View();
+        }
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual ActionResult SendSMSdebtor()
+        {
+            try
+            {
+                var phoneNumebrs = UnitOfWork.UserRepository.Get()
+                    .Where(u => u.InitialCredit - u.creditAmount > 0 && u.BuyerMobile == "09926932699")
+                    .Select(u => u.BuyerMobile)
+                    .ToArray();
+
+                ZarinpalController pyment = new ZarinpalController();
+                var isSendSMS = pyment.SendSMSdebtor(phoneNumebrs);
+                if (isSendSMS == true)
+                {
+                    ViewBag.PageMessages += "حساب درخواستی شما با موفقیت ثبت گردید  ";
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            return RedirectToAction("Index");
+        }
     }
 
 }

@@ -1142,6 +1142,16 @@ namespace Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: شارژ کیف پول
+        /// </summary>
+        public static string Rechargewallet([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Action.Rechargewallet;
+            }
+            return global::Resources.Action.ResourceManager.GetString("Rechargewallet", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: ثبت نام
         /// </summary>
         public static string Register([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -2427,6 +2437,11 @@ namespace Resources.Strings {
         ///   Provides access to string resource key of value similar to: خواندن SocialNewsRss
         /// </summary>
         public const string ReadRssSocialNews = "ReadRssSocialNews";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: شارژ کیف پول
+        /// </summary>
+        public const string Rechargewallet = "Rechargewallet";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: ثبت نام

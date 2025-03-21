@@ -1474,6 +1474,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ارسال پیامک به بدهکاران.
+        /// </summary>
+        public static string SendSMSdebtor {
+            get {
+                return ResourceManager.GetString("SendSMSdebtor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تعرفه خدمات سازمان.
         /// </summary>
         public static string ServiceTariff {

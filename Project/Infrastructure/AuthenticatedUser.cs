@@ -163,7 +163,7 @@
             }
         }
 
-        public int creditAmount
+        public long creditAmount
         {
             get
             {

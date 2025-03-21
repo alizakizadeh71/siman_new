@@ -73,7 +73,7 @@
             (ResourceType = typeof(Resources.ViewModel.User),
             Name = Resources.ViewModel.Strings.UserKeys.InitialCredit)]
         #endregion
-        public int InitialCredit { get; set; }
+        public long InitialCredit { get; set; }
         #region Address
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.ViewModel.User),

@@ -71,6 +71,7 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.SubHeadLineController SubHeadLine = new OPS.Areas.Administrator.Controllers.T4MVC_SubHeadLineController();
         public OPS.Areas.Administrator.Controllers.SubSystemController SubSystem = new OPS.Areas.Administrator.Controllers.T4MVC_SubSystemController();
         public OPS.Areas.Administrator.Controllers.TonnagesController Tonnages = new OPS.Areas.Administrator.Controllers.T4MVC_TonnagesController();
+        public OPS.Areas.Administrator.Controllers.TotalCompanyInventoryController TotalCompanyInventory = new OPS.Areas.Administrator.Controllers.T4MVC_TotalCompanyInventoryController();
         public OPS.Areas.Administrator.Controllers.UserController User = new OPS.Areas.Administrator.Controllers.T4MVC_UserController();
         public OPS.Areas.Administrator.Controllers.VillageController Village = new OPS.Areas.Administrator.Controllers.T4MVC_VillageController();
         public T4MVC.Administrator.SharedController Shared = new T4MVC.Administrator.SharedController();
@@ -956,6 +957,7 @@ namespace Links
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string AccountNumber_png = Url("AccountNumber.png");
             public static readonly string back_png = Url("back.png");
+            public static readonly string charge_png = Url("charge.png");
             public static readonly string Create_png = Url("Create.png");
             public static readonly string creditcard_png = Url("creditcard.png");
             public static readonly string Currency_png = Url("Currency.png");

@@ -128,7 +128,11 @@
 
                             strTemplate +=
                               '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ExportToExcel)" href="/Administrator/User/DownloadUserExcelGetByid/'
-                            + dataItem.Id + '"><img src="../../../Content/Images/Exel.png" width="20px" height="20px"/></a> | ';
+                                + dataItem.Id + '"><img src="../../../Content/Images/Exel.png" width="20px" height="20px"/></a> | ';
+
+                            strTemplate +=
+                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Rechargewallet)" href="/Administrator/User/Paymentwallet/'
+                            + dataItem.Id + '"><img src="../../../Content/Icon/charge.png"width="20px" height="20px"/></a> | ';
 
                             strTemplate +=
                                 '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ChangePassword)" href="/Administrator/User/ChangePassword/'
@@ -329,7 +333,7 @@
                     @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
                         @Html.DropDownListFor(model => model.Province, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                            Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
                 </div>
                 @*<div class="form-group">
@@ -343,7 +347,7 @@
                     @Html.LabelFor(model => model.Role, new { @class = "col-md-4 control-label" })
                     <div class="col col-md-8">
                         @Html.DropDownListFor(model => model.Role, null,
-                        Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
+                            Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
                     </div>
                 </div>
             </div>

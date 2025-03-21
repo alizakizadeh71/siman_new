@@ -208,6 +208,7 @@
     <Content Include="Content\css\chosen.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Icon\ExcelMini.png" />
+    <Content Include="Content\Icon\charge.png" />
     <Content Include="Content\Icon\map.png" />
     <Content Include="Content\Icon\Office.png" />
     <Content Include="Content\Icon\AccountNumber.png" />
@@ -587,6 +588,8 @@
     <Content Include="Areas\Administrator\Views\Inventoryamount\Delete.cshtml" />
     <Content Include="Areas\Administrator\Views\Request\Edit.cshtml" />
     <Content Include="Areas\Administrator\Views\Request\PrintNewFactorWallet.cshtml" />
+    <Content Include="Areas\Administrator\Views\TotalCompanyInventory\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\User\Paymentwallet.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Scripts\num2persian.js" />
@@ -1668,6 +1671,9 @@
     <Compile Include="Administrator.TonnagesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Administrator.TotalCompanyInventoryController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Administrator.UserController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1738,6 +1744,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Administrator\Controllers\TonnagesController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\TotalCompanyInventoryController.cs" />
     <Compile Include="Areas\Administrator\Controllers\UserController.cs">
       <SubType>Code</SubType>
     </Compile>

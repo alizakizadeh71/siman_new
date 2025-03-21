@@ -82,5 +82,41 @@ namespace DAL
                 throw ex;
             }
         }
+
+        public string GetAccountStatus(string userName)
+        {
+            try
+            {
+                User user =
+                    Get()
+                        .Where(u => u.UserName == userName)
+                        .FirstOrDefault();
+
+                long balanceAmount = user.InitialCredit - user.creditAmount;
+                string accountStatus = "متعادل";
+                string balanceDetails = "0";
+                if (balanceAmount > 0)
+                {
+                    accountStatus = "بدهکار";
+                    balanceDetails = $"{Math.Abs(balanceAmount).ToString("N0")}";
+                }
+                else if (balanceAmount < 0)
+                {
+                    accountStatus = "طلب کار";
+                    balanceDetails = $"{Math.Abs(balanceAmount).ToString("N0")}";
+                }
+                else
+                {
+                    accountStatus = "";
+                }
+
+                return balanceDetails + accountStatus;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
     }
 }

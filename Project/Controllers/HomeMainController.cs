@@ -350,9 +350,6 @@ namespace OPS.Controllers
             {
                 Id = Guid.NewGuid(),
                 UserId = oUser.Id,
-                UserIPAddress = Request.UserHostAddress,
-                Browser = Request.Browser.Type, // مدل و ورژن مرورگر
-                URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
                 Chargeamount = rechargewallet.Chargeamount,
                 BuyerMobile = oUser.BuyerMobile
             };

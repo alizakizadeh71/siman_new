@@ -666,4 +666,7 @@
   <data name="Rechargewallet" xml:space="preserve">
     <value>شارژ کیف پول</value>
   </data>
+  <data name="SendSMSdebtor" xml:space="preserve">
+    <value>ارسال پیامک به بدهکاران</value>
+  </data>
 </root>

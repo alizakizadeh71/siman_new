@@ -272,6 +272,14 @@
     <Compile Include="Model\Inventoryamount.tt.cs">
       <DependentUpon>Inventoryamount.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\TotalCompanyInventory.Designer.cs">
+      <DependentUpon>TotalCompanyInventory.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Model\TotalCompanyInventory.tt.cs">
+      <DependentUpon>TotalCompanyInventory.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\village.Designer.cs">
       <DependentUpon>village.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -526,6 +534,9 @@
     <Compile Include="ViewModel\Paymentwaitinglist.tt.cs">
       <DependentUpon>Paymentwaitinglist.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\RechargewalletUser.tt.cs">
+      <DependentUpon>RechargewalletUser.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\SubSystem.Designer.cs">
       <DependentUpon>SubSystem.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -543,6 +554,11 @@
     <Compile Include="ViewModel\Unit.tt.cs">
       <DependentUpon>Unit.tt</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModel\RechargewalletUser.Designer.cs">
+      <DependentUpon>RechargewalletUser.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="ViewModel\User.Designer.cs">
       <DependentUpon>User.resx</DependentUpon>
@@ -833,6 +849,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Inventoryamount.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Model\TotalCompanyInventory.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TotalCompanyInventory.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model\village.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>village.Designer.cs</LastGenOutput>
@@ -963,6 +984,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Unit.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\RechargewalletUser.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RechargewalletUser.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="ViewModel\User.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>User.Designer.cs</LastGenOutput>
@@ -1080,6 +1106,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Content>
+    <None Include="Model\TotalCompanyInventory.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TotalCompanyInventory.txt</LastGenOutput>
+    </None>
+    <Content Include="Model\TotalCompanyInventory.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TotalCompanyInventory.tt</DependentUpon>
+    </Content>
     <Content Include="Model\village.txt">
       <DependentUpon>village.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1177,6 +1212,15 @@
       <DependentUpon>Unit.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Content>
+    <Content Include="ViewModel\RechargewalletUser.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RechargewalletUser.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\RechargewalletUser.txt">
+      <DependentUpon>RechargewalletUser.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Content>
     <Content Include="ViewModel\User.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

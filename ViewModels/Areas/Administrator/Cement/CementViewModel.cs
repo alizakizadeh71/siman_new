@@ -191,6 +191,7 @@ namespace ViewModels.Areas.Administrator.Cement
             Name = Resources.Model.Strings.RequestKeys.PayEndDate)]
         #endregion
         public DateTime? PayEndDate { get; set; }
+        public String PayEndDatestring { get; set; }
 
         #region InvoiceNumber
         [System.ComponentModel.DataAnnotations.Display

@@ -1,0 +1,72 @@
+﻿@model ViewModels.Areas.Administrator.User.RechargewalletUser
+@{
+    ViewBag.Title = "Paymentwallet";
+}
+
+@using (Html.BeginForm("Paymentwallet", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+    {
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                پیام های سیستمی
+            </div>
+            <div class="panel-body">
+                @Html.Raw(ViewBag.PageMessages)
+            </div>
+        </div>
+    }
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            افزایش موجودی کاربر
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                @Html.LabelFor(model => model.PhoneNumber, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8" id="DivProductTypeId">
+                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.PhoneNumber)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ChargeAmount, new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.ChargeAmount, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ChargeAmount)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <input type="submit" value="@Resources.Buttons.Create" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-footer">
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.User.Index(), new { @class = "btn btn-default col-md-2" })
+
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
+               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker();
+    });
+</script>
+}
+
+

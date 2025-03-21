@@ -6,6 +6,7 @@ using OPS.CBINasimService;
 using OPS.ir.shaparak.sadad;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Web.Mvc;
@@ -53,7 +54,7 @@ namespace OPS.Controllers
                     }
                     else if (oFactorCement.AmountPaid <= user.creditAmount && user.UserName != "Guest")
                     {
-                        user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
+                        user.creditAmount = Convert.ToInt64(user.creditAmount - oFactorCement.AmountPaid);
                         UnitOfWork.UserRepository.Update(user);
                         oFactorCement.FinalApprove = true;
                         InventoryTonnage.Inventorytonnage = InventoryTonnage.Inventorytonnage - Tonnage;
@@ -461,7 +462,7 @@ namespace OPS.Controllers
             return cementViewModel;
         }
 
-        public ActionResult PaymentSMS(string phoneNumber, Models.FactorCement factor)
+        public virtual ActionResult PaymentSMS(string phoneNumber, Models.FactorCement factor)
         {
             try
             {
@@ -476,7 +477,7 @@ namespace OPS.Controllers
 
                 if (user != null)
                 {
-                    int balanceAmount = user.InitialCredit - user.creditAmount;
+                    long balanceAmount = user.InitialCredit - user.creditAmount;
 
                     if (balanceAmount > 0)
                     {
@@ -558,7 +559,7 @@ namespace OPS.Controllers
 
                     if (user != null)
                     {
-                        int balanceAmount = user.InitialCredit - user.creditAmount;
+                        long balanceAmount = user.InitialCredit - user.creditAmount;
 
                         if (balanceAmount > 0)
                         {
@@ -609,6 +610,37 @@ namespace OPS.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine($"خطا رخ داد: {ex.Message}");
+            }
+        }
+
+        public bool SendSMSdebtor(string[] phoneNumbers)
+        {
+            
+            try
+            {
+                const string username = "989926932699";
+                const string from = "";
+                const string text = "";
+                const string password = "#57PD";
+                const bool isFlash = false;
+                var binding = new BasicHttpBinding
+                {
+                    Security = new BasicHttpSecurity
+                    {
+                        Mode = BasicHttpSecurityMode.Transport
+                    }
+                };
+                var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
+                var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
+                var result = soapClient.SendSimpleSMS(username, password,phoneNumbers,from,text,isFlash);
+
+                // بازگرداندن نتیجه به صورت جاوا اسکریپت
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // بازگرداندن خطا به صورت جاوا اسکریپت
+                return false;
             }
         }
     }

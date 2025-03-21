@@ -56,6 +56,12 @@ namespace OPS.Controllers
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Paymentwallet);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult PaymentSMS()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.PaymentSMS);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ZarinpalController Actions { get { return MVC.Zarinpal; } }
@@ -76,6 +82,7 @@ namespace OPS.Controllers
             public readonly string VerifyPayment = "VerifyPayment";
             public readonly string Paymentwallet = "Paymentwallet";
             public readonly string VerifyPaymentWallet = "VerifyPaymentWallet";
+            public readonly string PaymentSMS = "PaymentSMS";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -85,6 +92,7 @@ namespace OPS.Controllers
             public const string VerifyPayment = "VerifyPayment";
             public const string Paymentwallet = "Paymentwallet";
             public const string VerifyPaymentWallet = "VerifyPaymentWallet";
+            public const string PaymentSMS = "PaymentSMS";
         }
 
 
@@ -105,6 +113,15 @@ namespace OPS.Controllers
         {
             public readonly string Chargeamount = "Chargeamount";
             public readonly string invoiceNumber = "invoiceNumber";
+        }
+        static readonly ActionParamsClass_PaymentSMS s_params_PaymentSMS = new ActionParamsClass_PaymentSMS();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_PaymentSMS PaymentSMSParams { get { return s_params_PaymentSMS; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_PaymentSMS
+        {
+            public readonly string phoneNumber = "phoneNumber";
+            public readonly string factor = "factor";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -154,6 +171,14 @@ namespace OPS.Controllers
         public override System.Web.Mvc.ActionResult VerifyPaymentWallet()
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.VerifyPaymentWallet);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult PaymentSMS(string phoneNumber, Models.FactorCement factor)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.PaymentSMS);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "phoneNumber", phoneNumber);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "factor", factor);
             return callInfo;
         }
 

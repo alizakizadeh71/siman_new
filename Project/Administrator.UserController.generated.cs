@@ -110,6 +110,12 @@ namespace OPS.Areas.Administrator.Controllers
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.DownloadUserExcelGetByid);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Paymentwallet()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Paymentwallet);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public UserController Actions { get { return MVC.Administrator.User; } }
@@ -142,6 +148,8 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string Authenticate = "Authenticate";
             public readonly string DownloadUserExcel = "DownloadUserExcel";
             public readonly string DownloadUserExcelGetByid = "DownloadUserExcelGetByid";
+            public readonly string Paymentwallet = "Paymentwallet";
+            public readonly string SendSMSdebtor = "SendSMSdebtor";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -163,6 +171,8 @@ namespace OPS.Areas.Administrator.Controllers
             public const string Authenticate = "Authenticate";
             public const string DownloadUserExcel = "DownloadUserExcel";
             public const string DownloadUserExcelGetByid = "DownloadUserExcelGetByid";
+            public const string Paymentwallet = "Paymentwallet";
+            public const string SendSMSdebtor = "SendSMSdebtor";
         }
 
 
@@ -265,6 +275,15 @@ namespace OPS.Areas.Administrator.Controllers
         {
             public readonly string id = "id";
         }
+        static readonly ActionParamsClass_Paymentwallet s_params_Paymentwallet = new ActionParamsClass_Paymentwallet();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Paymentwallet PaymentwalletParams { get { return s_params_Paymentwallet; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Paymentwallet
+        {
+            public readonly string id = "id";
+            public readonly string rechargewalletUser = "rechargewalletUser";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -282,6 +301,7 @@ namespace OPS.Areas.Administrator.Controllers
                 public readonly string Detail = "Detail";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
+                public readonly string Paymentwallet = "Paymentwallet";
             }
             public readonly string AccessManagement = "~/Areas/Administrator/Views/User/AccessManagement.cshtml";
             public readonly string ChangePassword = "~/Areas/Administrator/Views/User/ChangePassword.cshtml";
@@ -290,6 +310,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string Detail = "~/Areas/Administrator/Views/User/Detail.cshtml";
             public readonly string Edit = "~/Areas/Administrator/Views/User/Edit.cshtml";
             public readonly string Index = "~/Areas/Administrator/Views/User/Index.cshtml";
+            public readonly string Paymentwallet = "~/Areas/Administrator/Views/User/Paymentwallet.cshtml";
         }
     }
 
@@ -424,6 +445,26 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DownloadUserExcelGetByid);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Paymentwallet(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Paymentwallet);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Paymentwallet(ViewModels.Areas.Administrator.User.RechargewalletUser rechargewalletUser)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Paymentwallet);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "rechargewalletUser", rechargewalletUser);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult SendSMSdebtor()
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SendSMSdebtor);
             return callInfo;
         }
 
