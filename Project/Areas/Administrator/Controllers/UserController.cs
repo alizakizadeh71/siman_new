@@ -929,14 +929,16 @@ namespace OPS.Areas.Administrator.Controllers
             {
                 Amount = d.Chargeamount,
                 Type = "Deposit",
-                Date = d.InsertDateTime
+                Date = d.InsertDateTime,
+                Description = d.Description
             }).ToList();
 
             var withdrawalList = userswithdrawal.Select(w => new
             {
                 Amount = (int)w.AmountPaid,
                 Type = "Withdrawal",
-                Date = w.InsertDateTime
+                Date = w.InsertDateTime,
+                Description = w.Description
             }).ToList();
 
             var transactions = depositList;
@@ -951,7 +953,7 @@ namespace OPS.Areas.Administrator.Controllers
                 worksheet.Cell(1, 1).Value = "تاریخ";
                 worksheet.Cell(1, 2).Value = "نوع تراکنش";
                 worksheet.Cell(1, 3).Value = "مبلغ";
-
+                worksheet.Cell(1, 4).Value = "توضیحات";
                 // اضافه کردن اطلاعات تراکنش‌ها
                 for (int i = 0; i < transactions.Count; i++)
                 {
@@ -959,9 +961,9 @@ namespace OPS.Areas.Administrator.Controllers
                     worksheet.Cell(row, 1).Value = transactions[i].Date.ToString("yyyy-MM-dd HH:mm");
                     worksheet.Cell(row, 2).Value = transactions[i].Type == "Deposit" ? "واریزی" : "برداشت";
                     worksheet.Cell(row, 3).Value = transactions[i].Amount;
-
+                    worksheet.Cell(row, 4).Value = transactions[i].Description;
                     // رنگ‌بندی پس‌زمینه براساس نوع تراکنش
-                    var rowRange = worksheet.Range(row, 1, row, 3); // کل ردیف
+                    var rowRange = worksheet.Range(row, 1, row, 4); // کل ردیف
                     if (transactions[i].Type == "Deposit")
                     {
                         rowRange.Style.Fill.BackgroundColor = XLColor.LightGreen; // سبز برای واریزی‌ها
@@ -1027,7 +1029,8 @@ namespace OPS.Areas.Administrator.Controllers
                             IsVerified = true,
                             IsDeleted = false,
                             IsSystem = false,
-                            InsertDateTime = DateTime.Now
+                            InsertDateTime = DateTime.Now,
+                            Description = rechargewalletUser.Description
                         };
                         UnitOfWork.walletFactorRepository.Insertdata(OwalletFactor);
                         user.creditAmount += rechargewalletUser.ChargeAmount;

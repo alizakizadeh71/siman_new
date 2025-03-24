@@ -32,7 +32,17 @@ namespace Resources.ViewModel.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to: شماره کاربر
+        ///   Looks up a localized string similar to: توضیحات
+        /// </summary>
+        public static string Description([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.RechargewalletUser.Description;
+            }
+            return global::Resources.ViewModel.RechargewalletUser.ResourceManager.GetString("Description", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: شماره موبایل کاربر
         /// </summary>
         public static string PhoneNumber([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -58,7 +68,12 @@ namespace Resources.ViewModel.Strings {
         public const string ChargeAmount = "ChargeAmount";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: شماره کاربر
+        ///   Provides access to string resource key of value similar to: توضیحات
+        /// </summary>
+        public const string Description = "Description";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: شماره موبایل کاربر
         /// </summary>
         public const string PhoneNumber = "PhoneNumber";
     }

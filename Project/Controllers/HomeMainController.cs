@@ -197,6 +197,9 @@ namespace OPS.Controllers
                                  .Where(current => current.CityId == cementViewModel.City)
                                  .SingleOrDefault()
                                  ;
+
+                        var productName = UnitOfWork.ProductNameRepository.GetById(cementViewModel.ProductName).Name;
+                        var TonnageWieght = UnitOfWork.tonnageRepository.GetById(cementViewModel.Tonnage).Name;
                         if (oDestinationManagement != null)
                         {
                             DestinationAmountPaid = (oDestinationManagement.FinancialManagement.AmountPaid * Tonnage) + oDestinationManagement.DestinationAmountPaid;
@@ -233,7 +236,7 @@ namespace OPS.Controllers
                             Address = cementViewModel.Address,
                             AmountPaid = AmountPaid,
                             DestinationAmountPaid = DestinationAmountPaid,
-                            Description = cementViewModel.Description,
+                            Description = $"فاکتور پرداخت {productName} {TonnageWieght}تن",
                             RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),
                             UserIPAddress = Request.UserHostAddress,
                             Browser = Request.Browser.Type, // مدل و ورژن مرورگر

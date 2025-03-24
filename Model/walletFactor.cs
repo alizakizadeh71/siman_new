@@ -27,6 +27,7 @@
         public int Bankcode { get; set; }
         public string card_pan { get; set; }
         public long ref_id { get; set; }
+        public string Description { get; set; }
         public System.DateTime? AmountPaidDate { get; set; }
     }
 }

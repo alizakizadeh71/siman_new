@@ -120,6 +120,9 @@
   <data name="ChargeAmount" xml:space="preserve">
     <value>مقدار افزایش موجودی</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>شماره موبایل کاربر</value>
   </data>
