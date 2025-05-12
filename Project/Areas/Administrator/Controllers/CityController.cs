@@ -33,7 +33,7 @@ namespace OPS.Areas.Administrator.Controllers
             var varProvinces = UnitOfWork.ProvinceRepository.Get().ToList();
             ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", cementViewModel.Province);
 
-            var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList();
+            var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province ?? Guid.Empty).ToList();
             ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", cementViewModel.City);
         }
 
@@ -186,7 +186,7 @@ namespace OPS.Areas.Administrator.Controllers
                     .GetById(cementViewModel.Id)
                     ;
 
-                var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList(); /// کرمان
+                var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province ?? Guid.Empty).ToList(); /// کرمان
                 base.ViewData["City"] = new System.Web.Mvc.SelectList(City, "Id", "Name", cementViewModel.City).OrderBy(x => x.Text);
 
                 // **************************************************

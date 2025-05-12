@@ -47,11 +47,11 @@ namespace Models
                     .WillCascadeOnDelete(false)
                     ;
 
-                HasRequired(current => current.Tonnage)
-                    .WithMany(tonnage => tonnage.FactorCements)
-                    .HasForeignKey(current => current.TonnageId)
-                    .WillCascadeOnDelete(false)
-                    ;
+                //HasRequired(current => current.Tonnage)
+                //    .WithMany(tonnage => tonnage.FactorCements)
+                //    .HasForeignKey(current => current.TonnageId)
+                //    .WillCascadeOnDelete(false)
+                //    ;
 
 
                 HasOptional(current => current.Province)
@@ -60,11 +60,11 @@ namespace Models
                     .WillCascadeOnDelete(true)
                     ;
 
-                HasRequired(current => current.City)
-                    .WithMany(user => user.FactorCements)
-                    .HasForeignKey(current => current.CityId)
-                    .WillCascadeOnDelete(false)
-                    ;
+                //HasRequired(current => current.City)
+                //    .WithMany(user => user.FactorCements)
+                //    .HasForeignKey(current => current.CityId)
+                //    .WillCascadeOnDelete(false)
+                //    ;
             }
         }
 
@@ -133,8 +133,10 @@ namespace Models
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.Tonnage)]
         #endregion
-        public Guid TonnageId { get; set; }
-        public virtual Tonnage Tonnage { get; set; }
+        public Guid? TonnageId { get; set; }
+
+        public double Tonnagedouble { get; set; }
+        public Tonnage Tonnage { get; set; }
 
         #region Province
         [System.ComponentModel.DataAnnotations.Display
@@ -149,7 +151,7 @@ namespace Models
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.City)]
         #endregion
-        public Guid CityId { get; set; }
+        public Guid? CityId { get; set; }
         public virtual City City { get; set; }
 
         //#region Village

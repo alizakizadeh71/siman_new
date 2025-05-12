@@ -46,10 +46,10 @@ namespace OPS.Areas.Administrator.Controllers
             var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
             ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", cementViewModel.Province);
 
-            var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList();
+            var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province ?? Guid.Empty).ToList();
             ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", cementViewModel.City);
 
-            var varVilages = UnitOfWork.VillageRepository.GetBycityId(cementViewModel.City).ToList();
+            var varVilages = UnitOfWork.VillageRepository.GetBycityId(cementViewModel.City ?? Guid.Empty).ToList();
             ViewData["Village"] = new System.Web.Mvc.SelectList(varVilages, "Id", "Name", cementViewModel.Village);
         }
 
@@ -556,7 +556,7 @@ namespace OPS.Areas.Administrator.Controllers
                 var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
                 ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", cementViewModel.Province);
 
-                var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList();
+                var varCities = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province ?? Guid.Empty).ToList();
                 ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", cementViewModel.City);
 
                 var varVilages = UnitOfWork.VillageRepository.GetBycityId(new Guid()).ToList();
@@ -589,7 +589,7 @@ namespace OPS.Areas.Administrator.Controllers
                     //newDestinationManagement.UserId = Infrastructure.Sessions.AuthenticatedUser.User.Id;
                     newDestinationManagement.FinancialManagementId = cementViewModel.Id;
                     newDestinationManagement.ProvinceId = cementViewModel.Province;
-                    newDestinationManagement.CityId = cementViewModel.City;
+                    newDestinationManagement.CityId = cementViewModel.City ?? Guid.Empty;
                     newDestinationManagement.villageId = cementViewModel.Village;
                     newDestinationManagement.DestinationAmountPaid = cementViewModel.DestinationAmountPaid;
                     UnitOfWork.DestinationManagementRepository.Insertdata(newDestinationManagement);

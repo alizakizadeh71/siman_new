@@ -126,7 +126,6 @@
     <Compile Include="FactoryName.cs" />
     <Compile Include="News.cs" />
     <Compile Include="Paymentwaitinglist.cs" />
-    <Compile Include="Tonnage.cs" />
     <Compile Include="PackageType.cs" />
     <Compile Include="PaymentDetail.cs" />
     <Compile Include="PaymentHeader.cs" />
@@ -147,6 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SubSystem.cs" />
+    <Compile Include="Tonnage.cs" />
     <Compile Include="Unit.cs">
       <SubType>Code</SubType>
     </Compile>

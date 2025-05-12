@@ -94,14 +94,14 @@ namespace ViewModels.Areas.Administrator.Cement
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.Tonnage)]
         #endregion
-        public Guid Tonnage { get; set; }
+        public double Tonnage { get; set; }
 
         #region Province
         [System.ComponentModel.DataAnnotations.Display
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.Province)]
         #endregion
-        public Guid Province { get; set; }
+        public Guid? Province { get; set; }
         public Guid Province1 { get; set; }
 
         #region City
@@ -109,7 +109,7 @@ namespace ViewModels.Areas.Administrator.Cement
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.City)]
         #endregion
-        public Guid City { get; set; }
+        public Guid? City { get; set; }
         public Guid City1 { get; set; }
         #region Inventorytonnage
         [System.ComponentModel.DataAnnotations.Display
@@ -123,7 +123,7 @@ namespace ViewModels.Areas.Administrator.Cement
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.Village)]
         #endregion
-        public Guid Village { get; set; }
+        public Guid? Village { get; set; }
         #region Village
         [System.ComponentModel.DataAnnotations.Display
              (ResourceType = typeof(Resources.Model.Cement),
@@ -132,13 +132,16 @@ namespace ViewModels.Areas.Administrator.Cement
         public string stringVillage { get; set; }
 
         #region BuyerMobile
+
         [System.ComponentModel.DataAnnotations.Display
-             (ResourceType = typeof(Resources.Model.Cement),
-             Name = Resources.Model.Strings.CementKeys.BuyerMobile)]
+        (ResourceType = typeof(Resources.Model.Cement),
+            Name = Resources.Model.Strings.CementKeys.BuyerMobile)]
         [System.ComponentModel.DataAnnotations.MaxLength(11, ErrorMessage = "شماره همراه باید 11 رقم باشد")]
         [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+
         #endregion
-        public string BuyerMobile { get; set; }
+
+        public string BuyerMobile { get; set; } = "";
         public string BuyerNationalCode { get; set; }
         public string BuyerName { get; set; }
 

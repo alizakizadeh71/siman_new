@@ -94,7 +94,6 @@ namespace OPS.Controllers
                 ProductType = productType1.Value,
                 PackageType = packageType.Value,
                 FactoryName = factoryName,
-                Tonnage = Tonnage.Value,
                 Province = province ?? new Guid("C9CEA679-6DE8-11E5-8295-C0F8DABA7555"), // مقدار پیش‌فرض
                 City = city ?? new Guid("F99E8A31-0562-4918-8295-2CBFC78D6269"), // مقدار پیش‌فرض
                 Village = new Guid("7189A747-02F3-11EF-9994-7C8AE1A25092"),
@@ -119,18 +118,6 @@ namespace OPS.Controllers
 
             var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(cementViewModel.ProductName).ToList(); /// سیمان
             base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", cementViewModel.FactoryName).OrderBy(x => x.Text); /// ممتازان کرمان
-
-            var Tonnage = UnitOfWork.tonnageRepository.GetByPackageTypeId(cementViewModel.PackageType).ToList(); /// کیسه
-            base.ViewData["Tonnage"] = new System.Web.Mvc.SelectList(Tonnage, "Id", "Name", cementViewModel.Tonnage).OrderBy(x => x.Text); /// 12 تن
-
-            var Province = UnitOfWork.ProvinceRepository.Get().Where(x => x.IsActived && !x.IsDeleted).ToList();
-            base.ViewData["Province"] = new System.Web.Mvc.SelectList(Province, "Id", "Name", cementViewModel.Province).OrderBy(x => x.Text);
-
-            var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList(); /// کرمان
-            base.ViewData["City"] = new System.Web.Mvc.SelectList(City, "Id", "Name", cementViewModel.City).OrderBy(x => x.Text); /// کوهبنان
-
-            var varVilages = UnitOfWork.VillageRepository.GetBycityId(cementViewModel.City).ToList();
-            base.ViewData["Village"] = new System.Web.Mvc.SelectList(varVilages, "Id", "Name", null);
         }
 
         [System.Web.Mvc.HttpPost]
@@ -155,8 +142,7 @@ namespace OPS.Controllers
                          .SingleOrDefault()
                          ;
 
-                    var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
-                    .Where(x => x.Id == cementViewModel.Tonnage).FirstOrDefault().Code);
+                    var Tonnage =  Convert.ToInt32(cementViewModel.Tonnage);
                     var InventoryTonnage = Convert.ToInt32(UnitOfWork.InventoryamountRepository.Get()
                         .Where(x => x.ProductNameId == cementViewModel.ProductName)
                         .Where(x => x.ProductTypeId == cementViewModel.ProductType)
@@ -199,7 +185,7 @@ namespace OPS.Controllers
                                  ;
 
                         var productName = UnitOfWork.ProductNameRepository.GetById(cementViewModel.ProductName).Name;
-                        var TonnageWieght = UnitOfWork.tonnageRepository.GetById(cementViewModel.Tonnage).Name;
+                        var TonnageWieght = Tonnage;
                         if (oDestinationManagement != null)
                         {
                             DestinationAmountPaid = (oDestinationManagement.FinancialManagement.AmountPaid * Tonnage) + oDestinationManagement.DestinationAmountPaid;
@@ -229,9 +215,7 @@ namespace OPS.Controllers
                             ProductTypeId = cementViewModel.ProductType,
                             PackageTypeId = cementViewModel.PackageType,
                             FactoryNameId = cementViewModel.FactoryName,
-                            TonnageId = cementViewModel.Tonnage,
-                            ProvinceId = cementViewModel.Province,
-                            CityId = cementViewModel.City,
+                            Tonnagedouble = cementViewModel.Tonnage,
                             BuyerMobile = cementViewModel.BuyerMobile,
                             Address = cementViewModel.Address,
                             AmountPaid = AmountPaid,
@@ -324,6 +308,20 @@ namespace OPS.Controllers
         {
             return View();
         }
+
+
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.None)]
+        public virtual ActionResult Price()
+        {
+            var test = UnitOfWork.FinancialManagementRepository
+                .Get()
+                .Where(x => x.IsActived && !x.IsDeleted)
+                .ToList();
+            return View(test);
+        }
+
+
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.None)]
         public virtual ActionResult News()
         {

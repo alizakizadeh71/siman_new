@@ -95,7 +95,7 @@
                 @Html.LabelFor(model => model.ProductName, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6">
                     @Html.DropDownListFor(model => model.ProductName, null,
-                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
+                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName(); sendFormData(); " })
                     @Html.ValidationMessageFor(model => model.ProductName)
                 </div>
             </div>
@@ -104,7 +104,7 @@
                 @Html.LabelFor(model => model.ProductType, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6" id="DivProductTypeId">
                     @Html.DropDownListFor(model => model.ProductType, null,
-                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
+                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType(); sendFormData();" })
                     @Html.ValidationMessageFor(model => model.ProductType)
                 </div>
             </div>
@@ -113,7 +113,7 @@
                 @Html.LabelFor(model => model.PackageType, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6" id="DivPackageTypeId">
                     @Html.DropDownListFor(model => model.PackageType, null,
-                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangePackageType()" })
+                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "sendFormData();" })
                     @Html.ValidationMessageFor(model => model.PackageType)
                 </div>
             </div>
@@ -121,7 +121,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6" id="DivFactoryNameId">
-                    @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" , @onchange = "sendFormData();" })
                     @Html.ValidationMessageFor(model => model.FactoryName)
                 </div>
             </div>
@@ -129,59 +129,16 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6" id="DivTonnageId">
-                    @Html.DropDownListFor(model => model.Tonnage, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Tonnage, new { @class = "form-control" , onchange = "sendFormData();" })
                     @Html.ValidationMessageFor(model => model.Tonnage)
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Province, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6">
-                    @Html.DropDownListFor(model => model.Province, null,
-                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
-                    @Html.ValidationMessageFor(model => model.Province)
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.City, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6" id="DivCityId">
-                    @Html.DropDownListFor(model => model.City, null,
-                      Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = " onChangecity()" })
-                    @Html.ValidationMessageFor(model => model.City)
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6" id="DivVillageId">
-                    @Html.DropDownListFor(model => model.Village, null,
-                    Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Village)
-                </div>
-            </div>
-
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.Village, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-6" id="DivCityId">
-                        @Html.DropDownListFor(model => model.Village, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Village)
-                    </div>
-                </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" })
                 <div class="col-md-6">
                         @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control",@onkeypress = "return AllowNumbersOnly(event)" })
                     @Html.ValidationMessageFor(model => model.BuyerMobile)
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Address, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6">
-                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Address)
                 </div>
             </div>
 
@@ -459,4 +416,33 @@
         alert("لینک کپی شد: " + copyText.value);
     }
 
+    function sendFormData() {
+        var dataToSend = {
+            ProductName: $('#ProductName').val(),
+            ProductType: $('#ProductType').val(),
+            PackageType: $('#PackageType').val(),
+            FactoryName: $('#FactoryName').val(),
+            Tonnage: $('#Tonnage').val() || "1",
+            BuyerMobile: $('#BuyerMobile').val() || "0"
+        };
+
+        $.ajax({
+            url: '/HomeMain/Index', // تغییر بده با توجه به اسم کنترلر
+            type: 'POST',
+            data: dataToSend,
+            success: function (response) {
+                console.log("پاسخ سرور:", response);
+                // اینجا مثلا می‌تونی لیست دیگری رو بروزرسانی کنی
+            },
+            error: function (xhr, status, error) {
+                console.error("خطا در ارسال:", error);
+            }
+        });
+    }
+
+    // اگر بخوای روی تایپ کردن در فیلدها هم واکنش بدی:
+    $(document).ready(function () {
+        $('.ajax-input').on('change', sendFormData);
+        $('.ajax-input[type=text]').on('keyup', sendFormData); // برای TextBoxها مثل Tonnage و BuyerMobile
+    });
 </script>

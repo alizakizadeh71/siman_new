@@ -107,12 +107,6 @@ namespace OPS.Areas.Administrator.Controllers
                 Search = true;
             }
 
-            if (viewModel?.Tonnage != null && viewModel.Tonnage != Guid.Empty)
-            {
-                varRequest = varRequest.Where(x => x.TonnageId == viewModel.Tonnage);
-                Search = true;
-            }
-
             if (viewModel?.stringFinalApprove == "1")
             {
                 viewModel.FinalApprove = true;
@@ -265,7 +259,7 @@ namespace OPS.Areas.Administrator.Controllers
             var Province = UnitOfWork.ProvinceRepository.Get().ToList();
             base.ViewData["Province"] = new System.Web.Mvc.SelectList(Province, "Id", "Name", cementViewModel.Province).OrderBy(x => x.Text);
 
-            var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province).ToList(); /// کرمان
+            var City = UnitOfWork.CityRepository.GetByProvinceId(cementViewModel.Province ?? Guid.Empty).ToList(); /// کرمان
             base.ViewData["City"] = new System.Web.Mvc.SelectList(City, "Id", "Name", cementViewModel.City).OrderBy(x => x.Text); /// کوهبنان
         }
 

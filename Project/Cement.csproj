@@ -1575,6 +1575,7 @@
     <Content Include="Views\HomeMain\ShowFactor.cshtml" />
     <Content Include="Views\HomeMain\Rechargewallet.cshtml" />
     <Content Include="Views\Zarinpal\VerifyPaymentWallet.cshtml" />
+    <Content Include="Views\HomeMain\Price.cshtml" />
     <None Include="Web References\ir.shaparak.sadad\MerchantUtility.disco" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
