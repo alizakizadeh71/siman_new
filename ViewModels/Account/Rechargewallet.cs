@@ -10,7 +10,7 @@
              (ResourceType = typeof(Resources.Action),
              Name = Resources.Strings.ActionKeys.Chargeamount)]
         #endregion
-        public int Chargeamount { get; set; }
+        public long Chargeamount { get; set; }
         public string UserName { get; set; }
 
     }

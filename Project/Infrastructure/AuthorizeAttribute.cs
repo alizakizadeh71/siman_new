@@ -149,7 +149,7 @@ namespace Infrastructure
                     return;
                 }
 
-                Models.Role oUserRole = Infrastructure.Sessions.AuthenticatedUser.User.Role;
+                Models.Role oUserRole = Infrastructure.Sessions.AuthenticatedUser.User.Role; 
                 var asasas = oAction.Roles.Select(current => current.Id).ToList();
                 if (!oAction.Roles.Select(current => current.Id).Contains(oUserRole.Id))
                 {

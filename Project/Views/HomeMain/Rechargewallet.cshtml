@@ -11,6 +11,7 @@
         <div class="col-md-6">
            @Html.TextBoxFor(model => model.Chargeamount, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Chargeamount)
+            <div id="amountInWords" class="mt-2 text-muted" style="font-size : 14px;"></div>
         </div>
     </div>
     <div class="form-group">
@@ -19,4 +20,21 @@
         </div>
     </div>
 }
+
+<script src="../../Scripts/num2persian.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("Chargeamount");
+        const output = document.getElementById("amountInWords");
+
+        input.addEventListener("input", function () {
+            const value = parseInt(input.value.replace(/,/g, ''));
+            if (!isNaN(value)) {
+                output.textContent = num2persian(value) + " ريال ";
+            } else {
+                output.value = '';
+            }
+        })
+    });
+</script>
 

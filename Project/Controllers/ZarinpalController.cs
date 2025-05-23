@@ -29,8 +29,7 @@ namespace OPS.Controllers
                 var oFactorCement = UnitOfWork.FactorCementRepository.GetByinvoicenumber(invoiceNumber).FirstOrDefault();
                 var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
                 oFactorCement.MahalTahvil = MahalTahvil;
-                var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
-                .Where(x => x.Id == oFactorCement.TonnageId).FirstOrDefault().Code);
+                var Tonnage = oFactorCement.Tonnagedouble;
                 var InventoryTonnage = UnitOfWork.InventoryamountRepository.Get()
                     .Where(x => x.IsDeleted == false && x.IsActived != false)
                     .Where(x => x.ProductNameId == oFactorCement.ProductNameId)
@@ -61,7 +60,7 @@ namespace OPS.Controllers
                         UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
                         UnitOfWork.FactorCementRepository.Update(oFactorCement);
                         UnitOfWork.Save();
-                        PaymentSMS(user.BuyerMobile , oFactorCement);
+                        PaymentSMS(user.BuyerMobile, oFactorCement);
                         // Redirect به صفحه مقصد
                         return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = oFactorCement.InvoiceNumber });
                     }
@@ -88,7 +87,7 @@ namespace OPS.Controllers
                     }
                 }
                 string authority;
-                string description = oFactorCement.ProductName.Name + " - " + oFactorCement.PackageType.Name + " - " + oFactorCement.FactoryName.Name + " - " + oFactorCement.Tonnage.Name;
+                string description = oFactorCement.ProductName.Name + " - " + oFactorCement.PackageType.Name + " - " + oFactorCement.FactoryName.Name + " - " + oFactorCement.Tonnagedouble;
                 string callbackurl = "https://masalehpakhsh.com/Zarinpal/VerifyPayment";
                 string mobile = oFactorCement.BuyerMobile;
                 if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود

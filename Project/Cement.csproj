@@ -592,7 +592,7 @@
     <Content Include="Areas\Administrator\Views\User\Paymentwallet.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
-    <Content Include="Scripts\num2persian.js" />
+    <Content Include="Scripts\num2persian.min.js" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>

@@ -19,7 +19,7 @@
 
         public virtual User User { get; set; }
         public System.Guid UserId { get; set; }
-        public int Chargeamount { get; set; }
+        public long Chargeamount { get; set; }
         public bool FinalApprove { get; set; }
         public string Authority { get; set; }
         public int? InvoiceNumber { get; set; }

@@ -81,6 +81,7 @@ namespace OPS.Controllers
             public readonly string Main = "Main";
             public readonly string UserGuid = "UserGuid";
             public readonly string Authenticate = "Authenticate";
+            public readonly string Price = "Price";
             public readonly string News = "News";
             public readonly string Rechargewallet = "Rechargewallet";
         }
@@ -97,6 +98,7 @@ namespace OPS.Controllers
             public const string Main = "Main";
             public const string UserGuid = "UserGuid";
             public const string Authenticate = "Authenticate";
+            public const string Price = "Price";
             public const string News = "News";
             public const string Rechargewallet = "Rechargewallet";
         }
@@ -145,6 +147,7 @@ namespace OPS.Controllers
                 public readonly string Login = "Login";
                 public readonly string Main = "Main";
                 public readonly string News = "News";
+                public readonly string Price = "Price";
                 public readonly string Rechargewallet = "Rechargewallet";
                 public readonly string ShowFactor = "ShowFactor";
                 public readonly string UserGuid = "UserGuid";
@@ -157,6 +160,7 @@ namespace OPS.Controllers
             public readonly string Login = "~/Views/HomeMain/Login.cshtml";
             public readonly string Main = "~/Views/HomeMain/Main.cshtml";
             public readonly string News = "~/Views/HomeMain/News.cshtml";
+            public readonly string Price = "~/Views/HomeMain/Price.cshtml";
             public readonly string Rechargewallet = "~/Views/HomeMain/Rechargewallet.cshtml";
             public readonly string ShowFactor = "~/Views/HomeMain/ShowFactor.cshtml";
             public readonly string UserGuid = "~/Views/HomeMain/UserGuid.cshtml";
@@ -227,6 +231,12 @@ namespace OPS.Controllers
         public override System.Web.Mvc.ActionResult Authenticate()
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Authenticate);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Price()
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Price);
             return callInfo;
         }
 

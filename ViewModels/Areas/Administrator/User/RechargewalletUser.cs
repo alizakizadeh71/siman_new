@@ -24,5 +24,7 @@
             Name = Resources.ViewModel.Strings.RechargewalletUserKeys.Description)]
         #endregion
         public string Description { get; set; }
+
+        public int PageNumber { get; set; }
     }
 }

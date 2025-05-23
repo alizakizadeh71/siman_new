@@ -6,6 +6,7 @@
 @using (Html.BeginForm("Paymentwallet", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.PageNumber)
     @Html.ValidationSummary(true)
 
     if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
@@ -55,7 +56,13 @@
         </div>
 
         <div class="panel-footer">
-            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.User.Index(), new { @class = "btn btn-default col-md-2" })
+            @Html.ActionLink(
+                Resources.Action.BackToList,
+                "Index",
+                "User",
+                new { area = "Administrator", page = Model.PageNumber },
+                new { @class = "btn btn-default col-md-2" }
+            )
 
             <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
                href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
@@ -70,10 +77,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script>
-    $(document).ready(function () {
-        $('.selectpicker').selectpicker();
-    });
-</script>
+        $(document).ready(function () {
+            $('.selectpicker').selectpicker();
+        });
+
+        $(document).ready(function () {
+            $("button#btnBack").on("click", function () {
+                var currentPage = $("#grid").data("kendoGrid").dataSource.page();
+                localStorage.setItem("userListPage", currentPage);
+
+                window.location.href = "/Your/NextPage";
+            });
+        });
+
+    </script>
 }
 
 

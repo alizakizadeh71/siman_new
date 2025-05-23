@@ -282,6 +282,7 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionParamsClass_Paymentwallet
         {
             public readonly string id = "id";
+            public readonly string page = "page";
             public readonly string rechargewalletUser = "rechargewalletUser";
         }
         static readonly ViewsClass s_views = new ViewsClass();
@@ -448,10 +449,11 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Paymentwallet(System.Guid id)
+        public override System.Web.Mvc.ActionResult Paymentwallet(System.Guid id, int? page)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Paymentwallet);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             return callInfo;
         }
 

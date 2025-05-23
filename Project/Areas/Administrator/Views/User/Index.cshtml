@@ -13,6 +13,17 @@
     );
 }
 <script type="text/javascript">
+    function getParameterByName(name) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+        var results = regex.exec(window.location.href);
+        if (!results) return null;
+        if (!results[2]) return '';
+        console.log(results[2]);
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+
     $(document).ready(function () {
 
         $("#SearchPanelHeader").click(function () {
@@ -24,7 +35,7 @@
             new kendo.data.DataSource({
 
                 pageSize: 10,
-
+                page: getParameterByName("page") || 1,
                 serverPaging: true,
                 serverSorting: true,
                 serverFiltering: true,
@@ -132,7 +143,9 @@
 
                             strTemplate +=
                                 '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Rechargewallet)" href="/Administrator/User/Paymentwallet/'
-                            + dataItem.Id + '"><img src="../../../Content/Icon/charge.png"width="20px" height="20px"/></a> | ';
+                                + dataItem.Id + '?page=' + varDataSource.page() +
+                                '"><img src="../../../Content/Icon/charge.png" width="20px" height="20px"/></a> | ';
+
 
                             strTemplate +=
                                 '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ChangePassword)" href="/Administrator/User/ChangePassword/'

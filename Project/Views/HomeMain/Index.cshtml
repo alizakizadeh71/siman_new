@@ -59,9 +59,9 @@
                     <br />
                     @if (ViewBag.Mahal != null)
                     {
-                        @*@Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
+                        @Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
                             @Html.Raw(ViewBag.Mahal)
-                            <br />*@
+                            <br />
                         @Html.Raw(ViewBag.Mahal)
                     }
 
@@ -415,34 +415,4 @@
         document.execCommand("copy");
         alert("لینک کپی شد: " + copyText.value);
     }
-
-    function sendFormData() {
-        var dataToSend = {
-            ProductName: $('#ProductName').val(),
-            ProductType: $('#ProductType').val(),
-            PackageType: $('#PackageType').val(),
-            FactoryName: $('#FactoryName').val(),
-            Tonnage: $('#Tonnage').val() || "1",
-            BuyerMobile: $('#BuyerMobile').val() || "0"
-        };
-
-        $.ajax({
-            url: '/HomeMain/Index', // تغییر بده با توجه به اسم کنترلر
-            type: 'POST',
-            data: dataToSend,
-            success: function (response) {
-                console.log("پاسخ سرور:", response);
-                // اینجا مثلا می‌تونی لیست دیگری رو بروزرسانی کنی
-            },
-            error: function (xhr, status, error) {
-                console.error("خطا در ارسال:", error);
-            }
-        });
-    }
-
-    // اگر بخوای روی تایپ کردن در فیلدها هم واکنش بدی:
-    $(document).ready(function () {
-        $('.ajax-input').on('change', sendFormData);
-        $('.ajax-input[type=text]').on('keyup', sendFormData); // برای TextBoxها مثل Tonnage و BuyerMobile
-    });
 </script>

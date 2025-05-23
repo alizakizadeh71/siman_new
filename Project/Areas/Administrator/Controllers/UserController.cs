@@ -935,7 +935,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             var withdrawalList = userswithdrawal.Select(w => new
             {
-                Amount = (int)w.AmountPaid,
+                Amount = (long)w.AmountPaid,
                 Type = "Withdrawal",
                 Date = w.InsertDateTime,
                 Description = w.Description
@@ -993,11 +993,12 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
-        public virtual ActionResult Paymentwallet(System.Guid id)
+        public virtual ActionResult Paymentwallet(System.Guid id , int? page)
         {
             ViewBag.PageMessages = null;
             RechargewalletUser model = new RechargewalletUser();
             model.PhoneNumber = UnitOfWork.UserRepository.GetById(id).BuyerMobile;
+            model.PageNumber = page ?? 1;
             return View(model);
         }
         [System.Web.Mvc.HttpPost]
@@ -1040,7 +1041,7 @@ namespace OPS.Areas.Administrator.Controllers
                         ZarinpalController pyment = new ZarinpalController();
                         pyment.PaymentSMSWallet(user.BuyerMobile, OwalletFactor);
                         ViewBag.PageMessages= "افزایش موجودی با موفقیت افزایش یافت";
-                        return View();
+                        return RedirectToAction("Index", "User", new { area = "Administrator", page = rechargewalletUser.PageNumber });
                     }
                 }
                 catch (Exception e)

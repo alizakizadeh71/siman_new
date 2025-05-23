@@ -8,7 +8,7 @@
             (ResourceType = typeof(Resources.Model.Inventoryamount),
             Name = Resources.Model.Strings.InventoryamountKeys.Inventorytonnage)]
         #endregion
-        public int Inventorytonnage { get; set; }
+        public double Inventorytonnage { get; set; }
         #region ProductName
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Inventoryamount),
