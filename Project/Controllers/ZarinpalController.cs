@@ -233,8 +233,7 @@ namespace OPS.Controllers
                         .Where(x => x.FactoryNameId == oFactorCement.FactoryNameId)
                         .FirstOrDefault();
 
-                        var Tonnage = Convert.ToInt32(UnitOfWork.tonnageRepository.Get()
-                        .Where(x => x.Id == oFactorCement.TonnageId).FirstOrDefault().Code);
+                        var Tonnage = oFactorCement.Tonnagedouble;
 
                         InventoryTonnage.Inventorytonnage = InventoryTonnage.Inventorytonnage - Tonnage;
                         UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
@@ -274,13 +273,11 @@ namespace OPS.Controllers
             cementViewModel.BuyerMobile = oFactorCement.BuyerMobile;
             cementViewModel.BuyerName = oFactorCement.User.FullName;
             cementViewModel.BuyerNationalCode = oFactorCement.User.NationalCode;
-            cementViewModel.StringProvince = oFactorCement.Province.Name;
-            cementViewModel.StringCity = oFactorCement.City.Name;
             cementViewModel.StringProductName = oFactorCement.ProductName.Name;
             cementViewModel.StringProductType = oFactorCement.ProductType.Name;
             cementViewModel.StringPackageType = oFactorCement.PackageType.Name;
             cementViewModel.StringFactoryName = oFactorCement.FactoryName.Name;
-            cementViewModel.StringTonnage = oFactorCement.Tonnage.Name;
+            cementViewModel.StringTonnage = oFactorCement.Tonnagedouble.ToString();
             cementViewModel.AmountPaid = oFactorCement.AmountPaid;
             cementViewModel.DestinationAmountPaid = oFactorCement.DestinationAmountPaid != null ? oFactorCement.DestinationAmountPaid.Value : 0;
             cementViewModel.MahalTahvil = oFactorCement.MahalTahvil == "Karkhane" ? "درب کارخانه" : oFactorCement.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ";
@@ -499,7 +496,7 @@ namespace OPS.Controllers
                 string[] text = user != null && user.isSendSms
                     ? new string[] {
                 user.UserName,
-                factor.Tonnage?.Name ?? "N/A",
+                factor.Tonnagedouble.ToString() ?? "N/A",
                 factor.PackageType?.Name ?? "N/A",
                 factor.FactoryName?.Name ?? "N/A",
                 factor.ProductType?.Name ?? "N/A",
