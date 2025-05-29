@@ -206,6 +206,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\bootstrap-rtl.css" />
     <Content Include="Content\css\chosen.css" />
+    <Content Include="Content\css\UserIndexStyle.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Icon\ExcelMini.png" />
     <Content Include="Content\Icon\charge.png" />

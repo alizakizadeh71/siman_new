@@ -102,7 +102,7 @@ namespace Models
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.AmountPaid)]
         #endregion
-        public long AmountPaid { get; set; }
+        public double AmountPaid { get; set; }
         public virtual System.Collections.Generic.IList<DestinationManagement> DestinationManagements { get; set; }
     }
 }

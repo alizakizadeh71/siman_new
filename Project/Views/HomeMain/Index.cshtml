@@ -339,32 +339,6 @@
         });
     }
 
-    function onChangePackageType() {
-        debugger;
-        $.ajax({
-            url: '/Administrator/Cement/GetTonnage',
-            type: 'post',
-            data: { PackageTypeId: $("#PackageType").val() },
-            success: function (data) {
-
-                $("#DivTonnageId").empty();
-
-                var select = $("<select class='form-control' id='Tonnage' name='Tonnage' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-
-                $.each(data, function (i, Tonnage) {
-                    var option = ('<option value="' + Tonnage.Id + '"> ' + Tonnage.Name + '</option>');
-                    select.append(option);
-                })
-
-                $("#DivTonnageId").append(select);
-                // baraye az ghabl entekhab shodane item
-                $('#Tonnage>option:eq(1)').prop('selected', true);
-            }
-        });
-    }
-
     function onChangecity() {
                      $.ajax({
             url: '/Administrator/HeadOfFactor/GetVillage',

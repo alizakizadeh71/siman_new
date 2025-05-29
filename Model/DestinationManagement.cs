@@ -91,6 +91,6 @@ namespace Models
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.AmountPaid)]
         #endregion
-        public long DestinationAmountPaid { get; set; }
+        public double DestinationAmountPaid { get; set; }
     }
 }

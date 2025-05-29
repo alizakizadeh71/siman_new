@@ -190,7 +190,7 @@ namespace Models
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.AmountPaid)]
         #endregion
-        public long AmountPaid { get; set; }
+        public double AmountPaid { get; set; }
         public System.DateTime? AmountPaidDate { get; set; }
 
         #region
@@ -250,7 +250,7 @@ namespace Models
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.DestinationAmountPaid)]
         #endregion
-        public long? DestinationAmountPaid { get; set; }
+        public double? DestinationAmountPaid { get; set; }
         #region RemittanceNumber
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),

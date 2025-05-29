@@ -220,6 +220,29 @@
                     },
                     {
                         hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.IsMarketer",
+                        field: "@Resources.Model.Strings.UserKeys.IsMarketer",
+                        width: "150px",
+                    },
+                    {
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.MarketingCode",
+                        field: "@Resources.Model.Strings.UserKeys.MarketingCode",
+                        width: "150px",
+                    },{
+                        hidden: false,
+                        locked: true,
+                        lockable: true,
+                        title: "@Resources.Model.User.ReferredByCode",
+                        field: "@Resources.Model.Strings.UserKeys.ReferredByCode",
+                        width: "150px",
+                    },
+                    {
+                        hidden: false,
                         width: "90px",
                         locked: true,
                         lockable: true,
@@ -253,15 +276,6 @@
                         field: "@Resources.Model.Strings.UserKeys.IsApprovallicense",
                         template: '<input type="checkbox" #= @Resources.Model.Strings.UserKeys.IsApprovallicense ? checked="checked" : "" # disabled="disabled" ></input>'
                     },*@
-                    {
-                        hidden: false,
-                        locked: true,
-                        width: "140px",
-                        lockable: true,
-                        title: "@Resources.Model.User.Authenticate",
-                        field: "@Resources.Model.Strings.UserKeys.Authenticate",
-                        template: '<input type="checkbox" #= @Resources.Model.Strings.UserKeys.Authenticate ? checked="checked" : "" # disabled="disabled" ></input>'
-                    },
                 ]
         });
 
@@ -334,7 +348,7 @@
     })
 
 </script>
-
+<link href="../../../../Content/css/UserIndexStyle.css" rel="stylesheet" />
 <section id="Requests" class="form-horizontal" role="form">
     <div class="panel panel-info">
         <div class="panel-heading" id="SearchPanelHeader">
@@ -387,7 +401,7 @@
         </div>
     </div>
     <br />
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" id ="panel">
         <div class="panel-heading">
             @strTitle
         </div>

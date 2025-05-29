@@ -496,7 +496,7 @@ namespace OPS.Controllers
                 string[] text = user != null && user.isSendSms
                     ? new string[] {
                 user.UserName,
-                factor.Tonnagedouble.ToString() ?? "N/A",
+                factor.Tonnagedouble.ToString() + "تن" ?? "N/A",
                 factor.PackageType?.Name ?? "N/A",
                 factor.FactoryName?.Name ?? "N/A",
                 factor.ProductType?.Name ?? "N/A",
@@ -506,7 +506,7 @@ namespace OPS.Controllers
                     }
                     : new string[] {
                 "ثبت نام نشده",
-                factor.Tonnage?.Name ?? "N/A",
+                factor.Tonnagedouble.ToString()+"تن" ?? "N/A",
                 factor.PackageType?.Name ?? "N/A",
                 factor.FactoryName?.Name ?? "N/A",
                 factor.ProductType?.Name ?? "N/A",

@@ -142,7 +142,7 @@ namespace OPS.Controllers
                          .SingleOrDefault()
                          ;
 
-                    var Tonnage =  Convert.ToInt32(cementViewModel.Tonnage);
+                    var Tonnage =  cementViewModel.Tonnage;
                     var InventoryTonnage = Convert.ToInt32(UnitOfWork.InventoryamountRepository.Get()
                         .Where(x => x.ProductNameId == cementViewModel.ProductName)
                         .Where(x => x.ProductTypeId == cementViewModel.ProductType)
@@ -169,7 +169,7 @@ namespace OPS.Controllers
                             .Where(cuurrent => cuurrent.CityId == cementViewModel.City)
                             .Select(x => x.DestinationAmountPaid).SingleOrDefault();
 
-                        long? DestinationAmountPaid = varRequest;
+                        double? DestinationAmountPaid = varRequest;
                         var oDestinationManagement =
                                  UnitOfWork.DestinationManagementRepository
                                  .Get()
@@ -194,7 +194,7 @@ namespace OPS.Controllers
                         //{
                         //    DestinationAmountPaid = (oDestinationManagement.FinancialManagement.AmountPaid * Tonnage) + oDestinationManagement.DestinationAmountPaid;
                         //}
-                        long AmountPaid = oFinancialManagement.AmountPaid * Tonnage; /// محاسبه مبلغ
+                        double AmountPaid = oFinancialManagement.AmountPaid * Tonnage; /// محاسبه مبلغ
                         int LastInvoiceNumber = UnitOfWork.FactorCementRepository.GetLastInvoiceNumber() + 1;
                         Models.User oUser;
                         if (Infrastructure.Sessions.AuthenticatedUser?.UserName != null)

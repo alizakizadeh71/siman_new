@@ -230,15 +230,15 @@ namespace ViewModels.Areas.Administrator.Cement
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.AmountPaid)]
         #endregion
-        public long AmountPaid { get; set; }
-        public long AmountPaid1 { get; set; }
+        public double AmountPaid { get; set; }
+        public double AmountPaid1 { get; set; }
 
         #region DestinationAmountPaid
         [System.ComponentModel.DataAnnotations.Display
              (ResourceType = typeof(Resources.Model.Cement),
              Name = Resources.Model.Strings.CementKeys.DestinationAmountPaid)]
         #endregion
-        public long DestinationAmountPaid { get; set; }
+        public double DestinationAmountPaid { get; set; }
         public string ref_id { get; set; }
         public string card_pan { get; set; }
 

@@ -1,0 +1,7 @@
+﻿@media (min-width: 1024px) {
+    #panel {
+        width: 77vw;
+        position: relative;
+        left: 174px;
+    }   
+}
