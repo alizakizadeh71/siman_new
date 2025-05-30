@@ -114,6 +114,9 @@ namespace OPS.Areas.Administrator.Controllers
                          isSendSmS = current.isSendSms,
                          //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
+                         IsMarketer = current.IsMarketer,
+                         MarketingCode = current.MarketingCode,
+                         ReferredByCode = current.ReferredByCode
                      })
                      .ToList()
                      .Select(current =>

@@ -864,8 +864,6 @@ namespace Links
                       
         public static readonly string modernizr_2_6_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/modernizr-2.6.2.min.js") ? Url("modernizr-2.6.2.min.js") : Url("modernizr-2.6.2.js");
                       
-        public static readonly string num2persian_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/num2persian.min.js") ? Url("num2persian.min.js") : Url("num2persian.js");
-                      
         public static readonly string num2persian_min_js = Url("num2persian.min.js");
         public static readonly string popover_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/popover.min.js") ? Url("popover.min.js") : Url("popover.js");
                       
@@ -935,6 +933,8 @@ namespace Links
             public static readonly string bootstrap_rtl_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap-rtl.min.css") ? Url("bootstrap-rtl.min.css") : Url("bootstrap-rtl.css");
                  
             public static readonly string chosen_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/chosen.min.css") ? Url("chosen.min.css") : Url("chosen.css");
+                 
+            public static readonly string UserIndexStyle_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/UserIndexStyle.min.css") ? Url("UserIndexStyle.min.css") : Url("UserIndexStyle.css");
                  
         }
     

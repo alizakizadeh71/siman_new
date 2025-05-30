@@ -87,7 +87,24 @@
             Name = Resources.ViewModel.Strings.UserKeys.isSendSmS)]
         #endregion
         public bool isSendSmS { get; set; }
-
+        #region isSendSmS
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.IsMarketer)]
+        #endregion
+        public bool IsMarketer { get; set; }
+        #region isSendSmS
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.MarketingCode)]
+        #endregion
+        public string MarketingCode { get; set; }
+        #region isSendSmS
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.ReferredByCode)]
+        #endregion
+        public string ReferredByCode { get; set; }
 
         #region IsApprovallicense
         [System.ComponentModel.DataAnnotations.Display
@@ -95,23 +112,5 @@
             Name = Resources.ViewModel.Strings.UserKeys.Authenticate)]
         #endregion
         public bool? Authenticate { get; set; }
-        #region IsApprovallicense
-        [System.ComponentModel.DataAnnotations.Display
-        (ResourceType = typeof(Resources.ViewModel.User),
-            Name = Resources.ViewModel.Strings.UserKeys.IsMarketer)]
-        #endregion
-        public bool IsMarketer { get; set; }
-        #region IsApprovallicense
-        [System.ComponentModel.DataAnnotations.Display
-        (ResourceType = typeof(Resources.ViewModel.User),
-            Name = Resources.ViewModel.Strings.UserKeys.MarketingCode)]
-        #endregion
-        public string MarketingCode { get; set; }
-        #region IsApprovallicense
-        [System.ComponentModel.DataAnnotations.Display
-        (ResourceType = typeof(Resources.ViewModel.User),
-            Name = Resources.ViewModel.Strings.UserKeys.ReferredByCode)]
-        #endregion
-        public string ReferredByCode { get; set; }
     }
 }

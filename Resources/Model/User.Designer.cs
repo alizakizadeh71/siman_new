@@ -178,6 +178,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to بازاریاب هست ؟.
+        /// </summary>
+        public static string IsMarketer {
+            get {
+                return ResourceManager.GetString("IsMarketer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to وضعیت ارسال پیامک.
         /// </summary>
         public static string isSendSmS {
@@ -205,6 +214,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد بازاریابی.
+        /// </summary>
+        public static string MarketingCode {
+            get {
+                return ResourceManager.GetString("MarketingCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to گذرواژه.
         /// </summary>
         public static string Password {
@@ -219,6 +237,15 @@ namespace Resources.Model {
         public static string Province {
             get {
                 return ResourceManager.GetString("Province", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد بازاریاب دعوت کننده .
+        /// </summary>
+        public static string ReferredByCode {
+            get {
+                return ResourceManager.GetString("ReferredByCode", resourceCulture);
             }
         }
         

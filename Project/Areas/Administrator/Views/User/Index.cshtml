@@ -225,6 +225,9 @@
                         title: "@Resources.Model.User.IsMarketer",
                         field: "@Resources.Model.Strings.UserKeys.IsMarketer",
                         width: "150px",
+                        template: function (dataItem) {
+                            return `<input type="checkbox" ${dataItem.IsMarketer ? "checked" : ""} disabled />`;
+                        }
                     },
                     {
                         hidden: false,

@@ -142,6 +142,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: بازاریاب هست ؟
+        /// </summary>
+        public static string IsMarketer([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.IsMarketer;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("IsMarketer", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: زمان آخرین ورود
         /// </summary>
         public static string LastLoginDateTime([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -162,6 +172,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: کد بازاریابی
+        /// </summary>
+        public static string MarketingCode([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.MarketingCode;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("MarketingCode", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: گذرواژه
         /// </summary>
         public static string Password([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -179,6 +199,16 @@ namespace Resources.Model.Strings {
                 return global::Resources.Model.User.Province;
             }
             return global::Resources.Model.User.ResourceManager.GetString("Province", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: کد بازاریاب دعوت کننده 
+        /// </summary>
+        public static string ReferredByCode([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.User.ReferredByCode;
+            }
+            return global::Resources.Model.User.ResourceManager.GetString("ReferredByCode", resourceCulture);
         }
         
         /// <summary>
@@ -293,6 +323,11 @@ namespace Resources.Model.Strings {
         public const string IsApprovallicense = "IsApprovallicense";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: بازاریاب هست ؟
+        /// </summary>
+        public const string IsMarketer = "IsMarketer";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: زمان آخرین ورود
         /// </summary>
         public const string LastLoginDateTime = "LastLoginDateTime";
@@ -303,6 +338,11 @@ namespace Resources.Model.Strings {
         public const string LoginCount = "LoginCount";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: کد بازاریابی
+        /// </summary>
+        public const string MarketingCode = "MarketingCode";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: گذرواژه
         /// </summary>
         public const string Password = "Password";
@@ -311,6 +351,11 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: استان
         /// </summary>
         public const string Province = "Province";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: کد بازاریاب دعوت کننده 
+        /// </summary>
+        public const string ReferredByCode = "ReferredByCode";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: نقش کاربری

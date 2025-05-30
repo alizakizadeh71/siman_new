@@ -132,6 +132,26 @@ namespace Resources.ViewModel.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: بازاریاب هست ؟
+        /// </summary>
+        public static string IsMarketer([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.IsMarketer;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("IsMarketer", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: کد بازاریابی
+        /// </summary>
+        public static string MarketingCode([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.MarketingCode;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("MarketingCode", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: کد ملی
         /// </summary>
         public static string NationalCode([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -169,6 +189,16 @@ namespace Resources.ViewModel.Strings {
                 return global::Resources.ViewModel.User.Province;
             }
             return global::Resources.ViewModel.User.ResourceManager.GetString("Province", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: کد بازاریاب دعوت کننده 
+        /// </summary>
+        public static string ReferredByCode([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.ReferredByCode;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("ReferredByCode", resourceCulture);
         }
         
         /// <summary>
@@ -278,6 +308,16 @@ namespace Resources.ViewModel.Strings {
         public const string IsApprovallicense = "IsApprovallicense";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: بازاریاب هست ؟
+        /// </summary>
+        public const string IsMarketer = "IsMarketer";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: کد بازاریابی
+        /// </summary>
+        public const string MarketingCode = "MarketingCode";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: کد ملی
         /// </summary>
         public const string NationalCode = "NationalCode";
@@ -296,6 +336,11 @@ namespace Resources.ViewModel.Strings {
         ///   Provides access to string resource key of value similar to: استان
         /// </summary>
         public const string Province = "Province";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: کد بازاریاب دعوت کننده 
+        /// </summary>
+        public const string ReferredByCode = "ReferredByCode";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: نقش کاربری

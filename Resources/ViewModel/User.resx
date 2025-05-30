@@ -153,8 +153,14 @@
   <data name="IsApprovallicense" xml:space="preserve">
     <value>مجوز تایید پروانه ها</value>
   </data>
+  <data name="IsMarketer" xml:space="preserve">
+    <value>بازاریاب هست ؟</value>
+  </data>
   <data name="isSendSmS" xml:space="preserve">
     <value>وضعیت ارسال پیامک</value>
+  </data>
+  <data name="MarketingCode" xml:space="preserve">
+    <value>کد بازاریابی</value>
   </data>
   <data name="NationalCode" xml:space="preserve">
     <value>کد ملی</value>
@@ -167,6 +173,9 @@
   </data>
   <data name="Province" xml:space="preserve">
     <value>استان</value>
+  </data>
+  <data name="ReferredByCode" xml:space="preserve">
+    <value>کد بازاریاب دعوت کننده </value>
   </data>
   <data name="Role" xml:space="preserve">
     <value>نقش کاربری</value>
