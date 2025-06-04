@@ -732,6 +732,16 @@ namespace Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: جدول لیست قیمت ها
+        /// </summary>
+        public static string GetLivePrice([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Action.GetLivePrice;
+            }
+            return global::Resources.Action.ResourceManager.GetString("GetLivePrice", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: دريافت کاربران آنلاين
         /// </summary>
         public static string GetOnlineUsers([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -1522,6 +1532,16 @@ namespace Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: ارسال پیامک به بدهکاران
+        /// </summary>
+        public static string SendSMSdebtor([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Action.SendSMSdebtor;
+            }
+            return global::Resources.Action.ResourceManager.GetString("SendSMSdebtor", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: تعرفه خدمات سازمان
         /// </summary>
         public static string ServiceTariff([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -2234,6 +2254,11 @@ namespace Resources.Strings {
         public const string GetGendersCount = "GetGendersCount";
         
         /// <summary>
+        ///   Provides access to string resource key of value similar to: جدول لیست قیمت ها
+        /// </summary>
+        public const string GetLivePrice = "GetLivePrice";
+        
+        /// <summary>
         ///   Provides access to string resource key of value similar to: دريافت کاربران آنلاين
         /// </summary>
         public const string GetOnlineUsers = "GetOnlineUsers";
@@ -2627,6 +2652,11 @@ namespace Resources.Strings {
         ///   Provides access to string resource key of value similar to: ارسال مجدد نامه الکترونيکی، برای تاييد صحت نشانی پست الکترونيکی
         /// </summary>
         public const string SendAgainEmailAddressVerificationKey = "SendAgainEmailAddressVerificationKey";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: ارسال پیامک به بدهکاران
+        /// </summary>
+        public const string SendSMSdebtor = "SendSMSdebtor";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: تعرفه خدمات سازمان

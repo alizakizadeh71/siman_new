@@ -745,6 +745,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to جدول لیست قیمت ها.
+        /// </summary>
+        public static string GetLivePrice {
+            get {
+                return ResourceManager.GetString("GetLivePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to دريافت کاربران آنلاين.
         /// </summary>
         public static string GetOnlineUsers {

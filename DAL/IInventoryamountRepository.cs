@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Models;
+using System;
+using System.Collections.Generic;
 
 namespace DAL
 {
@@ -8,5 +10,6 @@ namespace DAL
 
         Models.Inventoryamount GetById(Guid Id);
         void Insertdata(Models.Inventoryamount Inventoryamount);
+       List<Inventoryamount> GetByProductId(List<Guid> productIdList);
     }
 }

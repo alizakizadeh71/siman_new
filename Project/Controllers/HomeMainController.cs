@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using ViewModels;
 using ViewModels.Account;
 //using PAPUtilities;
 
@@ -279,6 +280,47 @@ namespace OPS.Controllers
         {
             return View();
         }
+
+        [System.Web.Mvc.HttpGet]
+        [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
+        public virtual ActionResult GetLivePrice()
+        {
+            // دریافت محصولات مالی معتبر (قیمت != 0، فعال، حذف‌نشده)
+            var financialList = UnitOfWork.FinancialManagementRepository
+                .Get()
+                .Where(f => f.AmountPaid != 0 && f.IsActived == true && f.IsDeleted == false)
+                .ToList();
+
+            // گرفتن لیست ID محصولات
+            List<Guid> productIdList = financialList.Select(x => x.ProductNameId).ToList();
+
+            // دریافت موجودی انبار برای این محصولات که Inventorytonnage > 0
+            List<Inventoryamount> inventoryList = UnitOfWork.InventoryamountRepository
+                .GetByProductId(productIdList);
+
+            // فیلتر نهایی: فقط محصولاتی که هم قیمت دارند و هم موجودی
+            var liveProducts = financialList
+                .Select(f => 
+                {
+                    var inventory = inventoryList.FirstOrDefault(i => i.ProductNameId == f.ProductNameId);
+                    if (inventory == null || inventory.Inventorytonnage <= 0)
+                        return null;
+                    return new LiveProductViewModel
+                    {
+                        ProductName = f.ProductName.Name,
+                        ProductTypeName = f.ProductType.Name,
+                        PackageType = f.PackageType.Name,
+                        FactoryName = f.FactoryName.Name,
+                        AmountPaid = f.AmountPaid,
+                        Inventorytonnage = inventory.Inventorytonnage
+                    };
+                })
+                .ToList();
+
+            // ارسال به View
+            return View(liveProducts);
+        }
+
 
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]

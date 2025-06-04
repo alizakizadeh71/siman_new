@@ -1,6 +1,8 @@
 ﻿using Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DAL
 {
@@ -43,5 +45,25 @@ namespace DAL
                 throw ex;
             }
         }
+        public List<Inventoryamount> GetByProductId(List<Guid> productIdList)
+        {
+            try
+            {
+                var list = DatabaseContext.Inventoryamount
+                    .Where(x => productIdList.Contains(x.ProductNameId)
+                                && x.Inventorytonnage > 0 
+                                && x.IsActived != false
+                                && x.IsDeleted != true)
+                    .ToList();
+
+                return list;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
     }
 }

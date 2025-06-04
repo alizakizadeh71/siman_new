@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ViewModels.LiveProductViewModel>
+@{
+    ViewBag.Title = "GetLivePrice";
+    var allPricesAreZero = !Model.Any() || Model.All(x => x.AmountPaid == 0);
+}
+<link href="~/Content/css/GetLivePriceStyle.css" rel="stylesheet" />
+
+@if (allPricesAreZero)
+{
+    <div class="alert alert-warning text-center" style="margin-top: 20px;">
+        قیمت‌ها در حال آپدیت هستند...
+    </div>
+}
+else
+{
+    <div class="table-wrapper">
+        <table class="price-table">
+            <thead>
+            <tr>
+                <th>نام محصول</th>
+                <th>نوع محصول</th>
+                <th>نوع بسته‌بندی</th>
+                <th>نام کارخانه</th>
+                <th>مبلغ پرداختی</th>
+                <th>تناژ موجودی</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.ProductTypeName</td>
+                    <td>@item.PackageType</td>
+                    <td>@item.FactoryName</td>
+                    <td>@item.AmountPaid.ToString("N0")ريال</td>
+                    <td>@item.Inventorytonnage</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}

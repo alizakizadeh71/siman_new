@@ -669,4 +669,7 @@
   <data name="SendSMSdebtor" xml:space="preserve">
     <value>ارسال پیامک به بدهکاران</value>
   </data>
+  <data name="GetLivePrice" xml:space="preserve">
+    <value>جدول لیست قیمت ها</value>
+  </data>
 </root>
