@@ -118,5 +118,35 @@ namespace DAL
                 throw e;
             }
         }
+
+        public bool IsMarketingCodeAvailable(string marketingCode)
+        {
+            try
+            {
+                bool result = Get().Any(u => u.MarketingCode == marketingCode);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public User GetUserByMarketingCode(string marketingCode)
+        {
+            try
+            {
+                User user = Get().First(u => u.MarketingCode == marketingCode);
+
+                return user;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

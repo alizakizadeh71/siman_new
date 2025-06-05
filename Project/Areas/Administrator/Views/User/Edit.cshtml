@@ -80,6 +80,38 @@
                 @Html.ValidationMessageFor(model => model.creditAmount)
             </div>
         </div>
+        
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsMarketer, new { @class = "col-md-2 control-label" })
+            <div class="col-md-6">
+                @Html.CheckBoxFor(model => model.IsMarketer, new { @id = "isMarketer" , onclick = "toggleFields()" })
+            </div>
+        </div>
+        <div class="form-group" id="marketingCodeGroup">
+            @Html.LabelFor(model => model.MarketingCode, new { @class = "col-md-2 control-label" })
+
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.MarketingCode, new {
+                    @class = "form-control",
+                    @id = "marketingCode",
+                    @readonly = "readonly", // فقط خواندنی
+                })
+                @Html.ValidationMessageFor(model => model.MarketingCode)
+            </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" onclick="generateMarketingCode()">دریافت کد</button>
+            </div>
+        </div>
+
+        <div class="form-group" id="referredByCodeGroup">
+            @Html.LabelFor(model => model.ReferredByCode, new { @class = "col-md-2 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.ReferredByCode, new { @class = "form-control", @id = "referredByCode" })
+                @Html.ValidationMessageFor(model => model.ReferredByCode)
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.InitialCredit, new { @class = "col-md-2 control-label" })
@@ -173,5 +205,28 @@
                 $("#DivCityId").append(select);
             }
         });
+    }
+
+    function toggleFields() {
+        var isMarketer = document.getElementById("isMarketer").checked;
+
+        document.getElementById("marketingCodeGroup").style.display = isMarketer ? "block" : "none";
+        document.getElementById("referredByCodeGroup").style.display = isMarketer ? "none" : "block";
+    }
+
+    window.onload = toggleFields;
+
+    document.getElementById("isMarketer").addEventListener("change", toggleFields)
+
+    function generateMarketingCode() {
+        fetch('/Administrator/User/GenerateUniqueMarketingCode')
+            .then(response => response.json())
+            .then(code => {
+                document.getElementById("marketingCode").value = code;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("خطا در دریافت کد بازاریابی");
+            });
     }
 </script>

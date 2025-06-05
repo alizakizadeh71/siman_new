@@ -240,6 +240,14 @@ namespace OPS.Controllers
                         UnitOfWork.Save();
 
                         var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
+                        if (user.IsMarketer != true && user.ReferredByCode != null)
+                        {
+                            var Marketer = UnitOfWork.UserRepository.GetUserByMarketingCode(user.ReferredByCode);
+                            if (Marketer != null)
+                            {
+                                Marketer.creditAmount = (long)((oFactorCement.AmountPaid/10) * 0.005);
+                            }
+                        }
                         //string amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
                         //user.AmountOfTonnagePurchased = int.Parse(oFactorCement.Tonnage.Code);
                         //user.creditAmount += (user.AmountOfTonnagePurchased / 50) * 10000000;

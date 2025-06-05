@@ -934,6 +934,8 @@ namespace Links
                  
             public static readonly string chosen_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/chosen.min.css") ? Url("chosen.min.css") : Url("chosen.css");
                  
+            public static readonly string GetLivePriceStyle_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/GetLivePriceStyle.min.css") ? Url("GetLivePriceStyle.min.css") : Url("GetLivePriceStyle.css");
+                 
             public static readonly string UserIndexStyle_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/UserIndexStyle.min.css") ? Url("UserIndexStyle.min.css") : Url("UserIndexStyle.css");
                  
         }

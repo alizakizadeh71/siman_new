@@ -77,6 +77,7 @@ namespace OPS.Controllers
             public readonly string Login = "Login";
             public readonly string About = "About";
             public readonly string Contact = "Contact";
+            public readonly string GetLivePrice = "GetLivePrice";
             public readonly string ErrorAccount = "ErrorAccount";
             public readonly string Main = "Main";
             public readonly string UserGuid = "UserGuid";
@@ -94,6 +95,7 @@ namespace OPS.Controllers
             public const string Login = "Login";
             public const string About = "About";
             public const string Contact = "Contact";
+            public const string GetLivePrice = "GetLivePrice";
             public const string ErrorAccount = "ErrorAccount";
             public const string Main = "Main";
             public const string UserGuid = "UserGuid";
@@ -143,6 +145,7 @@ namespace OPS.Controllers
                 public readonly string Authenticate = "Authenticate";
                 public readonly string Contact = "Contact";
                 public readonly string Create = "Create";
+                public readonly string GetLivePrice = "GetLivePrice";
                 public readonly string Index = "Index";
                 public readonly string Login = "Login";
                 public readonly string Main = "Main";
@@ -156,6 +159,7 @@ namespace OPS.Controllers
             public readonly string Authenticate = "~/Views/HomeMain/Authenticate.cshtml";
             public readonly string Contact = "~/Views/HomeMain/Contact.cshtml";
             public readonly string Create = "~/Views/HomeMain/Create.cshtml";
+            public readonly string GetLivePrice = "~/Views/HomeMain/GetLivePrice.cshtml";
             public readonly string Index = "~/Views/HomeMain/Index.cshtml";
             public readonly string Login = "~/Views/HomeMain/Login.cshtml";
             public readonly string Main = "~/Views/HomeMain/Main.cshtml";
@@ -207,6 +211,12 @@ namespace OPS.Controllers
         public override System.Web.Mvc.ActionResult Contact()
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Contact);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult GetLivePrice()
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GetLivePrice);
             return callInfo;
         }
 

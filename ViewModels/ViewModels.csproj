@@ -154,6 +154,7 @@
     <Compile Include="Areas\Administrator\TotalCompanyInventory\TotalCompanyInventoryViewModel.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="IComboboxItem.cs" />
+    <Compile Include="LiveProductViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

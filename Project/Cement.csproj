@@ -206,6 +206,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\bootstrap-rtl.css" />
     <Content Include="Content\css\chosen.css" />
+    <Content Include="Content\css\GetLivePriceStyle.css" />
     <Content Include="Content\css\UserIndexStyle.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Icon\ExcelMini.png" />
@@ -1577,6 +1578,7 @@
     <Content Include="Views\HomeMain\Rechargewallet.cshtml" />
     <Content Include="Views\Zarinpal\VerifyPaymentWallet.cshtml" />
     <Content Include="Views\HomeMain\Price.cshtml" />
+    <Content Include="Views\HomeMain\GetLivePrice.cshtml" />
     <None Include="Web References\ir.shaparak.sadad\MerchantUtility.disco" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

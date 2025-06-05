@@ -131,6 +131,9 @@ namespace OPS.Areas.Administrator.Controllers
                          IsActive = current.IsActive,
                          BuyerMobile = current.BuyerMobile,
                          Address = current.Address,
+                         IsMarketer = current.IsMarketer,
+                         MarketingCode = current.MarketingCode,
+                         ReferredByCode = current.ReferredByCode,
                          //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
                      })
@@ -186,6 +189,9 @@ namespace OPS.Areas.Administrator.Controllers
                              Address = current.Address,
                              InitialCredit = current.InitialCredit,
                              isSendSmS = current.isSendSms,
+                             IsMarketer = current.IsMarketer,
+                             MarketingCode = current.MarketingCode,
+                             ReferredByCode = current.ReferredByCode,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
@@ -205,11 +211,15 @@ namespace OPS.Areas.Administrator.Controllers
                              Address = current.Address,
                              InitialCredit = current.InitialCredit,
                              isSendSmS = current.isSendSmS,
+                             IsMarketer = current.IsMarketer,
+                             MarketingCode = current.MarketingCode,
+                             ReferredByCode = current.ReferredByCode,
                              //IsApprovallicense = current.IsApprovallicense,
                              Authenticate = current.Authenticate,
                          })
                          .AsQueryable();
 
+                var test = varUser.Where(u => u.UserName == "amemo").ToList();
                 var varResult =
                     Utilities.Kendo.HtmlHelpers
                     .ParseGridData<ViewModels.Areas.Administrator.User.IndexViewModel>(ViewModelsUser);
@@ -338,6 +348,24 @@ namespace OPS.Areas.Administrator.Controllers
                 return View(user);
             }
 
+            if (UnitOfWork.UserRepository.IsMarketingCodeAvailable(user.MarketingCode))
+            {
+                var varRoles
+                    = UnitOfWork.RoleRepository.Get()
+                        .Where(current => current.Code < Infrastructure.Sessions.AuthenticatedUser.RoleCode)
+                        .OrderBy(current => current.Name).ToList();
+                ViewData["Role"] = new System.Web.Mvc.SelectList(varRoles, "Id", "Name", null);
+
+                var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
+                ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
+
+                var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
+                ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
+                ViewBag.PageMessages += "کد بازاریابی تکراری است";
+                ViewBag.PageMessages += "<br/>";
+                return View(user);
+            }
+
             if (ModelState.IsValid)
             {
                 Models.User oUser = new Models.User();
@@ -360,6 +388,9 @@ namespace OPS.Areas.Administrator.Controllers
                     oUser.creditAmount = user.creditAmount;
                     oUser.BirthDay = user.BirthDay;
                     oUser.Authenticate = true;
+                    oUser.IsMarketer = user.IsMarketer;
+                    oUser.MarketingCode = user.MarketingCode;
+                    oUser.ReferredByCode = user.ReferredByCode;
                     oUser.InitialCredit = user.InitialCredit;
                     oUser.isSendSms = user.isSendSmS;
                     UnitOfWork.UserRepository.Insert(oUser);
@@ -465,7 +496,9 @@ namespace OPS.Areas.Administrator.Controllers
                     Authenticate = current.Authenticate,
                     isSendSmS = current.isSendSms,
                     Image = current.Image,
-                    
+                    MarketingCode = current.MarketingCode,
+                    IsMarketer = current.IsMarketer,
+                    ReferredByCode = current.ReferredByCode,
                     InitialCredit = current.InitialCredit
                 })
                 .FirstOrDefault()
@@ -588,6 +621,16 @@ namespace OPS.Areas.Administrator.Controllers
                     OlderAccount.creditAmount = user.creditAmount;
                     OlderAccount.InitialCredit = user.InitialCredit;
                     OlderAccount.isSendSms = user.isSendSmS;
+                    OlderAccount.IsMarketer = user.IsMarketer;
+                    if (user.IsMarketer == false)
+                    {
+                        OlderAccount.MarketingCode = "";
+                    }
+                    else
+                    {
+                        OlderAccount.MarketingCode = user.MarketingCode;
+                    }
+                    OlderAccount.ReferredByCode = user.ReferredByCode;
                     if (user.Authenticate == false)
                     {
                         OlderAccount.Authenticate = user.Authenticate;
@@ -664,8 +707,8 @@ namespace OPS.Areas.Administrator.Controllers
 
                 if (varUser != null)
                 {
-                    //UnitOfWork.UserRepository.Delete(varUser);
-                    //UnitOfWork.Save();
+                    UnitOfWork.UserRepository.Delete(varUser);
+                    UnitOfWork.Save();
                     return (RedirectToAction(MVC.Administrator.User.Index()));
                 }
 
@@ -1081,6 +1124,22 @@ namespace OPS.Areas.Administrator.Controllers
                 throw;
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        public virtual JsonResult GenerateUniqueMarketingCode()
+        {
+            string code;
+            var rand = new Random();
+            do
+            {
+                int number = rand.Next(1, 10000); // عدد ۶ رقمی
+                code = number.ToString("D4");
+            }
+            while (UnitOfWork.UserRepository.IsMarketingCodeAvailable(code));
+
+            return Json(code, JsonRequestBehavior.AllowGet);
         }
     }
 

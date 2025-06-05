@@ -87,19 +87,19 @@
             Name = Resources.ViewModel.Strings.UserKeys.isSendSmS)]
         #endregion
         public bool isSendSmS { get; set; }
-        #region isSendSmS
+        #region IsMarketer
         [System.ComponentModel.DataAnnotations.Display
         (ResourceType = typeof(Resources.ViewModel.User),
             Name = Resources.ViewModel.Strings.UserKeys.IsMarketer)]
         #endregion
         public bool IsMarketer { get; set; }
-        #region isSendSmS
+        #region MarketingCode
         [System.ComponentModel.DataAnnotations.Display
         (ResourceType = typeof(Resources.ViewModel.User),
             Name = Resources.ViewModel.Strings.UserKeys.MarketingCode)]
         #endregion
         public string MarketingCode { get; set; }
-        #region isSendSmS
+        #region ReferredByCode
         [System.ComponentModel.DataAnnotations.Display
         (ResourceType = typeof(Resources.ViewModel.User),
             Name = Resources.ViewModel.Strings.UserKeys.ReferredByCode)]

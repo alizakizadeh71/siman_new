@@ -105,6 +105,24 @@ namespace ViewModels.Areas.Administrator.User
         #endregion
         public bool isSendSmS { get; set; }
 
+        #region IsMarketer
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.IsMarketer)]
+        #endregion
+        public bool IsMarketer { get; set; }
+        #region MarketingCode
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.MarketingCode)]
+        #endregion
+        public string MarketingCode { get; set; }
+        #region ReferredByCode
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.ReferredByCode)]
+        #endregion
+        public string ReferredByCode { get; set; }
         //#region IsDelete
         //[System.ComponentModel.DataAnnotations.Display
         //    (ResourceType = typeof(Resources.ViewModel.User),

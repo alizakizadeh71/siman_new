@@ -1,4 +1,6 @@
-﻿namespace DAL
+﻿using Models;
+
+namespace DAL
 {
     public interface IUserRepository : IRepository<Models.User>
     {
@@ -9,5 +11,9 @@
         System.Linq.IQueryable<Models.User> Get(Models.User user);
 
         string GetAccountStatus(string userName);
+
+        bool IsMarketingCodeAvailable(string marketingCode);
+
+        User GetUserByMarketingCode(string marketingCode);
     }
 }

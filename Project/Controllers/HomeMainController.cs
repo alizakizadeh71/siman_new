@@ -219,7 +219,7 @@ namespace OPS.Controllers
                             Tonnagedouble = cementViewModel.Tonnage,
                             BuyerMobile = cementViewModel.BuyerMobile,
                             Address = cementViewModel.Address,
-                            AmountPaid = AmountPaid,
+                            AmountPaid = 100000,
                             DestinationAmountPaid = DestinationAmountPaid,
                             Description = $"فاکتور پرداخت {productName} {TonnageWieght}تن",
                             RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),

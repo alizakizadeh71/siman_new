@@ -150,6 +150,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string DownloadUserExcelGetByid = "DownloadUserExcelGetByid";
             public readonly string Paymentwallet = "Paymentwallet";
             public readonly string SendSMSdebtor = "SendSMSdebtor";
+            public readonly string GenerateUniqueMarketingCode = "GenerateUniqueMarketingCode";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -173,6 +174,7 @@ namespace OPS.Areas.Administrator.Controllers
             public const string DownloadUserExcelGetByid = "DownloadUserExcelGetByid";
             public const string Paymentwallet = "Paymentwallet";
             public const string SendSMSdebtor = "SendSMSdebtor";
+            public const string GenerateUniqueMarketingCode = "GenerateUniqueMarketingCode";
         }
 
 
@@ -467,6 +469,12 @@ namespace OPS.Areas.Administrator.Controllers
         public override System.Web.Mvc.ActionResult SendSMSdebtor()
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SendSMSdebtor);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.JsonResult GenerateUniqueMarketingCode()
+        {
+            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GenerateUniqueMarketingCode);
             return callInfo;
         }
 
