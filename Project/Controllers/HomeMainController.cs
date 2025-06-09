@@ -4,8 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using ViewModels;
 using ViewModels.Account;
+using ViewModels.Areas.Administrator.Inventoryamount;
+
 //using PAPUtilities;
 
 
@@ -285,39 +288,57 @@ namespace OPS.Controllers
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual ActionResult GetLivePrice()
         {
-            // دریافت محصولات مالی معتبر (قیمت != 0، فعال، حذف‌نشده)
             var financialList = UnitOfWork.FinancialManagementRepository
                 .Get()
-                .Where(f => f.AmountPaid != 0 && f.IsActived == true && f.IsDeleted == false)
+                .Where(f => f.AmountPaid != 0 && f.IsActived && !f.IsDeleted)
                 .ToList();
 
-            // گرفتن لیست ID محصولات
-            List<Guid> productIdList = financialList.Select(x => x.ProductNameId).ToList();
+            var productIdList = financialList
+                .Select(x => new InventoryViewModel
+                {
+                    ProductTypeId = x.ProductTypeId,
+                    ProductNameId = x.ProductNameId,
+                    FactoryNameId = x.FactoryNameId,
+                    PackageType = x.PackageTypeId
+                })
+                .Distinct()
+                .ToList();
 
-            // دریافت موجودی انبار برای این محصولات که Inventorytonnage > 0
-            List<Inventoryamount> inventoryList = UnitOfWork.InventoryamountRepository
+            var inventoryList = UnitOfWork.InventoryamountRepository
                 .GetByProductId(productIdList);
 
-            // فیلتر نهایی: فقط محصولاتی که هم قیمت دارند و هم موجودی
-            var liveProducts = financialList
-                .Select(f => 
+            var liveProducts = new List<LiveProductViewModel>();
+
+            foreach (var f in financialList)
+            {
+                // پیدا کردن موجودی مربوط به محصول فعلی (مقایسه دقیق‌تر)
+                var inventory = inventoryList
+                    .FirstOrDefault(inv => inv.ProductNameId == f.ProductNameId 
+                    && inv.ProductTypeId == f.ProductTypeId
+                    && inv.PackageType == f.PackageType
+                    && inv.FactoryNameId == f.FactoryNameId);
+                if (inventory != null)
                 {
-                    var inventory = inventoryList.FirstOrDefault(i => i.ProductNameId == f.ProductNameId);
-                    if (inventory == null || inventory.Inventorytonnage <= 0)
-                        return null;
-                    return new LiveProductViewModel
+                    liveProducts.Add(new LiveProductViewModel
                     {
                         ProductName = f.ProductName.Name,
                         ProductTypeName = f.ProductType.Name,
                         PackageType = f.PackageType.Name,
                         FactoryName = f.FactoryName.Name,
                         AmountPaid = f.AmountPaid,
-                        Inventorytonnage = inventory.Inventorytonnage
-                    };
-                })
+                        Inventorytonnage = inventory != null ? inventory.Inventorytonnage : 0
+                    });
+                }
+            }
+
+            // فیلتر و مرتب‌سازی
+            liveProducts = liveProducts
+                .Where(x => x != null)
+                .OrderBy(x => x.ProductTypeName == "تیپ 2" ? 0 : 1)
                 .ToList();
 
-            // ارسال به View
+
+
             return View(liveProducts);
         }
 

@@ -218,14 +218,6 @@
                         hidden: false,
                         locked: true,
                         lockable: true,
-                        title: "@Resources.Model.Cement.RemittanceNumber",
-                        field: "@Resources.Model.Strings.CementKeys.RemittanceNumber",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
                         title: "@Resources.Model.Cement.StringProductName",
                         field: "@Resources.Model.Strings.CementKeys.StringProductName",
                         width: "20px",
@@ -269,22 +261,6 @@
                         lockable: true,
                         title: "@Resources.Model.Cement.stringFinalApprove",
                          field: "@Resources.Model.Strings.CementKeys.stringFinalApprove",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProvince",
-                        field: "@Resources.Model.Strings.CementKeys.StringProvince",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringCity",
-                        field: "@Resources.Model.Strings.CementKeys.StringCity",
                         width: "20px",
                     },
                     {
@@ -482,7 +458,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-4 control-label" })
                     <div class="col-md-8" id="DivTonnageId">
-                        @Html.DropDownListFor(model => model.Tonnage, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                        @Html.TextBoxFor(model => model.Tonnage, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Tonnage)
                     </div>
                 </div>

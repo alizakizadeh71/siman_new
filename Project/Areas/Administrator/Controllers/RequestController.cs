@@ -36,9 +36,6 @@ namespace OPS.Areas.Administrator.Controllers
             var FactoryName = UnitOfWork.FactoryNameRepository.GetByProductNameId(new Guid()).ToList(); /// سیمان
             base.ViewData["FactoryName"] = new System.Web.Mvc.SelectList(FactoryName, "Id", "Name", null).OrderBy(x => x.Text); /// ممتازان کرمان
 
-            var Tonnage = UnitOfWork.tonnageRepository.GetByPackageTypeId(new Guid()).ToList(); /// کیسه
-            base.ViewData["Tonnage"] = new System.Web.Mvc.SelectList(Tonnage, "Id", "Name", null).OrderBy(x => x.Text); /// 12 تن
-
             var stringFinalApprove = Infrastructure.Utility.EnumList(Enums.EnumTypes.FinalApprove);
             base.ViewData["stringFinalApprove"] = new System.Web.Mvc.SelectList(stringFinalApprove, "Id", "Name", 1);
 
@@ -189,11 +186,11 @@ namespace OPS.Areas.Administrator.Controllers
                             StringProductType = current.ProductType.Name,
                             StringPackageType = current.PackageType.Name,
                             StringFactoryName = current.FactoryName.Name,
-                            StringTonnage = current.Tonnage.Name,
-                            StringProvince = current.Province.Name,
-                            StringCity = current.City.Name,
+                            StringTonnage = current.Tonnagedouble.ToString(),
+                          //  StringProvince = current.Province.Name,
+                          //  StringCity = current.City.Name,
                             BuyerMobile = current.BuyerMobile,
-                            RemittanceNumber = current.RemittanceNumber,
+                            //RemittanceNumber = current.RemittanceNumber,
                             //FinalApprove = current.FinalApprove,
                             stringFinalApprove = current.FinalApprove == true ? "نهایی شده" : "نهایی نشده",
                             AmountPaid = current.MahalTahvil == "Karkhane" ? current.AmountPaid : current.MahalTahvil == "Mahal" ? current.DestinationAmountPaid.Value : 0,

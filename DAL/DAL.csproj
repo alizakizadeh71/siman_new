@@ -311,6 +311,10 @@
       <Project>{78fa154e-8772-4fc7-9c73-cc2e32baa91d}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
+      <Project>{7A01F539-3EF7-45C6-B01D-60A460BC72FB}</Project>
+      <Name>ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using ViewModels.Areas.Administrator.Inventoryamount;
 
 namespace DAL
 {
@@ -45,18 +46,24 @@ namespace DAL
                 throw ex;
             }
         }
-        public List<Inventoryamount> GetByProductId(List<Guid> productIdList)
+        public List<Inventoryamount> GetByProductId(List<InventoryViewModel> productIdList)
         {
             try
             {
-                var list = DatabaseContext.Inventoryamount
-                    .Where(x => productIdList.Contains(x.ProductNameId)
-                                && x.Inventorytonnage > 0 
-                                && x.IsActived != false
-                                && x.IsDeleted != true)
+                var data = DatabaseContext.Inventoryamount
+                    .Where(x => x.Inventorytonnage > 0 && x.IsActived != false && x.IsDeleted != true)
+                    .ToList(); // دریافت اولیه از دیتابیس
+
+                var filtered = data
+                    .Where(x => productIdList.Any(p =>
+                        p.ProductNameId == x.ProductNameId &&
+                        p.ProductTypeId == x.ProductTypeId &&
+                        p.PackageType == x.PackageTypeId &&
+                        p.FactoryNameId == x.FactoryNameId))
                     .ToList();
 
-                return list;
+
+                return filtered;
             }
             catch (Exception e)
             {
@@ -64,6 +71,7 @@ namespace DAL
                 throw;
             }
         }
+
 
     }
 }
