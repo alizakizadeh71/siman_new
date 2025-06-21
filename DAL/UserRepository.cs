@@ -148,5 +148,19 @@ namespace DAL
                 throw;
             }
         }
+
+        public string GetAddressByPhoneNumebr(string Phonenumber)
+        {
+            try
+            {
+                string address = Get().FirstOrDefault(u => u.BuyerMobile == Phonenumber).Address;
+                return address;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
     }
 }

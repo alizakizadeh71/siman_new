@@ -14,6 +14,7 @@ namespace DAL
 
         bool IsMarketingCodeAvailable(string marketingCode);
 
+        string GetAddressByPhoneNumebr(string Phonenumber);
         User GetUserByMarketingCode(string marketingCode);
     }
 }

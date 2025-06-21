@@ -200,6 +200,7 @@ namespace OPS.Controllers
                         //}
                         double AmountPaid = oFinancialManagement.AmountPaid * Tonnage; /// محاسبه مبلغ
                         int LastInvoiceNumber = UnitOfWork.FactorCementRepository.GetLastInvoiceNumber() + 1;
+                        string userAddress = null;
                         Models.User oUser;
                         if (Infrastructure.Sessions.AuthenticatedUser?.UserName != null)
                         {
@@ -208,11 +209,15 @@ namespace OPS.Controllers
                             {
                                 ViewBag.DisplaycreditAmount = " پس از ورود به درگاه پرداخت مبلغ اعتبار بصورت خودکار از کیف پول کسر خواهد شد ";
                             }
+
+                            userAddress = oUser.Address;
                         }
                         else
                         {
                             oUser = UnitOfWork.UserRepository.GetByUserName("Guest");
+                            userAddress = UnitOfWork.UserRepository.GetAddressByPhoneNumebr(cementViewModel.BuyerMobile);
                         }
+
                         Models.FactorCement oFactorCement = new Models.FactorCement()
                         {
                             ProductNameId = cementViewModel.ProductName,
@@ -221,8 +226,8 @@ namespace OPS.Controllers
                             FactoryNameId = cementViewModel.FactoryName,
                             Tonnagedouble = cementViewModel.Tonnage,
                             BuyerMobile = cementViewModel.BuyerMobile,
-                            Address = cementViewModel.Address,
-                            AmountPaid = 100000,
+                            Address = userAddress,
+                            AmountPaid = AmountPaid,
                             DestinationAmountPaid = DestinationAmountPaid,
                             Description = $"فاکتور پرداخت {productName} {TonnageWieght}تن",
                             RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),

@@ -504,7 +504,9 @@ namespace OPS.Controllers
                 string[] text = user != null && user.isSendSms
                     ? new string[] {
                 user.UserName,
-                factor.Tonnagedouble.ToString() + "تن" ?? "N/A",
+                factor.Tonnagedouble != null 
+                    ? factor.Tonnagedouble.ToString().Replace('.', '/') + " تن"
+                    : "N/A",
                 factor.PackageType?.Name ?? "N/A",
                 factor.FactoryName?.Name ?? "N/A",
                 factor.ProductType?.Name ?? "N/A",
@@ -514,7 +516,9 @@ namespace OPS.Controllers
                     }
                     : new string[] {
                 "ثبت نام نشده",
-                factor.Tonnagedouble.ToString()+"تن" ?? "N/A",
+                factor.Tonnagedouble != null 
+                    ? factor.Tonnagedouble.ToString().Replace('.' , '/') + " تن"
+                    : "N/A",
                 factor.PackageType?.Name ?? "N/A",
                 factor.FactoryName?.Name ?? "N/A",
                 factor.ProductType?.Name ?? "N/A",
@@ -534,9 +538,6 @@ namespace OPS.Controllers
                 var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
                 var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
                 var result = soapClient.SendByBaseNumber(username, password, text, to, bodyId);
-
-                // بازگرداندن نتیجه به صورت جاوا اسکریپت
-                return Content($"<script>console.log('پیامک با موفقیت ارسال شد. نتیجه: {result}');</script>", "text/html");
             }
             catch (Exception ex)
             {
