@@ -917,8 +917,8 @@ namespace OPS.Areas.Administrator.Controllers
                 var worksheet = workbook.Worksheets.Add("فایل موجودی");
                 worksheet.Cell(1, 1).Value = "نام و نام خانوادگی";
                 worksheet.Cell(1, 2).Value = "قدرت خرید";
-                worksheet.Cell(1, 3).Value = "مبلغ موجودی اولیه";
-                worksheet.Cell(1, 4).Value = "مبلغ موجودی باقی مانده";
+                worksheet.Cell(1, 3).Value = "میزان اعتبار داده شده";
+                worksheet.Cell(1, 4).Value = "میزان بدهی";
 
                 for (int i = 0; i < sortedUsers.Count; i++)
                 {
@@ -981,32 +981,43 @@ namespace OPS.Areas.Administrator.Controllers
 
             var withdrawalList = userswithdrawal.Select(w =>
             {
-                // گرفتن Tonnage بر اساس TonnageId
-                var tonnage = UnitOfWork.tonnageRepository.GetById(w.TonnageId.Value);
-
-                // بررسی اینکه Name موجوده یا Tonnagedouble بزرگ‌تر از صفره
                 string tonnageValue = "نامشخص";
-                if (!string.IsNullOrWhiteSpace(tonnage?.Name))
+
+                if (w.TonnageId.HasValue)
                 {
-                    tonnageValue = tonnage.Name;
+                    var tonnage = UnitOfWork.tonnageRepository.GetById(w.TonnageId.Value);
+                    if (!string.IsNullOrWhiteSpace(tonnage?.Name))
+                    {
+                        tonnageValue = tonnage.Name;
+                    }
                 }
                 else if (w.Tonnagedouble > 0)
                 {
                     tonnageValue = w.Tonnagedouble + " تن";
+                }else if (w.Tonnage.Name != "0")
+                {
+                    tonnageValue = w.Tonnage.Name + " تن";
                 }
+
+                // بررسی null بودن سایر فیلدها هم به همین روش:
+                var productName = w.ProductName?.Name ?? "نامشخص";
+                var productType = w.ProductType?.Name ?? "نامشخص";
+                var packageType = w.PackageType?.Name ?? "نامشخص";
+                var factoryName = w.FactoryName?.Name ?? "نامشخص";
 
                 return new
                 {
                     Amount = (long)w.AmountPaid,
                     Type = "Withdrawal",
                     Date = w.InsertDateTime,
-                    Description = $"محصول: {w.ProductName.Name}\n" +
-                                  $"نوع محصول: {w.ProductType.Name}\n" +
-                                  $"نوع بسته‌بندی: {w.PackageType.Name}\n" +
-                                  $"کارخانه: {w.FactoryName.Name}\n" +
+                    Description = $"محصول: {productName}\n" +
+                                  $"نوع محصول: {productType}\n" +
+                                  $"نوع بسته‌بندی: {packageType}\n" +
+                                  $"کارخانه: {factoryName}\n" +
                                   $"تناژ: {tonnageValue}"
                 };
             }).ToList();
+
 
 
 
