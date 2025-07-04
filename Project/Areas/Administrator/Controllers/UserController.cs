@@ -979,13 +979,36 @@ namespace OPS.Areas.Administrator.Controllers
                 Description = d.Description
             }).ToList();
 
-            var withdrawalList = userswithdrawal.Select(w => new
+            var withdrawalList = userswithdrawal.Select(w =>
             {
-                Amount = (long)w.AmountPaid,
-                Type = "Withdrawal",
-                Date = w.InsertDateTime,
-                Description = w.Description
+                // گرفتن Tonnage بر اساس TonnageId
+                var tonnage = UnitOfWork.tonnageRepository.GetById(w.TonnageId.Value);
+
+                // بررسی اینکه Name موجوده یا Tonnagedouble بزرگ‌تر از صفره
+                string tonnageValue = "نامشخص";
+                if (!string.IsNullOrWhiteSpace(tonnage?.Name))
+                {
+                    tonnageValue = tonnage.Name;
+                }
+                else if (w.Tonnagedouble > 0)
+                {
+                    tonnageValue = w.Tonnagedouble + " تن";
+                }
+
+                return new
+                {
+                    Amount = (long)w.AmountPaid,
+                    Type = "Withdrawal",
+                    Date = w.InsertDateTime,
+                    Description = $"محصول: {w.ProductName.Name}\n" +
+                                  $"نوع محصول: {w.ProductType.Name}\n" +
+                                  $"نوع بسته‌بندی: {w.PackageType.Name}\n" +
+                                  $"کارخانه: {w.FactoryName.Name}\n" +
+                                  $"تناژ: {tonnageValue}"
+                };
             }).ToList();
+
+
 
             var transactions = depositList;
             transactions.AddRange(withdrawalList);
