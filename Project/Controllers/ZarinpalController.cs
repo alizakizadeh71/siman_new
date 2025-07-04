@@ -538,6 +538,9 @@ namespace OPS.Controllers
                 var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
                 var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
                 var result = soapClient.SendByBaseNumber(username, password, text, to, bodyId);
+
+                // بازگرداندن نتیجه به صورت جاوا اسکریپت
+                return Content($"<script>console.log('پیامک با موفقیت ارسال شد. نتیجه: {result}');</script>", "text/html");
             }
             catch (Exception ex)
             {
