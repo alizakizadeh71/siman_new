@@ -121,7 +121,7 @@
     <value>موجودی کل سیمان</value>
   </data>
   <data name="InventoryUsersString" xml:space="preserve">
-    <value>موجودی کل کاربران</value>
+    <value>موجودی کل بدهی کاربران</value>
   </data>
   <data name="PriceInventory" xml:space="preserve">
     <value>موجودی کل شرکت</value>

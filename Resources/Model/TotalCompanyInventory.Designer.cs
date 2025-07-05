@@ -70,7 +70,7 @@ namespace Resources.Model {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to موجودی کل کاربران.
+        ///   Looks up a localized string similar to موجودی کل بدهی کاربران.
         /// </summary>
         public static string InventoryUsersString {
             get {

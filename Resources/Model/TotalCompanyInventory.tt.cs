@@ -22,7 +22,7 @@ namespace Resources.Model.Strings {
     public class TotalCompanyInventory {
         
         /// <summary>
-        ///   Looks up a localized string similar to: موجودی کل کاربران
+        ///   Looks up a localized string similar to: موجودی کل بدهی کاربران
         /// </summary>
         public static string InventoryUsersString([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -73,7 +73,7 @@ namespace Resources.Model.Strings {
     public class TotalCompanyInventoryKeys {
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: موجودی کل کاربران
+        ///   Provides access to string resource key of value similar to: موجودی کل بدهی کاربران
         /// </summary>
         public const string InventoryUsersString = "InventoryUsersString";
         

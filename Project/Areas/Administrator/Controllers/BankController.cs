@@ -159,13 +159,6 @@ namespace OPS.Areas.Administrator.Controllers
                     .FirstOrDefault()
                     ;
 
-                if (oFindedOther != null)
-                {
-                    ViewBag.PageMessages += "بانک ای با نام  یا کد مشابه در سیستم ثبت شده است.";
-                    ViewBag.PageMessages += "<br/>";
-                    return View(Bank);
-                }
-
 
                 // **************************************************
                 // **************************************************
