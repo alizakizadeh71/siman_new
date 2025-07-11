@@ -27,7 +27,7 @@
             @strTitle
         </div>
         <div class="panel-body">
-            @Html.HiddenFor(model=>model.Id)
+            @Html.HiddenFor(model => model.Id)
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, new { @class = "col-md-2 control-label" })
                 <div class="col-md-6">
@@ -39,7 +39,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Balance, new { @class = "col-md-2 control-label" })
                 <div class="col-md-6">
-                     @Html.TextBoxFor(model => model.Balance, new { @class = "form-control col-md-6" })
+                    @Html.TextBoxFor(model => model.Balance, new { @class = "form-control col-md-6" })
                     @Html.ValidationMessageFor(model => model.Balance)
                 </div>
             </div>
@@ -63,4 +63,25 @@
             <br />
         </div>
     </div>
+}
+
+@section Scripts {
+    <script>
+        const balanceInput = document.getElementById("Balance");
+
+        balanceInput.addEventListener("input", function (e) {
+            // حذف کاماهای قبلی
+            let value = this.value.replace(/,/g, '');
+
+            // فقط اعداد مجاز باشند
+            if (!isNaN(value)) {
+                this.value = Number(value).toLocaleString('en-US');
+            }
+        });
+
+        // هنگام ارسال فرم، کاماها را حذف کن
+        document.querySelector("form").addEventListener("submit", function () {
+            balanceInput.value = balanceInput.value.replace(/,/g, '');
+        });
+    </script>
 }
