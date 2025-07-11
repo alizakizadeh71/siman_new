@@ -11,7 +11,7 @@
 
         public string Name { get; set; }
 
-        public int Balance { get; set; }
+        public long Balance { get; set; }
         public virtual System.Collections.Generic.IList<BankAccount> BankAccounts { get; set; }
     }
 }
