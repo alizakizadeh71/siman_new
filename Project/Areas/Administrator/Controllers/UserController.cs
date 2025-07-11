@@ -348,7 +348,8 @@ namespace OPS.Areas.Administrator.Controllers
                 return View(user);
             }
 
-            if (UnitOfWork.UserRepository.IsMarketingCodeAvailable(user.MarketingCode))
+            if (!string.IsNullOrWhiteSpace(user.MarketingCode) &&
+                UnitOfWork.UserRepository.IsMarketingCodeAvailable(user.MarketingCode))
             {
                 var varRoles
                     = UnitOfWork.RoleRepository.Get()

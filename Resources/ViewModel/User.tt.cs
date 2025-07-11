@@ -102,7 +102,7 @@ namespace Resources.ViewModel.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to: موجودی اولیه
+        ///   Looks up a localized string similar to: اعتبار اولیه
         /// </summary>
         public static string InitialCredit([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -222,7 +222,7 @@ namespace Resources.ViewModel.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to: مبلغ اعتبار
+        ///   Looks up a localized string similar to: قدرت خرید
         /// </summary>
         public static string creditAmount([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
             if (object.ReferenceEquals(resourceCulture, null)) {
@@ -293,7 +293,7 @@ namespace Resources.ViewModel.Strings {
         public const string Image = "Image";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: موجودی اولیه
+        ///   Provides access to string resource key of value similar to: اعتبار اولیه
         /// </summary>
         public const string InitialCredit = "InitialCredit";
         
@@ -353,7 +353,7 @@ namespace Resources.ViewModel.Strings {
         public const string UserName = "UserName";
         
         /// <summary>
-        ///   Provides access to string resource key of value similar to: مبلغ اعتبار
+        ///   Provides access to string resource key of value similar to: قدرت خرید
         /// </summary>
         public const string creditAmount = "creditAmount";
         

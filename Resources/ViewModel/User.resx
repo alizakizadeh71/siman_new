@@ -133,7 +133,7 @@
     <value>شهر</value>
   </data>
   <data name="creditAmount" xml:space="preserve">
-    <value>مبلغ اعتبار</value>
+    <value>قدرت خرید</value>
   </data>
   <data name="FullName" xml:space="preserve">
     <value>نام و نام خانوادگی</value>
@@ -145,7 +145,7 @@
     <value>تصویر</value>
   </data>
   <data name="InitialCredit" xml:space="preserve">
-    <value>موجودی اولیه</value>
+    <value>اعتبار اولیه</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>فعال</value>

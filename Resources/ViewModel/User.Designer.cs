@@ -106,7 +106,7 @@ namespace Resources.ViewModel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to مبلغ اعتبار.
+        ///   Looks up a localized string similar to قدرت خرید.
         /// </summary>
         public static string creditAmount {
             get {
@@ -142,7 +142,7 @@ namespace Resources.ViewModel {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to موجودی اولیه.
+        ///   Looks up a localized string similar to اعتبار اولیه.
         /// </summary>
         public static string InitialCredit {
             get {
