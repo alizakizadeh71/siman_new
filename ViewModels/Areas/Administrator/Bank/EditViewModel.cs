@@ -21,6 +21,6 @@
            (ResourceType = typeof(Resources.ViewModel.Bank),
            Name = Resources.ViewModel.Strings.BankKeys.Balance)]
         #endregion
-        public int Balance { get; set; }
+        public long Balance { get; set; }
     }
 }
