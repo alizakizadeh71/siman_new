@@ -1,470 +1,427 @@
 ﻿@model ViewModels.Areas.Administrator.User.SearchViewModel
 
 @{
-    string strTitle =
-        string.Format("{0} {1}",
-        Resources.Action.ListOf,
-        Resources.Model.User.EntitiesName);
+    ViewBag.Title = "فهرست کاربران";
+    Layout = "~/Views/Shared/_Layouts/_Site.cshtml";
 
-    string strCreate =
-        string.Format("{0} {1}",
-        Resources.Action.CreateOf,
-        Resources.Model.User.EntityName
-    );
+    // 🟢 گرفتن شماره صفحه فعلی از QueryString
+    int currentPage = 1;
+    string pageQuery = Request.QueryString["page"];
+    if (!string.IsNullOrEmpty(pageQuery))
+    {
+        int tmpPage;
+        if (int.TryParse(pageQuery, out tmpPage) && tmpPage > 0)
+        {
+            currentPage = tmpPage;
+        }
+    }
 }
-<script type="text/javascript">
-    function getParameterByName(name) {
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-        var results = regex.exec(window.location.href);
-        if (!results) return null;
-        if (!results[2]) return '';
-        console.log(results[2]);
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<style>
+
+    /* ==== بک‌گراند کلی صفحه ==== */
+    body {
+        background: linear-gradient(135deg, #e0f0ff, #f8fbff);
+        font-family: "IRANSans", "Tahoma", sans-serif;
+        color: #333;
+        direction: rtl;
+        margin: 0;
+        padding: 20px;
     }
 
+    /* ==== کانتینر کل جدول و عنوان ==== */
+    .page-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px 20px 20px 20px; /* فاصله از بالا */
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
 
-    $(document).ready(function () {
+    .page-title {
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 24px;
+        color: #007bff;
+    }
 
-        $("#SearchPanelHeader").click(function () {
-            $("#SearchPanelBody").toggle(1000);
-        });
+    /* ==== ساختار جدید دکمه‌ها ==== */
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
 
-        //*********************************
-        var varDataSource =
-            new kendo.data.DataSource({
+    .action-group-left,
+    .action-group-right {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
 
-                pageSize: 10,
-                page: getParameterByName("page") || 1,
-                serverPaging: true,
-                serverSorting: true,
-                serverFiltering: true,
-                serverAggregates: false,
+    /* ==== استایل عمومی دکمه‌ها ==== */
+    .action-buttons a.btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        text-decoration: none;
+        transition: 0.2s;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
 
-                transport: {
-                    read: {
-                        type: "POST",
-                        dataType: "json",
-                        url: "/Administrator/User/GetUsers",
-                    },
-                },
+        .action-buttons a.btn img {
+            width: 16px;
+            height: 16px;
+        }
 
-                schema: {
-                    data: function (e) {
-                        return (e.Data);
-                    },
-                    total: function (e) {
-                        return (e.Total);
-                    },
-                },
-            });
+    /* ==== دکمه ایجاد کاربر جدید ==== */
+    .btn-create {
+        background-color: #17a2b8;
+        color: #fff;
+    }
 
-        //*********************************
-        //*********************************
-        //*********************************
+        .btn-create:hover {
+            background-color: #138496;
+        }
 
-        $("div#grid").kendoGrid({
-            sortable: {
-                mode: "multiple",
-                allowUnsort: true,
-            },
+    /* ==== دکمه اکسل ==== */
+    .btn-excel {
+        background-color: #28a745;
+        color: #fff;
+    }
 
-            pageable: {
-                info: true,
-                input: true,
-                refresh: true,
-                numeric: true,
-                buttonCount: 5,
-                previousNext: true,
-                pageSize: [5, 10, 25, 50, 100],
-                messages: {
-                    morePages: "صفحات بیشتر",
-                    page: "شماره صفحه",
-                }
-            },
+        .btn-excel:hover {
+            background-color: #218838;
+        }
 
-            groupable: true,
-            filterable: true,
-            scrollable: false,
-            reorderable: true,
+    /* ==== دکمه بازگشت ==== */
+    .btn-back {
+        background-color: #007bff;
+        color: #fff;
+    }
 
-            columnMenu: {
-                columns: true,
-                filterable: true,
-                messages: {
-                    lock: "قفل شده",
-                    unlock: "قفل نشده",
-                }
-            },
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
 
-            navigatable: true,
-            selectable: "multiple row",
+    /* ==== کانتینر جدول با اسکرول افقی ==== */
+    .table-responsive-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
 
-            dataSource: varDataSource,
+    /* ==== جدول ==== */
+    table.dataTable {
+        width: max-content;
+        min-width: 100%;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        table-layout: auto;
+        box-sizing: border-box;
+    }
 
-            dataBinding: function () {
-                rowNumber =
-					(this.dataSource.page() - 1) * this.dataSource.pageSize();
-            },
+        table.dataTable thead th {
+            background: linear-gradient(135deg, #007bff, #00a8ff);
+            color: #fff;
+            text-align: center;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
 
-            // **************************************************
+        table.dataTable tbody td {
+            text-align: center;
+            font-size: 13px;
+            padding: 9px 6px;
+            border-bottom: 1px solid #f0f0f0;
+            box-sizing: border-box;
+            word-break: break-word;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-            columns:
-                [
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        width: "20px",
-                        titel: "#",
-                        template: "#= ++rowNumber #",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        width: "120px",
-                        title: "",
-                        template: function (dataItem) {
+        table.dataTable tbody tr:hover {
+            background-color: #f1f8ff;
+            transition: background-color 0.2s ease-in-out;
+        }
 
-                            var strTemplate = "";
+    /* ==== ستون عملیات ==== */
+    td.action-icons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 0;
+    }
 
-                            strTemplate +=
-                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/User/Detail/'
-                                + dataItem.Id + '"><img src="../../../Content/Icon/display.png"/></a> | ';
+        td.action-icons img {
+            width: 28px;
+            height: 28px;
+            padding: 3px;
+            border-radius: 5px;
+            background-color: #f8f8f8;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
 
-                            strTemplate +=
-                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/User/Edit/'
-                                + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a> | ';
-
-                            strTemplate +=
-                              '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ExportToExcel)" href="/Administrator/User/DownloadUserExcelGetByid/'
-                                + dataItem.Id + '"><img src="../../../Content/Images/Exel.png" width="20px" height="20px"/></a> | ';
-
-                            strTemplate +=
-                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Rechargewallet)" href="/Administrator/User/Paymentwallet/'
-                                + dataItem.Id + '?page=' + varDataSource.page() +
-                                '"><img src="../../../Content/Icon/charge.png" width="20px" height="20px"/></a> | ';
-
-
-                            strTemplate +=
-                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ChangePassword)" href="/Administrator/User/ChangePassword/'
-                                + dataItem.Id + '"><img src="../../../Content/Icon/Password.png"/></a> ';
-
-                            return (strTemplate);
-                        },
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.UserName",
-                        field: "@Resources.Model.Strings.UserKeys.UserName",
-                        width: "140px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.FullName",
-                        field: "@Resources.Model.Strings.UserKeys.FullName",
-                        width: "240px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.BuyerMobile",
-                        field: "@Resources.Model.Strings.UserKeys.BuyerMobile",
-                        width: "240px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.Role",
-                        field: "@Resources.Model.Strings.UserKeys.Role",
-                        width: "160px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.Province",
-                        field: "@Resources.Model.Strings.UserKeys.Province",
-                        width: "130px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.City",
-                        field: "@Resources.Model.Strings.UserKeys.City",
-                        width: "150px",
-                    },
-                      {
-                        hidden: false,
-                        locked: true,
-                          lockable: true,
-                          title: "@Resources.Model.User.creditAmount",
-                          field: "@Resources.Model.Strings.UserKeys.creditAmount",
-                        width: "150px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.InitialCredit",
-                        field: "@Resources.Model.Strings.UserKeys.InitialCredit",
-                        width: "150px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.IsMarketer",
-                        field: "@Resources.Model.Strings.UserKeys.IsMarketer",
-                        width: "150px",
-                        template: function (dataItem) {
-                            return `<input type="checkbox" ${dataItem.IsMarketer ? "checked" : ""} disabled />`;
-                        }
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.MarketingCode",
-                        field: "@Resources.Model.Strings.UserKeys.MarketingCode",
-                        width: "150px",
-                    },{
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.ReferredByCode",
-                        field: "@Resources.Model.Strings.UserKeys.ReferredByCode",
-                        width: "150px",
-                    },
-                    {
-                        hidden: false,
-                        width: "90px",
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.IsActive",
-                        field: "@Resources.Model.Strings.UserKeys.IsActive",
-                        template: '<input type="checkbox" #= @Resources.Model.Strings.UserKeys.IsActive ? checked="checked" : "" # disabled="disabled" ></input>'
-                    },
-                    {
-                        hidden: false,
-                        width: "90px",
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.IsActive",
-                        field: "@Resources.Model.Strings.UserKeys.IsActive",
-                        template: '<input type="checkbox" #= @Resources.Model.Strings.UserKeys.IsActive ? checked="checked" : "" # disabled="disabled" ></input>'
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.User.Address",
-                        field: "@Resources.Model.Strings.UserKeys.Address",
-                        width: "240px",
-                    },
-                    @*{
-                        hidden: false,
-                        locked: true,
-                        width: "140px",
-                        lockable: true,
-                        title: "@Resources.Model.User.IsApprovallicense",
-                        field: "@Resources.Model.Strings.UserKeys.IsApprovallicense",
-                        template: '<input type="checkbox" #= @Resources.Model.Strings.UserKeys.IsApprovallicense ? checked="checked" : "" # disabled="disabled" ></input>'
-                    },*@
-                ]
-        });
-
-        // **************************************************
-        // **************************************************
-
-        $("button#btnSearch").click(function () {
-
-            var varDataSource =
-                new kendo.data.DataSource({
-
-                    pageSize: 10,
-
-                    serverPaging: true,
-                    serverSorting: true,
-                    serverFiltering: true,
-                    serverAggregates: false,
-
-                    transport: {
-                        read: {
-                            type: "POST",
-                            dataType: "json",
-                            url: "/Administrator/User/Search",
-                            data: {
-                                Province: function () {
-                                    return ($("select#Province").val());
-                                },
-                                //City: function () {
-                                //    return ($("select#City").val());
-                                //},
-                                Role: function () {
-                                    return ($("select#Role").val());
-                                },
-                                FullName: function () {
-                                    return ($("input#FullName").val());
-                                },
-                                UserName: function () {
-                                    return ($("input#UserName").val());
-                                },
-                            },
-                        },
-                    },
-
-                    requestStart: function (e) {
-                        $("button#btnSearch").hide();
-                    },
-
-                    requestEnd: function (e) {
-                        $("button#btnSearch").show();
-                    },
-
-                    schema: {
-                        data: function (e) {
-                            return (e.Data);
-                        },
-                        total: function (e) {
-                            return (e.Total);
-                        },
-                    },
-                });
-
-            // **************************************************
-            // **************************************************
-
-            var varGrid =
-                $('div#grid').data("kendoGrid");
-
-            varGrid.setDataSource(varDataSource);
-        });
-    })
-
-</script>
-<link href="../../../../Content/css/UserIndexStyle.css" rel="stylesheet" />
-<section id="Requests" class="form-horizontal" role="form">
-    <div class="panel panel-info">
-        <div class="panel-heading" id="SearchPanelHeader">
-            جستجو ( کلیک کنید...!)
-        </div>
-        <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
-            <div class="col col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.DropDownListFor(model => model.Province, null,
-                            Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
-                    </div>
-                </div>
-                @*<div class="form-group">
-                        @Html.LabelFor(model => model.City, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-6" id="DivCityId">
-                            @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.City)
-                        </div>
-                    </div>*@
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Role, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.DropDownListFor(model => model.Role, null,
-                            Resources.General.SelectAnItem, new { @class = "chzn-select form-control" })
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FullName, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.UserName, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-3 col-md-8">
-                    <button type="button" id="btnSearch" name="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br />
-    <div class="panel panel-primary" id ="panel">
-        <div class="panel-heading">
-            @strTitle
-        </div>
-        <div class="col-md-12 panel-body">
-            <div class="col-md-12">
-                <div class="row">
-                    <div style="float : right;width:27%;">
-                        <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;width:125px;"
-                           href="/Administrator/User/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
-                    </div>
-                    <div style="float : right;width:24%;">
-                        <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.ExportToExcel)" style="float:right;width:125px;"
-                           href="/Administrator/User/DownloadUserExcel/"><span style="float:right;">@Resources.Action.ExportToExcel</span><img style="float:left;width:20px;height:20px;" src='../../../Content/Images/Exel.png' /></a>
-                    </div>
-                    <div style="float:left;width:37%;">
-                        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float: left; width: 150px;"
-                           href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float: left; " src='../../../Content/Icon/Back.png' /></a>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div style="" data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel-footer">
-            <a class="btn btn-primary col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Create)" style="float:right;"
-               href="/Administrator/User/Create/"><span style="float:right;">@strCreate</span><img style="float:left;" src='../../../Content/Icon/Create.png' /></a>
-
-            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" style="float:left;"
-               href="/HomeMain/Main/"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
-
-            <br />
-            <br />
-        </div>
-    </div>
-</section>
-<script type="text/javascript">
-    function onChange() {
-        $.ajax({
-            url: '/Administrator/Request/GetCities',
-            type: 'post',
-            data: { provinceId: $("#Province").val() },
-            success: function (data) {
-
-                $("#DivCityId").empty();
-
-                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-
-                $.each(data, function (i, city) {
-                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
-                    select.append(option);
-                })
-
-                $("#DivCityId").append(select);
+            td.action-icons img:hover {
+                transform: scale(1.3);
+                background-color: #007bff;
+                box-shadow: 0 0 6px rgba(0,123,255,0.5);
+                cursor: pointer;
             }
-        });
+
+    /* ==== ستون مبلغ ==== */
+    td.credit-column, th.credit-column {
+        white-space: nowrap;
+        max-width: 120px;
+        text-align: center;
+        padding: 6px 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
+
+    /* ==== دکمه‌های معمول جدول ==== */
+    .btn {
+        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: 13px;
+        transition: 0.2s;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        color: #fff;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    /* ==== نسخه موبایل ==== */
+    @@media (max-width: 768px) {
+        .action-buttons {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .action-group-left,
+        .action-group-right {
+            justify-content: center;
+            width: 100%;
+        }
+
+            .action-group-left a.btn,
+            .action-group-right a.btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+        table.dataTable {
+            border: none;
+            box-shadow: none;
+            width: 100%;
+            background: transparent;
+        }
+
+            table.dataTable thead {
+                display: none;
+            }
+
+            table.dataTable tbody tr {
+                display: block;
+                background: #ffffff;
+                border-radius: 12px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+                margin-bottom: 15px;
+                overflow: hidden;
+                padding: 12px 16px;
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            table.dataTable tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: none;
+                font-size: 14px;
+                padding: 6px 0;
+                flex-wrap: wrap;
+                box-sizing: border-box;
+                max-width: 100%;
+            }
+
+                table.dataTable tbody td::before {
+                    content: attr(data-label);
+                    font-weight: bold;
+                    color: #007bff;
+                    flex-basis: 45%;
+                    text-align: right;
+                    padding-right: 5px;
+                    box-sizing: border-box;
+                }
+
+                table.dataTable tbody td.action-icons {
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    gap: 6px;
+                    margin-top: 6px;
+                    padding-top: 6px;
+                }
+
+            table.dataTable td.action-icons img {
+                width: 24px;
+                height: 24px;
+            }
+
+            table.dataTable tbody td.credit-column {
+                max-width: 100%;
+            }
+    }
+</style>
+
+
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<div class="page-container">
+    <h2 class="page-title">فهرست کاربران</h2>
+
+    <div class="action-buttons">
+        <div class="action-group-left">
+            <a class="btn btn-success btn-create" href="/Administrator/User/Create/" title="ایجاد کاربر جدید">
+                <img src='~/Content/Icon/Create.png' alt="Create" />
+                <span>ایجاد کاربر جدید</span>
+            </a>
+            <a class="btn btn-excel" href="/Administrator/User/DownloadUserExcel/" title="اکسل">
+                <img src='../../../Content/Images/Exel.png' alt="Excel" />
+                <span>اکسل</span>
+            </a>
+        </div>
+        <div class="action-group-right">
+            <a class="btn btn-back" href="/HomeMain/Main/" title="بازگشت">
+                <img src='../../../Content/Icon/Back.png' alt="Back" />
+                <span>بازگشت</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="table-responsive-wrapper">
+        <table id="userTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>عملیات</th>
+                    <th>نام کاربری</th>
+                    <th>نام و نام خانوادگی</th>
+                    <th>شماره تماس</th>
+                    <th>نقش</th>
+                    <th>استان</th>
+                    <th>شهر</th>
+                    <th>اعتبار</th>
+                    <th>اعتبار اولیه</th>
+                    <th>کد بازاریابی</th>
+                    <th>کد معرف</th>
+                    <th>تخفیف</th>
+                    <th>فعال</th>
+                    <th>آدرس</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function () {
+
+    const pageLength = 50;
+    const startRecord = (@currentPage - 1) * pageLength;
+
+    var table = $('#userTable').DataTable({
+        ajax: {
+            url: '/Administrator/User/GetUsers',
+            type: 'POST'
+        },
+        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fa.json' },
+        responsive: true,
+        pageLength: pageLength,
+        displayStart: startRecord,
+        columns: [
+            { data: null },
+            {
+                data: null,
+                className: "action-icons",
+                render: function (row, type, data, meta) {
+                    const currentPage = Math.floor(meta.row / meta.settings._iDisplayLength) + 1;
+                    return `
+                        <a href="/Administrator/User/Detail/${row.Id}" title="نمایش"><img src="../../../Content/Icon/display.png"/></a>
+                        <a href="/Administrator/User/Edit/${row.Id}" title="ویرایش"><img src="../../../Content/Icon/edit.png"/></a>
+                        <a href="/Administrator/User/DownloadUserExcelGetByid/${row.Id}" title="اکسل"><img src="../../../Content/Images/Exel.png"/></a>
+                        <a href="/Administrator/User/Paymentwallet/${row.Id}?page=${currentPage}" title="شارژ"><img src="../../../Content/Icon/charge.png"/></a>
+                        <a href="/Administrator/User/ChangePassword/${row.Id}" title="رمز"><img src="../../../Content/Icon/Password.png"/></a>
+                    `;
+                }
+            },
+            { data: "UserName" },
+            { data: "FullName" },
+            { data: "BuyerMobile" },
+            { data: "Role" },
+            { data: "Province" },
+            { data: "City" },
+            { data: "creditAmount", render: d => d ? parseInt(d).toLocaleString('fa-IR') : "0" },
+            { data: "InitialCredit", render: d => d ? parseInt(d).toLocaleString('fa-IR') : "0" },
+            { data: "MarketingCode" },
+            { data: "ReferredByCode" },
+            { data: "Discount" },
+            { data: "IsActive", render: d => `<input type="checkbox" ${d ? 'checked' : ''} disabled />` },
+            { data: "Address" }
+        ],
+        columnDefs: [{ orderable: false, targets: [0,1] }],
+        order: [[3, 'asc']],
+        rowCallback: function(row, data, index) {
+            const info = table.page.info();
+            $('td:eq(0)', row).html(info.start + index + 1);
+        }
+    });
+
+    // هنگام تغییر صفحه، URL بروزرسانی شود
+    table.on('page.dt', function () {
+        const info = table.page.info();
+        const newPage = info.page + 1;
+        const url = new URL(window.location);
+        url.searchParams.set('page', newPage);
+        window.history.replaceState({}, '', url);
+    });
+
+});
 </script>
+
+
+
 

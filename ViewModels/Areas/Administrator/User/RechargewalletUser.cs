@@ -1,4 +1,6 @@
-﻿namespace ViewModels.Areas.Administrator.User
+﻿using System;
+
+namespace ViewModels.Areas.Administrator.User
 {
     public class RechargewalletUser
     {
@@ -17,7 +19,7 @@
         (ResourceType = typeof(Resources.ViewModel.RechargewalletUser),
             Name = Resources.ViewModel.Strings.RechargewalletUserKeys.ChargeAmount)]
         #endregion
-        public int ChargeAmount { get; set; }
+        public long ChargeAmount { get; set; }
         #region Description
         [System.ComponentModel.DataAnnotations.Display
         (ResourceType = typeof(Resources.ViewModel.RechargewalletUser),
@@ -26,5 +28,7 @@
         public string Description { get; set; }
 
         public int PageNumber { get; set; }
+        public Guid TransactionId { get; set; }
+        
     }
 }

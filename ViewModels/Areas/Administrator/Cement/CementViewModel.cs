@@ -151,6 +151,11 @@ namespace ViewModels.Areas.Administrator.Cement
              Name = Resources.Model.Strings.CementKeys.Address)]
         #endregion
         public string Address { get; set; }
+        #region Description
+        [System.ComponentModel.DataAnnotations.Display
+             (ResourceType = typeof(Resources.Model.Cement),
+             Name = Resources.Model.Strings.CementKeys.Description)]
+        #endregion
         public string Description { get; set; }
 
         #region FromAmount

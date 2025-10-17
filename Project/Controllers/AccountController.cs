@@ -137,15 +137,34 @@ namespace OPS.Controllers
 
             System.Web.Security.FormsAuthentication.SetAuthCookie(user.UserName, true);
 
+            if (user.RoleId == new Guid("805F9B24-C5E0-4227-9EFA-7B5EB5646394"))
+            {
+                // اگر MarketingCode الان string است
+                string marketingCodeString = user.MarketingCode;
+
+                // تبدیل به int یا long
+                if (int.TryParse(marketingCodeString, out int marketingCodeInt))
+                {
+                    Session["MarketingCode"] = marketingCodeInt;
+                }
+                else
+                {
+                    // مدیریت خطا در صورت نامعتبر بودن مقدار
+                    Session["MarketingCode"] = null;
+                    // یا log/exception بسته به نیاز
+                }
+
+            }
+
             if (!user.Authenticate)
             {
                 return (RedirectToAction(MVC.HomeMain.Authenticate()));
             }
-            if (user.RoleId == new Guid("fc397d63-e779-443d-a53b-18900d2f9a10"))
+            if (user.RoleId == new Guid("FC397D63-E779-443D-A53B-18900D2F9A15") || user.RoleId == new Guid("805F9B24-C5E0-4227-9EFA-7B5EB5646394") )
             {
-                return (RedirectToAction(MVC.HomeMain.Index()));
+                return (RedirectToAction(MVC.HomeMain.Main()));
             }
-            return (RedirectToAction(MVC.HomeMain.Main()));
+            return (RedirectToAction(MVC.HomeMain.Index()));
         }
 
         [System.Web.Mvc.HttpGet]

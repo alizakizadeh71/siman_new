@@ -7,9 +7,12 @@ using OPS.ir.shaparak.sadad;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.ServiceModel;
 using System.Web.Mvc;
+using Models;
 using Utilities.PersianDate;
 using ViewModels.Areas.Administrator.ZarinPal;
 
@@ -56,6 +59,36 @@ namespace OPS.Controllers
                         user.creditAmount = Convert.ToInt64(user.creditAmount - oFactorCement.AmountPaid);
                         UnitOfWork.UserRepository.Update(user);
                         oFactorCement.FinalApprove = true;
+
+                        if (user.ReferredByCode != null)
+                        {
+                            var Marketer = UnitOfWork.UserRepository.GetUserByMarketingCode(user.ReferredByCode);
+                            if (Marketer != null)
+                            {
+                                #region region Create Marketer Transaction
+                                var commission = (int)(oFactorCement.AmountPaid * 0.007);
+
+                                var transaction = new MarketerTransactions
+                                {
+                                    Id = Guid.NewGuid(),
+                                    MarketingCode = int.Parse(Marketer.MarketingCode),
+                                    ReferredCode = int.Parse(user.ReferredByCode),
+                                    ProductNameId = oFactorCement.ProductNameId,
+                                    ProductTypeId = oFactorCement.ProductTypeId,
+                                    PackageType = oFactorCement.PackageType,
+                                    FactoryName = oFactorCement.FactoryName,
+                                    Tonnagedouble = oFactorCement.Tonnagedouble,
+                                    CommissionAmount = commission,
+                                    InsertDateTime = DateTime.Now
+                                };
+
+                                UnitOfWork.MarketerTransactionsRepository.Insertdata(transaction);
+                                #endregion
+
+
+                                Marketer.creditAmount += commission;
+                            }
+                        }
                         InventoryTonnage.Inventorytonnage = InventoryTonnage.Inventorytonnage - Tonnage;
                         UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
                         UnitOfWork.FactorCementRepository.Update(oFactorCement);
@@ -240,12 +273,33 @@ namespace OPS.Controllers
                         UnitOfWork.Save();
 
                         var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
-                        if (user.IsMarketer != true && user.ReferredByCode != null)
+                        if (user.ReferredByCode != null)
                         {
                             var Marketer = UnitOfWork.UserRepository.GetUserByMarketingCode(user.ReferredByCode);
                             if (Marketer != null)
                             {
-                                Marketer.creditAmount = (long)((oFactorCement.AmountPaid/10) * 0.005);
+                                #region region Create Marketer Transaction
+                                var commission = (int)(oFactorCement.AmountPaid * 0.007);
+
+                                var transaction = new MarketerTransactions
+                                {
+                                    Id = Guid.NewGuid(),
+                                    MarketingCode = int.Parse(Marketer.MarketingCode),
+                                    ReferredCode = int.Parse(user.ReferredByCode),
+                                    ProductNameId = oFactorCement.ProductNameId,
+                                    ProductTypeId = oFactorCement.ProductTypeId,
+                                    PackageType = oFactorCement.PackageType,
+                                    FactoryName = oFactorCement.FactoryName,
+                                    Tonnagedouble = oFactorCement.Tonnagedouble,
+                                    CommissionAmount = commission,
+                                    InsertDateTime = DateTime.Now
+                                };
+
+                                UnitOfWork.MarketerTransactionsRepository.Insertdata(transaction);
+                                #endregion
+
+
+                                Marketer.creditAmount += commission;
                             }
                         }
                         //string amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
@@ -554,6 +608,20 @@ namespace OPS.Controllers
         {
             try
             {
+                string connStr = ConfigurationManager.ConnectionStrings["DatabaseContext"].ConnectionString;
+
+                using (var testConnection = new SqlConnection(connStr))
+                {
+                    try
+                    {
+                        testConnection.Open();
+                    }
+                    catch (Exception dbEx)
+                    {
+                        Console.WriteLine($"خطا در اتصال به دیتابیس: {dbEx.Message}");
+                        return;
+                    }
+                }
                 var user = UnitOfWork.UserRepository.GetByPhoneNumebr(phoneNumber);
                 if (user != null && user.isSendSms == true)
                 {
@@ -651,5 +719,72 @@ namespace OPS.Controllers
                 return false;
             }
         }
+
+        public bool SendMarketingMessage(string phoneNumber, string messageText)
+        {
+            try
+            {
+                const string username = "989926932699";
+                const string password = "#57PD";
+                const string linksite = "https://masalehpakhsh.com/HomeMain/GetLivePrice";
+
+                string[] texts = { messageText , linksite };
+
+                var binding = new BasicHttpBinding
+                {
+                    Security = new BasicHttpSecurity
+                    {
+                        Mode = BasicHttpSecurityMode.Transport
+                    }
+                };
+
+                var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
+                var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
+
+                int bodyId = 367213; // مقدار واقعی bodyId
+                soapClient.SendByBaseNumber(username, password, texts, phoneNumber, bodyId);
+
+                Console.WriteLine($"پیامک به {phoneNumber} ارسال شد.");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"خطا در ارسال پیامک: {ex.Message}");
+                return false;
+            }
+        }
+
+
+
+        //public bool SendSMSPrice(string[] phoneNumbers)
+        //{
+
+        //    try
+        //    {
+        //        const string username = "989926932699";
+        //        const string password = "#57PD";
+        //        const string from = "50002710032699";
+        //        const string text = "تست";
+        //        const bool isFlash = false;
+        //        var binding = new BasicHttpBinding
+        //        {
+        //            Security = new BasicHttpSecurity
+        //            {
+        //                Mode = BasicHttpSecurityMode.Transport
+        //            }
+        //        };
+        //        var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
+        //        var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
+        //        var result = soapClient.SendSimpleSMS(username, password, phoneNumbers, from, text, isFlash);
+
+        //        // بازگرداندن نتیجه به صورت جاوا اسکریپت
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // بازگرداندن خطا به صورت جاوا اسکریپت
+        //        return false;
+        //    }
+        //}
     }
 }

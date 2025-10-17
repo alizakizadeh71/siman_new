@@ -185,9 +185,9 @@
     <Content Include="Areas\Administrator\Views\User\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\web.config" />
     <Content Include="Areas\Administrator\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\User\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\User\Views\web.config" />
-    <Content Include="Areas\User\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Markter\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Markter\Views\web.config" />
+    <Content Include="Areas\Markter\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -231,6 +231,7 @@
     <Content Include="Content\Icon\Request.png" />
     <Content Include="Content\Icon\Room.png" />
     <Content Include="Content\Icon\Setting.png" />
+    <Content Include="Content\Icon\sms.png" />
     <Content Include="Content\Icon\SubSystem.png" />
     <Content Include="Content\Icon\OfficeService.png" />
     <Content Include="Content\Icon\tick16.png" />
@@ -247,6 +248,7 @@
     <Content Include="Content\Images\Baner1a.jpg" />
     <Content Include="Content\Images\Banerr.jpg" />
     <Content Include="Content\Images\Banerr2.jpg" />
+    <Content Include="Content\Images\build.png" />
     <Content Include="Content\Images\Cement.png" />
     <Content Include="Content\Images\Contact-us.jpg" />
     <Content Include="Content\Images\Contact-us1.jpg" />
@@ -486,6 +488,7 @@
     <Content Include="Content\Kendo\lastVersion\Uniform\slider-v.gif" />
     <Content Include="Content\Kendo\lastVersion\Uniform\sprite.png" />
     <Content Include="Content\Kendo\lastVersion\Uniform\sprite_2x.png" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Files\Authenticate.jpg" />
@@ -592,6 +595,9 @@
     <Content Include="Areas\Administrator\Views\Request\PrintNewFactorWallet.cshtml" />
     <Content Include="Areas\Administrator\Views\TotalCompanyInventory\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\User\Paymentwallet.cshtml" />
+    <Content Include="Areas\Markter\Views\MarketingTransaction\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Sms\Send.cshtml" />
+    <Content Include="Areas\Administrator\Views\Sms\_UsersCheckboxList.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Scripts\num2persian.min.js" />
@@ -1666,6 +1672,9 @@
     <Compile Include="Administrator.SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Administrator.SmsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Administrator.SubHeadLineController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1741,6 +1750,7 @@
     <Compile Include="Areas\Administrator\Controllers\ServiceTariffController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Administrator\Controllers\SmsController.cs" />
     <Compile Include="Areas\Administrator\Controllers\SubHeadlineController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1753,7 +1763,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Administrator\Controllers\VillageController.cs" />
-    <Compile Include="Areas\User\UserAreaRegistration.cs">
+    <Compile Include="Areas\Markter\Controllers\MarketingTransactionController.cs" />
+    <Compile Include="Areas\Markter\MarkterAreaRegistration.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\AccountController.cs">
@@ -1816,6 +1827,12 @@
     <Compile Include="Infrastructure\WebServiceClass.cs" />
     <Compile Include="Infrastructure\GovermentIdSaleServiceSW2.cs" />
     <Compile Include="Infrastructure\WebServiceSetting_Sadad.cs" />
+    <Compile Include="Markter.MarketingTransactionController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Markter.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ParsianPGWSalePaymentController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1913,9 +1930,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="User.SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="WalletController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1924,6 +1938,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="WebApiConfig.cs" />
     <Compile Include="ZarinpalController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1952,7 +1967,6 @@
     <Folder Include="App_Data\Picture\" />
     <Folder Include="App_Data\UserAvatars\" />
     <Folder Include="App_Data\UserResumes\" />
-    <Folder Include="Areas\User\Controllers\" />
     <Folder Include="Files\Old\" />
     <Folder Include="Files\PersonImage\" />
     <Folder Include="Views\Wallet\" />
@@ -2079,6 +2093,12 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="QueryBuilder.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLLs\QueryBuilder.Common.dll</HintPath>
@@ -2184,6 +2204,7 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>

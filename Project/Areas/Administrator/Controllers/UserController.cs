@@ -5,11 +5,13 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Models;
 using OPS.Controllers;
 using Utilities.PersianDate;
 using ViewModels.Areas.Administrator.User;
+using System.Transactions;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -17,7 +19,7 @@ namespace OPS.Areas.Administrator.Controllers
     {
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(int? page)
         {
             var varRoles
                 = UnitOfWork.RoleRepository.Get()
@@ -32,6 +34,7 @@ namespace OPS.Areas.Administrator.Controllers
             ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
             ViewModels.Areas.Administrator.User.SearchViewModel searchViewModel = new ViewModels.Areas.Administrator.User.SearchViewModel();
             ViewBag.PageMessages = null;
+            ViewBag.CurrentPage = page ?? 1;
             return View(searchViewModel);
         }
 
@@ -95,8 +98,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             var ViewModelsUser
                  = varUser.OrderByDescending(current => current.Role.Code)
-                 .OrderBy(current => current.Province != null ? current.Province.Name : current.UserName)
-                 .ThenBy(current => current.UserName)
+                 .OrderBy(user => user.FullName)
                  .ToList()
                  .Select(current =>
                      new ViewModels.Areas.Administrator.User.IndexViewModel()
@@ -108,17 +110,18 @@ namespace OPS.Areas.Administrator.Controllers
                          Province = current.Province != null ? current.Province.Name : "[نا مشخص]",
                          City = current.City != null ? current.City.Name : "[نا مشخص]",
                          IsActive = current.IsActived,
-                         Address = current.Address,
+                         creditAmount = current.creditAmount.ToString("N0"),
                          BuyerMobile = current.BuyerMobile,
+                         Address = current.Address,
                          InitialCredit = current.InitialCredit,
                          isSendSmS = current.isSendSms,
+                         MarketingCode = current.MarketingCode,
+                         ReferredByCode = current.ReferredByCode,
                          //IsApprovallicense = current.IsApprovallicense,
                          Authenticate = current.Authenticate,
-                         IsMarketer = current.IsMarketer,
-                         MarketingCode = current.MarketingCode,
-                         ReferredByCode = current.ReferredByCode
                      })
                      .ToList()
+                     .OrderBy(u => u.FullName)
                      .Select(current =>
                      new ViewModels.Areas.Administrator.User.IndexViewModel()
                      {
@@ -129,8 +132,11 @@ namespace OPS.Areas.Administrator.Controllers
                          Province = current.Province,
                          City = current.City,
                          IsActive = current.IsActive,
+                         creditAmount = current.creditAmount,
                          BuyerMobile = current.BuyerMobile,
                          Address = current.Address,
+                         InitialCredit = current.InitialCredit,
+                         isSendSmS = current.isSendSmS,
                          IsMarketer = current.IsMarketer,
                          MarketingCode = current.MarketingCode,
                          ReferredByCode = current.ReferredByCode,
@@ -152,85 +158,45 @@ namespace OPS.Areas.Administrator.Controllers
         {
             try
             {
-                var varUser =
-                    UnitOfWork.UserRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User)
-                    ;
+                // گرفتن همه‌ی کاربران
+                var varUser = UnitOfWork.UserRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User);
 
-                var varRoles
-                    = UnitOfWork.RoleRepository.Get()
-                    .Where(current => current.Code < Infrastructure.Sessions.AuthenticatedUser.RoleCode)
-                    .OrderBy(current => current.Name).ToList();
-                ViewData["Role"] = new System.Web.Mvc.SelectList(varRoles, "Id", "Name", null);
+                var data = varUser
+                    .OrderBy(u => u.FullName)
+                    .Select(u => new
+                    {
+                        Id = u.Id,
+                        FullName = u.FullName,
+                        UserName = u.UserName,
+                        Role = u.Role.Name,
+                        Province = u.Province != null ? u.Province.Name : "[نا مشخص]",
+                        City = u.City != null ? u.City.Name : "[نا مشخص]",
+                        IsActive = u.IsActived,
+                        creditAmount = u.creditAmount,
+                        BuyerMobile = u.BuyerMobile,
+                        Address = u.Address,
+                        InitialCredit = u.InitialCredit,
+                        MarketingCode = u.MarketingCode,
+                        ReferredByCode = u.ReferredByCode,
+                        Discount = u.Discount
+                    }).ToList();
 
-                var varProvinces = UnitOfWork.ProvinceRepository.Get(Infrastructure.Sessions.AuthenticatedUser.User).ToList();
-                ViewData["Province"] = new System.Web.Mvc.SelectList(varProvinces, "Id", "Name", null);
+                var draw = Request.Form["draw"] ?? "1";
 
-                var varCities = UnitOfWork.CityRepository.GetByProvinceId(new Guid()).ToList();
-                ViewData["City"] = new System.Web.Mvc.SelectList(varCities, "Id", "Name", null);
-
-                var ViewModelsUser
-                     = varUser.OrderByDescending(current => current.Role.Code)
-                     .OrderBy(current => current.Province != null ? current.Province.Name : current.UserName)
-                     //.ThenBy(current => current.City != null ? current.City.Name : current.UserName)
-                     .ThenBy(current => current.UserName)
-                     .ToList()
-                     .Select(current =>
-                         new ViewModels.Areas.Administrator.User.IndexViewModel()
-                         {
-                             Id = current.Id,
-                             FullName = current.FullName,
-                             UserName = current.UserName,
-                             Role = current.Role.Name,
-                             Province = current.Province != null ? current.Province.Name : "[نا مشخص]",
-                             City = current.City != null ? current.City.Name : "[نا مشخص]",
-                             IsActive = current.IsActived,
-                             creditAmount = current.creditAmount.ToString("N0"),
-                             BuyerMobile = current.BuyerMobile,
-                             Address = current.Address,
-                             InitialCredit = current.InitialCredit,
-                             isSendSmS = current.isSendSms,
-                             IsMarketer = current.IsMarketer,
-                             MarketingCode = current.MarketingCode,
-                             ReferredByCode = current.ReferredByCode,
-                             //IsApprovallicense = current.IsApprovallicense,
-                             Authenticate = current.Authenticate,
-                         })
-                         .ToList()
-                         .Select(current =>
-                         new ViewModels.Areas.Administrator.User.IndexViewModel()
-                         {
-                             Id = current.Id,
-                             FullName = current.FullName,
-                             UserName = current.UserName,
-                             Role = current.Role,
-                             Province = current.Province,
-                             City = current.City,
-                             IsActive = current.IsActive,
-                             creditAmount = current.creditAmount,
-                             BuyerMobile = current.BuyerMobile,
-                             Address = current.Address,
-                             InitialCredit = current.InitialCredit,
-                             isSendSmS = current.isSendSmS,
-                             IsMarketer = current.IsMarketer,
-                             MarketingCode = current.MarketingCode,
-                             ReferredByCode = current.ReferredByCode,
-                             //IsApprovallicense = current.IsApprovallicense,
-                             Authenticate = current.Authenticate,
-                         })
-                         .AsQueryable();
-
-                var test = varUser.Where(u => u.UserName == "amemo").ToList();
-                var varResult =
-                    Utilities.Kendo.HtmlHelpers
-                    .ParseGridData<ViewModels.Areas.Administrator.User.IndexViewModel>(ViewModelsUser);
-                ViewBag.PageMessages = null;
-                return (Json(varResult, System.Web.Mvc.JsonRequestBehavior.AllowGet));
+                return Json(new
+                {
+                    draw = int.Parse(draw),
+                    recordsTotal = data.Count,
+                    recordsFiltered = data.Count,
+                    data = data
+                }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                throw ex;
+                return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
 
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
@@ -388,12 +354,13 @@ namespace OPS.Areas.Administrator.Controllers
                     oUser.NationalCode = user.NationalCode;
                     oUser.creditAmount = user.creditAmount;
                     oUser.BirthDay = user.BirthDay;
+                    oUser.BuyerMobile = user.PhoneNumebr;
                     oUser.Authenticate = true;
-                    oUser.IsMarketer = user.IsMarketer;
                     oUser.MarketingCode = user.MarketingCode;
                     oUser.ReferredByCode = user.ReferredByCode;
                     oUser.InitialCredit = user.InitialCredit;
                     oUser.isSendSms = user.isSendSmS;
+                    oUser.IsMarketer = user.IsMarketer;
                     UnitOfWork.UserRepository.Insert(oUser);
                     UnitOfWork.Save();
 
@@ -498,9 +465,10 @@ namespace OPS.Areas.Administrator.Controllers
                     isSendSmS = current.isSendSms,
                     Image = current.Image,
                     MarketingCode = current.MarketingCode,
-                    IsMarketer = current.IsMarketer,
                     ReferredByCode = current.ReferredByCode,
-                    InitialCredit = current.InitialCredit
+                    InitialCredit = current.InitialCredit,
+                    Discount = current.Discount,
+                    IsMarketer = current.IsMarketer
                 })
                 .FirstOrDefault()
                 ;
@@ -622,16 +590,15 @@ namespace OPS.Areas.Administrator.Controllers
                     OlderAccount.creditAmount = user.creditAmount;
                     OlderAccount.InitialCredit = user.InitialCredit;
                     OlderAccount.isSendSms = user.isSendSmS;
-                    OlderAccount.IsMarketer = user.IsMarketer;
-                    if (user.IsMarketer == false)
+                    OlderAccount.Discount = user.Discount;
+                    if (user.Role != new Guid("805f9b24-c5e0-4227-9efa-7b5eb5646394"))
                     {
-                        OlderAccount.MarketingCode = "";
+                        OlderAccount.ReferredByCode = user.ReferredByCode;
                     }
                     else
                     {
                         OlderAccount.MarketingCode = user.MarketingCode;
                     }
-                    OlderAccount.ReferredByCode = user.ReferredByCode;
                     if (user.Authenticate == false)
                     {
                         OlderAccount.Authenticate = user.Authenticate;
@@ -1074,67 +1041,117 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
-        public virtual ActionResult Paymentwallet(System.Guid id , int? page)
+        public virtual ActionResult Paymentwallet(Guid id, int? page)
         {
             ViewBag.PageMessages = null;
-            RechargewalletUser model = new RechargewalletUser();
-            model.PhoneNumber = UnitOfWork.UserRepository.GetById(id).BuyerMobile;
-            model.PageNumber = page ?? 1;
+
+            // پیدا کردن کاربر
+            var user = UnitOfWork.UserRepository.GetById(id);
+            if (user == null)
+            {
+                ViewBag.PageMessages = "کاربر یافت نشد";
+                return RedirectToAction("Index", "User", new { area = "Administrator", page = page ?? 1 });
+            }
+
+            // ساخت مدل برای ارسال به View
+            RechargewalletUser model = new RechargewalletUser
+            {
+                PhoneNumber = user.BuyerMobile,
+                PageNumber = page ?? 1,
+                TransactionId = Guid.NewGuid() // شناسه یکتا برای جلوگیری از شارژ دوباره
+            };
+
             return View(model);
         }
+
+
         [System.Web.Mvc.HttpPost]
+        [ValidateAntiForgeryToken]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
         public virtual ActionResult Paymentwallet(RechargewalletUser rechargewalletUser)
         {
-
-            if (ModelState.IsValid)
+            int page = rechargewalletUser.PageNumber;
+            if (!ModelState.IsValid)
             {
-                try
+                ViewBag.PageMessages = "خطا دیتا - دیتا های وارد شده را دوباره بررسی کنید";
+                return View(rechargewalletUser);
+            }
+
+            try
+            {
+                walletFactor walletFactor = null;
+
+                using (var scope = new TransactionScope())
                 {
                     var user = UnitOfWork.UserRepository.GetByPhoneNumebr(rechargewalletUser.PhoneNumber);
-                    if (user != null)
+                    if (user == null)
                     {
-                        walletFactor OwalletFactor = new walletFactor()
-                        {
-                            Id = Guid.NewGuid(),
-                            UserId = user.Id,
-                            Chargeamount = rechargewalletUser.ChargeAmount,
-                            BuyerMobile = user.BuyerMobile,
-                            FinalApprove = true,
-                            Authority = "",
-                            InvoiceNumber = 0,
-                            Bankcode = 100,
-                            card_pan = "",
-                            ref_id = 0,
-                            AmountPaidDate = DateTime.Now,
-                            IsActived = true,
-                            IsVerified = true,
-                            IsDeleted = false,
-                            IsSystem = false,
-                            InsertDateTime = DateTime.Now,
-                            Description = rechargewalletUser.Description
-                        };
-                        UnitOfWork.walletFactorRepository.Insertdata(OwalletFactor);
-                        user.creditAmount += rechargewalletUser.ChargeAmount;
-                        UnitOfWork.UserRepository.Update(user);
-                        UnitOfWork.Save();
-                        //ارسال پیامک
-                        ZarinpalController pyment = new ZarinpalController();
-                        pyment.PaymentSMSWallet(user.BuyerMobile, OwalletFactor);
-                        ViewBag.PageMessages= "افزایش موجودی با موفقیت افزایش یافت";
-                        return RedirectToAction("Index", "User", new { area = "Administrator", page = rechargewalletUser.PageNumber });
+                        ViewBag.PageMessages = "کاربر یافت نشد";
+                        return View(rechargewalletUser);
                     }
+
+                    // بررسی تراکنش تکراری
+                    bool exists = UnitOfWork.walletFactorRepository
+                        .Get(w => w.TransactionId == rechargewalletUser.TransactionId)
+                        .Any();
+
+                    if (exists)
+                    {
+                        TempData["PageMessages"] = "این تراکنش قبلا ثبت شده است";
+                        return RedirectToAction("Index", "User", new { area = "Administrator", page = page });
+                    }
+
+                    // بررسی اینکه اگر مبلغ منفی بود، موجودی کافی باشه
+                    if (rechargewalletUser.ChargeAmount < 0 && user.creditAmount < Math.Abs(rechargewalletUser.ChargeAmount))
+                    {
+                        ViewBag.PageMessages = "موجودی کاربر کافی نیست";
+                        return View(rechargewalletUser);
+                    }
+
+                    // ایجاد فاکتور جدید
+                    walletFactor = new walletFactor
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = user.Id,
+                        Chargeamount = rechargewalletUser.ChargeAmount,
+                        BuyerMobile = user.BuyerMobile,
+                        FinalApprove = true,
+                        Authority = "",
+                        InvoiceNumber = 0,
+                        Bankcode = 100,
+                        card_pan = "",
+                        ref_id = 0,
+                        AmountPaidDate = DateTime.Now,
+                        IsActived = true,
+                        IsVerified = true,
+                        IsDeleted = false,
+                        IsSystem = false,
+                        InsertDateTime = DateTime.Now,
+                        Description = rechargewalletUser.Description,
+                        TransactionId = rechargewalletUser.TransactionId
+                    };
+
+                    UnitOfWork.walletFactorRepository.Insertdata(walletFactor);
+
+                    // افزایش یا کاهش موجودی بر اساس علامت مبلغ
+                    user.creditAmount += rechargewalletUser.ChargeAmount;
+                    UnitOfWork.UserRepository.Update(user);
+
+                    UnitOfWork.Save();
+                    scope.Complete();
                 }
-                catch (Exception e)
-                {
-                    ViewBag.PageMessages= "خطا دیتا - دیتا های وارد شده را دوباره بررسی نمایید";
-                    return View();
-                }
-                
+
+                TempData["PageMessages"] = "تراکنش با موفقیت انجام شد";
+                return RedirectToAction("Index", "User", new { area = "Administrator", page = page });
             }
-            ViewBag.PageMessages = "خطا دیتا - دیتا های وارد شده را دوباره بررسی نمایید";
-            return View();
+            catch (Exception ex)
+            {
+                Console.WriteLine($"خطا در Paymentwallet: {ex.Message}");
+                ViewBag.PageMessages = "خطا دیتا - دیتا های وارد شده را دوباره بررسی نمایید";
+                return View(rechargewalletUser);
+            }
         }
+
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
         public virtual ActionResult SendSMSdebtor()
@@ -1161,21 +1178,31 @@ namespace OPS.Areas.Administrator.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
-        public virtual JsonResult GenerateUniqueMarketingCode()
-        {
-            string code;
-            var rand = new Random();
-            do
-            {
-                int number = rand.Next(1, 10000); // عدد ۶ رقمی
-                code = number.ToString("D4");
-            }
-            while (UnitOfWork.UserRepository.IsMarketingCodeAvailable(code));
+        //[System.Web.Mvc.HttpGet]
+        //[Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
+        //public virtual ActionResult SendSMSPrice()
+        //{
+        //    try
+        //    {
+        //        var phoneNumebrs = UnitOfWork.UserRepository.Get()
+        //            .Where(u =>  u.BuyerMobile == "09926932699")
+        //            .Select(u => u.BuyerMobile)
+        //            .ToArray();
 
-            return Json(code, JsonRequestBehavior.AllowGet);
-        }
+        //        ZarinpalController pyment = new ZarinpalController();
+        //        var isSendSMS = pyment.SendSMSPrice(phoneNumebrs);
+        //        if (isSendSMS == true)
+        //        {
+        //            ViewBag.PageMessages += "حساب درخواستی شما با موفقیت ثبت گردید  ";
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
+        //        throw;
+        //    }
+        //    return RedirectToAction("Index");
+        //}
     }
 
 }

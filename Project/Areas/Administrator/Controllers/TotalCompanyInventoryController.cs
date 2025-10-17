@@ -40,8 +40,7 @@ namespace OPS.Areas.Administrator.Controllers
 
             var totalBalance = UnitOfWork.UserRepository.Get()
                 .Where(u => u.IsActived && !u.IsDeleted)
-                .Sum(u => Math.Abs((long)u.InitialCredit - (long)u.creditAmount));
-
+                .Sum(u => (long)u.InitialCredit - (long)u.creditAmount);
 
             var totalValue = (from i in UnitOfWork.InventoryamountRepository.Get()
                               join f in UnitOfWork.FinancialManagementRepository.Get()

@@ -70,9 +70,10 @@
         public string IdentityCertificateSerial { get; set; }
         public int AmountOfTonnagePurchased { get; set; }
         public bool isSendSms { get; set; }
-        public bool IsMarketer { get; set; }
         public string MarketingCode { get; set; }
         public string ReferredByCode { get; set; }
+        public float? Discount { get; set; }
+        public bool IsMarketer { get; set; } = false;
 
         public virtual System.Collections.Generic.IList<Request> Requests { get; set; }
         public virtual System.Collections.Generic.IList<HeadOfFactor> HeadOfFactors { get; set; }

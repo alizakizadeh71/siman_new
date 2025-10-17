@@ -26,8 +26,8 @@ public static class MVC
 {
     static readonly AdministratorClass s_Administrator = new AdministratorClass();
     public static AdministratorClass Administrator { get { return s_Administrator; } }
-    static readonly UserClass s_User = new UserClass();
-    public static UserClass User { get { return s_User; } }
+    static readonly MarkterClass s_Markter = new MarkterClass();
+    public static MarkterClass Markter { get { return s_Markter; } }
     public static OPS.Controllers.AccountController Account = new OPS.Controllers.T4MVC_AccountController();
     public static OPS.Controllers.ErrorController Error = new OPS.Controllers.T4MVC_ErrorController();
     public static OPS.Controllers.HomeMainController HomeMain = new OPS.Controllers.T4MVC_HomeMainController();
@@ -68,6 +68,7 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.ReportBuilderController ReportBuilder = new OPS.Areas.Administrator.Controllers.T4MVC_ReportBuilderController();
         public OPS.Areas.Administrator.Controllers.RequestController Request = new OPS.Areas.Administrator.Controllers.T4MVC_RequestController();
         public OPS.Areas.Administrator.Controllers.ServiceTariffController ServiceTariff = new OPS.Areas.Administrator.Controllers.T4MVC_ServiceTariffController();
+        public OPS.Areas.Administrator.Controllers.SmsController Sms = new OPS.Areas.Administrator.Controllers.T4MVC_SmsController();
         public OPS.Areas.Administrator.Controllers.SubHeadLineController SubHeadLine = new OPS.Areas.Administrator.Controllers.T4MVC_SubHeadLineController();
         public OPS.Areas.Administrator.Controllers.SubSystemController SubSystem = new OPS.Areas.Administrator.Controllers.T4MVC_SubSystemController();
         public OPS.Areas.Administrator.Controllers.TonnagesController Tonnages = new OPS.Areas.Administrator.Controllers.T4MVC_TonnagesController();
@@ -77,10 +78,11 @@ namespace T4MVC
         public T4MVC.Administrator.SharedController Shared = new T4MVC.Administrator.SharedController();
     }
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class UserClass
+    public class MarkterClass
     {
-        public readonly string Name = "User";
-        public T4MVC.User.SharedController Shared = new T4MVC.User.SharedController();
+        public readonly string Name = "Markter";
+        public OPS.Areas.Markter.Controllers.MarketingTransactionController MarketingTransaction = new OPS.Areas.Markter.Controllers.T4MVC_MarketingTransactionController();
+        public T4MVC.Markter.SharedController Shared = new T4MVC.Markter.SharedController();
     }
 }
 
@@ -981,6 +983,7 @@ namespace Links
             public static readonly string Request_png = Url("Request.png");
             public static readonly string Room_png = Url("Room.png");
             public static readonly string Setting_png = Url("Setting.png");
+            public static readonly string sms_png = Url("sms.png");
             public static readonly string SubSystem_png = Url("SubSystem.png");
             public static readonly string tick16_png = Url("tick16.png");
             public static readonly string Truck_png = Url("Truck.png");
@@ -1003,6 +1006,7 @@ namespace Links
             public static readonly string Baner1a_jpg = Url("Baner1a.jpg");
             public static readonly string Banerr_jpg = Url("Banerr.jpg");
             public static readonly string Banerr2_jpg = Url("Banerr2.jpg");
+            public static readonly string build_png = Url("build.png");
             public static readonly string Cement_png = Url("Cement.png");
             public static readonly string Contact_us_jpg = Url("Contact-us.jpg");
             public static readonly string Contact_us1_jpg = Url("Contact-us1.jpg");
@@ -1352,6 +1356,8 @@ namespace Links
         
         }
     
+        public static readonly string PagedList_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/PagedList.min.css") ? Url("PagedList.min.css") : Url("PagedList.css");
+             
         public static readonly string Site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Site.min.css") ? Url("Site.min.css") : Url("Site.css");
              
     }

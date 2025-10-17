@@ -107,5 +107,17 @@ namespace ViewModels.Areas.Administrator.User
             Name = Resources.ViewModel.Strings.UserKeys.ReferredByCode)]
         #endregion
         public string ReferredByCode { get; set; }
+        #region PhoneNumebr
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.BuyerMobile)]
+        #endregion
+        public string PhoneNumebr { get; set; }
+        #region Discount
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.Discount)]
+        #endregion
+        public float? Discount { get; set; }
     }
 }

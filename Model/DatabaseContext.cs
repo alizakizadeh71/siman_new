@@ -63,6 +63,7 @@
         public System.Data.Entity.DbSet<Inventoryamount> Inventoryamount { get; set; }
         public System.Data.Entity.DbSet<Paymentwaitinglist> Paymentwaitinglist { get; set; }
         public System.Data.Entity.DbSet<walletFactor> walletFactor { get; set; }
+        public System.Data.Entity.DbSet<MarketerTransactions> MarketerTransactions { get; set; }
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -35,7 +35,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Role, new { @class = "col-md-2 control-label" })
                 <div class="col-md-6">
-                    @Html.DropDownListFor(model => model.Role, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.Role, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @id = "RoleDropdown" })
                     @Html.ValidationMessageFor(model => model.Role)
                 </div>
             </div>
@@ -72,6 +72,16 @@
                 </div>
             </div>
 
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PhoneNumebr, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.PhoneNumebr, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.PhoneNumebr)
+                </div>
+            </div>
+
+
             <div class="form-group">
                 @Html.LabelFor(model => model.creditAmount, new { @class = "col-md-2 control-label" })
                 <div class="col-md-6">
@@ -79,27 +89,12 @@
                     @Html.ValidationMessageFor(model => model.creditAmount)
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.IsMarketer, new { @class = "col-md-2 control-label" })
-                <div class="col-md-6">
-                    @Html.CheckBoxFor(model => model.IsMarketer, new { @id = "isMarketer" , onclick = "toggleFields()" })
-                </div>
-            </div>
             <div class="form-group" id="marketingCodeGroup">
                 @Html.LabelFor(model => model.MarketingCode, new { @class = "col-md-2 control-label" })
 
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.MarketingCode, new {
-                        @class = "form-control",
-                        @id = "marketingCode",
-                        @readonly = "readonly", // فقط خواندنی
-                    })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.MarketingCode, new { @class = "form-control col-md-6" })
                     @Html.ValidationMessageFor(model => model.MarketingCode)
-                </div>
-
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" onclick="generateMarketingCode()">دریافت کد</button>
                 </div>
             </div>
 
@@ -117,7 +112,13 @@
                     @Html.ValidationMessageFor(model => model.InitialCredit)
                 </div>
             </div>
-
+            <div class="form-group">
+                @Html.LabelFor(model => model.Discount, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Discount, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.Discount)
+                </div>
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.isSendSmS, "ارسال پیامک", new { @class = "col-md-2 control-label" })
                 <div class="col-md-6">
@@ -299,27 +300,25 @@
         return separatedNumbers.join(',');
     }
 
-    function toggleFields() {
-        var isMarketer = document.getElementById("isMarketer").checked;
+        $(document).ready(function () {
+            function toggleCodeFields() {
+                var selectedRole = $('#RoleDropdown').val();
 
-        document.getElementById("marketingCodeGroup").style.display = isMarketer ? "block" : "none";
-        document.getElementById("referredByCodeGroup").style.display = isMarketer ?  "none" : "block";
-    }
+                if (selectedRole === '805f9b24-c5e0-4227-9efa-7b5eb5646394') { // مقدار دقیق نقش را جایگزین کن
+                    $('#marketingCodeGroup').show();
+                    $('#referredByCodeGroup').hide();
+                } else {
+                    $('#marketingCodeGroup').hide();
+                    $('#referredByCodeGroup').show();
+                }
+            }
 
-    window.onload = toggleFields;
+            // اجرای اولیه
+            toggleCodeFields();
 
-    document.getElementById("isMarketer").addEventListener("change", toggleFields)
-
-    function generateMarketingCode() {
-        fetch('/Administrator/User/GenerateUniqueMarketingCode')
-            .then(response => response.json())
-            .then(code => {
-                document.getElementById("marketingCode").value = code;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("خطا در دریافت کد بازاریابی");
+            // اجرای هنگام تغییر نقش
+            $('#RoleDropdown').change(function () {
+                toggleCodeFields();
             });
-    }
-
+        });
 </script>

@@ -1,0 +1,48 @@
+﻿@model ViewModels.Areas.Administrator.User.SendSmsViewModel
+
+@using (Html.BeginForm("Send", "Sms", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <!-- فیلد متن پیامک -->
+    <div class="form-group">
+        @Html.LabelFor(m => m.Text, "متن پیامک")
+        @Html.TextAreaFor(m => m.Text, new { @class = "form-control", rows = 4 })
+        @Html.ValidationMessageFor(m => m.Text)
+    </div>
+
+    <!-- باکس جستجو -->
+    <div class="form-group">
+        @Html.Label("جستجوی کاربران:", new { @class = "control-label" })
+        <div class="input-group">
+            <input type="text" id="searchInput" class="form-control" placeholder="نام یا شماره موبایل" />
+            <span class="input-group-btn">
+                <button type="button" id="btnSearch" class="btn btn-primary">جستجو</button>
+            </span>
+        </div>
+    </div>
+
+    <!-- جدول کاربران -->
+    <div id="usersTable">
+        @Html.Partial("_UsersCheckboxList", Model)
+    </div>
+
+    <button type="submit" class="btn btn-success">ارسال پیامک</button>
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#btnSearch").click(function () {
+                var searchTerm = $("#searchInput").val();
+
+                $.get('@Url.Action("UsersPartial", "Sms")', { searchTerm: searchTerm }, function (data) {
+                    $("#usersTable").html(data);
+                });
+            });
+        });
+    </script>
+}
+
+

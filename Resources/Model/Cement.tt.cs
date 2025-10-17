@@ -62,6 +62,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: توضیحات
+        /// </summary>
+        public static string Description([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.Description;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("Description", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: مبلغ پرداخت در محل
         /// </summary>
         public static string DestinationAmountPaid([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -421,6 +431,11 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: شهر تخلیه
         /// </summary>
         public const string City = "City";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: توضیحات
+        /// </summary>
+        public const string Description = "Description";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: مبلغ پرداخت در محل

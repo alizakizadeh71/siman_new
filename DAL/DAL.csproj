@@ -117,6 +117,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DestinationManagement.cs" />
+    <Compile Include="IMarketerTransactionsRepository.cs" />
+    <Compile Include="MarketerTransactionsRepository.cs" />
     <Compile Include="walletFactorRepository.cs" />
     <Compile Include="FinancialManagementRepository.cs" />
     <Compile Include="FactorCementRepository.cs" />

@@ -13,6 +13,7 @@
         Fava = 860,
         SoperAdmin = 900,
         WebServiceUser = 999,
-        Programmer = 1000
+        Programmer = 1000,
+        Marketer = 200
     }
 }

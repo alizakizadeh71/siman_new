@@ -1,0 +1,39 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@using ViewModels.Areas.Administrator.User
+@model ViewModels.Areas.Administrator.User.SendSmsViewModel
+@{
+    var pagedUsers = ViewBag.PagedUsers as IPagedList<UserSmsSelectionViewModel>;
+}
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>انتخاب</th>
+        <th>نام</th>
+        <th>شماره موبایل</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (int i = (pagedUsers.PageNumber - 1) * pagedUsers.PageSize; i < Math.Min(pagedUsers.Count + (pagedUsers.PageNumber - 1) * pagedUsers.PageSize, Model.Users.Count); i++)
+    {
+        <tr>
+            <td>
+                @Html.CheckBoxFor(m => m.Users[i].IsSelected)
+                @Html.HiddenFor(m => m.Users[i].UserId)
+            </td>
+            <td>@Model.Users[i].FullName</td>
+            <td>@Model.Users[i].PhoneNumber</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="text-center">
+    @Html.PagedListPager(pagedUsers, page => Url.Action("UsersPartial", new { page, searchTerm = Model.SearchTerm }))
+</div>
+
+
+
+
+

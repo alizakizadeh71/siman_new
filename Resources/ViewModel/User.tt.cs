@@ -72,6 +72,16 @@ namespace Resources.ViewModel.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: میزان تخفیف برای کاربر
+        /// </summary>
+        public static string Discount([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.ViewModel.User.Discount;
+            }
+            return global::Resources.ViewModel.User.ResourceManager.GetString("Discount", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: نام و نام خانوادگی
         /// </summary>
         public static string FullName([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -276,6 +286,11 @@ namespace Resources.ViewModel.Strings {
         ///   Provides access to string resource key of value similar to: شهر
         /// </summary>
         public const string City = "City";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: میزان تخفیف برای کاربر
+        /// </summary>
+        public const string Discount = "Discount";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: نام و نام خانوادگی

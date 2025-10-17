@@ -528,6 +528,19 @@
             }
         }
 
+        private IMarketerTransactionsRepository _MarketerTransactionsRepository;
+        public IMarketerTransactionsRepository MarketerTransactionsRepository
+        {
+            get
+            {
+                if (_MarketerTransactionsRepository == null)
+                {
+                    _MarketerTransactionsRepository = new MarketerTransactionsRepository(DatabaseContext);
+                }
+                return (_MarketerTransactionsRepository);
+            }
+        }
+
 
         private IRequestRepository _RequestRepository;
         public IRequestRepository RequestRepository

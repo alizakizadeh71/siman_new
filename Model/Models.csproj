@@ -121,6 +121,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Inventoryamount.cs" />
+    <Compile Include="MarketerTransactions.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="FactoryName.cs" />

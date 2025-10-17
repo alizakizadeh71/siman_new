@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System;
+
+namespace Models
 {
     public class walletFactor : BaseExtendedEntity
     {
@@ -19,6 +21,7 @@
 
         public virtual User User { get; set; }
         public System.Guid UserId { get; set; }
+        public Guid TransactionId { get; set; }
         public long Chargeamount { get; set; }
         public bool FinalApprove { get; set; }
         public string Authority { get; set; }

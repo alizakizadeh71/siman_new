@@ -9,21 +9,27 @@ namespace OPS
     {
         protected void Application_Start()
         {
-            RouteTable.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = System.Web.Http.RouteParameter.Optional });
+            // 1️⃣ ثبت Areaها باید **قبل از RouteConfig** باشد
+            AreaRegistration.RegisterAllAreas();
 
+            // 2️⃣ ثبت فیلترهای سراسری
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
+            // 3️⃣ ثبت مسیرهای Web API
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
 
+            // 4️⃣ ثبت مسیرهای MVC
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            // 5️⃣ ثبت Bundleها
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // 6️⃣ ModelBinder برای DateTime
             var binder = new Infrastructure.DateTimeModelBinder();
             ModelBinders.Binders.Add(typeof(System.DateTime), binder);
             ModelBinders.Binders.Add(typeof(System.DateTime?), binder);
-
-            AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
     }
 }

@@ -229,7 +229,7 @@ namespace OPS.Controllers
                             Address = userAddress,
                             AmountPaid = AmountPaid,
                             DestinationAmountPaid = DestinationAmountPaid,
-                            Description = $"فاکتور پرداخت {productName} {TonnageWieght}تن",
+                            Description = cementViewModel.Description,
                             RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),
                             UserIPAddress = Request.UserHostAddress,
                             Browser = Request.Browser.Type, // مدل و ورژن مرورگر

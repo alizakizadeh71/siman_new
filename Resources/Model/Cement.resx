@@ -132,6 +132,9 @@
   <data name="code" xml:space="preserve">
     <value>کد</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
   <data name="DestinationAmountPaid" xml:space="preserve">
     <value>مبلغ پرداخت در محل</value>
   </data>

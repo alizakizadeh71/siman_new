@@ -123,6 +123,12 @@ namespace ViewModels.Areas.Administrator.User
             Name = Resources.ViewModel.Strings.UserKeys.ReferredByCode)]
         #endregion
         public string ReferredByCode { get; set; }
+        #region Discount
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.ViewModel.User),
+            Name = Resources.ViewModel.Strings.UserKeys.Discount)]
+        #endregion
+        public float? Discount { get; set; }
         //#region IsDelete
         //[System.ComponentModel.DataAnnotations.Display
         //    (ResourceType = typeof(Resources.ViewModel.User),

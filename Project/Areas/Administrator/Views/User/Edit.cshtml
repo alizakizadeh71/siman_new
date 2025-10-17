@@ -3,185 +3,186 @@
 @using System.Web.Http
 
 @{ string strTitle =
-                     string.Format("{0} {1}",
-                     Resources.Action.Edit,
-                     Resources.Model.User.EntitiesName); }
+                      string.Format("{0} {1}",
+                      Resources.Action.Edit,
+                      Resources.Model.User.EntitiesName); }
 
 @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-@Html.AntiForgeryToken()
-                @Html.ValidationSummary(true) if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
-                {
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        پیام های سیستمی
-    </div>
-    <div class="panel-body">
-        @Html.Raw(ViewBag.PageMessages)
-    </div>
-</div> }
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        @strTitle
-    </div>
-    <div class="panel-body">
-        @Html.HiddenFor(model => model.Id)
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true) if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                پیام های سیستمی
+            </div>
+            <div class="panel-body">
+                @Html.Raw(ViewBag.PageMessages)
+            </div>
+        </div> }
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @strTitle
+        </div>
+        <div class="panel-body">
+            @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Role, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.DropDownListFor(model => model.Role, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Role)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Province, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.DropDownListFor(model => model.Province, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChange()" })
-                @Html.ValidationMessageFor(model => model.Province)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.City, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6" id="DivCityId">
-                @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.City)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FullName, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(model => model.FullName, new { @class = "form-control col-md-6" })
-                @Html.ValidationMessageFor(model => model.FullName)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserName, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control col-md-6" })
-                @Html.ValidationMessageFor(model => model.UserName)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control col-md-6" })
-                @Html.ValidationMessageFor(model => model.BuyerMobile)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.creditAmount, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(model => model.creditAmount, new { @class = "form-control col-md-6" })
-                @Html.ValidationMessageFor(model => model.creditAmount)
-            </div>
-        </div>
-        
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsMarketer, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.CheckBoxFor(model => model.IsMarketer, new { @id = "isMarketer" , onclick = "toggleFields()" })
-            </div>
-        </div>
-        <div class="form-group" id="marketingCodeGroup">
-            @Html.LabelFor(model => model.MarketingCode, new { @class = "col-md-2 control-label" })
-
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.MarketingCode, new {
-                    @class = "form-control",
-                    @id = "marketingCode",
-                    @readonly = "readonly", // فقط خواندنی
-                })
-                @Html.ValidationMessageFor(model => model.MarketingCode)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Role, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.Role, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @id = "RoleDropdown" })
+                    @Html.ValidationMessageFor(model => model.Role)
+                </div>
             </div>
 
-            <div class="col-md-2">
-                <button type="button" class="btn btn-primary" onclick="generateMarketingCode()">دریافت کد</button>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Province, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.Province, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChange()" })
+                    @Html.ValidationMessageFor(model => model.Province)
+                </div>
             </div>
-        </div>
 
-        <div class="form-group" id="referredByCodeGroup">
-            @Html.LabelFor(model => model.ReferredByCode, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(model => model.ReferredByCode, new { @class = "form-control", @id = "referredByCode" })
-                @Html.ValidationMessageFor(model => model.ReferredByCode)
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6" id="DivCityId">
+                    @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.City)
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.InitialCredit, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextBoxFor(model => model.InitialCredit, new { @class = "form-control col-md-6", @id = "initialCreditInput" })
-                @Html.ValidationMessageFor(model => model.InitialCredit)
-                <small id="convertedAmount" class="text-muted"></small>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FullName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.FullName)
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.CheckBoxFor(model => model.IsActive, new { @style = "height:34px;" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.isSendSmS, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.CheckBoxFor(model => model.isSendSmS, new { @style = "height:34px;" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.BuyerMobile)
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Address, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.TextAreaFor(model => model.Address, new { @class = "form-control col-md-6" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.creditAmount, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.creditAmount, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.creditAmount)
+                </div>
             </div>
-        </div>
+            <div class="form-group" id="marketingCodeGroup">
+                @Html.LabelFor(model => model.MarketingCode, new { @class = "col-md-2 control-label" })
 
-        @*<div class="form-group">
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.MarketingCode, new { @class = "form-control col-md-6" })
+                    @Html.ValidationMessageFor(model => model.MarketingCode)
+                </div>
+            </div>
+
+            <div class="form-group" id="referredByCodeGroup">
+                @Html.LabelFor(model => model.ReferredByCode, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.ReferredByCode, new { @class = "form-control", @id = "referredByCode" })
+                    @Html.ValidationMessageFor(model => model.ReferredByCode)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.InitialCredit, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.InitialCredit, new { @class = "form-control col-md-6", @id = "initialCreditInput" })
+                    @Html.ValidationMessageFor(model => model.InitialCredit)
+                    <small id="convertedAmount" class="text-muted"></small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Discount, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Discount, new { @class = "form-control col-md-6", @id = "initialCreditInput" })
+                    @Html.ValidationMessageFor(model => model.Discount)
+                    <small id="convertedAmount" class="text-muted"></small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsActive, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.CheckBoxFor(model => model.IsActive, new { @style = "height:34px;" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.isSendSmS, "ارسال پیامک", new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    <div class="form-check">
+                        @Html.RadioButtonFor(model => model.isSendSmS, true, new { @class = "form-check-input", @id = "sendSmsYes" })
+                        <label class="form-check-label" for="sendSmsYes">بله</label>
+                    </div>
+                    <div class="form-check">
+                        @Html.RadioButtonFor(model => model.isSendSmS, false, new { @class = "form-check-input", @id = "sendSmsNo" })
+                        <label class="form-check-label" for="sendSmsNo">خیر</label>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.isSendSmS)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.TextAreaFor(model => model.Address, new { @class = "form-control col-md-6" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
             @Html.LabelFor(model => model.IsApprovallicense, new { @class = "col-md-2 control-label" })
             <div class="col-md-6">
                 @Html.CheckBoxFor(model => model.IsApprovallicense, new { @style = "height:34px;" })
             </div>
         </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Authenticate, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                @Html.CheckBoxFor(model => model.Authenticate, new { @style = "height:34px;" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Authenticate, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    @Html.CheckBoxFor(model => model.Authenticate, new { @style = "height:34px;" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Image, new { @class = "col-md-2 control-label" })
-            <div class="col-md-6">
-                <img class="col-md-offset-1" src="@Model.Image" style=" width:225px ; height: 300px" id="PersonImage">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image, new { @class = "col-md-2 control-label" })
+                <div class="col-md-6">
+                    <img class="col-md-offset-1" src="@Model.Image" style=" width:225px ; height: 300px" id="PersonImage">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-10 col-md-offset-2">
-                <input type="submit" value="@Resources.Buttons.Save" class="btn btn-success" />
-                @*<input type="submit" value="@Resources.Buttons.Reset" class="btn btn-primary" />*@
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <input type="submit" value="@Resources.Buttons.Save" class="btn btn-success" />
+                    @*<input type="submit" value="@Resources.Buttons.Reset" class="btn btn-primary" />*@
+                </div>
             </div>
+
         </div>
 
-    </div>
+        <div class="panel-footer">
+            @Html.ActionLink(Resources.Action.Details, MVC.Administrator.User.Detail(Model.Id), new { @class = "btn btn-primary " })
+            @*@Html.ActionLink(Resources.Action.Delete, MVC.Administrator.User.Delete(Model.Id), new { @class = "btn btn-danger" })*@
+            @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.User.Index(), new { @class = "btn btn-default" })
 
-    <div class="panel-footer">
-        @Html.ActionLink(Resources.Action.Details, MVC.Administrator.User.Detail(Model.Id), new { @class = "btn btn-primary " })
-        @*@Html.ActionLink(Resources.Action.Delete, MVC.Administrator.User.Delete(Model.Id), new { @class = "btn btn-danger" })*@
-        @Html.ActionLink(Resources.Action.BackToList, MVC.Administrator.User.Index(), new { @class = "btn btn-default" })
-
-        <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
-           href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
-        <br />
-        <br />
-    </div>
-</div>}
+            <a class="btn btn-default col-md-2" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+               href="/HomeMain/Main/" style="float:left;"><span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' /></a>
+            <br />
+            <br />
+        </div>
+    </div>}
 
 <script type="text/javascript">
     function onChange() {
@@ -206,27 +207,28 @@
             }
         });
     }
+        $(document).ready(function () {
+            function toggleCodeFields() {
+                var selectedRole = $('#RoleDropdown').val();
 
-    function toggleFields() {
-        var isMarketer = document.getElementById("isMarketer").checked;
+                // مقدار GUID مربوط به نقش "بازاریاب" را اینجا وارد کن
+                const marketerRoleGuid = '805f9b24-c5e0-4227-9efa-7b5eb5646394';
 
-        document.getElementById("marketingCodeGroup").style.display = isMarketer ? "block" : "none";
-        document.getElementById("referredByCodeGroup").style.display = isMarketer ? "none" : "block";
-    }
+                if (selectedRole === marketerRoleGuid) {
+                    $('#marketingCodeGroup').show();
+                    $('#referredByCodeGroup').hide();
+                } else {
+                    $('#marketingCodeGroup').hide();
+                    $('#referredByCodeGroup').show();
+                }
+            }
 
-    window.onload = toggleFields;
+            // اجرای اولیه (برای وقتی که فرم ویرایش بارگذاری شده و نقش از قبل مقدار دارد)
+            toggleCodeFields();
 
-    document.getElementById("isMarketer").addEventListener("change", toggleFields)
-
-    function generateMarketingCode() {
-        fetch('/Administrator/User/GenerateUniqueMarketingCode')
-            .then(response => response.json())
-            .then(code => {
-                document.getElementById("marketingCode").value = code;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("خطا در دریافت کد بازاریابی");
+            // اجرای هنگام تغییر در نقش
+            $('#RoleDropdown').on('change', function () {
+                toggleCodeFields();
             });
-    }
+        });
 </script>

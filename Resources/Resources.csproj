@@ -272,6 +272,9 @@
     <Compile Include="Model\Inventoryamount.tt.cs">
       <DependentUpon>Inventoryamount.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\MarketerTransactions.tt.cs">
+      <DependentUpon>MarketerTransactions.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\TotalCompanyInventory.Designer.cs">
       <DependentUpon>TotalCompanyInventory.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -279,6 +282,11 @@
     </Compile>
     <Compile Include="Model\TotalCompanyInventory.tt.cs">
       <DependentUpon>TotalCompanyInventory.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MarketerTransactions.Designer.cs">
+      <DependentUpon>MarketerTransactions.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Model\village.Designer.cs">
       <DependentUpon>village.resx</DependentUpon>
@@ -517,6 +525,9 @@
       <DependentUpon>ExecutableCode.tt</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\MarketingTransactionViewModel.tt.cs">
+      <DependentUpon>MarketingTransactionViewModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Paymentwaitinglist.Designer.cs">
       <DependentUpon>Paymentwaitinglist.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -557,6 +568,11 @@
     </Compile>
     <Compile Include="ViewModel\RechargewalletUser.Designer.cs">
       <DependentUpon>RechargewalletUser.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="ViewModel\MarketingTransactionViewModel.Designer.cs">
+      <DependentUpon>MarketingTransactionViewModel.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -854,6 +870,11 @@
       <LastGenOutput>TotalCompanyInventory.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Model\MarketerTransactions.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MarketerTransactions.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model\village.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>village.Designer.cs</LastGenOutput>
@@ -989,6 +1010,11 @@
       <LastGenOutput>RechargewalletUser.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ViewModel\MarketingTransactionViewModel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MarketingTransactionViewModel.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="ViewModel\User.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>User.Designer.cs</LastGenOutput>
@@ -1115,6 +1141,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TotalCompanyInventory.tt</DependentUpon>
     </Content>
+    <None Include="Model\MarketerTransactions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MarketerTransactions.txt</LastGenOutput>
+    </None>
+    <Content Include="Model\MarketerTransactions.txt">
+      <DependentUpon>MarketerTransactions.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
     <Content Include="Model\village.txt">
       <DependentUpon>village.tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1219,6 +1254,15 @@
     </Content>
     <Content Include="ViewModel\RechargewalletUser.txt">
       <DependentUpon>RechargewalletUser.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="ViewModel\MarketingTransactionViewModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MarketingTransactionViewModel.txt</LastGenOutput>
+    </Content>
+    <Content Include="ViewModel\MarketingTransactionViewModel.txt">
+      <DependentUpon>MarketingTransactionViewModel.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Content>

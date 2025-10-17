@@ -20,416 +20,125 @@
         height: auto !important;
     }
 </style>
-
-<script type="text/javascript">
-
-    function AllowNumbersOnly(e) {
-        var code = (e.which) ? e.which : e.keyCode;
-        if (code > 31 && (code < 48 || code > 57)) {
-            e.preventDefault();
-        }
-    }
-    // باز شدن در صفحه جدید
-    $(document).on('click', 'a.btn-blank', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        window.open(url, '_blank');
+<link href="http://kendo.cdn.telerik.com/2014.2.716/styles/kendo.common.min.css" rel="stylesheet" />
+<link href="http://kendo.cdn.telerik.com/2014.2.716/styles/kendo.default.min.css" rel="stylesheet" />
+<script src="http://kendo.cdn.telerik.com/2014.2.716/js/jquery.min.js"></script>
+<script src="http://kendo.cdn.telerik.com/2014.2.716/js/kendo.ui.core.min.js"></script>
+<script>
+    // 1- تعریف DataSource اولیه
+    var varDataSource = new kendo.data.DataSource({
+        pageSize: 10,
+        data: []
     });
 
-    function Comma(Num) {
-        Num += '';
-        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
-        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
-        x = Num.split('.');
-        x1 = x[0];
-        x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1))
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-        return x1 + x2;
-    }
+    // 2- ساخت Grid
+    $("#grid").kendoGrid({
+        dataSource: varDataSource,
+        sortable: true,
+        filterable: true,
+        resizable: true,
+        scrollable: { virtual: false },
+        pageable: {
+            refresh: true,
+            input: true,
+            numeric: true,
+            pageSizes: [5, 10, 25, 50, 100]
+        },
+        mobile: true,
+        columnMenu: true,
+        columns: [
+            { field: "InvoiceNumber", title: "شماره فاکتور", width: "120px" },
+            { field: "StringProductName", title: "نام محصول", width: "150px" },
+            { field: "StringProductType", title: "نوع محصول", width: "150px" },
+            { field: "StringPackageType", title: "نوع بسته بندی", width: "150px" },
+            { field: "StringFactoryName", title: "کارخانه", width: "150px" },
+            { field: "Tonnage", title: "تن", width: "100px" },
+            { field: "AmountPaid", title: "مبلغ پرداختی", width: "120px" },
+            { field: "BuyerMobile", title: "شماره خریدار", width: "120px" },
+            { field: "Address", title: "آدرس", width: "200px" },
+            { field: "Description", title: "توضیحات", width: "200px" },
+            { field: "MahalTahvil", title: "محل تحویل", width: "150px" },
+            { field: "StringInsertDateTime", title: "تاریخ ثبت", width: "150px" },
+            {
+                title: "عملیات",
+                width: "120px",
+                template: function (dataItem) {
+                    return `
+                    <a class="btn-blank" href="/Administrator/Request/display/${dataItem.Id}">
+                        <img src="../../../Content/Icon/display.png"/>
+                    </a>
+                    <a href="/Administrator/Request/Edit/${dataItem.Id}">
+                        <img src="../../../Content/Icon/edit.png"/>
+                    </a>
+                `;
+                }
+            }
+        ]
+    });
 
+    // 3- گرفتن نمونه Grid
+    var grid = $("#grid").data("kendoGrid");
 
-    $(document).ready(function () {
-
-        $('input#CompanyName').val('نام شرکت باید به طور دقیق وارد شود');
-
-        $('#StartDate').datepicker({
-            dateFormat: 'yy/mm/dd',
-            autoSize: true,
-            showyear: true,
-            changeYear: true
+    // 4- تنظیم autoFit در dataBound
+    grid.bind("dataBound", function () {
+        grid.columns.forEach(col => {
+            if (col.field) {
+                grid.autoFitColumn(col.field);
+            }
         });
+    });
 
-        $('#EndDate').datepicker({
-            dateFormat: 'yy/mm/dd',
-            autoSize: true,
-            showyear: true,
-            changeYear: true
-        });
-
-        $('#PayStartDate').datepicker({
-            dateFormat: 'yy/mm/dd',
-            autoSize: true,
-            showyear: true,
-            changeYear: true
-        });
-
-        $('#PayEndDate').datepicker({
-            dateFormat: 'yy/mm/dd',
-            autoSize: true,
-            showyear: true,
-            changeYear: true
-        });
-
-        $("#SearchPanelHeader").click(function () {
-            $("#SearchPanelBody").toggle(1000);
-        });
-
-        //$("#input#CompanyName").click(function () {
-        //    this.style.color.val('red')
-        //});
-
-        //*********************************
-        var varDataSource =
-            new kendo.data.DataSource({
-
-                pageSize: 10,
-
-                serverPaging: true,
-                serverSorting: true,
-                serverFiltering: true,
-                serverAggregates: false,
-
-                transport: {
-                    read: {
-                        type: "POST",
-                        dataType: "json",
-                        url: "/Administrator/Request/GetRequests",
-                    },
-                },
-
-                schema: {
-                    data: function (e) {
-                        return (e.Data);
-                    },
-                    total: function (e) {
-                        return (e.Total);
-                    },
-                },
-            });
-
-        //*********************************
-        //*********************************
-        //*********************************
-
-        $("div#grid").kendoGrid({
-            sortable: {
-                mode: "multiple",
-                allowUnsort: true,
-            },
-
-            pageable: {
-                info: true,
-                input: true,
-                refresh: true,
-                numeric: true,
-                buttonCount: 5,
-                previousNext: true,
-                pageSize: [5, 10, 25, 50, 100],
-                messages: {
-                    morePages: "صفحات بیشتر",
-                    page: "شماره صفحه",
+    // 5- رویداد کلیک دکمه سرچ
+    $("button#btnSearch").click(function () {
+        var varDataSource = new kendo.data.DataSource({
+            pageSize: 10,
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            transport: {
+                read: {
+                    type: "POST",
+                    dataType: "json",
+                    url: "/Administrator/Request/Search",
+                    data: {
+                        InvoiceNumber: () => $("input#InvoiceNumber").val(),
+                        BuyerMobile: () => $("input#BuyerMobile").val(),
+                        ProductName: () => $("select#ProductName").val(),
+                        ProductType: () => $("select#ProductType").val(),
+                        PackageType: () => $("select#PackageType").val(),
+                        FactoryName: () => $("select#FactoryName").val(),
+                        Tonnage: () => $("select#Tonnage").val(),
+                        stringFinalApprove: () => $("select#stringFinalApprove").val(),
+                        Province: () => $("select#Province").val(),
+                        City: () => $("select#City").val(),
+                        StartDate: () => $("input#StartDate").val(),
+                        EndDate: () => $("input#EndDate").val(),
+                        PayStartDate: () => $("input#PayStartDate").val(),
+                        PayEndDate: () => $("input#PayEndDate").val(),
+                        FromAmount: () => {
+                            var number = $("#FromAmount").val().replace(/,/g, "");
+                            $("#FromAmount").val(number);
+                            return number;
+                        },
+                        ToAmount: () => {
+                            var number = $("#ToAmount").val().replace(/,/g, "");
+                            $("#ToAmount").val(number);
+                            return number;
+                        }
+                    }
                 }
             },
-
-            groupable: true,
-            filterable: true,
-            scrollable: false,
-            reorderable: true,
-
-            columnMenu: {
-                columns: true,
-                filterable: true,
-                messages: {
-                    lock: "قفل شده",
-                    unlock: "قفل نشده",
-                }
-            },
-
-            navigatable: true,
-            selectable: "multiple row",
-
-            dataSource: varDataSource,
-
-            dataBinding: function () {
-                rowNumber =
-					(this.dataSource.page() - 1) * this.dataSource.pageSize();
-            },
-
-            // **************************************************
-
-            columns:
-                [
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        width: "20px",
-                        titel: "#",
-                        template: "#= ++rowNumber #",
-                    },
-                    {
-                        title: "جزئیات و اقدامات",
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        width: "10px",
-                        title: "",
-                        template: function (dataItem) {
-
-                            var strTemplate = "";
-
-                            strTemplate +=
-                                '<a  class="btn-blank" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Display)" href="/Administrator/Request/display/'
-                                + dataItem.Id + '"><img class="k-icon" src="../../../Content/Icon/display.png"/></span></a>';
-
-                                 strTemplate +=
-                                '<a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.Edit)" href="/Administrator/Request/Edit/'
-                                + dataItem.Id + '"><img src="../../../Content/Icon/edit.png"/></a> | ';
-                            @*if (dataItem.RequestState_Value <2 && (@Infrastructure.Sessions.AuthenticatedUser.RoleCode==800|| @Infrastructure.Sessions.AuthenticatedUser.RoleCode==1000))
-                            {
-                                    strTemplate +=
-                                    ' | <a data-toggle="tooltip" data-placement="top" title="@(Resources.Action.UpAmontPaid)" href="/Administrator/Request/UpAmountPaid/'
-                                    + dataItem.Id + '"><img src="../../../Content/Icon/UpAmontPaid.png"/></span></a>';
-                            }*@
-                            return (strTemplate);
-                        },
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.InvoiceNumber",
-                        field: "@Resources.Model.Strings.CementKeys.InvoiceNumber",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProductName",
-                        field: "@Resources.Model.Strings.CementKeys.StringProductName",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: false,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringProductType",
-                        field: "@Resources.Model.Strings.CementKeys.StringProductType",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringPackageType",
-                        field: "@Resources.Model.Strings.CementKeys.StringPackageType",
-                        width: "20px",
-                    },
-
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringFactoryName",
-                        field: "@Resources.Model.Strings.CementKeys.StringFactoryName",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringTonnage",
-                        field: "@Resources.Model.Strings.CementKeys.StringTonnage",
-                        width: "20px",
-                    },
-                                        {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.stringFinalApprove",
-                         field: "@Resources.Model.Strings.CementKeys.stringFinalApprove",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.BuyerMobile",
-                        field: "@Resources.Model.Strings.CementKeys.BuyerMobile",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.Address",
-                        field: "@Resources.Model.Strings.CementKeys.Address",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "مبلغ پرداختی",
-                        field: "@Resources.Model.Strings.CementKeys.AmountPaid",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.MahalTahvil",
-                        field: "@Resources.Model.Strings.CementKeys.MahalTahvil",
-                        width: "20px",
-                    },
-                    {
-                        hidden: false,
-                        locked: true,
-                        lockable: true,
-                        title: "@Resources.Model.Cement.StringInsertDateTime",
-                        field: "@Resources.Model.Strings.CementKeys.StringInsertDateTime",
-                        width: "20px",
-                    },
-                ]
+            schema: {
+                data: e => e.Data,
+                total: e => e.Total
+            }
         });
 
-        // **************************************************
-        // **************************************************
-
-        $("button#btnSearch").click(function () {
-            debugger;
-            var varDataSource =
-                new kendo.data.DataSource({
-
-                    pageSize: 10,
-
-                    serverPaging: true,
-                    serverSorting: true,
-                    serverFiltering: true,
-                    serverAggregates: false,
-
-                    transport: {
-                        read: {
-                            type: "POST",
-                            dataType: "json",
-                            url: "/Administrator/Request/Search",
-                            data: {
-                                InvoiceNumber: function () {
-                                    return ($("input#InvoiceNumber").val());
-                                },
-
-                                BuyerMobile: function () {
-                                    return ($("input#BuyerMobile").val());
-                                },
-
-                                ProductName: function () {
-                                    return ($("select#ProductName").val());
-                                },
-
-                                ProductType: function () {
-                                    return ($("select#ProductType").val());
-                                },
-
-                                PackageType: function () {
-                                    return ($("select#PackageType").val());
-                                },
-
-                                FactoryName: function () {
-                                    return ($("select#FactoryName").val());
-                                },
-
-                                Tonnage: function () {
-                                    return ($("select#Tonnage").val());
-                                },
-
-                                stringFinalApprove: function () {
-                                    return ($("select#stringFinalApprove").val());
-                                },
-
-                                Province: function () {
-                                    return ($("select#Province").val());
-                                },
-
-                                City: function () {
-                                    return ($("select#City").val());
-                                },
-
-                                StartDate: function () {
-                                    return ($("input#StartDate").val());
-                                },
-                                EndDate: function () {
-                                    return ($("input#EndDate").val());
-                                },
-                                PayStartDate: function () {
-                                    return ($("input#PayStartDate").val());
-                                },
-                                PayEndDate: function () {
-                                    return ($("input#PayEndDate").val());
-                                },
-                                FromAmount: function () {
-                                    var number = $("#FromAmount").val();
-                                    for (var i = 0; i < number.split(',').length; i++) {
-                                        number = number.replace(',', '');
-                                    }
-                                    $("#FromAmount").val(number);
-                                    return (
-                                        $("input#FromAmount").val()
-                                    );
-                                },
-                                ToAmount: function () {
-                                    var number = $("#ToAmount").val();
-                                    for (var i = 0; i < number.split(',').length; i++) {
-                                        number = number.replace(',', '');
-                                    }
-                                    $("#ToAmount").val(number);
-                                    return ($("input#ToAmount").val());
-                                },
-                            },
-                        },
-                    },
-
-                    requestStart: function (e) {
-                        $("button#btnSearch").hide();
-                    },
-
-                    requestEnd: function (e) {
-                        $("button#btnSearch").show();
-                    },
-
-                    schema: {
-                        data: function (e) {
-                            return (e.Data);
-                        },
-                        total: function (e) {
-                            return (e.Total);
-                        },
-                    },
-                });
-
-            // **************************************************
-            // **************************************************
-
-            var varGrid =
-                $('div#grid').data("kendoGrid");
-
-            varGrid.setDataSource(varDataSource);
-        });
-    })
+        grid.setDataSource(varDataSource);
+    });
 
 </script>
+
 
 <section id="Requests" class="form-horizontal" role="form">
     <div class="panel panel-info">
@@ -572,9 +281,8 @@
                     </div>
                 </div>
                 <br />
-                <div class="row" style="overflow-y: scroll;">
-                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:1500px;">
-                    </div>
+                <div class="table-responsive">
+                    <div id="grid"></div>
                 </div>
                 <br />
                 <div class="row">
@@ -586,7 +294,45 @@
 </section>
 
 
+<style>
+    #grid .k-grid-header th,
+    #grid .k-grid-content td {
+        box-sizing: border-box;
+        padding: 6px 10px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 
+
+    /* راست‌چین کردن کل Grid */
+    #grid {
+        direction: rtl;
+        text-align: right;
+    }
+
+        /* جلوگیری از کوچک و بزرگ شدن ستون‌ها */
+        #grid .k-grid-header th {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: right;
+        }
+
+        #grid .k-grid-content td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: right;
+        }
+
+    /* ریسپانسیو موبایل */
+    @@media (max-width: 768px) {
+        #grid .k-grid-header, #grid .k-grid-content {
+            font-size: 12px;
+        }
+    }
+</style>
 <script type="text/javascript">
     function onChangeProvince() {
         $.ajax({
@@ -718,5 +464,8 @@
             }
         });
     }
+
+
+
 
 </script>

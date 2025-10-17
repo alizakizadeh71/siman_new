@@ -115,6 +115,15 @@ namespace Resources.ViewModel {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to میزان تخفیف برای کاربر.
+        /// </summary>
+        public static string Discount {
+            get {
+                return ResourceManager.GetString("Discount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام و نام خانوادگی.
         /// </summary>
         public static string FullName {
