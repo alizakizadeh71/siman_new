@@ -39,7 +39,7 @@ namespace ViewModels.Areas.Administrator.User
             (ResourceType = typeof(Resources.ViewModel.User),
             Name = Resources.ViewModel.Strings.UserKeys.creditAmount)]
         #endregion
-        public int creditAmount { get; set; }
+        public long creditAmount { get; set; }
 
         #region BirthDay
         [System.ComponentModel.DataAnnotations.Display
@@ -73,7 +73,7 @@ namespace ViewModels.Areas.Administrator.User
             (ResourceType = typeof(Resources.ViewModel.User),
             Name = Resources.ViewModel.Strings.UserKeys.InitialCredit)]
         #endregion
-        public int InitialCredit { get; set; }
+        public long InitialCredit { get; set; }
 
         #region IsApprovallicense
         [System.ComponentModel.DataAnnotations.Display

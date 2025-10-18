@@ -919,27 +919,27 @@ namespace OPS.Areas.Administrator.Controllers
             }
         }
         [HttpGet]
-        public virtual ActionResult DownloadUserExcelGetByid(System.Guid id)
+        public virtual ActionResult DownloadUserExcelGetByid(Guid id)
         {
-            // بازیابی نام کاربر از دیتابیس
+            // --- بازیابی اطلاعات کاربر
             var user = UnitOfWork.UserRepository.GetById(id);
-            var userName = user?.FullName ?? "User"; // فرض اینکه نام کامل کاربر در `FullName` ذخیره شده است
-
-            // تاریخ روز به صورت فرمت شده
+            var userName = user?.FullName ?? "User";
             var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
 
-            // بازیابی اطلاعات واریزی و برداشت
-            var usersdeposit = UnitOfWork.walletFactorRepository.Get()
+            // --- دریافت واریزی‌ها
+            var deposits = UnitOfWork.walletFactorRepository.Get()
                 .Where(u => u.UserId == id && u.FinalApprove == true)
                 .OrderByDescending(x => x.InsertDateTime)
                 .ToList();
 
-            var userswithdrawal = UnitOfWork.FactorCementRepository.Get()
+            // --- دریافت برداشت‌ها
+            var withdrawals = UnitOfWork.FactorCementRepository.Get()
                 .Where(u => u.UserId == id && u.FinalApprove == true)
                 .OrderByDescending(x => x.InsertDateTime)
                 .ToList();
 
-            var depositList = usersdeposit.Select(d => new
+            // --- تبدیل واریزی‌ها
+            var depositList = deposits.Select(d => new
             {
                 Amount = d.Chargeamount,
                 Type = "Deposit",
@@ -947,7 +947,8 @@ namespace OPS.Areas.Administrator.Controllers
                 Description = d.Description
             }).ToList();
 
-            var withdrawalList = userswithdrawal.Select(w =>
+            // --- تبدیل برداشت‌ها
+            var withdrawalList = withdrawals.Select(w =>
             {
                 string tonnageValue = "نامشخص";
 
@@ -955,19 +956,17 @@ namespace OPS.Areas.Administrator.Controllers
                 {
                     var tonnage = UnitOfWork.tonnageRepository.GetById(w.TonnageId.Value);
                     if (!string.IsNullOrWhiteSpace(tonnage?.Name))
-                    {
                         tonnageValue = tonnage.Name;
-                    }
                 }
                 else if (w.Tonnagedouble > 0)
                 {
                     tonnageValue = w.Tonnagedouble + " تن";
-                }else if (w.Tonnage.Name != "0")
+                }
+                else if (w.Tonnage?.Name != "0")
                 {
-                    tonnageValue = w.Tonnage.Name + " تن";
+                    tonnageValue = w.Tonnage?.Name + " تن";
                 }
 
-                // بررسی null بودن سایر فیلدها هم به همین روش:
                 var productName = w.ProductName?.Name ?? "نامشخص";
                 var productType = w.ProductType?.Name ?? "نامشخص";
                 var packageType = w.PackageType?.Name ?? "نامشخص";
@@ -986,59 +985,73 @@ namespace OPS.Areas.Administrator.Controllers
                 };
             }).ToList();
 
-
-
-
+            // --- ادغام و مرتب‌سازی تراکنش‌ها از قدیمی‌ترین به جدیدترین
             var transactions = depositList;
             transactions.AddRange(withdrawalList);
-            transactions = transactions.OrderByDescending(t => t.Date).ToList();
+            transactions = transactions.OrderBy(t => t.Date).ToList();
 
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Transactions");
 
-                // تنظیم هدر‌ها
-                worksheet.Cell(1, 1).Value = "تاریخ";
+                // --- هدرها
+                worksheet.Cell(1, 1).Value = "تاریخ (شمسی - ساعت)";
                 worksheet.Cell(1, 2).Value = "نوع تراکنش";
                 worksheet.Cell(1, 3).Value = "مبلغ";
                 worksheet.Cell(1, 4).Value = "توضیحات";
-                // اضافه کردن اطلاعات تراکنش‌ها
+                worksheet.Cell(1, 5).Value = "موجودی تجمعی";
+
+                long cumulative = 0;
+                var pc = new PersianCalendar();
+
                 for (int i = 0; i < transactions.Count; i++)
                 {
+                    var t = transactions[i];
                     var row = i + 2;
-                    worksheet.Cell(row, 1).Value = transactions[i].Date.ToString("yyyy-MM-dd HH:mm");
-                    worksheet.Cell(row, 2).Value = transactions[i].Type == "Deposit" ? "واریزی" : "برداشت";
-                    worksheet.Cell(row, 3).Value = transactions[i].Amount;
-                    worksheet.Cell(row, 4).Value = transactions[i].Description;
-                    // رنگ‌بندی پس‌زمینه براساس نوع تراکنش
-                    var rowRange = worksheet.Range(row, 1, row, 4); // کل ردیف
-                    if (transactions[i].Type == "Deposit")
-                    {
-                        rowRange.Style.Fill.BackgroundColor = XLColor.LightGreen; // سبز برای واریزی‌ها
-                    }
+
+                    // --- محاسبه موجودی تجمعی
+                    if (t.Type == "Deposit")
+                        cumulative += t.Amount;
                     else
-                    {
-                        rowRange.Style.Fill.BackgroundColor = XLColor.LightCoral; // قرمز برای برداشت‌ها
-                    }
+                        cumulative -= t.Amount;
+
+                    // --- تبدیل تاریخ به رشته شمسی با ساعت (فرمت گزینه A)
+                    var d = t.Date;
+                    string persianDateTime =
+                        $"{pc.GetYear(d):0000}/{pc.GetMonth(d):00}/{pc.GetDayOfMonth(d):00} - {d:HH:mm}";
+
+                    // --- درج اطلاعات در اکسل
+                    worksheet.Cell(row, 1).Value = persianDateTime;
+                    worksheet.Cell(row, 2).Value = t.Type == "Deposit" ? "واریزی" : "برداشت";
+                    worksheet.Cell(row, 3).Value = t.Amount;
+                    worksheet.Cell(row, 4).Value = t.Description;
+                    worksheet.Cell(row, 5).Value = cumulative;
+
+                    // --- رنگ‌بندی ردیف‌ها
+                    var rowRange = worksheet.Range(row, 1, row, 5);
+                    if (t.Type == "Deposit")
+                        rowRange.Style.Fill.BackgroundColor = XLColor.LightGreen;
+                    else
+                        rowRange.Style.Fill.BackgroundColor = XLColor.LightCoral;
                 }
 
-                // ساختن نام فایل
+                // --- تنظیم عرض ستون‌ها
+                worksheet.Columns().AdjustToContents();
+
+                // --- نام فایل خروجی
                 var fileName = $"{userName}_{currentDate}.xlsx";
 
-                // ذخیره به استریم و بازگشت فایل
                 using (var stream = new MemoryStream())
                 {
                     workbook.SaveAs(stream);
                     stream.Seek(0, SeekOrigin.Begin);
-
                     return File(stream.ToArray(),
-                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                fileName);
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        fileName);
                 }
             }
-
-
         }
+
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.MaliAdminGholami)]
         public virtual ActionResult Paymentwallet(Guid id, int? page)
