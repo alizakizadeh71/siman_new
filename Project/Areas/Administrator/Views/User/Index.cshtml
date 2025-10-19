@@ -339,14 +339,11 @@
                     <th>نام و نام خانوادگی</th>
                     <th>شماره تماس</th>
                     <th>نقش</th>
-                    <th>استان</th>
-                    <th>شهر</th>
-                    <th>اعتبار</th>
+                    <th>قدرت خرید</th>
                     <th>اعتبار اولیه</th>
                     <th>کد بازاریابی</th>
                     <th>کد معرف</th>
                     <th>تخفیف</th>
-                    <th>فعال</th>
                     <th>آدرس</th>
                 </tr>
             </thead>
@@ -392,14 +389,11 @@ $(document).ready(function () {
             { data: "FullName" },
             { data: "BuyerMobile" },
             { data: "Role" },
-            { data: "Province" },
-            { data: "City" },
             { data: "creditAmount", render: d => d ? parseInt(d).toLocaleString('fa-IR') : "0" },
             { data: "InitialCredit", render: d => d ? parseInt(d).toLocaleString('fa-IR') : "0" },
             { data: "MarketingCode" },
             { data: "ReferredByCode" },
             { data: "Discount" },
-            { data: "IsActive", render: d => `<input type="checkbox" ${d ? 'checked' : ''} disabled />` },
             { data: "Address" }
         ],
         columnDefs: [{ orderable: false, targets: [0,1] }],

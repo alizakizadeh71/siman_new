@@ -948,6 +948,7 @@ namespace OPS.Areas.Administrator.Controllers
             }).ToList();
 
             // --- تبدیل برداشت‌ها
+            // --- تبدیل برداشت‌ها
             var withdrawalList = withdrawals.Select(w =>
             {
                 string tonnageValue = "نامشخص";
@@ -972,18 +973,18 @@ namespace OPS.Areas.Administrator.Controllers
                 var packageType = w.PackageType?.Name ?? "نامشخص";
                 var factoryName = w.FactoryName?.Name ?? "نامشخص";
 
+                // --- توضیحات سفارشی کاربر در انتها
+                string customNote = "برداشت از کیف پول کاربر"; // اینو هر چی خواستی بنویس
+
                 return new
                 {
                     Amount = (long)w.AmountPaid,
                     Type = "Withdrawal",
                     Date = w.InsertDateTime,
-                    Description = $"محصول: {productName}\n" +
-                                  $"نوع محصول: {productType}\n" +
-                                  $"نوع بسته‌بندی: {packageType}\n" +
-                                  $"کارخانه: {factoryName}\n" +
-                                  $"تناژ: {tonnageValue}"
+                    Description = $"{productName} - {productType} - {packageType} - {factoryName} - {tonnageValue} - {w.Description}"
                 };
             }).ToList();
+
 
             // --- ادغام و مرتب‌سازی تراکنش‌ها از قدیمی‌ترین به جدیدترین
             var transactions = depositList;
