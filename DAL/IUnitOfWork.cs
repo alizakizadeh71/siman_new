@@ -3,7 +3,6 @@
     public interface IUnitOfWork : System.IDisposable
     {
         IDetailOfFactorRepository DetailOfFactorRepository { get; }
-        IFactorMessageRepository FactorMessageRepository { get; }
         IHeadOfFactorRepository HeadOfFactorRepository { get; }
         IServiceTariffInSubSystemRepository ServiceTariffInSubSystemRepository { get; }
         ICommodityInSubSystemRepository CommodityInSubSystemRepository { get; }

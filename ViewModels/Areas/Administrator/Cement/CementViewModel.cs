@@ -280,5 +280,11 @@ namespace ViewModels.Areas.Administrator.Cement
         #endregion
         public string UserName { get; set; }
 
+        #region RequestState
+        [System.ComponentModel.DataAnnotations.Display(Name = "وضعیت درخواست")]
+        public int RequestState { get; set; }
+        #endregion
+
+
     }
 }

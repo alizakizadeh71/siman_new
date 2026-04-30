@@ -26,154 +26,185 @@
         margin-right: 6px;
         margin-left: 3px;
     }
+
+    .disabled-purchase-box {
+        margin-top: 40px;
+        padding: 50px 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        background-color: #fdfdfd;
+        border: 2px solid #ebccd1;
+    }
 </style>
 
 <div class="example">
-    <img src="~/Content/Images/Baner1a.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%; z-index: -10; border: solid; border-width: 7px; border-color: #e1e1e1; -webkit-box-shadow: 0 7px 2px #777; -moz-box-shadow: 0 7px 2px #777; box-shadow: 0 7px 2px #777;" class="img-responsive">
+    <img src="~/Content/Images/Baner1a.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%; z-index: -10; border: solid; border-width: 7px; border-color: #e1e1e1; box-shadow: 0 7px 2px #777;" class="img-responsive">
 </div>
-
-@*<img  title="مصالح پخش" src="~/Content/Images/Baner.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%; z-index: -10; border: solid; border-width: 7px; border-color: #e1e1e1; -webkit-box-shadow: 0 7px 2px #777; -moz-box-shadow: 0 7px 2px #777; box-shadow: 0 7px 2px #777;" class="img-responsive">*@
 <br />
 
-<div class="row">
-    <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
-        @if (ViewBag.DisplaycreditAmount != null)
-        {
-            <h4 class="panel-heading" style="text-align:center ; color:forestgreen">@ViewBag.DisplaycreditAmount</h4>
-        }
-        @if (ViewBag.Message != null)
-        {
-            <h4 class="panel-heading" style="text-align:center">@ViewBag.Message</h4>
-        }
-
-        @if (ViewBag.Karkhane != null && ViewBag.Karkhane != string.Empty)
-        {
-            using (Html.BeginForm("Payment", "Zarinpal", FormMethod.Post))
+@* بررسی فعال بودن سیستم فروش *@
+@if (ViewBag.IsPurchaseEnabled != null && !(bool)ViewBag.IsPurchaseEnabled)
+{
+    <!-- نمای زیبا برای زمان توقف فروش -->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="text-center disabled-purchase-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="#d9534f" viewBox="0 0 16 16" style="margin-bottom: 15px;">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+                </svg>
+                <h2 style="color: #d9534f; margin-top: 25px; font-weight:bold;">
+                    @(ViewBag.PageMessages is string ? ViewBag.PageMessages : "در حال حاضر امکان ثبت سفارش وجود ندارد.")
+                </h2>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- نمای فرم خرید برای زمان فعال بودن فروش -->
+    <div class="row">
+        <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
+            @if (ViewBag.DisplaycreditAmount != null)
             {
-                <div style="color:red ; text-align:center" ; font-weight:bold" class="panel-body">
-                    <p style="color:black">
-                        لطفا محل تحویل را انتخاب نمایید
-                    </p>
-                    @Html.RadioButtonFor(model => model.Description, "M", new { @id = "Karkhane", @checked = "checked" })
-                    @Html.Raw(ViewBag.Karkhane)
-                    <br />
-                    @if (ViewBag.Mahal != null)
-                    {
-                        @Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
-                        @Html.Raw(ViewBag.Mahal)
+                <h4 class="panel-heading" style="text-align:center ; color:forestgreen">@ViewBag.DisplaycreditAmount</h4>
+            }
+            @if (ViewBag.Message != null)
+            {
+                <h4 class="panel-heading" style="text-align:center">@ViewBag.Message</h4>
+            }
+
+            @if (ViewBag.Karkhane != null && ViewBag.Karkhane != string.Empty)
+            {
+                using (Html.BeginForm("Payment", "Zarinpal", FormMethod.Post))
+                {
+                    <div style="color:red ; text-align:center ; font-weight:bold" class="panel-body">
+                        <p style="color:black">
+                            لطفا محل تحویل را انتخاب نمایید
+                        </p>
+                        @Html.RadioButtonFor(model => model.Description, "M", new { @id = "Karkhane", @checked = "checked" })
+                        @Html.Raw(ViewBag.Karkhane)
                         <br />
-                        @Html.Raw(ViewBag.Mahal)
-                    }
+                        @if (ViewBag.Mahal != null)
+                        {
+                            @Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
+                            @Html.Raw(ViewBag.Mahal)
+                            <br />
+                            @Html.Raw(ViewBag.Mahal)
+                        }
+                    </div>
 
-                </div>
-
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
-                @Html.Hidden("invoiceNumber", null, new { @class = "form-controle" })
-                @Html.Hidden("MahalTahvil", null, new { @class = "form-controle" })
-                <div style="text-align:center">
-                    <input class="btn btn-success" type="submit" id="btnPayment" style="margin-right:7px ; text-align:center" value="پرداخت و دریافت فاکتور" onclick="EnablePayment()" />
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    @Html.Hidden("invoiceNumber", null, new { @class = "form-controle" })
+                    @Html.Hidden("MahalTahvil", null, new { @class = "form-controle" })
+                    <div style="text-align:center; padding-bottom: 15px;">
+                        <input class="btn btn-success" type="submit" id="btnPayment" style="margin-right:7px ; text-align:center" value="پرداخت و دریافت فاکتور" onclick="EnablePayment()" />
+                    </div>
+                }
+            }
+            else if (ViewBag.PageMessages is string && !string.IsNullOrEmpty((string)ViewBag.PageMessages))
+            {
+                <div class="panel panel-info" style="text-align:center">
+                    <div style="color:red ; font-weight:bold" class="panel-body">
+                        @Html.Raw((string)ViewBag.PageMessages)
+                    </div>
                 </div>
             }
-        }
-        else if (ViewBag.PageMessages != null && ViewBag.PageMessages != string.Empty)
-        {
-            <div class="panel panel-info" style="text-align:center">
-                <div style="color:red ; font-weight:bold" class="panel-body">
-                    @Html.Raw(ViewBag.PageMessages)
+
+            @using (Html.BeginForm("Index", "HomeMain", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductName, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.ProductName, null,
+                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName(); sendFormData(); " })
+                        @Html.ValidationMessageFor(model => model.ProductName)
+                    </div>
                 </div>
-            </div>
-        }
 
-        @using (Html.BeginForm("Index", "HomeMain", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            <hr />
-            @Html.ValidationSummary(true)
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ProductName, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6">
-                    @Html.DropDownListFor(model => model.ProductName, null,
-                    Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName(); sendFormData(); " })
-                    @Html.ValidationMessageFor(model => model.ProductName)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductType, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6" id="DivProductTypeId">
+                        @Html.DropDownListFor(model => model.ProductType, null,
+                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType(); sendFormData();" })
+                        @Html.ValidationMessageFor(model => model.ProductType)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.ProductType, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6" id="DivProductTypeId">
-                    @Html.DropDownListFor(model => model.ProductType, null,
-                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType(); sendFormData();" })
-                    @Html.ValidationMessageFor(model => model.ProductType)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PackageType, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6" id="DivPackageTypeId">
+                        @Html.DropDownListFor(model => model.PackageType, null,
+                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "sendFormData();" })
+                        @Html.ValidationMessageFor(model => model.PackageType)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.PackageType, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6" id="DivPackageTypeId">
-                    @Html.DropDownListFor(model => model.PackageType, null,
-                   Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "sendFormData();" })
-                    @Html.ValidationMessageFor(model => model.PackageType)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6" id="DivFactoryNameId">
+                        @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "sendFormData();" })
+                        @Html.ValidationMessageFor(model => model.FactoryName)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6" id="DivFactoryNameId">
-                    @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "sendFormData();" })
-                    @Html.ValidationMessageFor(model => model.FactoryName)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6" id="DivTonnageId">
+                        @Html.TextBoxFor(model => model.Tonnage, new { @class = "form-control", onchange = "sendFormData();" })
+                        @Html.ValidationMessageFor(model => model.Tonnage)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6" id="DivTonnageId">
-                    @Html.TextBoxFor(model => model.Tonnage, new { @class = "form-control", onchange = "sendFormData();" })
-                    @Html.ValidationMessageFor(model => model.Tonnage)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
+                        @Html.ValidationMessageFor(model => model.BuyerMobile)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6">
-                    @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
-                    @Html.ValidationMessageFor(model => model.BuyerMobile)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-6">
+                        @Html.TextAreaFor(model => model.Description, new
+                        {
+                            @class = "form-control",
+                        Rows = 4,
+                        Style = "resize: none;"
+                        })
+                        @Html.ValidationMessageFor(model => model.Description)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Description, new { @class = "col-md-3 control-label" })
-                <div class="col-md-6">
-                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", 
-                    Rows = 4,
-                    Style = "resize: none;"
-                    })
-                    @Html.ValidationMessageFor(model => model.Description)
+                <div class="form-group">
+                    <div class="text-center">
+                        <input type="submit" value='محاسبه قیمت' class="btn btn-info" />
+                    </div>
                 </div>
-            </div>
+            }
+        </section>
+    </div>
+}
 
-            <div class="form-group">
-                <div class="text-center">
-                    @*<input type="submit" value='محاسبه قیمت' class="btn btn-success" />*@
-                    <input type="submit" value='محاسبه قیمت' class="btn btn-info" />
-                </div>
-            </div>
-        }
-    </section>
-
-    @Html.Action("News")
-
-</div>
+<hr />
 <div class="row">
+    @Html.Action("News")
+</div>
+
+<div class="row" style="margin-top: 20px;">
     <div class="col-md-4">
-        <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; -webkit-box-shadow: 0 4px 2px #777; -moz-box-shadow: 0 4px 2px #777; box-shadow: 0 4px 2px #777;">
+        <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; box-shadow: 0 4px 2px #777;">
             <img src="/Content/Images/Guid.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%;" class="img-responsive" />
             <hr />
             <div class="caption">
                 <h4 style="margin-top:-20px;">راهنما کاربران</h4>
                 <p>...</p>
-                <br />
                 <br />
                 <p>
                     <a class="btn btn-default" href="/HomeMain/UserGuid">ادامه مطلب ...</a>
@@ -182,13 +213,12 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; -webkit-box-shadow: 0 4px 2px #777; -moz-box-shadow: 0 4px 2px #777; box-shadow: 0 4px 2px #777;">
+        <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; box-shadow: 0 4px 2px #777;">
             <img src="~/Content/Images/Recepe.jpg" style="top: 0px; left: 0px; width: 100%; max-height: 100%;" class="img-responsive" />
             <hr />
             <div class="caption">
                 <h4 style="margin-top:-20px;">دستورالعمل ها</h4>
                 <p>...</p>
-                <br />
                 <br />
                 <p>
                     <a class="btn btn-default" href="#">ادامه مطلب ...</a>
@@ -197,14 +227,11 @@
         </div>
     </div>
     <div class="col-md-4">
-        <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; -webkit-box-shadow: 0 4px 2px #777; -moz-box-shadow: 0 4px 2px #777; box-shadow: 0 4px 2px #777;">
+        <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; box-shadow: 0 4px 2px #777;">
             <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=340301&amp;Code=15RKvgmjoNFLcmU8pGMk"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=340301&amp;Code=15RKvgmjoNFLcmU8pGMk" alt="" style="cursor:pointer" id="15RKvgmjoNFLcmU8pGMk"></a>
         </div>
     </div>
 </div>
-
-@*<img src="http://d.ivo.ir/Files/Clearance/3087.jpg" />*@
-
 
 <script>
     function vmsblink(selector) {
@@ -214,24 +241,7 @@
             });
         });
     }
-    vmsblink('blink');
-</script>
-
-<script type="text/javascript">
-    $("button#btnSearch").click(function () {
-        alert('ddfdf');
-    });
-
-    $.ajax({
-        url: '/api/Temp',
-        success: function (data) {
-            var list = $("#Temps");
-            for (var i = 0; i < data.length; i++) {
-                var temp = data[i];
-                list.append('<li id="' + temp.Id + '">' + temp.Name + '</li>');
-            }
-        }
-    });
+    vmsblink('.blink');
 </script>
 
 <script type="text/javascript">
@@ -241,18 +251,14 @@
             e.preventDefault();
         }
     }
-</script>
 
-<script type="text/javascript">
     function onChangeProvince() {
         $.ajax({
             url: '/Administrator/HeadOfFactor/GetCities',
             type: 'post',
             data: { provinceId: $("#Province").val() },
             success: function (data) {
-
                 $("#DivCityId").empty();
-
                 var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
@@ -269,25 +275,20 @@
         });
     }
 
-
     function onChangeProductName() {
         $.ajax({
             url: '/Administrator/Cement/GetProductType',
             type: 'post',
             data: { ProductNameId: $("#ProductName").val() },
             success: function (data) {
-
                 $("#DivProductTypeId").empty();
-
                 var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
+
                 $.each(data, function (i, ProductType) {
                     var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
-                    /// baraye inke avalin id baraye loade Select badi estefade shavad
-                    if (i == 0) {
-                        onChangeProductType(ProductType.Id);
-                    }
+                    if (i == 0) { onChangeProductType(ProductType.Id); }
                     select.append(option);
                 })
 
@@ -301,9 +302,7 @@
             type: 'post',
             data: { ProductNameId: $("#ProductName").val() },
             success: function (data) {
-
                 $("#DivFactoryNameId").empty();
-
                 var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
@@ -314,25 +313,19 @@
                 })
 
                 $("#DivFactoryNameId").append(select);
-                // baraye az ghabl entekhab shodane item
                 $('#FactoryName>option:eq(1)').prop('selected', true);
             }
         });
     }
 
     function onChangeProductType(ProductTypee) {
-        debugger;
-        if (ProductTypee == undefined) { /// baraye inke dafe aval az loade safhe bekhoone
-            ProductTypee = $("#ProductType").val();
-        }
+        if (ProductTypee == undefined) { ProductTypee = $("#ProductType").val(); }
         $.ajax({
             url: '/Administrator/Cement/GetPackageType',
             type: 'post',
             data: { ProductTypeId: ProductTypee },
             success: function (data) {
-
                 $("#DivPackageTypeId").empty();
-
                 var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
@@ -343,22 +336,19 @@
                 })
 
                 $("#DivPackageTypeId").append(select);
-                // baraye az ghabl entekhab shodane item
                 $('#PackageType>option:eq(1)').prop('selected', true);
-                onChangePackageType();
+                if (typeof onChangePackageType === "function") { onChangePackageType(); }
             }
         });
     }
 
     function onChangecity() {
-                     $.ajax({
+         $.ajax({
             url: '/Administrator/HeadOfFactor/GetVillage',
             type: 'post',
             data: { cityId: $("#City").val() },
             success: function (data) {
-
                 $("#DivVillageId").empty();
-
                 var select = $("<select class='form-control' id='village' name='village' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
@@ -367,37 +357,28 @@
                     var option = ('<option value="' + village.Id + '"> ' + village.Name + '</option>');
                     select.append(option);
                 })
-
                 $("#DivVillageId").append(select);
             }
-                     });
+         });
     }
 
-    $('#Village>option:eq(1)').prop('selected', true);
-</script>
-
-
-<script type="text/javascript">
-
     function EnablePayment() {
-        debugger;
         var Karkhane = document.getElementById("Karkhane");
         var Mahal = document.getElementById("Mahal");
-        if (Karkhane.checked == true) {
+        if (Karkhane && Karkhane.checked == true) {
             $("#MahalTahvil").val('Karkhane');
         }
-        else if (Mahal.checked == true) {
+        else if (Mahal && Mahal.checked == true) {
             $("#MahalTahvil").val('Mahal');
         }
-        //else {
-        //    $('#btnPayment').prop('disabled', 'disabled');
-        //}
     }
 
     function copyLink() {
         var copyText = document.getElementById("linkInput");
-        copyText.select();
-        document.execCommand("copy");
-        alert("لینک کپی شد: " + copyText.value);
+        if (copyText) {
+            copyText.select();
+            document.execCommand("copy");
+            alert("لینک کپی شد: " + copyText.value);
+        }
     }
 </script>

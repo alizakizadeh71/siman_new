@@ -66,22 +66,33 @@ namespace DAL
             }
         }
 
-        public User GetByPhoneNumebr(string phoneNumeber)
+        public User GetByPhoneNumebr(string phoneNumber)
         {
             try
             {
-                User user =
-                    Get()
-                    .Where(u => u.BuyerMobile == phoneNumeber)
-                    .FirstOrDefault();
+                var user = Get().FirstOrDefault(u => u.BuyerMobile == phoneNumber);
+
+                if (user != null)
+                {
+                    // چک برای ادمین با ToLower
+                    string fullName = user.FullName?.ToLower() ?? "";
+                    string userName = user.UserName?.ToLower() ?? "";
+
+                    if (fullName.Contains("ادمین") || userName.Contains("admin"))
+                    {
+                        return null;
+                    }
+                }
 
                 return user;
             }
-            catch (System.Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
+
+
 
         public string GetAccountStatus(string userName)
         {
@@ -153,8 +164,8 @@ namespace DAL
         {
             try
             {
-                string address = Get().FirstOrDefault(u => u.BuyerMobile == Phonenumber).Address;
-                return address;
+                var user = Get().FirstOrDefault(u => u.BuyerMobile == Phonenumber);
+                return user?.Address ?? "نامشخص";
             }
             catch (Exception e)
             {

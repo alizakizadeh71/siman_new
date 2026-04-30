@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models
 {
@@ -261,5 +263,32 @@ namespace Models
         public virtual System.Collections.Generic.IList<File> Files { get; set; }
         public virtual System.Collections.Generic.IList<Message> Messages { get; set; }
         public string MahalTahvil { get; set; }
+
+        #region Driver Information (اطلاعات باربری)
+        [NotMapped]
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.DriverName)]
+        public string DriverName { get; set; }
+
+        [NotMapped]
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.DriverLastName)]
+        public string DriverLastName { get; set; }
+
+        [NotMapped]
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.DriverMobile)]
+        [StringLength(11, ErrorMessage = "شماره موبایل باید 11 رقم باشد")]
+        public string DriverMobile { get; set; }
+
+        [NotMapped]
+        [System.ComponentModel.DataAnnotations.Display
+            (ResourceType = typeof(Resources.Model.Request),
+            Name = Resources.Model.Strings.RequestKeys.DriverLicensePlate)]
+        public string DriverLicensePlate { get; set; }
+        #endregion
     }
 }

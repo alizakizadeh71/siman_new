@@ -20,88 +20,11 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace OPS.Areas.Administrator.Controllers
+namespace T4MVC.Administrator
 {
-    public partial class CentralBankController
+    public class CentralBankController
     {
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public CentralBankController() { }
 
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected CentralBankController(Dummy d) { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoute(callInfo.RouteValueDictionary);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
-        {
-            var callInfo = result.GetT4MVCResult();
-            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
-        }
-
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.JsonResult GetCentralBank()
-        {
-            return new T4MVC_JsonResult(Area, Name, ActionNames.GetCentralBank);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult PaymentInquiry()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.PaymentInquiry);
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public CentralBankController Actions { get { return MVC.Administrator.CentralBank; } }
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Area = "Administrator";
-        [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "CentralBank";
-        [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "CentralBank";
-
-        static readonly ActionNamesClass s_actions = new ActionNamesClass();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionNamesClass ActionNames { get { return s_actions; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass
-        {
-            public readonly string Index = "Index";
-            public readonly string GetCentralBank = "GetCentralBank";
-            public readonly string PaymentInquiry = "PaymentInquiry";
-        }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants
-        {
-            public const string Index = "Index";
-            public const string GetCentralBank = "GetCentralBank";
-            public const string PaymentInquiry = "PaymentInquiry";
-        }
-
-
-        static readonly ActionParamsClass_GetCentralBank s_params_GetCentralBank = new ActionParamsClass_GetCentralBank();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_GetCentralBank GetCentralBankParams { get { return s_params_GetCentralBank; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_GetCentralBank
-        {
-            public readonly string viewModel = "viewModel";
-        }
-        static readonly ActionParamsClass_PaymentInquiry s_params_PaymentInquiry = new ActionParamsClass_PaymentInquiry();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_PaymentInquiry PaymentInquiryParams { get { return s_params_PaymentInquiry; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_PaymentInquiry
-        {
-            public readonly string Id = "Id";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -118,32 +41,6 @@ namespace OPS.Areas.Administrator.Controllers
         }
     }
 
-    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_CentralBankController : OPS.Areas.Administrator.Controllers.CentralBankController
-    {
-        public T4MVC_CentralBankController() : base(Dummy.Instance) { }
-
-        public override System.Web.Mvc.ActionResult Index()
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.JsonResult GetCentralBank(ViewModels.Areas.Administrator.CentralBank.bankTransactionViewModel viewModel)
-        {
-            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GetCentralBank);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult PaymentInquiry(string Id)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.PaymentInquiry);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Id", Id);
-            return callInfo;
-        }
-
-    }
 }
 
 #endregion T4MVC

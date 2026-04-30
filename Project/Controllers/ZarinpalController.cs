@@ -21,7 +21,6 @@ namespace OPS.Controllers
     public partial class ZarinpalController : Infrastructure.BaseControllerWithUnitOfWork
     {
         private MerchantUtility oMerchantUtility = new MerchantUtility();
-        private Infrastructure.cbinasimService oCBINasim = new Infrastructure.cbinasimService();
         PGServiceClient oIPGServices = new PGServiceClient();
         //string testamount = "10017";
 
@@ -123,10 +122,57 @@ namespace OPS.Controllers
                 string description = oFactorCement.ProductName.Name + " - " + oFactorCement.PackageType.Name + " - " + oFactorCement.FactoryName.Name + " - " + oFactorCement.Tonnagedouble;
                 string callbackurl = "https://masalehpakhsh.com/Zarinpal/VerifyPayment";
                 string mobile = oFactorCement.BuyerMobile;
-                if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
+                // اگر در حالت تست هستیم (یعنی روی لوکال یا با دیباگر اجرا می‌کنیم)
+                if (System.Diagnostics.Debugger.IsAttached)
                 {
-                    callbackurl = "http://localhost:6066/Zarinpal/VerifyPayment";
+                    // شبیه‌سازی پاسخ زرین‌پال بدون اتصال واقعی
+                    string fakeAuthority = "TEST_AUTH_" + Guid.NewGuid().ToString("N").Substring(0, 8);
+                    oFactorCement.Authority = fakeAuthority;
+                    oFactorCement.FinalApprove = true;
+                    UnitOfWork.FactorCementRepository.Update(oFactorCement);
+                    UnitOfWork.Save();
+
+                    // کاهش موجودی انبار
+                    if (InventoryTonnage != null)
+                    {
+                        InventoryTonnage.Inventorytonnage -= Tonnage;
+                        UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
+                    }
+
+                    // در صورت داشتن معرف، پورسانت بده
+                    if (user.ReferredByCode != null)
+                    {
+                        var marketer = UnitOfWork.UserRepository.GetUserByMarketingCode(user.ReferredByCode);
+                        if (marketer != null)
+                        {
+                            var commission = (int)(oFactorCement.AmountPaid * 0.007);
+                            var transaction = new MarketerTransactions
+                            {
+                                Id = Guid.NewGuid(),
+                                MarketingCode = int.Parse(marketer.MarketingCode),
+                                ReferredCode = int.Parse(user.ReferredByCode),
+                                ProductNameId = oFactorCement.ProductNameId,
+                                ProductTypeId = oFactorCement.ProductTypeId,
+                                PackageType = oFactorCement.PackageType,
+                                FactoryName = oFactorCement.FactoryName,
+                                Tonnagedouble = oFactorCement.Tonnagedouble,
+                                CommissionAmount = commission,
+                                InsertDateTime = DateTime.Now
+                            };
+                            UnitOfWork.MarketerTransactionsRepository.Insertdata(transaction);
+                            marketer.creditAmount += commission;
+                        }
+                    }
+
+                    UnitOfWork.Save();
+
+                    // ارسال پیامک پرداخت موفق تستی
+                    PaymentSMS(user.BuyerMobile, oFactorCement);
+
+                    // هدایت کاربر به صفحه نمایش فاکتور مثل حالت واقعی
+                    return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = oFactorCement.InvoiceNumber });
                 }
+
 
                 ViewModels.Areas.Administrator.ZarinPal.RequestParameters Parameters = new ViewModels.Areas.Administrator.ZarinPal.RequestParameters(merchant, amount, description, callbackurl, mobile, "ali_animax@yahoo.com");
 
@@ -334,6 +380,7 @@ namespace OPS.Controllers
             cementViewModel.StringInsertDateTime = new Infrastructure.Calander(oFactorCement.InsertDateTime).Persion();
             cementViewModel.BuyerMobile = oFactorCement.BuyerMobile;
             cementViewModel.BuyerName = oFactorCement.User.FullName;
+            cementViewModel.RequestState = oFactorCement.RequestState;
             cementViewModel.BuyerNationalCode = oFactorCement.User.NationalCode;
             cementViewModel.StringProductName = oFactorCement.ProductName.Name;
             cementViewModel.StringProductType = oFactorCement.ProductType.Name;
@@ -555,31 +602,28 @@ namespace OPS.Controllers
 
 
 
-                string[] text = user != null && user.isSendSms
+                string[] text = (user != null && user.isSendSms)
                     ? new string[] {
-                user.UserName,
-                factor.Tonnagedouble != null 
-                    ? factor.Tonnagedouble.ToString().Replace('.', '/') + " تن"
-                    : "N/A",
-                factor.PackageType?.Name ?? "N/A",
-                factor.FactoryName?.Name ?? "N/A",
-                factor.ProductType?.Name ?? "N/A",
-                factor.AmountPaid.ToString("N0"),
-                balanceDetails,
-                accountStatus
-                    }
-                    : new string[] {
-                "ثبت نام نشده",
-                factor.Tonnagedouble != null 
-                    ? factor.Tonnagedouble.ToString().Replace('.' , '/') + " تن"
-                    : "N/A",
-                factor.PackageType?.Name ?? "N/A",
-                factor.FactoryName?.Name ?? "N/A",
-                factor.ProductType?.Name ?? "N/A",
-                factor.AmountPaid.ToString("N0"),
-                "0",
-                ""
+                        user.UserName,
+                        factor.Tonnagedouble.ToString().Replace('.', '/') + " تن" ?? "N/A",
+                        factor.PackageType?.Name ?? "N/A",
+                        factor.FactoryName?.Name ?? "N/A",
+                        factor.ProductType?.Name ?? "N/A",
+                        factor.AmountPaid.ToString("N0"),
+                        balanceDetails,
+                        accountStatus
+                                    }
+                                    : new string[] {
+                        "ثبت نام نشده",
+                        factor.Tonnagedouble.ToString().Replace('.', '/') + " تن" ?? "N/A",
+                        factor.PackageType?.Name ?? "N/A",
+                        factor.FactoryName?.Name ?? "N/A",
+                        factor.ProductType?.Name ?? "N/A",
+                        factor.AmountPaid.ToString("N0"),
+                        "0",
+                        ""
                     };
+
 
                 var binding = new BasicHttpBinding
                 {

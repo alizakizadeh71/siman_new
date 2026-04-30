@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Enums;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -144,7 +145,7 @@ namespace Infrastructure
 
                 case Enums.EnumTypes.RequestStates:
                     {
-                        helperValue = ((Enums.RequestStates)enumValue).ToString();
+                        helperValue = ((RequestState)enumValue).ToString();
                         retValue = Resources.Enum.RequestStates.ResourceManager.GetString(helperValue);
                         break;
                     }
@@ -303,8 +304,8 @@ namespace Infrastructure
                 case Enums.EnumTypes.RequestStates:
                     {
                         EnumRowList =
-                            Enum.GetValues(typeof(Enums.RequestStates))
-                            .Cast<Enums.RequestStates>().ToList()
+                            Enum.GetValues(typeof(RequestState))
+                            .Cast<RequestState>().ToList()
                             .Select(current => new Infrastructure.EnumRow()
                             {
                                 Id = current.GetHashCode(),

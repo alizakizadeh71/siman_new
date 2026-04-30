@@ -7,8 +7,6 @@
         {
             public Configuration()
             {
-                Property(current => current.FullName).HasMaxLength(100);
-                Property(current => current.UserName).HasMaxLength(20);
                 Property(current => current.Password).HasMaxLength(200);
 
                 HasRequired(current => current.Role)

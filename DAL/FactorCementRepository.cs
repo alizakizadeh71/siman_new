@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Enums;
+using Models;
 using System;
 using System.Linq;
 
@@ -99,6 +100,60 @@ namespace DAL
             }
 
             catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public IQueryable<FactorCement> GetOrdersByState(RequestState state)
+        {
+            try
+            {
+                return Get()
+                    .Where(current => current.RequestState == (int)state)
+                    .Where(current => current.IsDeleted == false)
+                    .Where(current => current.IsActived == true);
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void UpdateOrderState(Guid orderId, RequestState newState)
+        {
+            try
+            {
+                var order = Get().FirstOrDefault(x => x.Id == orderId);
+                if (order != null)
+                {
+                    order.RequestState = (int)newState;
+                    DatabaseContext.SaveChanges();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void SetDriverInfoAndLoadOrder(Guid orderId, string driverName, string driverLastName, string driverMobile, string driverPlate)
+        {
+            try
+            {
+                var order = Get().FirstOrDefault(x => x.Id == orderId);
+                if (order != null)
+                {
+                    order.DriverName = driverName;
+                    order.DriverLastName = driverLastName;
+                    order.DriverMobile = driverMobile;
+                    order.DriverLicensePlate = driverPlate;
+                    order.RequestState = (int)Enums.RequestState.Loaded;
+
+                    DatabaseContext.SaveChanges();
+                }
+            }
+            catch (System.Exception ex)
             {
                 throw ex;
             }

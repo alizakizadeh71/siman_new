@@ -118,11 +118,12 @@
     </Compile>
     <Compile Include="DestinationManagement.cs" />
     <Compile Include="IMarketerTransactionsRepository.cs" />
+    <Compile Include="ISiteSettingRepository.cs" />
     <Compile Include="MarketerTransactionsRepository.cs" />
+    <Compile Include="SiteSettingRepository.cs" />
     <Compile Include="walletFactorRepository.cs" />
     <Compile Include="FinancialManagementRepository.cs" />
     <Compile Include="FactorCementRepository.cs" />
-    <Compile Include="FactorMessageRepository.cs" />
     <Compile Include="FileRepository.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -191,7 +192,6 @@
     <Compile Include="IExecutableCodeRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IFactorMessageRepository.cs" />
     <Compile Include="IFileRepository.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -242,9 +242,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IUserRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MessageRepository.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PaymentDetailRepository.cs" />

@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "تایید بارگیری و ثبت اطلاعات راننده";
+}
+
+<div class="panel panel-success" style="margin-top: 20px;">
+    <div class="panel-heading">
+        <h3 class="panel-title">تایید بارگیری و ثبت اطلاعات راننده</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <input type="hidden" id="RequestId" value="@ViewBag.RequestId" />
+
+                <div class="form-group">
+                    <label>نام و نام خانوادگی راننده:</label>
+                    <input type="text" id="DriverFullName" class="form-control" placeholder="مثال: علی احمدی" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>شماره تماس راننده:</label>
+                    <input type="text" id="DriverMobile" class="form-control" onkeypress="return AllowNumbersOnly(event)" placeholder="مثال: 09123456789" maxlength="11" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>شماره پلاک خودرو:</label>
+                    <input type="text" id="LicensePlate" class="form-control" placeholder="مثال: 12 الف 345 ایران 67" />
+                </div>
+
+                <br />
+                <div class="form-group text-center">
+                    <a href="/Carrier/Request/Index" class="btn btn-default">انصراف و بازگشت</a>
+                    <button type="button" class="btn btn-success" id="btnSubmitLoad" onclick="submitLoadData()">ثبت وضعیت و ارسال پیامک</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
+    function submitLoadData() {
+        var reqId = $("#RequestId").val();
+        var driverName = $("#DriverFullName").val();
+        var driverMobile = $("#DriverMobile").val();
+        var licensePlate = $("#LicensePlate").val();
+
+        if (!driverName || !driverMobile || !licensePlate) {
+            alert("لطفاً تمامی فیلدهای مربوط به راننده را پر کنید.");
+            return;
+        }
+
+        $("#btnSubmitLoad").prop("disabled", true).text("در حال ارسال...");
+
+        $.ajax({
+            url: '/Carrier/Request/SetAsLoaded',
+            type: 'POST',
+            data: {
+                id: reqId,
+                driverName: driverName,
+                driverMobile: driverMobile,
+                licensePlate: licensePlate
+            },
+            success: function (res) {
+                if (res.Success) {
+                    alert("وضعیت بار با موفقیت تغییر کرد و پیامک ارسال شد.");
+                    window.location.href = '/Carrier/Request/Index'; // بازگشت به گرید
+                } else {
+                    alert("خطا: " + res.Message);
+                    $("#btnSubmitLoad").prop("disabled", false).text("ثبت وضعیت و ارسال پیامک");
+                }
+            },
+            error: function () {
+                alert("خطا در برقراری ارتباط با سرور.");
+                $("#btnSubmitLoad").prop("disabled", false).text("ثبت وضعیت و ارسال پیامک");
+            }
+        });
+    }
+</script>
+

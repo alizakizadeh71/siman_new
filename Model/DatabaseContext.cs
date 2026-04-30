@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System.Data.Entity;
+
+namespace Models
 {
     public class DatabaseContext : System.Data.Entity.DbContext
     {
@@ -64,6 +66,9 @@
         public System.Data.Entity.DbSet<Paymentwaitinglist> Paymentwaitinglist { get; set; }
         public System.Data.Entity.DbSet<walletFactor> walletFactor { get; set; }
         public System.Data.Entity.DbSet<MarketerTransactions> MarketerTransactions { get; set; }
+        public DbSet<SiteSetting> WebsiteSettings { get; set; }
+
+
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -107,6 +112,7 @@
             modelBuilder.Configurations.Add(new FactoryName.Configuration());
             modelBuilder.Configurations.Add(new Tonnage.Configuration());
             modelBuilder.Configurations.Add(new FactorCement.Configuration());
+
         }
 
         public System.Data.Entity.DbSet<Models.City> Cities { get; set; }

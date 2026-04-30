@@ -182,6 +182,46 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: نام خانوادگی راننده
+        /// </summary>
+        public static string DriverLastName([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.DriverLastName;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("DriverLastName", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: شماره پلاک
+        /// </summary>
+        public static string DriverLicensePlate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.DriverLicensePlate;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("DriverLicensePlate", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: شماره تماس راننده
+        /// </summary>
+        public static string DriverMobile([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.DriverMobile;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("DriverMobile", resourceCulture);
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to: نام راننده
+        /// </summary>
+        public static string DriverName([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.DriverName;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("DriverName", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: تا تاریخ صدور
         /// </summary>
         public static string EndDate([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -859,6 +899,26 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: توضیحات
         /// </summary>
         public const string Description = "Description";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نام خانوادگی راننده
+        /// </summary>
+        public const string DriverLastName = "DriverLastName";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: شماره پلاک
+        /// </summary>
+        public const string DriverLicensePlate = "DriverLicensePlate";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: شماره تماس راننده
+        /// </summary>
+        public const string DriverMobile = "DriverMobile";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نام راننده
+        /// </summary>
+        public const string DriverName = "DriverName";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: تا تاریخ صدور

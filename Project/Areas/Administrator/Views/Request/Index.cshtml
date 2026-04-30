@@ -1,4 +1,5 @@
-﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
+﻿@model ViewModels.Areas.Administrator.Request.IndexViewModel
+@using Utilities.PersianDate
 
 @{
     string strTitle =
@@ -14,169 +15,240 @@
         border-radius: 4px;
     }
 
-    .k-icon {
-        background-image: none !important;
-        width: auto !important;
-        height: auto !important;
+    /* یکسان‌سازی دقیق ارتفاع سطرها بین بخش ثابت و متحرک */
+    .k-grid tbody tr {
+        height: 45px !important; /* ارتفاع ثابت برای تمام سطرها */
+    }
+
+    .k-grid td {
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
+        vertical-align: middle !important; /* وسط‌چین کردن عمودی همه سلول‌ها */
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
     }
 </style>
-<link href="http://kendo.cdn.telerik.com/2014.2.716/styles/kendo.common.min.css" rel="stylesheet" />
-<link href="http://kendo.cdn.telerik.com/2014.2.716/styles/kendo.default.min.css" rel="stylesheet" />
-<script src="http://kendo.cdn.telerik.com/2014.2.716/js/jquery.min.js"></script>
-<script src="http://kendo.cdn.telerik.com/2014.2.716/js/kendo.ui.core.min.js"></script>
-<script>
-    // 1- تعریف DataSource اولیه
-    var varDataSource = new kendo.data.DataSource({
-        pageSize: 10,
-        data: []
+
+<script type="text/javascript">
+
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
+    // باز شدن در صفحه جدید
+    $(document).on('click', 'a.btn-blank', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        window.open(url, '_blank');
     });
 
-    // 2- ساخت Grid
-    $("#grid").kendoGrid({
-        dataSource: varDataSource,
-        sortable: true,
-        filterable: true,
-        resizable: true,
-        scrollable: { virtual: false },
-        pageable: {
-            refresh: true,
-            input: true,
-            numeric: true,
-            pageSizes: [5, 10, 25, 50, 100]
-        },
-        mobile: true,
-        columnMenu: true,
-        columns: [
-            { field: "InvoiceNumber", title: "شماره فاکتور", width: "120px" },
-            { field: "StringProductName", title: "نام محصول", width: "150px" },
-            { field: "StringProductType", title: "نوع محصول", width: "150px" },
-            { field: "StringPackageType", title: "نوع بسته بندی", width: "150px" },
-            { field: "StringFactoryName", title: "کارخانه", width: "150px" },
-            { field: "Tonnage", title: "تن", width: "100px" },
-            { field: "AmountPaid", title: "مبلغ پرداختی", width: "120px" },
-            { field: "BuyerMobile", title: "شماره خریدار", width: "120px" },
-            { field: "Address", title: "آدرس", width: "200px" },
-            { field: "Description", title: "توضیحات", width: "200px" },
-            { field: "MahalTahvil", title: "محل تحویل", width: "150px" },
-            { field: "StringInsertDateTime", title: "تاریخ ثبت", width: "150px" },
-            {
-                title: "عملیات",
-                width: "120px",
-                template: function (dataItem) {
-                    return `
-                    <a class="btn-blank" href="/Administrator/Request/display/${dataItem.Id}">
-                        <img src="../../../Content/Icon/display.png"/>
-                    </a>
-                    <a href="/Administrator/Request/Edit/${dataItem.Id}">
-                        <img src="../../../Content/Icon/edit.png"/>
-                    </a>
-                `;
-                }
-            }
-        ]
-    });
+    function Comma(Num) {
+        if (!Num) return Num;
+        Num = Num.toString().replace(/,/g, '');
+        var parts = Num.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join('.');
+    }
 
-    // 3- گرفتن نمونه Grid
-    var grid = $("#grid").data("kendoGrid");
+    // تابع دریافت پارامترهای جستجو به صورت داینامیک برای گرید
+    function getSearchParameters() {
+        return {
+            AmountPaid: $("input#AmountPaid").val(),
+            InvoiceNumber: $("input#InvoiceNumber").val(),
+            BuyerMobile: $("input#BuyerMobile").val(),
+            ProductName: $("select#ProductName").val(),
+            ProductType: $("select#ProductType").val(),
+            PackageType: $("select#PackageType").val(),
+            FactoryName: $("select#FactoryName").val(),
+            Province: $("select#Province").val(),
+            City: $("select#City").val(),
+            stringFinalApprove: $("select#stringFinalApprove").val(),
+            // === فیلد وضعیت درخواست به جستجو اضافه شد ===
+            RequestState: $("select#RequestState").val(),
+            Tonnage: $("input#Tonnage").val() || $("select#Tonnage").val(),
+            StartDate: $("input#StartDate").val(),
+            EndDate: $("input#EndDate").val(),
+            PayStartDate: $("input#PayStartDate").val(),
+            PayEndDate: $("input#PayEndDate").val(),
+            FromAmount: $("#FromAmount").val() ? $("#FromAmount").val().replace(/,/g, '') : "",
+            ToAmount: $("#ToAmount").val() ? $("#ToAmount").val().replace(/,/g, '') : ""
+        };
+    }
 
-    // 4- تنظیم autoFit در dataBound
-    grid.bind("dataBound", function () {
-        grid.columns.forEach(col => {
-            if (col.field) {
-                grid.autoFitColumn(col.field);
-            }
+    var rowNumber = 0;
+
+    $(document).ready(function () {
+
+        $('#StartDate').datepicker({ dateFormat: 'yy/mm/dd', autoSize: true, showyear: true, changeYear: true });
+        $('#EndDate').datepicker({ dateFormat: 'yy/mm/dd', autoSize: true, showyear: true, changeYear: true });
+        $('#PayStartDate').datepicker({ dateFormat: 'yy/mm/dd', autoSize: true, showyear: true, changeYear: true });
+        $('#PayEndDate').datepicker({ dateFormat: 'yy/mm/dd', autoSize: true, showyear: true, changeYear: true });
+
+        $("#SearchPanelHeader").click(function () {
+            $("#SearchPanelBody").toggle(1000);
         });
-    });
 
-    // 5- رویداد کلیک دکمه سرچ
-    $("button#btnSearch").click(function () {
-        var varDataSource = new kendo.data.DataSource({
-            pageSize: 10,
-            serverPaging: true,
-            serverSorting: true,
-            serverFiltering: true,
-            transport: {
-                read: {
-                    type: "POST",
-                    dataType: "json",
-                    url: "/Administrator/Request/Search",
-                    data: {
-                        InvoiceNumber: () => $("input#InvoiceNumber").val(),
-                        BuyerMobile: () => $("input#BuyerMobile").val(),
-                        ProductName: () => $("select#ProductName").val(),
-                        ProductType: () => $("select#ProductType").val(),
-                        PackageType: () => $("select#PackageType").val(),
-                        FactoryName: () => $("select#FactoryName").val(),
-                        Tonnage: () => $("select#Tonnage").val(),
-                        stringFinalApprove: () => $("select#stringFinalApprove").val(),
-                        Province: () => $("select#Province").val(),
-                        City: () => $("select#City").val(),
-                        StartDate: () => $("input#StartDate").val(),
-                        EndDate: () => $("input#EndDate").val(),
-                        PayStartDate: () => $("input#PayStartDate").val(),
-                        PayEndDate: () => $("input#PayEndDate").val(),
-                        FromAmount: () => {
-                            var number = $("#FromAmount").val().replace(/,/g, "");
-                            $("#FromAmount").val(number);
-                            return number;
-                        },
-                        ToAmount: () => {
-                            var number = $("#ToAmount").val().replace(/,/g, "");
-                            $("#ToAmount").val(number);
-                            return number;
-                        }
-                    }
-                }
+        var varDataSource =
+            new kendo.data.DataSource({
+                pageSize: 10,
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                serverAggregates: false,
+
+                transport: {
+                    read: {
+                        type: "POST",
+                        dataType: "json",
+                        url: "/Administrator/Request/Search",
+                        data: getSearchParameters
+                    },
+                },
+
+                requestStart: function (e) {
+                    $("button#btnSearch").hide();
+                },
+                requestEnd: function (e) {
+                    $("button#btnSearch").show();
+                },
+                schema: {
+                    data: function (e) { return (e.Data); },
+                    total: function (e) { return (e.Total); },
+                },
+            });
+
+        $("div#grid").kendoGrid({
+            sortable: { mode: "multiple", allowUnsort: true, },
+            pageable: {
+                info: true, input: true, refresh: true, numeric: true, buttonCount: 5, previousNext: true, pageSize: [5, 10, 25, 50, 100],
+                messages: { morePages: "صفحات بیشتر", page: "شماره صفحه", }
             },
-            schema: {
-                data: e => e.Data,
-                total: e => e.Total
-            }
+            groupable: true, filterable: true, scrollable: true, reorderable: true,
+            columnMenu: { columns: true, filterable: true, messages: { lock: "قفل شده", unlock: "قفل نشده", } },
+            navigatable: true, selectable: "multiple row",
+            dataSource: varDataSource,
+            dataBinding: function () {
+                rowNumber = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+            },
+            columns:
+                [
+                    {
+                        hidden: false, locked: true, lockable: true, width: "40px", title: "#",
+                        attributes: { style: "text-align: center; vertical-align: middle;" },
+                        template: function (dataItem) { return ++rowNumber; }
+                    },
+                    {
+                        title: "عملیات", hidden: false, locked: true, lockable: true, width: "220px",
+                        attributes: { style: "text-align: center; vertical-align: middle;" },
+                        template: function (dataItem) {
+                            var strTemplate = "";
+
+                            strTemplate += '<a data-toggle="tooltip" data-placement="top" title="نمایش" style="margin-left:8px;" href="/Administrator/Request/display/' + dataItem.Id + '">';
+                            strTemplate += '<img src="/Content/Icon/display.png" style="width: 20px; height: 20px; vertical-align: middle;" /></a>';
+
+                            strTemplate += '<a data-toggle="tooltip" data-placement="top" title="ویرایش" href="/Administrator/Request/Edit/' + dataItem.Id + '">';
+                            strTemplate += '<img src="/Content/Icon/edit.png" style="width: 20px; height: 20px; vertical-align: middle;" /></a>';
+
+                            strTemplate += '&nbsp;&nbsp;&nbsp;';
+
+                            var invoiceNumber = dataItem.InvoiceNumber;
+
+                            if (invoiceNumber === null || invoiceNumber === undefined || invoiceNumber === "" || invoiceNumber === 0 || invoiceNumber === "0") {
+                                strTemplate += "<span style='color:red;'>بدون فاکتور</span>";
+                            } else {
+                                var viewUrl = '/Administrator/Request/ShowFactor?invoicenumber=' + invoiceNumber;
+                                var pdfUrl = viewUrl + '&isPdf=true';
+
+                                strTemplate += '<a class="btn btn-sm btn-primary btn-blank" data-toggle="tooltip" data-placement="top" title="نمایش فاکتور" href="' + viewUrl + '" style="margin-left:8px; padding: 2px 6px;">';
+                                strTemplate += '<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8z"/><circle cx="8" cy="8" r="3" fill="#0d6efd"></circle></svg></a>';
+
+                                strTemplate += '<a class="btn btn-sm btn-danger btn-blank" data-toggle="tooltip" data-placement="top" title="دانلود PDF" href="' + pdfUrl + '" style="padding: 2px 6px;">';
+                                strTemplate += '<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 0h6l4 4v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/><path d="M8 5v6M6 9l2 2 2-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>';
+                            }
+
+                            return strTemplate;
+                        }
+                    },
+                    { field: "InvoiceNumber", title: "شماره فاکتور", width: "120px" },
+                    // === نمایش RequestState در گرید با لیبل‌های رنگی ===
+                    {
+                        field: "RequestState",
+                        title: "وضعیت درخواست",
+                        width: "150px",
+                        template: function (dataItem) {
+                            if (dataItem.RequestState === 1) return "<span class='label label-warning' style='font-size:12px;'>تایید مالی نشده</span>";
+                            if (dataItem.RequestState === 2) return "<span class='label label-success' style='font-size:12px;'>تایید مالی شده</span>";
+                            if (dataItem.RequestState === 3) return "<span class='label label-info' style='font-size:12px;'>در حال بررسی باربری</span>";
+                            // می‌توانید وضعیت‌های دیگر را هم اینجا اضافه کنید
+                            return "<span class='label label-default' style='font-size:12px;'>وضعیت " + dataItem.RequestState + "</span>";
+                        }
+                    },
+                    { field: "stringFinalApprove", title: "تایید نهایی", width: "120px" },
+                    { field: "StringProductName", title: "نام محصول", width: "120px" },
+                    { field: "StringProductType", title: "نوع محصول", width: "120px" },
+                    { field: "StringPackageType", title: "نوع بسته بندی", width: "120px" },
+                    { field: "StringFactoryName", title: "کارخانه", width: "150px" },
+                    { field: "StringTonnage", title: "تن", width: "80px" },
+                    {
+                        field: "AmountPaid", title: "مبلغ پرداختی", width: "120px",
+                        template: "#= AmountPaid ? Comma(AmountPaid) : '0' #"
+                    },
+                    { field: "BuyerMobile", title: "شماره خریدار", width: "120px" },
+                    { field: "Address", title: "آدرس", width: "200px" },
+                    { field: "Description", title: "توضیحات", width: "150px" },
+                    { field: "MahalTahvil", title: "محل تحویل", width: "150px" },
+                    { field: "StringInsertDateTime", title: "تاریخ ثبت", width: "120px" }
+                ]
         });
 
-        grid.setDataSource(varDataSource);
-    });
-
+        $("button#btnSearch").click(function () {
+            var varGrid = $('div#grid').data("kendoGrid");
+            varGrid.dataSource.page(1);
+        });
+    })
 </script>
 
-
 <section id="Requests" class="form-horizontal" role="form">
+
     <div class="panel panel-info">
-        <div class="panel-heading" id="SearchPanelHeader">
+        <div class="panel-heading" style="cursor: pointer;" id="SearchPanelHeader">
             جستجو ( کلیک کنید...!)
         </div>
         <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
             <div class="col col-md-6">
+                <!-- دراپ‌داون وضعیت درخواست به فرم جستجو اضافه شد -->
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RequestState, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.RequestState, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    </div>
+                </div>
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
                     <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.ProductName, null,
-                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
-                        @Html.ValidationMessageFor(model => model.ProductName)
+                        @Html.DropDownListFor(model => model.ProductName, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.PackageType, new { @class = "col-md-4 control-label" })
                     <div class="col-md-8" id="DivPackageTypeId">
-                        @Html.DropDownListFor(model => model.PackageType, null,
-                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangePackageType()" })
-                        @Html.ValidationMessageFor(model => model.PackageType)
+                        @Html.DropDownListFor(model => model.PackageType, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangePackageType()" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.Province, new { @class = "col-md-4 control-label" })
                     <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.Province, null,
-                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
-                        @Html.ValidationMessageFor(model => model.Province)
+                        @Html.DropDownListFor(model => model.Province, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-4 control-label" })
                     <div class="col-md-8" id="DivTonnageId">
                         @Html.TextBoxFor(model => model.Tonnage, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Tonnage)
                     </div>
                 </div>
                 <div class="form-group">
@@ -204,27 +276,32 @@
                     </div>
                 </div>
             </div>
+
             <div class="col col-md-6">
+                <!-- برای بالانس شدن ستون‌ها، stringFinalApprove را به بالا منتقل کردم -->
+                <div class="form-group">
+                    @Html.LabelFor(model => model.stringFinalApprove, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.stringFinalApprove, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
+                    </div>
+                </div>
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductType, new { @class = "col-md-4 control-label" })
                     <div class="col-md-8" id="DivProductTypeId">
-                        @Html.DropDownListFor(model => model.ProductType, null,
-                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
-                        @Html.ValidationMessageFor(model => model.ProductType)
+                        @Html.DropDownListFor(model => model.ProductType, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType()" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-4 control-label" })
                     <div class="col-md-8" id="DivFactoryNameId">
                         @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.FactoryName)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.City, new { @class = "col-md-4 control-label" })
                     <div class="col-md-8" id="DivCityId">
                         @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.City)
                     </div>
                 </div>
                 <div class="form-group">
@@ -251,21 +328,18 @@
                         @Html.TextBoxFor(model => model.ToAmount, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)", @onkeyup = "javascript:this.value=Comma(this.value);" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.stringFinalApprove, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.stringFinalApprove, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    </div>
-                </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-3 col-md-8">
-                    <button type="button" id="btnSearch" name="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
+
+            <div class="form-group" style="clear:both;">
+                <div class="col-md-offset-3 col-md-8" style="margin-top:15px; text-align:center;">
+                    <button type="button" id="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
                 </div>
             </div>
         </div>
     </div>
+
     <br />
+
     <div class="panel panel-primary">
         <div class="panel-heading">
             @strTitle
@@ -273,19 +347,17 @@
         <div class="col-md-12 panel-body">
             <div class="col-md-12">
                 <div class="row">
-                    <div style="float:left;">
-                        <a class="btn btn-default col-md-2 " data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
-                           href="/HomeMain/Main/" style="float : left;width:150px;">
-                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='../../../Content/Icon/Back.png' />
+                    <div style="float:left;width:100%;">
+                        <a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
+                           href="/HomeMain/Main/" style="float: left;width:150px;">
+                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='/Content/Icon/Back.png' />
                         </a>
                     </div>
                 </div>
                 <br />
-                <div class="table-responsive">
-                    <div id="grid"></div>
-                </div>
-                <br />
                 <div class="row">
+                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:100%;">
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,146 +365,75 @@
     </div>
 </section>
 
-
-<style>
-    #grid .k-grid-header th,
-    #grid .k-grid-content td {
-        box-sizing: border-box;
-        padding: 6px 10px;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-
-
-    /* راست‌چین کردن کل Grid */
-    #grid {
-        direction: rtl;
-        text-align: right;
-    }
-
-        /* جلوگیری از کوچک و بزرگ شدن ستون‌ها */
-        #grid .k-grid-header th {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-align: right;
-        }
-
-        #grid .k-grid-content td {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-align: right;
-        }
-
-    /* ریسپانسیو موبایل */
-    @@media (max-width: 768px) {
-        #grid .k-grid-header, #grid .k-grid-content {
-            font-size: 12px;
-        }
-    }
-</style>
+<!-- بخش توابع جاوااسکریپت Dropdownهای وابسته‌ (بدون تغییر) -->
 <script type="text/javascript">
     function onChangeProvince() {
         $.ajax({
-            url: '/Administrator/HeadOfFactor/GetCities',
-            type: 'post',
-            data: { provinceId: $("#Province").val() },
+            url: '/Administrator/HeadOfFactor/GetCities', type: 'post', data: { provinceId: $("#Province").val() },
             success: function (data) {
-
                 $("#DivCityId").empty();
-
                 var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
-
                 $.each(data, function (i, city) {
                     var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
                     select.append(option);
                 })
-
                 $("#DivCityId").append(select);
                 $('#City>option:eq(1)').prop('selected', true);
             }
         });
     }
 
-
     function onChangeProductName() {
         $.ajax({
-            url: '/Administrator/Cement/GetProductType',
-            type: 'post',
-            data: { ProductNameId: $("#ProductName").val() },
+            url: '/Administrator/Cement/GetProductType', type: 'post', data: { ProductNameId: $("#ProductName").val() },
             success: function (data) {
-
                 $("#DivProductTypeId").empty();
-
                 var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
                 $.each(data, function (i, ProductType) {
                     var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
-                    /// baraye inke avalin id baraye loade Select badi estefade shavad
-                    if (i == 0) {
-                        onChangeProductType(ProductType.Id);
-                    }
+                    if (i == 0) { onChangeProductType(ProductType.Id); }
                     select.append(option);
                 })
-
                 $("#DivProductTypeId").append(select);
                 $('#ProductType>option:eq(1)').prop('selected', true);
             }
         });
 
         $.ajax({
-            url: '/Administrator/Cement/GetFactoryName',
-            type: 'post',
-            data: { ProductNameId: $("#ProductName").val() },
+            url: '/Administrator/Cement/GetFactoryName', type: 'post', data: { ProductNameId: $("#ProductName").val() },
             success: function (data) {
-
                 $("#DivFactoryNameId").empty();
-
                 var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
-
                 $.each(data, function (i, FactoryName) {
                     var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
                     select.append(option);
                 })
-
                 $("#DivFactoryNameId").append(select);
-                // baraye az ghabl entekhab shodane item
                 $('#FactoryName>option:eq(1)').prop('selected', true);
             }
         });
     }
 
     function onChangeProductType(ProductTypee) {
-        debugger;
-        if (ProductTypee == undefined) { /// baraye inke dafe aval az loade safhe bekhoone
-            ProductTypee = $("#ProductType").val();
-        }
+        if (ProductTypee == undefined) { ProductTypee = $("#ProductType").val(); }
         $.ajax({
-            url: '/Administrator/Cement/GetPackageType',
-            type: 'post',
-            data: { ProductTypeId: ProductTypee },
+            url: '/Administrator/Cement/GetPackageType', type: 'post', data: { ProductTypeId: ProductTypee },
             success: function (data) {
-
                 $("#DivPackageTypeId").empty();
-
                 var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
-
                 $.each(data, function (i, PackageType) {
                     var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
                     select.append(option);
                 })
-
                 $("#DivPackageTypeId").append(select);
-                // baraye az ghabl entekhab shodane item
                 $('#PackageType>option:eq(1)').prop('selected', true);
                 onChangePackageType();
             }
@@ -440,32 +441,20 @@
     }
 
     function onChangePackageType() {
-        debugger;
         $.ajax({
-            url: '/Administrator/Cement/GetTonnage',
-            type: 'post',
-            data: { PackageTypeId: $("#PackageType").val() },
+            url: '/Administrator/Cement/GetTonnage', type: 'post', data: { PackageTypeId: $("#PackageType").val() },
             success: function (data) {
-
                 $("#DivTonnageId").empty();
-
                 var select = $("<select class='form-control' id='Tonnage' name='Tonnage' data-rel='chosen'>");
                 var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
                 select.append(option1);
-
                 $.each(data, function (i, Tonnage) {
                     var option = ('<option value="' + Tonnage.Id + '"> ' + Tonnage.Name + '</option>');
                     select.append(option);
                 })
-
                 $("#DivTonnageId").append(select);
-                // baraye az ghabl entekhab shodane item
                 $('#Tonnage>option:eq(1)').prop('selected', true);
             }
         });
     }
-
-
-
-
 </script>

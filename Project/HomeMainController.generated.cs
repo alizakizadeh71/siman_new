@@ -112,6 +112,10 @@ namespace OPS.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Index
         {
+            public readonly string productId = "productId";
+            public readonly string typeId = "typeId";
+            public readonly string packageId = "packageId";
+            public readonly string factoryId = "factoryId";
             public readonly string cementViewModel = "cementViewModel";
         }
         static readonly ActionParamsClass_ShowFactor s_params_ShowFactor = new ActionParamsClass_ShowFactor();
@@ -176,9 +180,13 @@ namespace OPS.Controllers
     {
         public T4MVC_HomeMainController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Web.Mvc.ActionResult Index(System.Guid? productId, System.Guid? typeId, System.Guid? packageId, System.Guid? factoryId)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "productId", productId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "typeId", typeId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "packageId", packageId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "factoryId", factoryId);
             return callInfo;
         }
 

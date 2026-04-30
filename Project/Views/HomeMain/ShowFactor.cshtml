@@ -1,173 +1,291 @@
-﻿
-
-@model ViewModels.Areas.Administrator.Cement.CementViewModel
+﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
 
 @{
     Layout = "~/Views/Shared/_Layouts/_SiteForPrint.cshtml";
-    string strTitel =
-        string.Format("{0} {1}",
-        Resources.Action.DetailsOf,
-        Resources.Model.Request.EntityName);
-
-    List<Infrastructure.PageMessage> PageMessageList = ViewBag.PageMessages;
-
-    string url = System.Configuration.ConfigurationSettings.AppSettings["IVOReferrUrl"].ToString();
 }
 
-<style>
-    .BorderStyle {
-        border-color: green;
-        border-style: solid;
-        border-width: 1px;
-    }
-</style>
-@{
-    <div class="row">
-        <center style="color:red">
-            @TempData["NotFoundMessage"]
-        </center>
-        @if (TempData["NotFoundMessage"] == null)
-        {
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>فاکتور فروش</title>
 
-            <div class="panel panel-info" style="font-family: BYekan, Tahoma;">
-                <div class="panel-heading ">
-                    <center style="text-align:center">
-                        <b3>
-                            فاکتور خرید مصالح ساختمانی
-                            <hr />
-                            شماره فاکتور : @Html.DisplayFor(model => model.InvoiceNumber)
-                            <hr />
-                            تاریخ فاکتور :  @Html.DisplayFor(model => model.StringInsertDateTime)
-                        </b3>
-                    </center>
+    <style>
+    @@font-face {
+        font-family: 'Vazir';
+        src: url('/Content/fonts/Vazir.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    body {
+        font-family: 'Vazir', tahoma, sans-serif !important;
+        background: #f8f9fa;
+        padding: 20px;
+    }
+
+    .invoice {
+        background: #fff;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    .company-logo {
+        width: 140px;
+        height: auto;
+    }
+
+    .small-muted {
+        color: #6c757d;
+        font-size: .9rem;
+    }
+
+    .signature {
+        height: 70px;
+        border-bottom: 1px dashed #ddd;
+        margin-bottom: 6px;
+    }
+
+    .signature-img {
+        width: 150px;
+        opacity: 0.55;
+        mix-blend-mode: multiply;
+    }
+
+
+    </style>
+
+</head>
+
+<body>
+
+    @{
+        // استخراج تناژ واقعی از StringTonnage
+        double tonnageValue = 0;
+
+        if (!string.IsNullOrWhiteSpace(Model.StringTonnage))
+        {
+            var justNumber = new string(Model.StringTonnage.Where(char.IsDigit).ToArray());
+
+            if (!string.IsNullOrWhiteSpace(justNumber))
+            {
+                tonnageValue = Convert.ToDouble(justNumber);
+            }
+        }
+
+            double amountWithoutTax = Model.AmountPaid / 1.1;
+            double taxAmount = amountWithoutTax * 0.1;
+
+
+        // محاسبه قیمت واحد
+        string unitPrice =
+            tonnageValue > 0
+            ? (Model.AmountPaid / tonnageValue).ToString("N0")
+            : "0";
+    }
+
+    <div class="container">
+        <div class="invoice mx-auto" style="max-width:900px;">
+
+            <!-- header -->
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="company-info">
+                    <h5 class="mb-0">مصالح پخش برخط</h5>
+                    <div class="small-muted">شناسه ملی : 14012802684</div>
+                    <div class="small-muted">آدرس: کرمان، کوهبنان</div>
+                    <div class="small-muted">کد پستی : 7784165165</div>
+                    <div class="small-muted">شماره ثبت : 1189 </div>
                 </div>
-                <div class="panel-body">
-                    @Html.HiddenFor(model => model.Id)
-                    <br />
-                    <table class="col-md-12 BorderStyle" align="center">
-                        <caption style="background-color: lightblue;" class="BorderStyle">
-                            <span>اطلاعات خریدار</span>
-                        </caption>
-                        <tr class="BorderStyle">
-                            <td>نام شرکت/شخص</td>
-                            <td class="BorderStyle">شناسه ملی/کد ملی</td>
-                            <td>@Html.DisplayNameFor(model => model.BuyerMobile)</td>
-                            <td class="BorderStyle">استان</td>
-                            <td>شهرستان</td>
-                            <td class="BorderStyle">ادرس</td>
-                        </tr>
-                        <tr class="BorderStyle">
-                            <td>@Html.DisplayFor(model => model.BuyerName)</td>
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.BuyerNationalCode)</td>
-                            <td>@Html.DisplayFor(model => model.BuyerMobile)</td>
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.StringProvince)</td>
-                            <td>@Html.DisplayFor(model => model.StringCity)</td>
-                            <td class="BorderStyle" id="addressCell">@Html.DisplayFor(model => model.Address)</td>
-                        </tr>
-                    </table>
-                    <br />
-                    <table class="col-md-12 BorderStyle" align="center">
-                        <caption style="background-color: lightblue;" class="BorderStyle">
-                            <span>اطلاعات کالا</span>
-                        </caption>
-                        <tr class="BorderStyle">
-                            <td>@Html.DisplayNameFor(model => model.ProductName)</td>
-                            <td class="BorderStyle">@Html.DisplayNameFor(model => model.ProductType)</td>
-                            <td>@Html.DisplayNameFor(model => model.PackageType)</td>
-                            <td class="BorderStyle">@Html.DisplayNameFor(model => model.FactoryName)</td>
-                            <td>@Html.DisplayNameFor(model => model.Tonnage)</td>
-                        </tr>
-                        <tr class="BorderStyle">
-                            <td>@Html.DisplayFor(model => model.StringProductName)</td>
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.StringProductType)</td>
-                            <td>@Html.DisplayFor(model => model.StringPackageType)</td>
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.StringFactoryName)</td>
-                            <td>@Html.DisplayFor(model => model.StringTonnage)</td>
-                        </tr>
-                    </table>
-                    <br />
-                    <table class="col-md-12 BorderStyle" align="center">
-                        <caption style="background-color: lightblue;" class="BorderStyle">
-                            <span>اطلاعات پرداخت</span>
-                        </caption>
-                        <tr class="BorderStyle">
-                            <td class="BorderStyle">محل تحویل</td>
-                            @if (Model.MahalTahvil == "درب کارخانه")
-                            {
-                                <td>@Html.DisplayNameFor(model => model.AmountPaid)</td>
-                            }
-                            else if (Model.MahalTahvil == "مقصد خریدار")
-                            {
-                                <td>@Html.DisplayNameFor(model => model.DestinationAmountPaid)</td>
-                            }
-                            <td class="BorderStyle">شماره تراكنش</td>
-                            <td>شماره کارت خریدار</td>
-                            <td class="BorderStyle">@Html.DisplayNameFor(model => model.RemittanceNumber)</td>
-                        </tr>
-                        <tr class="BorderStyle">
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.MahalTahvil)</td>
-                            @if (Model.MahalTahvil == "درب کارخانه")
-                            {
-                                <td>@Html.DisplayFor(model => model.AmountPaid)</td>
-                            }
-                            else if (Model.MahalTahvil == "مقصد خریدار")
-                            {
-                                <td>@Html.DisplayFor(model => model.DestinationAmountPaid)</td>
-                            }
-                            <td class="BorderStyle">@Html.DisplayFor(model => model.ref_id)</td>
-                            <td>@Html.DisplayFor(model => model.card_pan)</td>
-                            <td class="BorderStyle">@Html.DisplayFor(x => x.RemittanceNumber)</td>
-                        </tr>
-                    </table>
-                    <br />
-                    <div style="text-align:center">
-                        سامانه خرید آنلاین مصالح ساختمانی
+
+                <div class="text-end">
+
+                    <div class="border rounded p-2">
+                        <div><strong>فاکتور فروش کالا و خدمات</strong></div>
+
+                        <div class="small-muted">
+                            سریال:
+                            <strong>@Model.InvoiceNumber</strong>
+                        </div>
+
+                        <div class="small-muted">
+                            تاریخ:
+                            <strong>@Model.StringInsertDateTime</strong>
+                        </div>
+
                     </div>
                 </div>
-                @using (Html.BeginForm("PrintNewFactor", "Request", routeValues: new { Area = "Administrator", @class = "form-horizontal", role = "form" }, method: FormMethod.Get))
-                {
-                    @Html.AntiForgeryToken()
-                    <hr />
-                    @Html.ValidationSummary(true)
-                    <center class="form-group row">
-                        <div class="col-md-offset-2">
-                            @Html.ActionLink("چاپ فاکتور پرداخت", MVC.Administrator.Request.PrintNewFactor(Model.InvoiceNumber.Value), new { @class = "btn btn-success" })
-                        </div>
-                    </center>
-                }
             </div>
-        }
-        @using (Html.BeginForm("Index", "HomeMain", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-            <center class="form-group row">
-                <div class="col-md-offset-2">
-                    <input type="submit" value='بازگشت به سامانه' class="btn btn-primary" />
+
+            <hr />
+
+            <!-- buyer -->
+            <div class="row mb-3">
+
+                <div class="col-md-6 mb-2">
+                    <div class="p-3 border rounded h-100">
+                        <h6 class="mb-2">مشخصات خریدار</h6>
+
+                        <div>
+                            نام:
+                            <strong>@Model.BuyerName</strong>
+                        </div>
+
+                        <div class="small-muted">
+                            آدرس:
+                            @Model.Address
+                        </div>
+
+                        <div class="small-muted">
+                            شماره همراه:
+                            @Model.BuyerMobile
+                        </div>
+
+                        <div class="small-muted">
+                            کد ملی:
+                            @Model.BuyerNationalCode
+                        </div>
+
+                    </div>
                 </div>
-            </center>
-        }
+
+                <div class="col-md-6 mb-2">
+                    <div class="p-3 border rounded h-100">
+                        <h6 class="mb-2">مشخصات فروشنده</h6>
+                        <div>مصالح پخش برخط</div>
+                        <div class="small-muted">آدرس: کرمان ، کوهبنان</div>
+                        <div class="small-muted">کد پستی: 7784165165</div>
+                        <div class="small-muted">تلفن مسئول فروش: 09051510102</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- items table -->
+            <div class="table-responsive">
+
+                <table class="table table-bordered align-middle">
+
+                    <thead class="table-light">
+                        <tr class="text-center">
+                            <th style="width:6%">ردیف</th>
+                            <th>شرح کالا یا خدمات</th>
+                            <th style="width:12%">مقدار</th>
+                            <th style="width:18%">مبلغ واحد</th>
+                            <th style="width:18%">مبلغ کل</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td class="text-center">1</td>
+
+                            <td>
+                                @string.Join(" ", new[] {
+                                    Model.StringProductName,
+                                    Model.StringProductType,
+                                    Model.StringPackageType,
+                                    Model.StringFactoryName
+                                })
+                            </td>
+
+
+
+                            <td class="text-center">
+                                @Model.StringTonnage
+                            </td>
+
+                            <td class="text-end">
+                                @unitPrice
+                            </td>
+
+                            <td class="text-end">
+                                @Model.AmountPaid.ToString("N0")
+                            </td>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- totals -->
+            <div class="row justify-content-end mt-3">
+                <div class="col-md-6">
+
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td class="small-muted">جمع مبلغ کل (بدون مالیات)</td>
+                                <td class="text-end">
+                                    <strong>@amountWithoutTax.ToString("N0")</strong> ریال
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="small-muted">جمع مالیات و عوارض (۱۰٪)</td>
+                                <td class="text-end">
+                                    <strong>@taxAmount.ToString("N0")</strong> ریال
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="small-muted">مبلغ تخفیف</td>
+                                <td class="text-end">0</td>
+                            </tr>
+
+                            <tr class="border-top">
+                                <td class="fw-bold">جمع کل</td>
+                                <td class="text-end fw-bold">
+                                    @Model.AmountPaid.ToString("N0") ریال
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <!-- signatures -->
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    <h6>توضیحات</h6>
+
+                    <p class="small-muted">
+                        @Model.Description
+                    </p>
+
+                </div>
+
+                <div class="col-md-4 text-center">
+
+                    <div class="mb-3">
+                        <div class="signature">
+                            <img src="/Content/Images/signature-stamp.jpg" class="signature-img" />
+                        </div>
+                        <div class="small-muted">مهر و امضا فروشنده</div>
+                    </div>
+
+                    <div>
+                        <div class="signature"></div>
+                        <div class="small-muted">مهر و امضا خریدار</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="d-flex justify-content-between small-muted">
+                <div>شماره ثبت: 10840047614</div>
+                <div>تلفن تماس: 03532429082</div>
+            </div>
+
+        </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var addressCell = document.getElementById('addressCell');
-            var addressText = addressCell.textContent.trim();
-            var words = addressText.split(' ');
-            var formattedText = '';
-            var lineLength = 0;
 
-            for (var i = 0; i < words.length; i++) {
-                if (lineLength + words[i].length + 1 > 50) {
-                    formattedText += '<br>';
-                    lineLength = 0;
-                }
-                formattedText += words[i] + ' ';
-                lineLength += words[i].length + 1;
-            }
-
-            addressCell.innerHTML = formattedText.trim();
-        });
-    </script>
-}
-
-
+</body>
+</html>

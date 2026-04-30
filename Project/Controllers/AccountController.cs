@@ -160,10 +160,15 @@ namespace OPS.Controllers
             {
                 return (RedirectToAction(MVC.HomeMain.Authenticate()));
             }
-            if (user.RoleId == new Guid("FC397D63-E779-443D-A53B-18900D2F9A15") || user.RoleId == new Guid("805F9B24-C5E0-4227-9EFA-7B5EB5646394") )
+
+            // GUID نقش باربری در شرط زیر اضافه شد
+            if (user.RoleId == new Guid("FC397D63-E779-443D-A53B-18900D2F9A15") || // ادمین/برنامه نویس
+                user.RoleId == new Guid("805F9B24-C5E0-4227-9EFA-7B5EB5646394") || // بازاریاب
+                user.RoleId == new Guid("805f9b24-c5e0-4227-9efa-7b6eb5646394"))   // باربری
             {
                 return (RedirectToAction(MVC.HomeMain.Main()));
             }
+
             return (RedirectToAction(MVC.HomeMain.Index()));
         }
 

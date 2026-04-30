@@ -36,17 +36,18 @@
             }
         }
 
+        private ISiteSettingRepository _siteSettingRepository;
 
-        private IFactorMessageRepository _FactorMessageRepository;
-        public IFactorMessageRepository FactorMessageRepository
+        public ISiteSettingRepository SiteSettingRepository
         {
             get
             {
-                if (_FactorMessageRepository == null)
+                if (_siteSettingRepository == null)
                 {
-                    _FactorMessageRepository = new FactorMessageRepository(DatabaseContext);
+                    _siteSettingRepository = new SiteSettingRepository(DatabaseContext);
                 }
-                return (_FactorMessageRepository);
+
+                return _siteSettingRepository;
             }
         }
 
@@ -514,20 +515,6 @@
             }
         }
 
-
-        private IMessageRepository _MessageRepository;
-        public IMessageRepository MessageRepository
-        {
-            get
-            {
-                if (_MessageRepository == null)
-                {
-                    _MessageRepository = new MessageRepository(DatabaseContext);
-                }
-                return (_MessageRepository);
-            }
-        }
-
         private IMarketerTransactionsRepository _MarketerTransactionsRepository;
         public IMarketerTransactionsRepository MarketerTransactionsRepository
         {
@@ -677,6 +664,7 @@
             }
         }
 
+        public IMessageRepository MessageRepository => throw new System.NotImplementedException();
 
         public void Save()
         {

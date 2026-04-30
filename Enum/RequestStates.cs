@@ -1,40 +1,32 @@
 ﻿namespace Enums
 {
-    public enum RequestStates : int
+    public enum RequestState
     {
-        /// <summary>
-        /// خطا
-        /// </summary>
-        Error = -3,
+        // ... اگر وضعیت‌های قبلی دارید اینجا باشند ...
 
         /// <summary>
-        /// تکراری
+        /// تایید مالی نشده
         /// </summary>
-        Duplicate = -2,
+        PendingFinancialApproval = 1,
 
         /// <summary>
-        /// درخواست ناقص
+        /// تایید مالی
         /// </summary>
-        Incomplete = -1,
+        FinanciallyApproved = 2,
 
         /// <summary>
-        /// درخواست اولیه
+        /// بارگیری شده
         /// </summary>
-        InitialRequet = 0,
+        Loaded = 3,
 
         /// <summary>
-        /// دارای دستور پرداخت
+        /// به مقصد رسیده
         /// </summary>
-        PaymentOrder = 1,
+        ArrivedAtDestination = 4,
 
         /// <summary>
-        /// پرداخت شده
+        /// تحویل داده شده
         /// </summary>
-        Payment = 2,
-
-        /// <summary>
-        /// تایید پرداخت
-        /// </summary>
-        PaymentConfirmation = 3
+        Delivered = 5
     }
 }

@@ -358,6 +358,42 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نام خانوادگی راننده.
+        /// </summary>
+        public static string DriverLastName {
+            get {
+                return ResourceManager.GetString("DriverLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره پلاک.
+        /// </summary>
+        public static string DriverLicensePlate {
+            get {
+                return ResourceManager.GetString("DriverLicensePlate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره تماس راننده.
+        /// </summary>
+        public static string DriverMobile {
+            get {
+                return ResourceManager.GetString("DriverMobile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نام راننده.
+        /// </summary>
+        public static string DriverName {
+            get {
+                return ResourceManager.GetString("DriverName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تا تاریخ صدور.
         /// </summary>
         public static string EndDate {

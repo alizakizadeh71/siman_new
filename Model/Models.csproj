@@ -123,6 +123,10 @@
     <Compile Include="Inventoryamount.cs" />
     <Compile Include="MarketerTransactions.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="Migrations\202604291806087_AddDriverInfoToCementOrder.cs" />
+    <Compile Include="Migrations\202604291806087_AddDriverInfoToCementOrder.Designer.cs">
+      <DependentUpon>202604291806087_AddDriverInfoToCementOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="FactoryName.cs" />
     <Compile Include="News.cs" />
@@ -153,8 +157,10 @@
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="UserLoginLog.cs" />
+    <Compile Include="UserSmsSettings.cs" />
     <Compile Include="village.cs" />
     <Compile Include="walletFactor.cs" />
+    <Compile Include="SiteSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -173,6 +179,11 @@
       <Project>{78fa154e-8772-4fc7-9c73-cc2e32baa91d}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202604291806087_AddDriverInfoToCementOrder.resx">
+      <DependentUpon>202604291806087_AddDriverInfoToCementOrder.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -14,6 +14,7 @@
         SoperAdmin = 900,
         WebServiceUser = 999,
         Programmer = 1000,
-        Marketer = 200
+        Marketer = 200,
+        Carrier = 10
     }
 }

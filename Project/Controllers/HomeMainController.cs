@@ -8,6 +8,8 @@ using DocumentFormat.OpenXml.Drawing.Diagrams;
 using ViewModels;
 using ViewModels.Account;
 using ViewModels.Areas.Administrator.Inventoryamount;
+using System.Data.Entity;
+using Enums;
 
 //using PAPUtilities;
 
@@ -18,96 +20,135 @@ namespace OPS.Controllers
     {
         [System.Web.Mvc.HttpGet]
         [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(Guid? productId = null, Guid? typeId = null, Guid? packageId = null, Guid? factoryId = null)
         {
-            if (TempData["WelcomeMessage"] != null && TempData["Balance"] != null)
+            // 1. خواندن تنظیمات سایت از کش
+            var siteSetting = 
+                    UnitOfWork.SiteSettingRepository.Get()
+                    .Select(s => new { s.IsPurchaseEnabled })
+                    .FirstOrDefault();
+
+            bool isPurchaseEnabled = siteSetting?.IsPurchaseEnabled ?? true;
+            ViewBag.IsPurchaseEnabled = isPurchaseEnabled;
+
+            // 2. مدیریت پیام‌ها و اطلاعات کاربر
+            if (!isPurchaseEnabled)
             {
-                ViewBag.WelcomeMessage = TempData["WelcomeMessage"]; // Pass the welcome message to the ViewBag
-                ViewBag.Balance = TempData["Balance"];
+                ViewBag.PageMessages = "در حال حاضر امکان ثبت سفارش وجود ندارد.";
+                // در صورت غیرفعال بودن خرید، مدل حداقلی ساخته و برمی‌گردد
+                var modelDisabled = new ViewModels.Areas.Administrator.Cement.CementViewModel();
+                ViewData(modelDisabled);
+                return View(modelDisabled);
             }
 
             ViewBag.Message = "برای محاسبه قیمت و خرید اطلاعات را تکمیل نمایید";
-            var oUser = new User();
-            if (Infrastructure.Sessions.AuthenticatedUser?.Id != null && Infrastructure.Sessions.AuthenticatedUser.RoleCode != 1000)
+
+            Guid? currentUserId = Infrastructure.Sessions.AuthenticatedUser?.Id;
+            bool isNormalUser = currentUserId != null && Infrastructure.Sessions.AuthenticatedUser.RoleCode != 1000;
+
+            string address = string.Empty, buyerMobile = string.Empty;
+            Guid? province = null, city = null;
+
+            if (isNormalUser)
             {
-                oUser = UnitOfWork.UserRepository.GetById(Infrastructure.Sessions.AuthenticatedUser.Id);
-                ViewBag.DisplaycreditAmount = oUser.FullName + " خوش آمدید. موجودی کیف پول شما برابر است با: " + oUser.creditAmount.ToString("N0") + " ریال. ";
-            }
-
-            ViewBag.PageMessages = null;
-
-            var product = UnitOfWork.ProductNameRepository.Get()
-                .Where(x => x.Code == "1")
-                .Select(x => x.Id)
-                .FirstOrDefault();
-            //ترتیب لیست نوع کالا
-            var productTypist = new List<string> { "تیپ 2", "تیپ 5", "پوزولانی", "مرکب" };
-
-
-            var productTypes = UnitOfWork.ProductTypeRepository.Get()
-                .Where(x => x.ProductNameId == product)
-                .ToList();
-
-            var SortedproductTypes =
-                    productTypes.Where(x => productTypist.Contains(x.Name))
-                    .OrderBy(x => productTypist.IndexOf(x.Name))
-                    .Select(x => x.Id)
-                    .ToList();
-
-            Guid? productType1 = null;
-            Guid? packageType = null;
-            Guid? Tonnage = null;
-
-            foreach (var item in SortedproductTypes)
-            {
-                packageType = UnitOfWork.PackageTypeRepository.Get()
-                    .Where(x => x.ProductTypeId == item && x.Name == "کیسه")
-                    .Select(x => x.Id)
-                    .FirstOrDefault();
-
-                if (packageType != Guid.Empty)
+                var user = UnitOfWork.UserRepository.GetById(currentUserId.Value);
+                if (user != null)
                 {
-                    productType1 = item;
-                    Tonnage = UnitOfWork.tonnageRepository.Get().FirstOrDefault(x => x.PackageTypeId == packageType).Id;
-                    break;
+                    ViewBag.DisplaycreditAmount = $"{user.FullName} خوش آمدید. موجودی کیف پول شما: {user.creditAmount:N0} ریال";
+                    province = user.ProvinceId;
+                    city = user.CityId;
+                    address = user.Address;
+                    buyerMobile = user.BuyerMobile;
                 }
             }
 
-            var factoryName = UnitOfWork.FactoryNameRepository.Get()
-                .Where(x => x.ProductNameId == product)
+            if (TempData["WelcomeMessage"] != null)
+            {
+                ViewBag.WelcomeMessage = TempData["WelcomeMessage"];
+                ViewBag.Balance = TempData["Balance"];
+            }
+
+            // 3. تعیین مقادیر پیش‌فرض با حداقل کوئری‌ها 
+
+            // محصول پیش‌فرض
+            Guid defaultProductId = UnitOfWork.ProductNameRepository.Get()
+                .Where(x => x.Code == "1")
                 .Select(x => x.Id)
                 .FirstOrDefault();
 
-            Guid? province = null;
-            Guid? city = null;
-            string address = string.Empty;
-            string buyerMobile = string.Empty;
-            if (Infrastructure.Sessions.AuthenticatedUser?.Id != null && Infrastructure.Sessions.AuthenticatedUser.RoleCode != 1000)
+            Guid selectedProduct = productId ?? defaultProductId;
+
+            // انتخاب خودکار نوع و بسته‌بندی 
+            Guid? selectedProductType = typeId;
+            Guid? selectedPackageType = packageId;
+
+            if (selectedProductType == null || selectedPackageType == null)
             {
-                var user = UnitOfWork.UserRepository.GetById(Infrastructure.Sessions.AuthenticatedUser.Id);
-                province = user.ProvinceId;
-                city = user.CityId;
-                address = user.Address;
-                buyerMobile = user.BuyerMobile;
+                var preferredTypes = new List<string> { "تیپ 2", "تیپ 5", "پوزولانی", "مرکب" };
+
+                // --- بخش اصلاح شده برای رفع خطای System.NotSupportedException ---
+
+                // مرحله الف: دریافت ProductType ها و انتقال به حافظه
+                var productTypes = UnitOfWork.ProductTypeRepository.Get()
+                    .Where(t => t.ProductNameId == selectedProduct && preferredTypes.Contains(t.Name))
+                    .ToList();
+
+                var productTypeIds = productTypes.Select(t => t.Id).ToList();
+
+                // مرحله ب: دریافت PackageType های مرتبط (با نام "کیسه") و انتقال به حافظه
+                var packageTypes = UnitOfWork.PackageTypeRepository.Get()
+                    .Where(p => productTypeIds.Contains(p.ProductTypeId) && p.Name == "کیسه")
+                    .ToList();
+
+                // مرحله ج: ترکیب داده‌ها در حافظه (LINQ to Objects)
+                var typePackageData = productTypes.Select(t => new
+                {
+                    Type = t,
+                    BagPackageId = packageTypes
+                        .Where(p => p.ProductTypeId == t.Id)
+                        .Select(p => (Guid?)p.Id)
+                        .FirstOrDefault()
+                }).ToList();
+
+                // ---------------------------------------------------------------
+
+                var selectedTuple = typePackageData
+                    .Where(x => x.BagPackageId != null)
+                    .OrderBy(x => preferredTypes.IndexOf(x.Type.Name))
+                    .FirstOrDefault();
+
+                if (selectedTuple != null)
+                {
+                    selectedProductType = selectedProductType ?? selectedTuple.Type.Id;
+                    selectedPackageType = selectedPackageType ?? selectedTuple.BagPackageId;
+                }
             }
 
+            // کارخانه پیش‌فرض (استفاده از ?Guid به جای Guid)
+            Guid? selectedFactoryName = factoryId ??
+                UnitOfWork.FactoryNameRepository.Get()
+                .Where(x => x.ProductNameId == selectedProduct)
+                .Select(x => (Guid?)x.Id)
+                .FirstOrDefault();
 
-            var cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel
+            // 4. ساخت ViewModel نهایی
+            var model = new ViewModels.Areas.Administrator.Cement.CementViewModel
             {
-                ProductName = product,
-                ProductType = productType1.Value,
-                PackageType = packageType.Value,
-                FactoryName = factoryName,
-                Province = province ?? new Guid("C9CEA679-6DE8-11E5-8295-C0F8DABA7555"), // مقدار پیش‌فرض
-                City = city ?? new Guid("F99E8A31-0562-4918-8295-2CBFC78D6269"), // مقدار پیش‌فرض
+                ProductName = selectedProduct,
+                ProductType = selectedProductType ?? Guid.Empty,
+                PackageType = selectedPackageType ?? Guid.Empty,
+                FactoryName = selectedFactoryName ?? Guid.Empty,
+                Province = province ?? new Guid("C9CEA679-6DE8-11E5-8295-C0F8DABA7555"),
+                City = city ?? new Guid("F99E8A31-0562-4918-8295-2CBFC78D6269"),
                 Village = new Guid("7189A747-02F3-11EF-9994-7C8AE1A25092"),
                 Address = address,
                 BuyerMobile = buyerMobile
             };
 
-            ViewData(cementViewModel);
-            return View(cementViewModel);
+            ViewData(model);
+            return View(model);
         }
+
 
         private void ViewData(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
@@ -162,6 +203,10 @@ namespace OPS.Controllers
                     else if (Tonnage > InventoryTonnage)
                     {
                         ViewBag.PageMessages = "ثناژ درخواستی شما در انبار موجود نمی باشد";
+                    }
+                    else if (Tonnage == 0)
+                    {
+                        ViewBag.PageMessages = "تناژ باید بیشتر از صفر باشد";
                     }
                     else
                     {
@@ -230,7 +275,7 @@ namespace OPS.Controllers
                             AmountPaid = AmountPaid,
                             DestinationAmountPaid = DestinationAmountPaid,
                             Description = cementViewModel.Description,
-                            RequestState = Convert.ToInt32(Enums.RequestStates.PaymentOrder),
+                            RequestState = Convert.ToInt32(RequestState.PendingFinancialApproval),
                             UserIPAddress = Request.UserHostAddress,
                             Browser = Request.Browser.Type, // مدل و ورژن مرورگر
                             URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
@@ -326,6 +371,10 @@ namespace OPS.Controllers
                 {
                     liveProducts.Add(new LiveProductViewModel
                     {
+                        ProductNameId = f.ProductNameId,
+                        ProductTypeId = f.ProductTypeId,
+                        PackageTypeId = f.PackageTypeId,
+                        FactoryNameId = f.FactoryNameId,
                         ProductName = f.ProductName.Name,
                         ProductTypeName = f.ProductType.Name,
                         PackageType = f.PackageType.Name,
@@ -339,7 +388,9 @@ namespace OPS.Controllers
             // فیلتر و مرتب‌سازی
             liveProducts = liveProducts
                 .Where(x => x != null)
-                .OrderBy(x => x.ProductTypeName == "تیپ 2" ? 0 : 1)
+                .OrderBy(x => x.PackageType.Contains("کیسه") ? 0 : 1)
+                .ThenBy(x => x.ProductTypeName == "تیپ 2" ? 0 : 1)
+                 .ThenBy(x => x.FactoryName)
                 .ToList();
 
 

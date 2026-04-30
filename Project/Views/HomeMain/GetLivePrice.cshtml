@@ -1,21 +1,6 @@
-﻿@model IEnumerable<ViewModels.LiveProductViewModel>
-@{
-    ViewBag.Title = "GetLivePrice";
-    var allPricesAreZero = !Model.Any() || Model.All(x => x.AmountPaid == 0);
-}
-<link href="~/Content/css/GetLivePriceStyle.css" rel="stylesheet" />
-
-@if (allPricesAreZero)
-{
-    <div class="alert alert-warning text-center" style="margin-top: 20px;">
-        قیمت‌ها در حال آپدیت هستند...
-    </div>
-}
-else
-{
-    <div class="table-wrapper">
-        <table class="price-table">
-            <thead>
+﻿<div class="table-wrapper">
+    <table class="price-table">
+        <thead>
             <tr>
                 <th>نام محصول</th>
                 <th>نوع محصول</th>
@@ -23,21 +8,201 @@ else
                 <th>نام کارخانه</th>
                 <th>قیمت (براساس هر تن)</th>
                 <th>تناژ موجودی</th>
+                <th>عملیات</th>
             </tr>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.ProductName</td>
-                    <td>@item.ProductTypeName</td>
-                    <td>@item.PackageType</td>
-                    <td>@item.FactoryName</td>
-                    <td>@item.AmountPaid.ToString("N0")ريال</td>
-                    <td>@item.Inventorytonnage</td>
+                    <!-- این کلمات داخل data-label بسیار مهم هستند و در موبایل نمایش داده می‌شوند -->
+                    <td data-label="نام محصول:">@item.ProductName</td>
+                    <td data-label="نوع محصول:">@item.ProductTypeName</td>
+                    <td data-label="نوع بسته‌بندی:">@item.PackageType</td>
+                    <td data-label="نام کارخانه:">@item.FactoryName</td>
+                    <td data-label="قیمت (براساس هر تن):">@item.AmountPaid.ToString("N0") ريال</td>
+                    <td data-label="تناژ موجودی:">@item.Inventorytonnage</td>
+
+                    <!-- سلول آخر (دکمه خرید) -->
+                    <td data-label="عملیات:">
+                        @if (item.AmountPaid > 0 && item.Inventorytonnage > 0)
+                        {
+                            <a href="@Url.Action("Index", "HomeMain", new {
+                                productId = item.ProductNameId,
+                                typeId = item.ProductTypeId,
+                                packageId = item.PackageTypeId,
+                                factoryId = item.FactoryNameId
+                            })" class="btn btn-success btn-sm" style="padding: 5px 15px; border-radius: 5px; color:white; background-color:#28a745; text-decoration:none;">
+                                خرید
+                            </a>
+                        }
+                        else
+                        {
+                            <span style="color: #dc3545; font-size: 0.9em;">غیرقابل خرید</span>
+                        }
+                    </td>
                 </tr>
             }
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+</div>
+
+
+<style>
+/* =========================================
+   استایل‌های پایه و حالت دسکتاپ (کامپیوتر)
+========================================= */
+/* استایل کلی برای جلوگیری از اسکرول افقی در کل سایت */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
+
+body {
+    font-family: 'Tahoma', sans-serif;
+    background: #f9f9f9;
+    direction: rtl; /* راست‌چین کردن کل صفحه */
+    text-align: right; /* حل مشکل جمع شدن جدول در وسط */
+}
+
+/* نگهدارنده جدول در کامپیوتر */
+.table-wrapper {
+    display: block;
+    width: 95%; /* به جای 100 درصد، 95 درصد دادیم تا کمی حاشیه داشته باشد */
+    max-width: 1200px; /* حداکثر عرض برای مانیتورهای خیلی بزرگ */
+    overflow-x: auto;
+    margin: 100px auto 40px auto; /* وسط‌چین کردن خود قاب جدول */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 0;
+}
+
+/* استایل خود جدول در کامپیوتر */
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    table-layout: auto; /* توزیع مناسب عرض ستون‌ها */
+}
+
+.price-table thead {
+    background-color: #3f51b5; /* رنگ آبی هدر */
+    color: #fff;
+}
+
+.price-table th,
+.price-table td {
+    padding: 15px 10px;
+    text-align: center; /* متن داخل سلول‌ها وسط‌چین باشد */
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap; /* جلوگیری از شکستن خطوط در کامپیوتر */
+}
+
+.price-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.price-table th {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* استایل اسکرول‌بار در کامپیوتر */
+.table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 10px;
+}
+
+
+/* ========================================================== */
+/*      استایل‌های ریسپانسیو (مخصوص موبایل - زیر 768 پیکسل)     */
+/* ========================================================== */
+@@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .table-wrapper {
+        margin-top: 80px !important; /* فاصله از منوی بالای سایت */
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+    }
+
+    /* تبدیل جدول به حالت بلاکی برای چیدمان عمودی */
+    .price-table,
+    .price-table tbody,
+    .price-table tr,
+    .price-table td {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* مخفی کردن هدر اصلی جدول در موبایل */
+    .price-table thead {
+        display: none !important;
+    }
+
+    /* طراحی هر سطر به شکل یک کارت */
+    .price-table tbody tr {
+        background-color: #ffffff !important;
+        margin-bottom: 20px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+        padding: 10px 0 !important;
+        border: 1px solid #eee !important;
+    }
+
+    /* تنظیم چیدمان داخل هر کارت در موبایل */
+    .price-table td {
+        text-align: left !important; /* مقادیر سمت چپ قرار گیرند */
+        padding: 12px 20px !important;
+        border-bottom: 1px solid #f2f2f2 !important;
+        display: flex !important;
+        justify-content: space-between !important; /* عنوان راست، مقدار چپ */
+        align-items: center !important;
+        white-space: normal !important; /* اجازه شکستن متن در موبایل */
+    }
+
+    /* اضافه کردن عنوان‌ها (Label) در موبایل */
+    .price-table td::before {
+        content: attr(data-label);
+        font-weight: bold !important;
+        color: #3f51b5 !important; /* رنگ آبی برای عناوین */
+        font-size: 13px !important;
+        text-align: right !important;
+    }
+
+    /* استایل خاص برای ردیف آخر (دکمه خرید) */
+    .price-table td:last-child {
+        border-bottom: none !important;
+        justify-content: center !important;
+        padding: 15px !important;
+        background-color: #fafafa !important;
+    }
+
+    /* مخفی کردن کلمه "عملیات" در کنار دکمه */
+    .price-table td:last-child::before {
+        display: none !important;
+    }
+
+    .price-table td .btn {
+        width: 100% !important;
+        padding: 10px !important;
+        font-size: 16px !important;
+        box-sizing: border-box;
+    }
+}
+</style>
+

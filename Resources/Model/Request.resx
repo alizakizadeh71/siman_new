@@ -339,4 +339,16 @@
   <data name="RemittanceNumber" xml:space="preserve">
     <value>شماره حواله</value>
   </data>
+  <data name="DriverLastName" xml:space="preserve">
+    <value>نام خانوادگی راننده</value>
+  </data>
+  <data name="DriverLicensePlate" xml:space="preserve">
+    <value>شماره پلاک</value>
+  </data>
+  <data name="DriverMobile" xml:space="preserve">
+    <value>شماره تماس راننده</value>
+  </data>
+  <data name="DriverName" xml:space="preserve">
+    <value>نام راننده</value>
+  </data>
 </root>

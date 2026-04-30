@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ViewModels.Areas.Administrator.Request
 {
@@ -7,150 +8,127 @@ namespace ViewModels.Areas.Administrator.Request
         public IndexViewModel()
         { }
 
-        public System.Guid Id { get; set; }
+        public Guid Id { get; set; }
 
-        #region SubSystem
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.SubSystem)]
+        #region شماره فاکتور و تاریخ
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.InvoiceNumber)]
+        public int? InvoiceNumber { get; set; }
+
+        public DateTime? InsertDateTime { get; set; }
+        public string StringInsertDateTime { get; set; }
         #endregion
-        public string SubSystem { get; set; }
 
-        #region CompanyName
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.CompanyName)]
+        #region فیلدهای جستجو و دراپ‌داون‌ها (Guid)
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.ProductName)]
+        public Guid? ProductName { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.ProductType)]
+        public Guid? ProductType { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.PackageType)]
+        public Guid? PackageType { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.FactoryName)]
+        public Guid? FactoryName { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.Province)]
+        public Guid? Province { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.City)]
+        public Guid? City { get; set; }
         #endregion
-        public string CompanyName { get; set; }
 
-        #region CommodityType
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.CommodityType)]
+        #region فیلدهای نمایشی گرید (String)
+        public string StringProductName { get; set; }
+        public string StringProductType { get; set; }
+        public string StringPackageType { get; set; }
+        public string StringFactoryName { get; set; }
+        public string StringProvince { get; set; }
+        public string StringCity { get; set; }
+        public string StringTonnage { get; set; }
         #endregion
-        public string CommodityType { get; set; }
 
-        #region CommodityType
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.ServiceTariff)]
+        #region اطلاعات خریدار و سفارش
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.BuyerMobile)]
+        [MaxLength(11, ErrorMessage = "شماره همراه باید 11 رقم باشد")]
+        public string BuyerMobile { get; set; }
+
+        public string BuyerNationalCode { get; set; }
+        public string BuyerName { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.Address)]
+        public string Address { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.Description)]
+        public string Description { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.MahalTahvil)]
+        public string MahalTahvil { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.Tonnage)]
+        public double Tonnage { get; set; }
         #endregion
-        public string ServiceTariff { get; set; }
 
-        #region Province
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.Province)]
+        #region وضعیت تایید
+        // === این فیلد اضافه شد ===
+        [Display(Name = "وضعیت درخواست")]
+        public int RequestState { get; set; }
+        // ==========================
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.FinalApprove)]
+        public bool? FinalApprove { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.FinalApprove)]
+        public string stringFinalApprove { get; set; } // برای فرم جستجو (0 یا 1) و نمایش گرید ("نهایی شده" / "نهایی نشده")
         #endregion
-        public string Province { get; set; }
 
-        #region City
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.City)]
+        #region اطلاعات مالی و بانکی
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.AmountPaid)]
+        public double AmountPaid { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Cement), Name = Resources.Model.Strings.CementKeys.DestinationAmountPaid)]
+        public double? DestinationAmountPaid { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.RemittanceNumber)]
+        public string RemittanceNumber { get; set; }
+
+        public string ref_id { get; set; }
+        public string card_pan { get; set; }
         #endregion
-        public string City { get; set; }
 
-        #region CompanyNationalCode
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.CompanyNationalCode)]
+        #region فیلترهای بازه زمانی و مبلغ (برای فرم جستجو)
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.FromAmount)]
+        public int? FromAmount { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.ToAmount)]
+        public int? ToAmount { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.StartDate)]
+        public DateTime? StartDate { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.EndDate)]
+        public DateTime? EndDate { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.PayStartDate)]
+        public DateTime? PayStartDate { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.PayEndDate)]
+        public DateTime? PayEndDate { get; set; }
         #endregion
-        public string CompanyNationalCode { get; set; }
 
-        #region InvoiceNumber
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.InvoiceNumber)]
+        #region اطلاعات باربری (Driver Information)
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.DriverName)]
+        public string DriverName { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.DriverLastName)]
+        public string DriverLastName { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.DriverMobile)]
+        [StringLength(11, ErrorMessage = "شماره موبایل باید 11 رقم باشد")]
+        public string DriverMobile { get; set; }
+
+        [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.DriverLicensePlate)]
+        public string DriverLicensePlate { get; set; }
         #endregion
-        public int InvoiceNumber { get; set; }
-
-        #region InvoiceDate
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.InvoiceDate)]
-        #endregion
-        public string InvoiceDate { get; set; }
-
-        #region InvoiceDate
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.AmountPaidDate)]
-        #endregion
-        public string AmountPaidDate { get; set; }
-
-        #region RequestCode
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.RecordNumber)]
-        #endregion
-        public string RecordNumber { get; set; }
-
-        #region RequestDate
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.RecordDate)]
-        #endregion
-        public string RecordDate { get; set; }
-
-        public string SecNumber { get; set; }
-
-        #region RequestState
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.RequestState)]
-        #endregion
-        public string RequestState { get; set; }
-
-        #region AmountPaid
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.AmountPaid)]
-        #endregion
-        public long AmountPaid { get; set; }
-
-        public int RequestState_Value { get; set; }
-
-        #region DepositNumber
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.DepositNumber)]
-        #endregion
-        public string DepositNumber { get; set; }
-        public long Token { get; set; }
-
-
-        #region Bank_TraceNo
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.Bank.TraceNo)]
-        #endregion
-        public long? Bank_TraceNo { get; set; }
-
-        #region
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.Request),
-            Name = Resources.Model.Strings.RequestKeys.BaseCurrencyValue)]
-        #endregion
-        public decimal? BaseCurrencyValue { get; set; }
-
-        #region Description
-        [System.ComponentModel.DataAnnotations.Display
-            (ResourceType = typeof(Resources.Model.HeadOfFactor),
-            Name = Resources.Model.Strings.HeadOfFactorKeys.CurrencyUnit)]
-        #endregion
-        public Guid? CurrencyUnit { get; set; }
-        public string CeratedBy { get; set; }
-        public DateTime? InvoiceDateNew { get; set; }
-        public DateTime? AmountPaidDateNew { get; set; }
-        public string Bank_ShamsiDate { get; set; }
-        public int? RequestStateNew { get; set; }
-        public string Name { get; set; }
-        public decimal? Amount { get; set; }
-        public Guid SubSystemId { get; set; }
-        public Guid? ServiceTariffId { get; set; }
-        public Guid ProvinceId { get; set; }
-        public Guid? CityId { get; set; }
-        public Guid CeratedById { get; set; }
     }
 }

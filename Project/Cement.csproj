@@ -70,124 +70,6 @@
     <Content Include="App_Data\Photos\no-photo.jpg" />
     <Content Include="App_Data\Photos\Text.gif" />
     <Content Include="App_Data\Photos\Video.gif" />
-    <Content Include="Areas\Administrator\Views\AccountNumberManage\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\AccountNumberManage\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\AccountNumberManage\Detail.cshtml" />
-    <Content Include="Areas\Administrator\Views\AccountNumberManage\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\AccountNumberManage\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\BankAccount\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\BankAccount\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\BankAccount\Detail.cshtml" />
-    <Content Include="Areas\Administrator\Views\BankAccount\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\BankAccount\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Bank\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\Bank\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\Bank\Detail.cshtml" />
-    <Content Include="Areas\Administrator\Views\Bank\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\Bank\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Certain\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\Certain\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\Certain\Detail.cshtml" />
-    <Content Include="Areas\Administrator\Views\Certain\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\Certain\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\CurrencyUnit\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\CurrencyUnit\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\CurrencyUnit\Detail.cshtml" />
-    <Content Include="Areas\Administrator\Views\CurrencyUnit\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\CurrencyUnit\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\DetailOfFactor\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\DetailOfFactor\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\DetailOfFactor\Details.cshtml" />
-    <Content Include="Areas\Administrator\Views\DetailOfFactor\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\DetailOfFactor\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\DetailOfFactor\PrintFactor.cshtml" />
-    <Content Include="Areas\Administrator\Views\ExecutableCode\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\ExecutableCode\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\ExecutableCode\Detail.cshtml" />
-    <Content Include="Areas\Administrator\Views\ExecutableCode\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\ExecutableCode\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\DetailsId.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\PaymentReport.cshtml" />
-    <Content Include="Areas\Administrator\Views\Headline\Create.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\Headline\Delete.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\Headline\Detail.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\Headline\Edit.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\Headline\Index.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\HeadOfFactor\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\HeadOfFactor\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\HeadOfFactor\Details.cshtml" />
-    <Content Include="Areas\Administrator\Views\HeadOfFactor\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\HeadOfFactor\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\IncomeRow\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\IncomeRow\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\IncomeRow\Detail.cshtml" />
-    <Content Include="Areas\Administrator\Views\IncomeRow\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\IncomeRow\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Request\display.cshtml" />
-    <Content Include="Areas\Administrator\Views\Request\Incomplete.cshtml" />
-    <Content Include="Areas\Administrator\Views\Request\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Request\PaymentReport.cshtml" />
-    <Content Include="Areas\Administrator\Views\Request\PrintDepositNumber.cshtml" />
-    <Content Include="Areas\Administrator\Views\Request\UpAmountPaid.cshtml" />
-    <Content Include="Areas\Administrator\Views\ServiceTariff\Create.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\ServiceTariff\Delete.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\ServiceTariff\Detail.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\ServiceTariff\Edit.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\ServiceTariff\Index.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Administrator\Views\SubHeadline\Create.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\SubHeadline\Delete.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\SubHeadline\Detail.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\SubHeadline\Edit.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\SubHeadline\Index.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Areas\Administrator\Views\SubSystem\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\SubSystem\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\SubSystem\Detail.cshtml" />
-    <Content Include="Areas\Administrator\Views\SubSystem\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\SubSystem\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\User\AccessManagement.cshtml" />
-    <Content Include="Areas\Administrator\Views\User\ChangePassword.cshtml" />
-    <Content Include="Areas\Administrator\Views\User\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\User\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\User\Detail.cshtml" />
-    <Content Include="Areas\Administrator\Views\User\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\User\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\web.config" />
-    <Content Include="Areas\Administrator\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Markter\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Markter\Views\web.config" />
-    <Content Include="Areas\Markter\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -208,6 +90,16 @@
     <Content Include="Content\css\chosen.css" />
     <Content Include="Content\css\GetLivePriceStyle.css" />
     <Content Include="Content\css\UserIndexStyle.css" />
+    <Content Include="Content\DataTables\dataTables.bootstrap.min.css" />
+    <Content Include="Content\DataTables\responsive.dataTables.min.css" />
+    <Content Include="Content\NewKendo\kendo.default.min.css" />
+    <Content Include="Content\NewKendo\kendo.common.min.css" />
+    <Content Include="Scripts\DataTables\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.responsive.min.js" />
+    <Content Include="Scripts\DataTables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.bootstrap.js" />
+    <Content Include="Content\DataTables\datatables.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Icon\ExcelMini.png" />
     <Content Include="Content\Icon\charge.png" />
@@ -271,223 +163,9 @@
     <Content Include="Content\Images\rahnam.jpg" />
     <Content Include="Content\Images\rahnama2.jpg" />
     <Content Include="Content\Images\Recepe.jpg" />
+    <Content Include="Content\Images\signature-stamp.jpg" />
     <Content Include="Content\Images\Untitled.jpg" />
     <Content Include="Content\jquery-ui-1.8.21.custom.css" />
-    <Content Include="Content\Kendo\lastVersion\Black\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\Black\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\Black\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\Black\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\Black\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\Black\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\Black\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\Black\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Black\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\Black\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\Black\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\Black\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\BlueOpal\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\Bootstrap\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Default\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\Default\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\Default\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\Default\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\Default\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\Default\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\Default\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\Default\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Default\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\Default\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\Default\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\Default\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Flat\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\Flat\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\Flat\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\Flat\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\Flat\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\Flat\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\Flat\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\Flat\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Flat\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\Flat\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\Flat\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\Flat\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\HighContrast\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\images\back.png" />
-    <Content Include="Content\Kendo\lastVersion\images\kendoui.svg" />
-    <Content Include="Content\Kendo\lastVersion\images\wp8_icons.png" />
-    <Content Include="Content\Kendo\lastVersion\images\wp8_inverseicons.png" />
-    <Content Include="Content\Kendo\lastVersion\kendo.black.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.black.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.blueopal.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.blueopal.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.bootstrap.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.bootstrap.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.common-bootstrap.core.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.common-bootstrap.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.common.core.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.common.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.black.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.blueopal.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.bootstrap.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.default.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.flat.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.highcontrast.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.metro.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.metroblack.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.moonlight.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.silver.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.dataviz.uniform.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.default.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.default.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.flat.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.flat.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.highcontrast.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.highcontrast.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.metro.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.metro.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.metroblack.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.metroblack.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.mobile.all.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.mobile.android.dark.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.mobile.android.light.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.mobile.blackberry.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.mobile.common.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.mobile.flat.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.mobile.ios.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.mobile.meego.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.mobile.wp8.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.moonlight.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.moonlight.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.rtl.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.silver.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.silver.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.uniform.min.css" />
-    <Content Include="Content\Kendo\lastVersion\kendo.uniform.mobile.min.css" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\MetroBlack\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Metro\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\Metro\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\Metro\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\Metro\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\Metro\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\Metro\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\Metro\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\Metro\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Metro\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\Metro\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\Metro\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\Metro\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\Moonlight\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Silver\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\Silver\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\Silver\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\Silver\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\Silver\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\Silver\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\Silver\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\Silver\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Silver\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\Silver\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\Silver\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\Silver\sprite_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\brushed-metal.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots1.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots10.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots11.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots12.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots13.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots2.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots3.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots4.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots5.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots6.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots7.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots8.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\dots9.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\glass-lighter.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\glass.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\highlight.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\hsv-gradient.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\hue.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\leather1.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\leather2.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\noise.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\stripe1.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\stripe2.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\stripe3.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\stripe4.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\stripe5.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\stripe6.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\transparency.png" />
-    <Content Include="Content\Kendo\lastVersion\textures\transtexture.png" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\editor.png" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\imagebrowser.png" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\indeterminate.gif" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\loading-image.gif" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\loading.gif" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\loading_2x.gif" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\markers.png" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\markers_2x.png" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\slider-h.gif" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\slider-v.gif" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\sprite.png" />
-    <Content Include="Content\Kendo\lastVersion\Uniform\sprite_2x.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
@@ -510,8 +188,6 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\irsans.ttf" />
     <Content Include="Content\fonts\tahoma.ttf" />
-    <Content Include="Content\Kendo\lastVersion\images\kendoui.ttf" />
-    <Content Include="Content\Kendo\lastVersion\images\kendoui.woff" />
     <Content Include="Files\New\2.pdf" />
     <Content Include="Fonts\BYEKAN.eot" />
     <Content Include="Fonts\BYEKAN.TTF" />
@@ -519,41 +195,7 @@
     <Content Include="Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Areas\Administrator\Views\Request\EditIVO.cshtml" />
-    <Content Include="Areas\Administrator\Views\ReportBuilder\ExportToExcel.cshtml" />
-    <Content Include="Areas\Administrator\Views\ReportBuilder\GetParamReport.cshtml" />
-    <Content Include="Areas\Administrator\Views\ReportBuilder\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\ReportBuilder\IndexDataReport.cshtml" />
     <Content Include="App_Browsers\qt.browser" />
-    <Content Include="Areas\Administrator\Views\Request\PrintFactor.cshtml" />
-    <Content Include="Areas\Administrator\Views\Request\PrintNewFactor.cshtml" />
-    <Content Include="Areas\Administrator\Views\CentralBank\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\DestinationPrice.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\DestinationIndex.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\DestinationEdit.cshtml" />
-    <Content Include="Areas\Administrator\Views\Financial\DestinationDelete.cshtml" />
-    <Content Include="Areas\Administrator\Views\ProductName\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\ProductName\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\ProductName\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\ProductType\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\ProductType\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\ProductType\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\PackageType\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\PackageType\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\PackageType\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\FactoryName\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\FactoryName\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\FactoryName\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\Province\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Province\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\City\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\City\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\Tonnages\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Tonnages\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\Tonnages\Delete.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -580,26 +222,162 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Areas\Administrator\Views\News\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\News\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\News\Edit.cshtml" />
-    <Content Include="Areas\Administrator\Views\News\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\Village\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\Village\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\Village\Delete.cshtml" />
-    <Content Include="Areas\Administrator\Views\Inventoryamount\Index.cshtml" />
+    <Content Include="Content\fonts\Vazir.ttf" />
+    <Content Include="Areas\Administrator\Views\AccountNumberManage\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\AccountNumberManage\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\AccountNumberManage\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\AccountNumberManage\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\AccountNumberManage\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\BankAccount\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\BankAccount\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\BankAccount\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\BankAccount\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\BankAccount\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Bank\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Bank\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Bank\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\Bank\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Bank\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\CentralBank\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Certain\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Certain\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Certain\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\Certain\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Certain\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\City\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\City\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\CurrencyUnit\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\CurrencyUnit\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\CurrencyUnit\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\CurrencyUnit\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\CurrencyUnit\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\DetailOfFactor\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\DetailOfFactor\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\DetailOfFactor\Details.cshtml" />
+    <Content Include="Areas\Administrator\Views\DetailOfFactor\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\DetailOfFactor\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\DetailOfFactor\PrintFactor.cshtml" />
+    <Content Include="Areas\Administrator\Views\ExecutableCode\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\ExecutableCode\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\ExecutableCode\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\ExecutableCode\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\ExecutableCode\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\FactoryName\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\FactoryName\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\FactoryName\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\DestinationDelete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\DestinationEdit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\DestinationIndex.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\DestinationPrice.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\DetailsId.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\Index2.cshtml" />
+    <Content Include="Areas\Administrator\Views\Financial\PaymentReport.cshtml" />
+    <Content Include="Areas\Administrator\Views\Headline\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Headline\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Headline\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\Headline\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Headline\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\HeadOfFactor\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\HeadOfFactor\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\HeadOfFactor\Details.cshtml" />
+    <Content Include="Areas\Administrator\Views\HeadOfFactor\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\HeadOfFactor\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\IncomeRow\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\IncomeRow\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\IncomeRow\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\IncomeRow\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\IncomeRow\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\Inventoryamount\Create.cshtml" />
-    <Content Include="Areas\Administrator\Views\Inventoryamount\Edit.cshtml" />
     <Content Include="Areas\Administrator\Views\Inventoryamount\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Inventoryamount\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Inventoryamount\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\News\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\News\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\News\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\News\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\PackageType\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\PackageType\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\PackageType\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductName\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductName\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductName\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductType\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductType\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\ProductType\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Province\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Province\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\ReportBuilder\ExportToExcel.cshtml" />
+    <Content Include="Areas\Administrator\Views\ReportBuilder\GetParamReport.cshtml" />
+    <Content Include="Areas\Administrator\Views\ReportBuilder\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\ReportBuilder\IndexDataReport.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\display.cshtml" />
     <Content Include="Areas\Administrator\Views\Request\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\EditIVO.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\Incomplete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\PaymentReport.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\PrintDepositNumber.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\PrintFactor.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\PrintNewFactor.cshtml" />
     <Content Include="Areas\Administrator\Views\Request\PrintNewFactorWallet.cshtml" />
-    <Content Include="Areas\Administrator\Views\TotalCompanyInventory\Index.cshtml" />
-    <Content Include="Areas\Administrator\Views\User\Paymentwallet.cshtml" />
-    <Content Include="Areas\Markter\Views\MarketingTransaction\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\UpAmountPaid.cshtml" />
+    <Content Include="Areas\Administrator\Views\ServiceTariff\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\ServiceTariff\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\ServiceTariff\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\ServiceTariff\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\ServiceTariff\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Administrator\Views\Sms\Send.cshtml" />
     <Content Include="Areas\Administrator\Views\Sms\_UsersCheckboxList.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubHeadline\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubHeadline\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubHeadline\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubHeadline\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubHeadline\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubSystem\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubSystem\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubSystem\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubSystem\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\SubSystem\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\Tonnages\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Tonnages\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Tonnages\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\TotalCompanyInventory\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\User\AccessManagement.cshtml" />
+    <Content Include="Areas\Administrator\Views\User\ChangePassword.cshtml" />
+    <Content Include="Areas\Administrator\Views\User\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\User\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\User\Detail.cshtml" />
+    <Content Include="Areas\Administrator\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Administrator\Views\User\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\User\Paymentwallet.cshtml" />
+    <Content Include="Areas\Administrator\Views\Village\Create.cshtml" />
+    <Content Include="Areas\Administrator\Views\Village\Delete.cshtml" />
+    <Content Include="Areas\Administrator\Views\Village\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\web.config" />
+    <Content Include="Areas\Administrator\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Markter\Views\MarketingTransaction\Index.cshtml" />
+    <Content Include="Areas\Markter\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Markter\Views\web.config" />
+    <Content Include="Areas\Markter\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\User\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\User\Views\web.config" />
+    <Content Include="Areas\User\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Administrator\Views\Request\ShowFactor.cshtml" />
+    <Content Include="Areas\Carrier\Views\Request\Index.cshtml" />
+    <Content Include="Areas\Carrier\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Carrier\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Carrier\Views\web.config" />
+    <Content Include="Areas\Carrier\Views\Request\LoadCargo.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
+    <Content Include="Scripts\NewKendo\jquery.min.js" />
+    <Content Include="Scripts\NewKendo\kendo.all.min.js" />
+    <Content Include="Scripts\NewKendo\kendo.ui.core.min.js" />
     <Content Include="Scripts\num2persian.min.js" />
     <Content Include="Service References\BehdadService\OPS.BehdadService.accountInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -1606,9 +1384,6 @@
     <Compile Include="Administrator.BankController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Administrator.CementController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Administrator.CentralBankController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1697,46 +1472,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\AccountNumberManageController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\BankAccountController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\BankController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\CentralBankController.cs" />
-    <Compile Include="Areas\Administrator\Controllers\CertainController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\CityController.cs" />
-    <Compile Include="Areas\Administrator\Controllers\CurrencyUnitController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\DetailOfFactorController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\ExecutableCodeController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\FactoryNameController.cs" />
-    <Compile Include="Areas\Administrator\Controllers\FinancialController.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AccountNumberManageController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\BankAccountController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\BankController.cs" />
     <Compile Include="Areas\Administrator\Controllers\CementController.cs" />
-    <Compile Include="Areas\Administrator\Controllers\HeadlineController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\HeadOfFactorController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\IncomeRowController.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Areas\Administrator\Controllers\CertainController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\CityController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\CurrencyUnitController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\ExecutableCodeController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\FactoryNameController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\FinancialController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\HeadlineController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\HeadOfFactorController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\IncomeRowController.cs" />
     <Compile Include="Areas\Administrator\Controllers\InventoryamountController.cs" />
     <Compile Include="Areas\Administrator\Controllers\NewsController.cs" />
     <Compile Include="Areas\Administrator\Controllers\PackageTypeController.cs" />
@@ -1744,29 +1493,20 @@
     <Compile Include="Areas\Administrator\Controllers\ProductTypeController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ProvinceController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ReportBuilderController.cs" />
-    <Compile Include="Areas\Administrator\Controllers\RequestController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\ServiceTariffController.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Areas\Administrator\Controllers\RequestController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\ServiceTariffController.cs" />
     <Compile Include="Areas\Administrator\Controllers\SmsController.cs" />
-    <Compile Include="Areas\Administrator\Controllers\SubHeadlineController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Areas\Administrator\Controllers\SubSystemController.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Areas\Administrator\Controllers\SubHeadlineController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\SubSystemController.cs" />
     <Compile Include="Areas\Administrator\Controllers\TonnagesController.cs" />
     <Compile Include="Areas\Administrator\Controllers\TotalCompanyInventoryController.cs" />
-    <Compile Include="Areas\Administrator\Controllers\UserController.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Areas\Administrator\Controllers\UserController.cs" />
     <Compile Include="Areas\Administrator\Controllers\VillageController.cs" />
+    <Compile Include="Areas\Carrier\CarrierAreaRegistration.cs" />
+    <Compile Include="Areas\Carrier\Controllers\RequestController.cs" />
     <Compile Include="Areas\Markter\Controllers\MarketingTransactionController.cs" />
-    <Compile Include="Areas\Markter\MarkterAreaRegistration.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Areas\Markter\MarkterAreaRegistration.cs" />
+    <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1833,9 +1573,6 @@
     <Compile Include="Markter.SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ParsianPGWSalePaymentController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Parsian\ConfigHelper.cs" />
     <Compile Include="Parsian\Constants.cs" />
     <Compile Include="Parsian\PaymentCallBackModel.cs" />
@@ -1852,7 +1589,6 @@
     </Compile>
     <Compile Include="Quarantine.asmx.cs">
       <DependentUpon>Quarantine.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportGenerator\KendoGridPost.cs" />
     <Compile Include="ReportGenerator\StringHelpers.cs" />
@@ -1930,6 +1666,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="User.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="WalletController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1967,8 +1706,10 @@
     <Folder Include="App_Data\Picture\" />
     <Folder Include="App_Data\UserAvatars\" />
     <Folder Include="App_Data\UserResumes\" />
+    <Folder Include="Content\Kendo\" />
     <Folder Include="Files\Old\" />
     <Folder Include="Files\PersonImage\" />
+    <Folder Include="Views\Default\" />
     <Folder Include="Views\Wallet\" />
   </ItemGroup>
   <ItemGroup>
@@ -2294,10 +2035,6 @@
     <ProjectReference Include="..\ViewModels\ViewModels.csproj">
       <Project>{7a01f539-3ef7-45c6-b01d-60a460bc72fb}</Project>
       <Name>ViewModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WCFServiceLibrary\WCFServiceLibrary.csproj">
-      <Project>{99dfb77d-8f8e-4351-a3ac-da0436a2ce65}</Project>
-      <Name>WCFServiceLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

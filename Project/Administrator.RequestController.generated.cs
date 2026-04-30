@@ -52,6 +52,12 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ShowFactor()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.ShowFactor);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult DetailsInvoiceNumber()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.DetailsInvoiceNumber);
@@ -70,39 +76,15 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult EditIVO()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.EditIVO);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult GetTransactionReportByPageNumber()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.GetTransactionReportByPageNumber);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult UpAmountPaid()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.UpAmountPaid);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Incomplete()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Incomplete);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult DetailsByTracingCode()
-        {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.DetailsByTracingCode);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult ViewFiles()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.ViewFiles);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ApproveFinancial()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.ApproveFinancial);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -128,12 +110,6 @@ namespace OPS.Areas.Administrator.Controllers
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.PrintDepositNumber);
         }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.JsonResult AddPayment()
-        {
-            return new T4MVC_JsonResult(Area, Name, ActionNames.AddPayment);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public RequestController Actions { get { return MVC.Administrator.Request; } }
@@ -153,21 +129,16 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string Index = "Index";
             public readonly string GetRequests = "GetRequests";
             public readonly string Search = "Search";
+            public readonly string ShowFactor = "ShowFactor";
             public readonly string DetailsInvoiceNumber = "DetailsInvoiceNumber";
             public readonly string Display = "Display";
             public readonly string Edit = "Edit";
-            public readonly string EditIVO = "EditIVO";
-            public readonly string GetTransactionReportByPageNumber = "GetTransactionReportByPageNumber";
-            public readonly string UpAmountPaid = "UpAmountPaid";
-            public readonly string Incomplete = "Incomplete";
-            public readonly string DetailsByTracingCode = "DetailsByTracingCode";
             public readonly string ViewFiles = "ViewFiles";
-            public readonly string Download = "Download";
+            public readonly string ApproveFinancial = "ApproveFinancial";
             public readonly string GetCities = "GetCities";
             public readonly string PrintNewFactor = "PrintNewFactor";
             public readonly string PrintNewFactorWallet = "PrintNewFactorWallet";
             public readonly string PrintDepositNumber = "PrintDepositNumber";
-            public readonly string AddPayment = "AddPayment";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -176,21 +147,16 @@ namespace OPS.Areas.Administrator.Controllers
             public const string Index = "Index";
             public const string GetRequests = "GetRequests";
             public const string Search = "Search";
+            public const string ShowFactor = "ShowFactor";
             public const string DetailsInvoiceNumber = "DetailsInvoiceNumber";
             public const string Display = "Display";
             public const string Edit = "Edit";
-            public const string EditIVO = "EditIVO";
-            public const string GetTransactionReportByPageNumber = "GetTransactionReportByPageNumber";
-            public const string UpAmountPaid = "UpAmountPaid";
-            public const string Incomplete = "Incomplete";
-            public const string DetailsByTracingCode = "DetailsByTracingCode";
             public const string ViewFiles = "ViewFiles";
-            public const string Download = "Download";
+            public const string ApproveFinancial = "ApproveFinancial";
             public const string GetCities = "GetCities";
             public const string PrintNewFactor = "PrintNewFactor";
             public const string PrintNewFactorWallet = "PrintNewFactorWallet";
             public const string PrintDepositNumber = "PrintDepositNumber";
-            public const string AddPayment = "AddPayment";
         }
 
 
@@ -201,6 +167,15 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionParamsClass_Search
         {
             public readonly string viewModel = "viewModel";
+        }
+        static readonly ActionParamsClass_ShowFactor s_params_ShowFactor = new ActionParamsClass_ShowFactor();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ShowFactor ShowFactorParams { get { return s_params_ShowFactor; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ShowFactor
+        {
+            public readonly string invoicenumber = "invoicenumber";
+            public readonly string isPdf = "isPdf";
         }
         static readonly ActionParamsClass_DetailsInvoiceNumber s_params_DetailsInvoiceNumber = new ActionParamsClass_DetailsInvoiceNumber();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -227,50 +202,6 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string id = "id";
             public readonly string cementViewModel = "cementViewModel";
         }
-        static readonly ActionParamsClass_EditIVO s_params_EditIVO = new ActionParamsClass_EditIVO();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_EditIVO EditIVOParams { get { return s_params_EditIVO; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_EditIVO
-        {
-            public readonly string id = "id";
-            public readonly string request = "request";
-        }
-        static readonly ActionParamsClass_GetTransactionReportByPageNumber s_params_GetTransactionReportByPageNumber = new ActionParamsClass_GetTransactionReportByPageNumber();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_GetTransactionReportByPageNumber GetTransactionReportByPageNumberParams { get { return s_params_GetTransactionReportByPageNumber; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_GetTransactionReportByPageNumber
-        {
-            public readonly string id = "id";
-        }
-        static readonly ActionParamsClass_UpAmountPaid s_params_UpAmountPaid = new ActionParamsClass_UpAmountPaid();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_UpAmountPaid UpAmountPaidParams { get { return s_params_UpAmountPaid; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_UpAmountPaid
-        {
-            public readonly string id = "id";
-            public readonly string request = "request";
-            public readonly string submit = "submit";
-        }
-        static readonly ActionParamsClass_Incomplete s_params_Incomplete = new ActionParamsClass_Incomplete();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Incomplete IncompleteParams { get { return s_params_Incomplete; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Incomplete
-        {
-            public readonly string RecordNumber = "RecordNumber";
-            public readonly string SystemMessage = "SystemMessage";
-        }
-        static readonly ActionParamsClass_DetailsByTracingCode s_params_DetailsByTracingCode = new ActionParamsClass_DetailsByTracingCode();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_DetailsByTracingCode DetailsByTracingCodeParams { get { return s_params_DetailsByTracingCode; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DetailsByTracingCode
-        {
-            public readonly string tracingcode = "tracingcode";
-        }
         static readonly ActionParamsClass_ViewFiles s_params_ViewFiles = new ActionParamsClass_ViewFiles();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_ViewFiles ViewFilesParams { get { return s_params_ViewFiles; } }
@@ -278,6 +209,15 @@ namespace OPS.Areas.Administrator.Controllers
         public class ActionParamsClass_ViewFiles
         {
             public readonly string Id = "Id";
+        }
+        static readonly ActionParamsClass_ApproveFinancial s_params_ApproveFinancial = new ActionParamsClass_ApproveFinancial();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ApproveFinancial ApproveFinancialParams { get { return s_params_ApproveFinancial; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ApproveFinancial
+        {
+            public readonly string id = "id";
+            public readonly string description = "description";
         }
         static readonly ActionParamsClass_GetCities s_params_GetCities = new ActionParamsClass_GetCities();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -311,15 +251,6 @@ namespace OPS.Areas.Administrator.Controllers
         {
             public readonly string invoiceNumber = "invoiceNumber";
         }
-        static readonly ActionParamsClass_AddPayment s_params_AddPayment = new ActionParamsClass_AddPayment();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_AddPayment AddPaymentParams { get { return s_params_AddPayment; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_AddPayment
-        {
-            public readonly string data = "data";
-            public readonly string Id = "Id";
-        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -340,6 +271,7 @@ namespace OPS.Areas.Administrator.Controllers
                 public readonly string PrintFactor = "PrintFactor";
                 public readonly string PrintNewFactor = "PrintNewFactor";
                 public readonly string PrintNewFactorWallet = "PrintNewFactorWallet";
+                public readonly string ShowFactor = "ShowFactor";
                 public readonly string UpAmountPaid = "UpAmountPaid";
             }
             public readonly string display = "~/Areas/Administrator/Views/Request/display.cshtml";
@@ -352,6 +284,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string PrintFactor = "~/Areas/Administrator/Views/Request/PrintFactor.cshtml";
             public readonly string PrintNewFactor = "~/Areas/Administrator/Views/Request/PrintNewFactor.cshtml";
             public readonly string PrintNewFactorWallet = "~/Areas/Administrator/Views/Request/PrintNewFactorWallet.cshtml";
+            public readonly string ShowFactor = "~/Areas/Administrator/Views/Request/ShowFactor.cshtml";
             public readonly string UpAmountPaid = "~/Areas/Administrator/Views/Request/UpAmountPaid.cshtml";
         }
     }
@@ -373,10 +306,18 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Cement.CementViewModel viewModel)
+        public override System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Request.IndexViewModel viewModel)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Search);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ShowFactor(int? invoicenumber, bool isPdf)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ShowFactor);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "invoicenumber", invoicenumber);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "isPdf", isPdf);
             return callInfo;
         }
 
@@ -408,57 +349,6 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult EditIVO(System.Guid id)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditIVO);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult GetTransactionReportByPageNumber(System.Guid id)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GetTransactionReportByPageNumber);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult UpAmountPaid(System.Guid id)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpAmountPaid);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult UpAmountPaid(ViewModels.Areas.Administrator.Request.UpAmountPaidViewModel request, string submit)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpAmountPaid);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "request", request);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "submit", submit);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Incomplete(string RecordNumber, string SystemMessage)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Incomplete);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "RecordNumber", RecordNumber);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "SystemMessage", SystemMessage);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult EditIVO(ViewModels.Areas.Administrator.Request.EditViewModel request)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditIVO);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "request", request);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult DetailsByTracingCode(string tracingcode)
-        {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DetailsByTracingCode);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "tracingcode", tracingcode);
-            return callInfo;
-        }
-
         public override System.Web.Mvc.ActionResult ViewFiles(string Id)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ViewFiles);
@@ -466,9 +356,11 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.FileContentResult Download()
+        public override System.Web.Mvc.ActionResult ApproveFinancial(System.Guid id, string description)
         {
-            var callInfo = new T4MVC_FileContentResult(Area, Name, ActionNames.Download);
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ApproveFinancial);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "description", description);
             return callInfo;
         }
 
@@ -497,14 +389,6 @@ namespace OPS.Areas.Administrator.Controllers
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.PrintDepositNumber);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "invoiceNumber", invoiceNumber);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.JsonResult AddPayment(OPS.Areas.Administrator.Controllers.PCPOS_Res data, System.Guid Id)
-        {
-            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.AddPayment);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "data", data);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Id", Id);
             return callInfo;
         }
 

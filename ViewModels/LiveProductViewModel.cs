@@ -8,6 +8,10 @@ namespace ViewModels
 {
     public class LiveProductViewModel
     {
+        public Guid ProductNameId { get; set; }
+        public Guid ProductTypeId { get; set; }
+        public Guid PackageTypeId { get; set; }
+        public Guid FactoryNameId { get; set; }
         public string ProductName { get; set; }
         public string ProductTypeName { get; set; }
         public string PackageType { get; set; }
