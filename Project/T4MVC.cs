@@ -26,6 +26,8 @@ public static class MVC
 {
     static readonly AdministratorClass s_Administrator = new AdministratorClass();
     public static AdministratorClass Administrator { get { return s_Administrator; } }
+    static readonly CarrierClass s_Carrier = new CarrierClass();
+    public static CarrierClass Carrier { get { return s_Carrier; } }
     static readonly MarkterClass s_Markter = new MarkterClass();
     public static MarkterClass Markter { get { return s_Markter; } }
     static readonly UserClass s_User = new UserClass();
@@ -34,6 +36,7 @@ public static class MVC
     public static OPS.Controllers.ErrorController Error = new OPS.Controllers.T4MVC_ErrorController();
     public static OPS.Controllers.HomeMainController HomeMain = new OPS.Controllers.T4MVC_HomeMainController();
     public static OPS.Controllers.ZarinpalController Zarinpal = new OPS.Controllers.T4MVC_ZarinpalController();
+    public static T4MVC.DefaultController Default = new T4MVC.DefaultController();
     public static T4MVC.PaymentController Payment = new T4MVC.PaymentController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
     public static T4MVC.WalletController Wallet = new T4MVC.WalletController();
@@ -53,6 +56,7 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.CurrencyUnitController CurrencyUnit = new OPS.Areas.Administrator.Controllers.T4MVC_CurrencyUnitController();
         public OPS.Areas.Administrator.Controllers.ExecutableCodeController ExecutableCode = new OPS.Areas.Administrator.Controllers.T4MVC_ExecutableCodeController();
         public OPS.Areas.Administrator.Controllers.FactoryNameController FactoryName = new OPS.Areas.Administrator.Controllers.T4MVC_FactoryNameController();
+        public OPS.Areas.Administrator.Controllers.FinancialController Financial = new OPS.Areas.Administrator.Controllers.T4MVC_FinancialController();
         public OPS.Areas.Administrator.Controllers.HeadLineController HeadLine = new OPS.Areas.Administrator.Controllers.T4MVC_HeadLineController();
         public OPS.Areas.Administrator.Controllers.IncomeRowController IncomeRow = new OPS.Areas.Administrator.Controllers.T4MVC_IncomeRowController();
         public OPS.Areas.Administrator.Controllers.InventoryamountController Inventoryamount = new OPS.Areas.Administrator.Controllers.T4MVC_InventoryamountController();
@@ -64,6 +68,7 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.ReportBuilderController ReportBuilder = new OPS.Areas.Administrator.Controllers.T4MVC_ReportBuilderController();
         public OPS.Areas.Administrator.Controllers.RequestController Request = new OPS.Areas.Administrator.Controllers.T4MVC_RequestController();
         public OPS.Areas.Administrator.Controllers.ServiceTariffController ServiceTariff = new OPS.Areas.Administrator.Controllers.T4MVC_ServiceTariffController();
+        public OPS.Areas.Administrator.Controllers.SiteSettingController SiteSetting = new OPS.Areas.Administrator.Controllers.T4MVC_SiteSettingController();
         public OPS.Areas.Administrator.Controllers.SmsController Sms = new OPS.Areas.Administrator.Controllers.T4MVC_SmsController();
         public OPS.Areas.Administrator.Controllers.SubHeadLineController SubHeadLine = new OPS.Areas.Administrator.Controllers.T4MVC_SubHeadLineController();
         public OPS.Areas.Administrator.Controllers.SubSystemController SubSystem = new OPS.Areas.Administrator.Controllers.T4MVC_SubSystemController();
@@ -73,9 +78,15 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.VillageController Village = new OPS.Areas.Administrator.Controllers.T4MVC_VillageController();
         public T4MVC.Administrator.CentralBankController CentralBank = new T4MVC.Administrator.CentralBankController();
         public T4MVC.Administrator.DetailOfFactorController DetailOfFactor = new T4MVC.Administrator.DetailOfFactorController();
-        public T4MVC.Administrator.FinancialController Financial = new T4MVC.Administrator.FinancialController();
         public T4MVC.Administrator.HeadOfFactorController HeadOfFactor = new T4MVC.Administrator.HeadOfFactorController();
         public T4MVC.Administrator.SharedController Shared = new T4MVC.Administrator.SharedController();
+    }
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public class CarrierClass
+    {
+        public readonly string Name = "Carrier";
+        public OPS.Areas.Carrier.Controllers.RequestController Request = new OPS.Areas.Carrier.Controllers.T4MVC_RequestController();
+        public T4MVC.Carrier.SharedController Shared = new T4MVC.Carrier.SharedController();
     }
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public class MarkterClass
@@ -137,6 +148,21 @@ public class T4MVC_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult
     {
         this.InitMVCT4Result(area, controller, action, protocol);
     }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+public class T4MVC_FileResult : System.Web.Mvc.FileResult, IT4MVCActionResult
+{
+    public T4MVC_FileResult(string area, string controller, string action, string protocol = null): base(" ")
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+     
+    protected override void WriteFile(System.Web.HttpResponseBase response) { }
     
     public string Controller { get; set; }
     public string Action { get; set; }

@@ -352,26 +352,74 @@
     </div>
 
     <!-- بخش تایید مالی (فقط در حالت نمایشگر مرورگر دیده می‌شود، در پرینت مخفی است) -->
+    <!-- بخش تایید مالی -->
     @if (Model.RequestState == 1)
     {
+        <style>
+            .custom-dropdown {
+                display: block;
+                width: 100%;
+                padding: 10px 15px;
+                font-size: 14px;
+                font-family: 'Vazir', tahoma, sans-serif;
+                color: #495057;
+                background-color: #fff;
+                border: 1px solid #ced4da;
+                border-radius: 6px;
+                appearance: none; /* حذف ظاهر پیش‌فرض مرورگر */
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                /* اضافه کردن فلش سفارشی برای حالت راست‌چین */
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: left 15px center;
+                background-size: 8px 10px;
+                transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+                cursor: pointer;
+            }
+
+                .custom-dropdown:focus {
+                    border-color: #80bdff;
+                    outline: 0;
+                    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+                }
+        </style>
+
         <div class="container no-print" style="margin-top: 20px; margin-bottom: 40px;">
-            <div class="invoice" style="text-align: right; background: #eef2f3; padding: 20px;">
+            <div class="invoice" style="text-align: right; background: #eef2f3; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                 <h5 style="color: #2c3e50; margin-bottom: 15px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">بخش تایید مالی سفارش</h5>
                 <form action="/Administrator/Request/ApproveFinancial" method="post">
                     <input type="hidden" name="id" value="@Model.Id" />
 
-                    <div style="margin-bottom: 15px;">
-                        <label for="description" style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">توضیحات (اختیاری):</label>
-                        <textarea name="description" id="description" rows="3" style="width: 100%; max-width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: 'Vazir', tahoma;" placeholder="اگر توضیحاتی برای این تایید مالی دارید، اینجا وارد کنید..."></textarea>
+                    <!-- دراپ داون انتخاب باربری -->
+                    <div style="margin-bottom: 20px;">
+                        <label for="CarrierId" style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">انتخاب باربری (الزامی):</label>
+                        @if (ViewBag.CarrierList != null)
+                        {
+                            @Html.DropDownList("CarrierId", (System.Web.Mvc.SelectList)ViewBag.CarrierList, "--- لطفا یک باربری انتخاب کنید ---", new { @class = "custom-dropdown", required = "required" })
+                        }
+                        else
+                        {
+                            <div style="padding: 10px; background: #ffeeba; color: #856404; border-radius: 6px; border: 1px solid #ffeeba;">
+                                لیست باربری‌ها یافت نشد!
+                            </div>
+                        }
                     </div>
 
-                    <button type="submit" onclick="return confirm('آیا از تایید مالی این فاکتور اطمینان دارید؟');" style="background-color: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; font-family: 'Vazir', tahoma; font-weight: bold;">
+                    <div style="margin-bottom: 20px;">
+                        <label for="description" style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">توضیحات (اختیاری):</label>
+                        <textarea name="description" id="description" rows="3" style="width: 100%; max-width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 6px; font-family: 'Vazir', tahoma;" placeholder="اگر توضیحاتی برای این تایید مالی دارید، اینجا وارد کنید..."></textarea>
+                    </div>
+
+                    <button type="submit" onclick="return confirm('آیا از تایید مالی این فاکتور و ارجاع آن به باربری انتخابی اطمینان دارید؟');" style="background-color: #28a745; color: white; padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; font-family: 'Vazir', tahoma; font-weight: bold; transition: background 0.2s;">
                         ✓ تایید مالی و ارسال به کارتابل باربری
                     </button>
                 </form>
             </div>
         </div>
     }
+
+
 
 </body>
 </html>

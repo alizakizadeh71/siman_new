@@ -218,6 +218,7 @@ namespace OPS.Areas.Administrator.Controllers
         {
             public readonly string id = "id";
             public readonly string description = "description";
+            public readonly string CarrierId = "CarrierId";
         }
         static readonly ActionParamsClass_GetCities s_params_GetCities = new ActionParamsClass_GetCities();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -356,11 +357,12 @@ namespace OPS.Areas.Administrator.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ApproveFinancial(System.Guid id, string description)
+        public override System.Web.Mvc.ActionResult ApproveFinancial(System.Guid id, string description, System.Guid CarrierId)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ApproveFinancial);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "description", description);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "CarrierId", CarrierId);
             return callInfo;
         }
 

@@ -2,31 +2,24 @@
 {
     public enum RequestState
     {
-        // ... اگر وضعیت‌های قبلی دارید اینجا باشند ...
-
         /// <summary>
         /// تایید مالی نشده
         /// </summary>
         PendingFinancialApproval = 1,
 
         /// <summary>
-        /// تایید مالی
+        /// تایید مالی شده
         /// </summary>
         FinanciallyApproved = 2,
 
         /// <summary>
-        /// بارگیری شده
+        /// در انتظار بارگیری
         /// </summary>
-        Loaded = 3,
-
-        /// <summary>
-        /// به مقصد رسیده
-        /// </summary>
-        ArrivedAtDestination = 4,
+        WaitingForLoading = 3,
 
         /// <summary>
         /// تحویل داده شده
         /// </summary>
-        Delivered = 5
+        Delivered = 4
     }
 }

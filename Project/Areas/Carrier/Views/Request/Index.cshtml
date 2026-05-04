@@ -1,12 +1,4 @@
-﻿@model ViewModels.Areas.Administrator.Request.IndexViewModel
-@using Utilities.PersianDate
-@{
-    string strTitle =
-        string.Format("{0} {1}",
-        Resources.Action.ListOf,
-        Resources.Model.Request.EntitiesName);
-}
-<style>
+﻿<style>
     input#CompanyName {
         color: gray;
         padding: 6px 12px;
@@ -25,23 +17,28 @@
         padding-top: 5px !important;
         padding-bottom: 5px !important;
     }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+        background-color: #f5f5f5;
+        font-weight: bold;
+        color: #31708f;
+        border-bottom-color: transparent;
+    }
+
+    .tab-content {
+        padding: 15px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-top: none;
+    }
 </style>
 
 <script type="text/javascript">
     function AllowNumbersOnly(e) {
         var code = (e.which) ? e.which : e.keyCode;
-        if (code > 31 && (code < 48 || code > 57)) {
-            e.preventDefault();
-        }
+        if (code > 31 && (code < 48 || code > 57)) { e.preventDefault(); }
     }
 
-    $(document).on('click', 'a.btn-blank', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        window.open(url, '_blank');
-    });
-
-    // تابع دریافت پارامترهای جستجو (فیلدهای اضافه حذف شدند)
     function getSearchParameters() {
         return {
             InvoiceNumber: $("input#InvoiceNumber").val(),
@@ -55,348 +52,279 @@
             EndDate: $("input#EndDate").val()
         };
     }
-    var rowNumber = 0;
+
+    var rowNumber1 = 0, rowNumber2 = 0, rowNumber3 = 0;
+    var isGrid2Loaded = false;
+    var isGrid3Loaded = false;
+
+    // 🌟 متغیرهای جدید برای ذخیره زمان آخرین لود هر گرید
+    var lastLoadTime1 = Date.now(); // گرید ۱ در ابتدا لود می‌شود
+    var lastLoadTime2 = 0;
+    var lastLoadTime3 = 0;
+
+    // 🌟 زمان انقضای دیتا (مثلاً ۲ دقیقه = 120,000 میلی‌ثانیه)
+    var cacheExpirationMs = 2 * 60 * 1000;
+
     $(document).ready(function () {
         $('#StartDate').datepicker({ dateFormat: 'yy/mm/dd', autoSize: true, showyear: true, changeYear: true });
         $('#EndDate').datepicker({ dateFormat: 'yy/mm/dd', autoSize: true, showyear: true, changeYear: true });
+        $("#SearchPanelHeader").click(function () { $("#SearchPanelBody").toggle(1000); });
 
-        $("#SearchPanelHeader").click(function () {
-            $("#SearchPanelBody").toggle(1000);
+        var commonColumns = [
+            { field: "StringInsertDateTime", title: "تاریخ ثبت", width: "100px" },
+            { field: "InvoiceNumber", title: "شماره فاکتور", width: "100px" },
+            {
+                field: "RequestState", title: "وضعیت بار", width: "130px",
+                template: function (dataItem) {
+                    if (dataItem.RequestState === 2) return "<span class='label label-success' style='font-size:12px;'>تایید مالی شده</span>";
+                    if (dataItem.RequestState === 3) return "<span class='label label-info' style='font-size:12px;'>در جریان ارسال</span>";
+                    if (dataItem.RequestState === 4) return "<span class='label label-primary' style='font-size:12px;'>تحویل داده شده</span>";
+                    return "<span class='label label-default' style='font-size:12px;'>نامشخص</span>";
+                }
+            },
+            { field: "Description", title: "توضیحات", width: "200px" },
+            { field: "StringProductName", title: "نام محصول", width: "80px" },
+            { field: "StringProductType", title: "تیپ محصول", width: "80px" }, // 🌟 اضافه شد
+            { field: "StringPackageType", title: "نوع بسته‌بندی", width: "80px" },
+            { field: "StringTonnage", title: "تناژ", width: "80px" },
+            { field: "BuyerName", title: "نام مشتری", width: "150px" },
+            { field: "BuyerMobile", title: "شماره گیرنده", width: "110px" },
+            { field: "StringFactoryName", title: "مبدأ (کارخانه)", width: "100px" },
+            { field: "Address", title: "آدرس مقصد", width: "200px" },
+        ];
+
+
+
+        // ------------------ گرید 1 ------------------
+        var ds1 = new kendo.data.DataSource({
+            pageSize: 10, serverPaging: true, serverSorting: true, serverFiltering: true,
+            transport: {
+                read: {
+                    type: "POST", dataType: "json", url: "/Carrier/Request/Search",
+                    data: function () {
+                        var p = getSearchParameters(); p.gridTab = 1; return p;
+                    }
+                }
+            },
+            schema: { data: "Data", total: "Total" }
         });
 
-        var varDataSource =
-            new kendo.data.DataSource({
-                pageSize: 10,
-                serverPaging: true,
-                serverSorting: true,
-                serverFiltering: true,
-                serverAggregates: false,
-                transport: {
-                    read: {
-                        type: "POST",
-                        dataType: "json",
-                        url: "/Carrier/Request/Search",
-                        data: getSearchParameters
-                    },
-                },
-                requestStart: function (e) {
-                    $("button#btnSearch").hide();
-                },
-                requestEnd: function (e) {
-                    $("button#btnSearch").show();
-                },
-                schema: {
-                    data: function (e) { return (e.Data); },
-                    total: function (e) { return (e.Total); },
-                },
-            });
-
-        $("div#grid").kendoGrid({
-            sortable: { mode: "multiple", allowUnsort: true, },
-            pageable: {
-                info: true, input: true, refresh: true, numeric: true, buttonCount: 5, previousNext: true, pageSize: [5, 10, 25, 50, 100],
-                messages: { morePages: "صفحات بیشتر", page: "شماره صفحه", }
-            },
-            groupable: true, filterable: true, scrollable: true, reorderable: true,
-            columnMenu: { columns: true, filterable: true, messages: { lock: "قفل شده", unlock: "قفل نشده", } },
-            navigatable: true, selectable: "multiple row",
-            dataSource: varDataSource,
-            dataBinding: function () {
-                rowNumber = (this.dataSource.page() - 1) * this.dataSource.pageSize();
-            },
-            columns:
-                [
-                    {
-                        hidden: false, locked: true, lockable: true, width: "40px", title: "#",
-                        attributes: { style: "text-align: center; vertical-align: middle;" },
-                        template: function (dataItem) { return ++rowNumber; }
-                    },
-                    {
-                        title: "عملیات", hidden: false, locked: true, lockable: true, width: "130px",
-                        attributes: { style: "text-align: center; vertical-align: middle;" },
-                        template: function (dataItem) {
-                            var strTemplate = "";
-                            strTemplate += '<a data-toggle="tooltip" data-placement="top" title="نمایش جزئیات بار" style="margin-left:8px;" href="/Carrier/Request/display/' + dataItem.Id + '">';
-                            strTemplate += '<img src="/Content/Icon/display.png" style="width: 20px; height: 20px; vertical-align: middle;" /></a>';
-
-                            strTemplate += '<a data-toggle="tooltip" data-placement="top" title="تخصیص راننده" href="/Carrier/Request/Edit/' + dataItem.Id + '">';
-                            strTemplate += '<img src="/Content/Icon/edit.png" style="width: 20px; height: 20px; vertical-align: middle;" /></a>';
-
-                            if (dataItem.RequestState === 2) {
-                                strTemplate += "<a data-toggle='tooltip' data-placement='top' title='تغییر وضعیت به بارگیری شده' style='margin-left:8px;' href='/Carrier/Request/LoadCargo/" + dataItem.Id + "'>";
-                                strTemplate += "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='#5cb85c' style='vertical-align: middle; margin: 0 4px;' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z'/></svg>";
-                                strTemplate += "</a>";
-                            }
-
-                            // اگر وضعیت بارگیری شده (3) است -> دکمه "رسیدن به مقصد" (آیکون Location)
-                            if (dataItem.RequestState === 3) {
-                                strTemplate += "<a data-toggle='tooltip' title='اعلام رسیدن به مقصد' style='margin-left:8px; cursor:pointer;' onclick='setAsArrived(\"" + dataItem.Id + "\")'>";
-                                strTemplate += "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='#f0ad4e' style='vertical-align: middle; margin: 0 4px;' viewBox='0 0 16 16'><path d='M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z'/></svg></a>";
-                            }
-
-                            // اگر وضعیت به مقصد رسیده (4) است -> دکمه "تحویل نهایی" (آیکون Check)
-                            if (dataItem.RequestState === 4) {
-                                strTemplate += "<a data-toggle='tooltip' title='ثبت تحویل نهایی' style='margin-left:8px; cursor:pointer;' onclick='setAsDelivered(\"" + dataItem.Id + "\")'>";
-                                strTemplate += "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='#5cb85c' style='vertical-align: middle; margin: 0 4px;' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'/></svg></a>";
-                            }
-
-
-                            return strTemplate;
-                        }
-                    },
-                    { field: "InvoiceNumber", title: "شماره فاکتور", width: "120px" },
-                    {
-                        field: "RequestState",
-                        title: "وضعیت بار",
-                        width: "150px",
-                        template: function (dataItem) {
-                            if (dataItem.RequestState === 2) return "<span class='label label-success' style='font-size:12px;'>آماده بارگیری</span>";
-                            if (dataItem.RequestState === 3) return "<span class='label label-info' style='font-size:12px;'>بارگیری شده</span>";
-                            if (dataItem.RequestState === 4) return "<span class='label label-primary' style='font-size:12px;'>به مقصد رسیده</span>";
-                            if (dataItem.RequestState === 5) return "<span class='label label-default' style='font-size:12px;'>تحویل داده شده</span>";
-                            return "<span class='label label-default' style='font-size:12px;'>وضعیت " + dataItem.RequestState + "</span>";
-                        }
-                    },
-                    { field: "StringProductName", title: "نام محصول", width: "120px" },
-                    { field: "StringFactoryName", title: "مبدأ (کارخانه)", width: "150px" },
-                    { field: "BuyerMobile", title: "شماره گیرنده", width: "120px" },
-                    { field: "Address", title: "آدرس مقصد", width: "200px" },
-                    { field: "Description", title: "توضیحات", width: "150px" },
-                    { field: "MahalTahvil", title: "محل تحویل", width: "150px" },
-                    { field: "StringInsertDateTime", title: "تاریخ ثبت", width: "120px" }
-                ]
+        $("#grid1").kendoGrid({
+            pageable: true, sortable: true, scrollable: true, dataSource: ds1,
+            dataBinding: function () { rowNumber1 = (this.dataSource.page() - 1) * this.dataSource.pageSize(); },
+            columns: [
+                { title: "#", width: "40px", template: function () { return ++rowNumber1; } },
+                {
+                    title: "عملیات", width: "130px",
+                    template: function (dataItem) {
+                        var str = '<a title="نمایش" style="margin-left:8px;" href="/Carrier/Request/display/' + dataItem.Id + '"><img src="/Content/Icon/display.png" style="width:20px; height:20px;" /></a>';
+                        str += '<a title="تخصیص راننده" style="margin-left:8px;" href="/Carrier/Request/Edit/' + dataItem.Id + '"><img src="/Content/Icon/edit.png" style="width:20px; height:20px;" /></a>';
+                        str += "<a title='تغییر وضعیت به بارگیری شده' href='/Carrier/Request/LoadCargo/" + dataItem.Id + "'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='#5cb85c' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z'/></svg></a>";
+                        return str;
+                    }
+                }
+            ].concat(commonColumns)
         });
 
+        // ------------------ گرید 2 ------------------
+        var ds2 = new kendo.data.DataSource({
+            pageSize: 10, serverPaging: true, serverSorting: true, serverFiltering: true,
+            transport: {
+                read: {
+                    type: "POST", dataType: "json", url: "/Carrier/Request/Search",
+                    data: function () {
+                        var p = getSearchParameters(); p.gridTab = 2; return p;
+                    }
+                }
+            },
+            schema: { data: "Data", total: "Total" }
+        });
+
+        $("#grid2").kendoGrid({
+            autoBind: false,
+            pageable: true, sortable: true, scrollable: true, dataSource: ds2,
+            dataBinding: function () { rowNumber2 = (this.dataSource.page() - 1) * this.dataSource.pageSize(); },
+            columns: [
+                { title: "#", width: "40px", template: function () { return ++rowNumber2; } },
+                {
+                    title: "عملیات", width: "130px",
+                    template: function (dataItem) {
+                        var str = '<a title="نمایش" style="margin-left:8px;" href="/Carrier/Request/display/' + dataItem.Id + '"><img src="/Content/Icon/display.png" style="width:20px; height:20px;" /></a>';
+                        if (dataItem.RequestState === 3) {
+                            str += "<a title='ثبت تحویل نهایی' style='cursor:pointer;' onclick='setAsDelivered(\"" + dataItem.Id + "\")'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='#5cb85c' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'/></svg></a>";
+                        }
+                        return str;
+                    }
+                }
+            ].concat(commonColumns)
+        });
+
+        // ------------------ گرید 3 ------------------
+        var ds3 = new kendo.data.DataSource({
+            pageSize: 10, serverPaging: true, serverSorting: true, serverFiltering: true,
+            transport: {
+                read: {
+                    type: "POST", dataType: "json", url: "/Carrier/Request/Search",
+                    data: function () {
+                        var p = getSearchParameters(); p.gridTab = 3; return p;
+                    }
+                }
+            },
+            schema: { data: "Data", total: "Total" }
+        });
+
+        $("#grid3").kendoGrid({
+            autoBind: false,
+            pageable: true, sortable: true, scrollable: true, dataSource: ds3,
+            dataBinding: function () { rowNumber3 = (this.dataSource.page() - 1) * this.dataSource.pageSize(); },
+            columns: [
+                { title: "#", width: "40px", template: function () { return ++rowNumber3; } },
+                {
+                    title: "عملیات", width: "80px",
+                    template: function (dataItem) {
+                        return '<a title="نمایش جزئیات" href="/Carrier/Request/display/' + dataItem.Id + '"><img src="/Content/Icon/display.png" style="width:20px; height:20px;" /></a>';
+                    }
+                }
+            ].concat(commonColumns)
+        });
+
+        // 🌟 دکمه جستجو: علاوه بر لود گرید، زمان‌ها را هم ریست می‌کند تا دیتای جدید بگیرد
         $("button#btnSearch").click(function () {
-            var varGrid = $('div#grid').data("kendoGrid");
-            varGrid.dataSource.page(1);
+            var now = Date.now();
+
+            $("#grid1").data("kendoGrid").dataSource.page(1);
+            lastLoadTime1 = now;
+
+            isGrid2Loaded = false;
+            isGrid3Loaded = false;
+            lastLoadTime2 = 0;
+            lastLoadTime3 = 0;
+
+            if ($("#tab2").parent().hasClass("active") || $("#tab2").hasClass("active")) {
+                $("#grid2").data("kendoGrid").dataSource.page(1);
+                isGrid2Loaded = true;
+                lastLoadTime2 = now;
+            }
+            if ($("#tab3").parent().hasClass("active") || $("#tab3").hasClass("active")) {
+                $("#grid3").data("kendoGrid").dataSource.page(1);
+                isGrid3Loaded = true;
+                lastLoadTime3 = now;
+            }
         });
-    })
+
+        // 🌟 مدیریت تغییر تب با قابلیت چک کردن زمان انقضا
+        $('.nav-tabs a').on('click', function (e) {
+            e.preventDefault();
+            var target = $(this).attr("href");
+            var now = Date.now();
+
+            $('.nav-tabs li').removeClass('active');
+            $(this).parent().addClass('active');
+
+            $('.tab-content .tab-pane').removeClass('active');
+            $(target).addClass('active');
+
+            setTimeout(function () {
+                if (target === "#tab1") {
+                    var grid1 = $("#grid1").data("kendoGrid");
+                    if (grid1) {
+                        // اگر زمان گذشته بود، رفرش کن
+                        if (now - lastLoadTime1 > cacheExpirationMs) {
+                            grid1.dataSource.read();
+                            lastLoadTime1 = now;
+                        }
+                        grid1.resize();
+                    }
+                }
+                else if (target === "#tab2") {
+                    var grid2 = $("#grid2").data("kendoGrid");
+                    if (grid2) {
+                        // اگر تا حالا لود نشده یا زمان منقضی شده
+                        if (!isGrid2Loaded || (now - lastLoadTime2 > cacheExpirationMs)) {
+                            grid2.dataSource.read();
+                            isGrid2Loaded = true;
+                            lastLoadTime2 = now;
+                        }
+                        grid2.resize();
+                    }
+                }
+                else if (target === "#tab3") {
+                    var grid3 = $("#grid3").data("kendoGrid");
+                    if (grid3) {
+                        // اگر تا حالا لود نشده یا زمان منقضی شده
+                        if (!isGrid3Loaded || (now - lastLoadTime3 > cacheExpirationMs)) {
+                            grid3.dataSource.read();
+                            isGrid3Loaded = true;
+                            lastLoadTime3 = now;
+                        }
+                        grid3.resize();
+                    }
+                }
+            }, 100);
+        });
+    });
+
+    function setAsDelivered(id) {
+        if (confirm("آیا مطمئن هستید که بار تحویل مشتری داده شده است؟")) {
+            $.post('/Carrier/Request/SetAsDelivered', { id: id }, function (result) {
+                var isSuccess = result.success || result.Success;
+                var msg = result.message || result.Message;
+                if (isSuccess) {
+                    if (typeof toastr !== 'undefined') toastr.success(msg); else alert(msg);
+                    $("#grid2").data("kendoGrid").dataSource.read();
+                    lastLoadTime2 = Date.now(); // آپدیت زمان لود پس از عملیات
+
+                    if (isGrid3Loaded) {
+                        $("#grid3").data("kendoGrid").dataSource.read();
+                        lastLoadTime3 = Date.now();
+                    }
+                } else {
+                    if (typeof toastr !== 'undefined') toastr.error(msg); else alert(msg);
+                }
+            });
+        }
+    }
 </script>
 
+
 <section id="Requests" class="form-horizontal" role="form">
-    <div class="panel panel-info">
-        <div class="panel-heading" style="cursor: pointer;" id="SearchPanelHeader">
-            جستجو ( کلیک کنید...!)
-        </div>
-        <div class="col-md-12 panel-body" id="SearchPanelBody" style="display: none;">
-            <div class="col col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.RequestState, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.RequestState, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ProductName, new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.ProductName, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName()" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Province, "استان مقصد", new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.Province, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProvince()" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.StartDate, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.InvoiceNumber, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.InvoiceNumber, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FactoryName, "مبدأ (کارخانه)", new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivFactoryNameId">
-                        @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.City, "شهر مقصد", new { @class = "col-md-4 control-label" })
-                    <div class="col-md-8" id="DivCityId">
-                        @Html.DropDownListFor(model => model.City, null, Resources.Caption.SelectAnItem, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EndDate, new { @class = "col-md-4 control-label" })
-                    <div class="col col-md-8">
-                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
-            <div class="form-group" style="clear:both;">
-                <div class="col-md-offset-3 col-md-8" style="margin-top:15px; text-align:center;">
-                    <button type="button" id="btnSearch" class="btn btn-primary btn-icon btn-green icon-alarmclock">@Resources.OPS.Button.Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <br />
     <div class="panel panel-primary">
-        <div class="panel-heading">
-            @strTitle
-        </div>
+        <div class="panel-heading">مدیریت درخواست‌های باربری</div>
         <div class="col-md-12 panel-body">
-            <div class="col-md-12">
-                <div class="row">
-                    <div style="float:left;width:100%;">
-                        <a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)"
-                           href="/HomeMain/Main/" style="float: left;width:150px;">
-                            <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='/Content/Icon/Back.png' />
-                        </a>
-                    </div>
+            <a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="@(Resources.Action.BackToMain)" href="/HomeMain/Main/" style="float: left;width:150px; margin-bottom: 15px;">
+                <span style="float:right;">@Resources.Action.BackToMain</span><img style="float:left;" src='/Content/Icon/Back.png' />
+            </a>
+            <div style="clear:both;"></div>
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">در انتظار بارگیری</a>
+                </li>
+                <li role="presentation">
+                    <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">در جریان ارسال</a>
+                </li>
+                <li role="presentation">
+                    <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">بایگانی (تحویل شده)</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" style="border: 1px solid #ddd; border-top: none; padding: 15px; border-radius: 0 0 5px 5px;">
+                <div role="tabpanel" class="tab-pane active" id="tab1">
+                    <div id="grid1" class="k-content k-rtl grid k-grid k-widget" style="width:100%;"></div>
                 </div>
-                <br />
-                <div class="row">
-                    <div data-role="grid" id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:100%;">
-                    </div>
+                <div role="tabpanel" class="tab-pane" id="tab2">
+                    <div id="grid2" class="k-content k-rtl grid k-grid k-widget" style="width:100%;"></div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="tab3">
+                    <div id="grid3" class="k-content k-rtl grid k-grid k-widget" style="width:100%;"></div>
                 </div>
             </div>
         </div>
-        <div class="panel-footer"></div>
     </div>
 </section>
 
-
-<!-- بخش توابع جاوااسکریپت Dropdownهای وابسته‌ (توابع اضافی پاک شدند) -->
 <script type="text/javascript">
-    function onChangeProvince() {
-        $.ajax({
-            url: '/Administrator/HeadOfFactor/GetCities', type: 'post', data: { provinceId: $("#Province").val() },
-            success: function (data) {
-                $("#DivCityId").empty();
-                var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-                $.each(data, function (i, city) {
-                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
-                    select.append(option);
-                })
-                $("#DivCityId").append(select);
-                $('#City>option:eq(1)').prop('selected', true);
-            }
-        });
-    }
-
-    function onChangeProductName() {
-        $.ajax({
-            url: '/Administrator/Cement/GetFactoryName', type: 'post', data: { ProductNameId: $("#ProductName").val() },
-            success: function (data) {
-                $("#DivFactoryNameId").empty();
-                var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-                $.each(data, function (i, FactoryName) {
-                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
-                    select.append(option);
-                })
-                $("#DivFactoryNameId").append(select);
-                $('#FactoryName>option:eq(1)').prop('selected', true);
-            }
-        });
-    }
-
-    function setAsArrived(id) {
-        if (confirm("آیا مطمئن هستید که بار به مقصد رسیده است؟")) {
-            $.ajax({
-                url: '/Carrier/Request/SetAsArrived',
-                type: 'POST',
-                data: { id: id },
-                success: function (result) {
-                    // بررسی هر دو حالت بزرگ و کوچک
-                    var isSuccess = result.success || result.Success;
-                    var msg = result.message || result.Message;
-
-                    if (isSuccess) {
-                        // اگر toastr وجود داشت از آن استفاده کن، وگرنه از alert
-                        if (typeof toastr !== 'undefined') {
-                            toastr.success(msg);
-                        } else {
-                            alert(msg);
-                        }
-
-                        // رفرش گرید (توصیه شده - بدون پرش صفحه)
-                        // آیدی گرید خود را جایگزین کنید، مثلا Grid یا NameGridShoma
-                        var grid = $('.k-grid').data('kendoGrid');
-                        if (grid) {
-                            grid.dataSource.read();
-                        } else {
-                            // اگر گرید پیدا نشد کل صفحه را رفرش کن
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 1000);
-                        }
-
-                    } else {
-                        if (typeof toastr !== 'undefined') {
-                            toastr.error(msg);
-                        } else {
-                            alert(msg);
-                        }
-                    }
-                },
-                error: function () {
-                    alert("خطا در ارتباط با سرور!");
-                }
-            });
-        }
-    }
-
-    // برای دکمه تحویل داده شده هم دقیقاً به همین شکل بنویسید:
-    function setAsDelivered(id) {
-        if (confirm("آیا مطمئن هستید که بار تحویل مشتری داده شده است؟")) {
-            $.ajax({
-                url: '/Carrier/Request/SetAsDelivered',
-                type: 'POST',
-                data: { id: id },
-                success: function (result) {
-                    var isSuccess = result.success || result.Success;
-                    var msg = result.message || result.Message;
-
-                    if (isSuccess) {
-                        if (typeof toastr !== 'undefined') {
-                            toastr.success(msg);
-                        } else {
-                            alert(msg);
-                        }
-
-                        var grid = $('.k-grid').data('kendoGrid');
-                        if (grid) {
-                            grid.dataSource.read();
-                        } else {
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 1000);
-                        }
-                    } else {
-                        if (typeof toastr !== 'undefined') {
-                            toastr.error(msg);
-                        } else {
-                            alert(msg);
-                        }
-                    }
-                },
-                error: function () {
-                    alert("خطا در ارتباط با سرور!");
-                }
-            });
-        }
-    }
-
-
-
+    function onChangeProvince() { }
+    function onChangeProductName() { }
 </script>

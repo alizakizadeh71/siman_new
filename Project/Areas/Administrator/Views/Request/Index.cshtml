@@ -181,7 +181,8 @@
                         template: function (dataItem) {
                             if (dataItem.RequestState === 1) return "<span class='label label-warning' style='font-size:12px;'>تایید مالی نشده</span>";
                             if (dataItem.RequestState === 2) return "<span class='label label-success' style='font-size:12px;'>تایید مالی شده</span>";
-                            if (dataItem.RequestState === 3) return "<span class='label label-info' style='font-size:12px;'>در حال بررسی باربری</span>";
+                            if (dataItem.RequestState === 3) return "<span class='label label-info' style='font-size:12px;'>در جریان ارسال</span>";
+                            if (dataItem.RequestState === 4) return "<span class='label label-primary' style='font-size:12px;'>تحویل داده شده</span>";
                             // می‌توانید وضعیت‌های دیگر را هم اینجا اضافه کنید
                             return "<span class='label label-default' style='font-size:12px;'>وضعیت " + dataItem.RequestState + "</span>";
                         }
@@ -199,6 +200,17 @@
                     { field: "BuyerMobile", title: "شماره خریدار", width: "120px" },
                     { field: "Address", title: "آدرس", width: "200px" },
                     { field: "Description", title: "توضیحات", width: "150px" },
+                    {
+                        field: "CarrierName",
+                        title: "باربری",
+                        width: "150px",
+                        template: function (dataItem) {
+                            if (dataItem.CarrierName === "بدون باربری" || !dataItem.CarrierName) {
+                                return "<span class='text-muted'>ثبت نشده</span>";
+                            }
+                            return "<span style='font-weight:bold; color:#2c3e50;'>" + dataItem.CarrierName + "</span>";
+                        }
+                    },
                     { field: "MahalTahvil", title: "محل تحویل", width: "150px" },
                     { field: "StringInsertDateTime", title: "تاریخ ثبت", width: "120px" }
                 ]

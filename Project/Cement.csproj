@@ -373,6 +373,7 @@
     <Content Include="Areas\Carrier\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Carrier\Views\web.config" />
     <Content Include="Areas\Carrier\Views\Request\LoadCargo.cshtml" />
+    <Content Include="Areas\Administrator\Views\SiteSetting\Index.cshtml" />
     <None Include="Service References\BehdadService\configuration91.svcinfo" />
     <None Include="Service References\BehdadService\configuration.svcinfo" />
     <Content Include="Scripts\NewKendo\jquery.min.js" />
@@ -1447,6 +1448,9 @@
     <Compile Include="Administrator.SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Administrator.SiteSettingController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Administrator.SmsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1495,6 +1499,7 @@
     <Compile Include="Areas\Administrator\Controllers\ReportBuilderController.cs" />
     <Compile Include="Areas\Administrator\Controllers\RequestController.cs" />
     <Compile Include="Areas\Administrator\Controllers\ServiceTariffController.cs" />
+    <Compile Include="Areas\Administrator\Controllers\SiteSettingController.cs" />
     <Compile Include="Areas\Administrator\Controllers\SmsController.cs" />
     <Compile Include="Areas\Administrator\Controllers\SubHeadlineController.cs" />
     <Compile Include="Areas\Administrator\Controllers\SubSystemController.cs" />
@@ -1507,6 +1512,12 @@
     <Compile Include="Areas\Markter\Controllers\MarketingTransactionController.cs" />
     <Compile Include="Areas\Markter\MarkterAreaRegistration.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
+    <Compile Include="Carrier.RequestController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Carrier.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1521,6 +1532,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ZarinpalController.cs" />
+    <Compile Include="DefaultController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

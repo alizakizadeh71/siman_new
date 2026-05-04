@@ -265,6 +265,12 @@ namespace Models
         public string MahalTahvil { get; set; }
 
         #region Driver Information (اطلاعات باربری)
+
+        [System.ComponentModel.DataAnnotations.Display(Name = "باربری تخصیص یافته")]
+        public Guid? CarrierId { get; set; }
+        [ForeignKey("CarrierId")]
+        public virtual User CarrierUser { get; set; }
+
         [NotMapped]
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),

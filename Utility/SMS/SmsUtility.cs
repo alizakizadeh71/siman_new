@@ -8,15 +8,29 @@ namespace Utilities.SMS
         /// <summary>
         /// ارسال پیامک اطلاع‌رسانی بارگیری شدن بار به مشتری
         /// </summary>
-        public static bool SendLoadedNotification(string buyerMobile, string driverName, string driverMobile, string licensePlate)
+        public static bool SendLoadedNotification(
+            string buyerMobile,
+            string factorNumber, // برای {0}
+            string productName,  // برای {1} (ترکیب نام محصول، کارخانه، بسته‌بندی و تناژ)
+            string driverName,   // برای {2}
+            string driverMobile, // برای {3}
+            string licensePlate  // برای {4}
+            )
         {
             try
             {
                 const string username = "989926932699";
                 const string password = "#57PD";
 
-                // مقادیری که جایگزین متغیرهای {0} و {1} و {2} در الگوی پنل پیامک می‌شوند
-                string[] texts = { driverName, driverMobile, licensePlate };
+                // مقادیر باید دقیقاً بر اساس شماره ایندکس‌ها (از 0 تا 4) در آرایه چیده شوند
+                string[] texts = new string[]
+                {
+                    factorNumber,  // {0} - فاکتور
+                    productName,   // {1} - محصول
+                    driverName,    // {2} - نام راننده
+                    driverMobile,  // {3} - شماره تماس راننده
+                    licensePlate   // {4} - پلاک
+                };
 
                 var binding = new BasicHttpBinding
                 {
@@ -28,11 +42,10 @@ namespace Utilities.SMS
 
                 var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
 
-                // دقت کنید که فضای نام MelipayamakService باید با پروژه شما همخوانی داشته باشد
                 var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
 
-                // شناسه الگوی ثبت شده در پنل پیامکی (این عدد را باید از پنل ملی پیامک بگیرید)
-                int bodyId = 448147; // <--- این عدد را با کد الگوی جدید جایگزین کنید
+                // شناسه الگوی ثبت شده در پنل پیامکی
+                int bodyId = 448729;
 
                 soapClient.SendByBaseNumber(username, password, texts, buyerMobile, bodyId);
 
@@ -40,7 +53,7 @@ namespace Utilities.SMS
             }
             catch (Exception ex)
             {
-                // در اینجا می‌توانید لاگ ارور را ذخیره کنید
+                // لاگ ارور
                 Console.WriteLine($"خطا در ارسال پیامک بارگیری: {ex.Message}");
                 return false;
             }

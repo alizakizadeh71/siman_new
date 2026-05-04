@@ -167,7 +167,7 @@ namespace OPS.Controllers
                     UnitOfWork.Save();
 
                     // ارسال پیامک پرداخت موفق تستی
-                    PaymentSMS(user.BuyerMobile, oFactorCement);
+                    PaymentSMS(mobile, oFactorCement);
 
                     // هدایت کاربر به صفحه نمایش فاکتور مثل حالت واقعی
                     return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = oFactorCement.InvoiceNumber });
@@ -572,13 +572,24 @@ namespace OPS.Controllers
             try
             {
                 var user = UnitOfWork.UserRepository.GetByPhoneNumebr(phoneNumber);
+
+                // اگر کاربر وجود دارد اما تنظیمات دریافت پیامک او غیرفعال است، خارج می‌شویم
+                if (user != null && !user.isSendSms)
+                {
+                    return Content("<script>console.log('ارسال پیامک برای این کاربر غیرفعال است.');</script>", "text/html");
+                }
+
                 const string username = "989926932699";
                 const string password = "#57PD";
-                const int bodyId = 284290;
+
+                // کد پترن جدید که در پنل ثبت می‌کنید را اینجا قرار دهید
+                const int bodyId = 448845;
+
                 string to = user?.BuyerMobile?.ToString() ?? phoneNumber;
 
-                string accountStatus = "متعادل";
-                string balanceDetails = "0"; // جزئیات بدهکاری یا طلبکاری
+                // --- محاسبه وضعیت حساب ---
+                string accountStatus = "تسویه";
+                string balanceDetails = "0";
 
                 if (user != null)
                 {
@@ -587,65 +598,63 @@ namespace OPS.Controllers
                     if (balanceAmount > 0)
                     {
                         accountStatus = "بدهکار";
-                        balanceDetails = $"{Math.Abs(balanceAmount).ToString("N0")}";
+                        balanceDetails = Math.Abs(balanceAmount).ToString("N0");
                     }
                     else if (balanceAmount < 0)
                     {
                         accountStatus = "طلبکار";
-                        balanceDetails = $"{Math.Abs(balanceAmount).ToString("N0")}";
-                    }
-                    else
-                    {
-                        accountStatus = "";
+                        balanceDetails = Math.Abs(balanceAmount).ToString("N0");
                     }
                 }
 
+                // --- آماده‌سازی پارامترهای پیامک به ترتیب دقیق الگوی ۶ متغیره ---
+                string p0_Name = user?.UserName ?? "مشتری";
+                string p1_FactorNum = factor.InvoiceNumber.ToString();
 
+                // ترکیب تناژ، کارخانه، نوع و بسته‌بندی برای متغیر دوم (شرح کل)
+                string tonnage = $"{factor.Tonnagedouble.ToString().Replace('.', '/')} تن";
+                string factory = factor.FactoryName?.Name ?? "";
+                string productType = factor.ProductType?.Name ?? "";
+                string packageType = factor.PackageType?.Name ?? "";
 
-                string[] text = (user != null && user.isSendSms)
-                    ? new string[] {
-                        user.UserName,
-                        factor.Tonnagedouble.ToString().Replace('.', '/') + " تن" ?? "N/A",
-                        factor.PackageType?.Name ?? "N/A",
-                        factor.FactoryName?.Name ?? "N/A",
-                        factor.ProductType?.Name ?? "N/A",
-                        factor.AmountPaid.ToString("N0"),
-                        balanceDetails,
-                        accountStatus
-                                    }
-                                    : new string[] {
-                        "ثبت نام نشده",
-                        factor.Tonnagedouble.ToString().Replace('.', '/') + " تن" ?? "N/A",
-                        factor.PackageType?.Name ?? "N/A",
-                        factor.FactoryName?.Name ?? "N/A",
-                        factor.ProductType?.Name ?? "N/A",
-                        factor.AmountPaid.ToString("N0"),
-                        "0",
-                        ""
-                    };
+                string p2_Description = $"{tonnage} {factory} {productType} {packageType}".Trim();
+                if (string.IsNullOrWhiteSpace(p2_Description)) p2_Description = "نامشخص";
 
+                string p3_Price = factor.AmountPaid.ToString("N0"); // مبلغ فی
+                string p4_Balance = balanceDetails;                 // مبلغ مانده
+                string p5_Status = accountStatus;                   // وضعیت (بدهکار/طلبکار/تسویه)
 
+                // مپ کردن مقادیر به آرایه (دقیقا ۶ آیتم)
+                string[] text = new string[]
+                {
+                    p0_Name,         // {0} 
+                    p1_FactorNum,    // {1} 
+                    p2_Description,  // {2} 
+                    p3_Price,        // {3} 
+                    p4_Balance,      // {4} 
+                    p5_Status        // {5} 
+                };
+
+                // --- ارسال پیامک ---
                 var binding = new BasicHttpBinding
                 {
-                    Security = new BasicHttpSecurity
-                    {
-                        Mode = BasicHttpSecurityMode.Transport
-                    }
+                    Security = new BasicHttpSecurity { Mode = BasicHttpSecurityMode.Transport }
                 };
 
                 var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
                 var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
+
                 var result = soapClient.SendByBaseNumber(username, password, text, to, bodyId);
 
-                // بازگرداندن نتیجه به صورت جاوا اسکریپت
-                return Content($"<script>console.log('پیامک با موفقیت ارسال شد. نتیجه: {result}');</script>", "text/html");
+                return Content($"<script>console.log('پیامک با موفقیت ارسال شد. کد نتیجه: {result}');</script>", "text/html");
             }
             catch (Exception ex)
             {
-                // بازگرداندن خطا به صورت جاوا اسکریپت
                 return Content($"<script>console.error('خطا در ارسال پیامک: {ex.Message}');</script>", "text/html");
             }
         }
+
+
 
 
         public void PaymentSMSWallet(string phoneNumber, Models.walletFactor factor)

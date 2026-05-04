@@ -148,7 +148,7 @@ namespace DAL
                     order.DriverLastName = driverLastName;
                     order.DriverMobile = driverMobile;
                     order.DriverLicensePlate = driverPlate;
-                    order.RequestState = (int)Enums.RequestState.Loaded;
+                    order.RequestState = (int)Enums.RequestState.WaitingForLoading;
 
                     DatabaseContext.SaveChanges();
                 }
