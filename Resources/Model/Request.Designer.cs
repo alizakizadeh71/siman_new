@@ -250,6 +250,15 @@ namespace Resources.Model {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نام و نام خانوادگی.
+        /// </summary>
+        public static string BuyerFullName {
+            get {
+                return ResourceManager.GetString("BuyerFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شماره همراه.
         /// </summary>
         public static string CellPhoneNumber {

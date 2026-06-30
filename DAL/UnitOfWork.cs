@@ -65,6 +65,19 @@
             }
         }
 
+        private ICarrierInventoryRepository _CarrierInventoryRepository;
+        public ICarrierInventoryRepository CarrierInventoryRepository
+        {
+            get
+            {
+                if (_CarrierInventoryRepository == null)
+                {
+                    _CarrierInventoryRepository = new CarrierInventoryRepository(DatabaseContext);
+                }
+                return (_CarrierInventoryRepository);
+            }
+        }
+
 
         private IServiceTariffInSubSystemRepository _ServiceTariffInSubSystemRepository;
         public IServiceTariffInSubSystemRepository ServiceTariffInSubSystemRepository

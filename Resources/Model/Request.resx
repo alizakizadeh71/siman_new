@@ -351,4 +351,7 @@
   <data name="DriverName" xml:space="preserve">
     <value>نام راننده</value>
   </data>
+  <data name="BuyerFullName" xml:space="preserve">
+    <value>نام و نام خانوادگی</value>
+  </data>
 </root>

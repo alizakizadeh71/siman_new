@@ -62,6 +62,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: نام و نام خانوادگی
+        /// </summary>
+        public static string BuyerFullName([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Request.BuyerFullName;
+            }
+            return global::Resources.Model.Request.ResourceManager.GetString("BuyerFullName", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: شماره همراه
         /// </summary>
         public static string CellPhoneNumber([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -839,6 +849,11 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: میزان کل ارز
         /// </summary>
         public const string BaseCurrencyValue = "BaseCurrencyValue";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نام و نام خانوادگی
+        /// </summary>
+        public const string BuyerFullName = "BuyerFullName";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: شماره همراه

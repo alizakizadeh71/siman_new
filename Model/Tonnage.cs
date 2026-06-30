@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Models
+﻿namespace Models
 {
     /// <summary>
     /// تناژ
@@ -27,7 +25,7 @@ namespace Models
 
         public Tonnage()
         { }
-        
+
         public string Name { get; set; }
 
         public string Code { get; set; }

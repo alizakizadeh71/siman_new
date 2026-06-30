@@ -1,15 +1,12 @@
 ﻿using DAL;
-using Models;
+using Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
 using ViewModels;
 using ViewModels.Account;
 using ViewModels.Areas.Administrator.Inventoryamount;
-using System.Data.Entity;
-using Enums;
 
 //using PAPUtilities;
 
@@ -23,7 +20,7 @@ namespace OPS.Controllers
         public virtual ActionResult Index(Guid? productId = null, Guid? typeId = null, Guid? packageId = null, Guid? factoryId = null)
         {
             // 1. خواندن تنظیمات سایت از کش
-            var siteSetting = 
+            var siteSetting =
                     UnitOfWork.SiteSettingRepository.Get()
                     .Select(s => new { s.IsPurchaseEnabled })
                     .FirstOrDefault();
@@ -46,7 +43,7 @@ namespace OPS.Controllers
             Guid? currentUserId = Infrastructure.Sessions.AuthenticatedUser?.Id;
             bool isNormalUser = currentUserId != null && Infrastructure.Sessions.AuthenticatedUser.RoleCode != 1000;
 
-            string address = string.Empty, buyerMobile = string.Empty;
+            string address = string.Empty, buyerMobile = string.Empty, buyerFullName = string.Empty;
             Guid? province = null, city = null;
 
             if (isNormalUser)
@@ -59,6 +56,7 @@ namespace OPS.Controllers
                     city = user.CityId;
                     address = user.Address;
                     buyerMobile = user.BuyerMobile;
+                    buyerFullName = user.FullName;
                 }
             }
 
@@ -66,6 +64,11 @@ namespace OPS.Controllers
             {
                 ViewBag.WelcomeMessage = TempData["WelcomeMessage"];
                 ViewBag.Balance = TempData["Balance"];
+            }
+
+            if (TempData["Error"] != null)
+            {
+                ViewBag.ErrorMessage = TempData["Error"];
             }
 
             // 3. تعیین مقادیر پیش‌فرض با حداقل کوئری‌ها 
@@ -142,7 +145,8 @@ namespace OPS.Controllers
                 City = city ?? new Guid("F99E8A31-0562-4918-8295-2CBFC78D6269"),
                 Village = new Guid("7189A747-02F3-11EF-9994-7C8AE1A25092"),
                 Address = address,
-                BuyerMobile = buyerMobile
+                BuyerMobile = buyerMobile,
+                BuyerFullName = buyerFullName
             };
 
             ViewData(model);
@@ -166,7 +170,7 @@ namespace OPS.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.Programmer)]
+        [Infrastructure.SyncPermission(isPublic: true, role: Enums.Roles.None)]
         public virtual System.Web.Mvc.ActionResult Index(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
             try
@@ -175,86 +179,107 @@ namespace OPS.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    var oFinancialManagement = UnitOfWork.FinancialManagementRepository
+                        .Get()
+                        .Where(x => x.IsActived && !x.IsDeleted)
+                        .Where(current => current.ProductNameId == cementViewModel.ProductName)
+                        .Where(current => current.ProductTypeId == cementViewModel.ProductType)
+                        .Where(current => current.PackageTypeId == cementViewModel.PackageType)
+                        .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
+                        .SingleOrDefault();
 
-                    var oFinancialManagement =
-                         UnitOfWork.FinancialManagementRepository
-                         .Get()
-                         .Where(x => x.IsActived && !x.IsDeleted)
-                         .Where(current => current.ProductNameId == cementViewModel.ProductName)
-                         .Where(current => current.ProductTypeId == cementViewModel.ProductType)
-                         .Where(current => current.PackageTypeId == cementViewModel.PackageType)
-                         .Where(current => current.FactoryNameId == cementViewModel.FactoryName)
-                         .SingleOrDefault()
-                         ;
+                    var Tonnage = cementViewModel.Tonnage;
 
-                    var Tonnage =  cementViewModel.Tonnage;
-                    var InventoryTonnage = Convert.ToInt32(UnitOfWork.InventoryamountRepository.Get()
+                    // بررسی موجودی انبار
+                    var inventoryTonnage = UnitOfWork.InventoryamountRepository.Get()
                         .Where(x => x.ProductNameId == cementViewModel.ProductName)
                         .Where(x => x.ProductTypeId == cementViewModel.ProductType)
                         .Where(x => x.PackageTypeId == cementViewModel.PackageType)
                         .Where(x => x.FactoryNameId == cementViewModel.FactoryName)
                         .Select(x => x.Inventorytonnage)
-                        .FirstOrDefault());
+                        .FirstOrDefault();
+
+                    // بررسی موجودی باربری‌ها
+                    var carrierInventories = UnitOfWork.CarrierInventoryRepository
+                        .GetByProduct(
+                            cementViewModel.ProductName,
+                            cementViewModel.ProductType,
+                            cementViewModel.PackageType,
+                            cementViewModel.FactoryName)
+                        .ToList();
+
+                    double totalCarrierInventory = carrierInventories.Sum(x => x.InventoryTonnage);
+                    bool hasAnyCarrierStock = carrierInventories.Any(x => x.InventoryTonnage >= Tonnage);
 
                     if (oFinancialManagement == null)
                     {
-                        ViewBag.PageMessages = " قیمت توسط ادمین در سیستم ثبت نشده است ";
+                        ViewBag.PageMessages = "قیمت توسط ادمین در سیستم ثبت نشده است.";
                     }
-                    else if (Tonnage > InventoryTonnage)
+                    else if (Tonnage <= 0)
                     {
-                        ViewBag.PageMessages = "ثناژ درخواستی شما در انبار موجود نمی باشد";
+                        ViewBag.PageMessages = "تناژ باید بیشتر از صفر باشد.";
                     }
-                    else if (Tonnage == 0)
+                    else if (Tonnage < 10)
                     {
-                        ViewBag.PageMessages = "تناژ باید بیشتر از صفر باشد";
+                        ViewBag.PageMessages = "حداقل تناژ قابل سفارش ۱۰ تن می‌باشد.";
+                    }
+                    else if (Tonnage > Convert.ToDouble(inventoryTonnage))
+                    {
+                        ViewBag.PageMessages = $"تناژ درخواستی شما در انبار موجود نمی‌باشد. موجودی فعلی: {inventoryTonnage:N0} تن";
+                    }
+                    else if (!carrierInventories.Any())
+                    {
+                        ViewBag.PageMessages = "در حال حاضر هیچ باربری برای این محصول تعریف نشده است. لطفاً با پشتیبانی تماس بگیرید.";
+                    }
+                    else if (!hasAnyCarrierStock)
+                    {
+                        ViewBag.PageMessages = $"متأسفانه موجودی هیچ‌یک از باربری‌های این محصول برای تناژ درخواستی کافی نیست. حداکثر تناژ قابل سفارش: {totalCarrierInventory:N0} تن";
+                    }
+                    else if (Tonnage > Convert.ToDouble(inventoryTonnage))  // ← چک مجدد انبار بعد از باربری
+                    {
+                        ViewBag.PageMessages = $"موجودی انبار کافی نیست. موجودی فعلی: {inventoryTonnage:N0} تن";
                     }
                     else
                     {
-                        var varRequest =
-                            UnitOfWork.DestinationManagementRepository.Get()
+                        var varRequest = UnitOfWork.DestinationManagementRepository.Get()
                             .Where(x => x.IsActived && !x.IsDeleted)
                             .Where(current => current.FinancialManagementId == oFinancialManagement.Id)
                             .Where(current => current.ProvinceId == cementViewModel.Province)
-                            .Where(cuurrent => cuurrent.CityId == cementViewModel.City)
-                            .Select(x => x.DestinationAmountPaid).SingleOrDefault();
+                            .Where(current => current.CityId == cementViewModel.City)
+                            .Select(x => x.DestinationAmountPaid)
+                            .SingleOrDefault();
 
                         double? DestinationAmountPaid = varRequest;
-                        var oDestinationManagement =
-                                 UnitOfWork.DestinationManagementRepository
-                                 .Get()
-                                 .Where(x => x.IsActived && !x.IsDeleted)
-                                 .Where(x => x.FinancialManagement.IsActived && !x.FinancialManagement.IsDeleted)
-                                 .Where(current => current.FinancialManagement.ProductNameId == cementViewModel.ProductName)
-                                 .Where(current => current.FinancialManagement.ProductTypeId == cementViewModel.ProductType)
-                                 .Where(current => current.FinancialManagement.PackageTypeId == cementViewModel.PackageType)
-                                 .Where(current => current.FinancialManagement.FactoryNameId == cementViewModel.FactoryName)
-                                 .Where(current => current.ProvinceId == cementViewModel.Province)
-                                 .Where(current => current.CityId == cementViewModel.City)
-                                 .SingleOrDefault()
-                                 ;
 
-                        var productName = UnitOfWork.ProductNameRepository.GetById(cementViewModel.ProductName).Name;
-                        var TonnageWieght = Tonnage;
+                        var oDestinationManagement = UnitOfWork.DestinationManagementRepository
+                            .Get()
+                            .Where(x => x.IsActived && !x.IsDeleted)
+                            .Where(x => x.FinancialManagement.IsActived && !x.FinancialManagement.IsDeleted)
+                            .Where(current => current.FinancialManagement.ProductNameId == cementViewModel.ProductName)
+                            .Where(current => current.FinancialManagement.ProductTypeId == cementViewModel.ProductType)
+                            .Where(current => current.FinancialManagement.PackageTypeId == cementViewModel.PackageType)
+                            .Where(current => current.FinancialManagement.FactoryNameId == cementViewModel.FactoryName)
+                            .Where(current => current.ProvinceId == cementViewModel.Province)
+                            .Where(current => current.CityId == cementViewModel.City)
+                            .SingleOrDefault();
+
                         if (oDestinationManagement != null)
                         {
-                            DestinationAmountPaid = (oDestinationManagement.FinancialManagement.AmountPaid * Tonnage) + oDestinationManagement.DestinationAmountPaid;
+                            DestinationAmountPaid = (oDestinationManagement.FinancialManagement.AmountPaid * Tonnage)
+                                                  + oDestinationManagement.DestinationAmountPaid;
                         }
 
-                        //{
-                        //    DestinationAmountPaid = (oDestinationManagement.FinancialManagement.AmountPaid * Tonnage) + oDestinationManagement.DestinationAmountPaid;
-                        //}
-                        double AmountPaid = oFinancialManagement.AmountPaid * Tonnage; /// محاسبه مبلغ
+                        double AmountPaid = oFinancialManagement.AmountPaid * Tonnage;
                         int LastInvoiceNumber = UnitOfWork.FactorCementRepository.GetLastInvoiceNumber() + 1;
+
                         string userAddress = null;
                         Models.User oUser;
+
                         if (Infrastructure.Sessions.AuthenticatedUser?.UserName != null)
                         {
                             oUser = UnitOfWork.UserRepository.GetByUserName(Infrastructure.Sessions.AuthenticatedUser.UserName);
                             if (oUser.creditAmount > 0)
-                            {
-                                ViewBag.DisplaycreditAmount = " پس از ورود به درگاه پرداخت مبلغ اعتبار بصورت خودکار از کیف پول کسر خواهد شد ";
-                            }
-
+                                ViewBag.DisplaycreditAmount = "پس از ورود به درگاه پرداخت مبلغ اعتبار بصورت خودکار از کیف پول کسر خواهد شد";
                             userAddress = oUser.Address;
                         }
                         else
@@ -277,28 +302,31 @@ namespace OPS.Controllers
                             Description = cementViewModel.Description,
                             RequestState = Convert.ToInt32(RequestState.PendingFinancialApproval),
                             UserIPAddress = Request.UserHostAddress,
-                            Browser = Request.Browser.Type, // مدل و ورژن مرورگر
+                            Browser = Request.Browser.Type,
                             URLAddress = UnitOfWork.SubSystemRepository.Get()?.FirstOrDefault()?.UrlTo,
                             UserId = oUser.Id,
+                            BuyerFullName = cementViewModel.BuyerFullName
                         };
 
                         oFactorCement.InvoiceNumber = LastInvoiceNumber;
                         UnitOfWork.FactorCementRepository.Insertdata(oFactorCement);
+
                         DestinationAmountPaid = varRequest + AmountPaid;
                         cementViewModel.InvoiceNumber = LastInvoiceNumber;
-                        ViewBag.Karkhane = "تحویل درب کارخانه: " + String.Format("{0:n0}", AmountPaid) + " ریال ";
-                        if (oDestinationManagement != null)
-                        {
-                            ViewBag.Mahal = "قیمت تقریبی محل تحویل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال ";
-                        }
 
+                        ViewBag.Karkhane = "تحویل درب کارخانه: " + String.Format("{0:n0}", AmountPaid) + " ریال";
+                        if (oDestinationManagement != null)
+                            ViewBag.Mahal = "قیمت تقریبی محل تحویل: " + String.Format("{0:n0}", DestinationAmountPaid) + " ریال";
+
+                        Session["LastInvoiceNumber"] = LastInvoiceNumber;
                     }
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.PageMessages = " خطا " + ex.Message;
+                ViewBag.PageMessages = "خطا: " + ex.Message;
             }
+
             ViewData(cementViewModel);
             return View(cementViewModel);
         }
@@ -363,7 +391,7 @@ namespace OPS.Controllers
             {
                 // پیدا کردن موجودی مربوط به محصول فعلی (مقایسه دقیق‌تر)
                 var inventory = inventoryList
-                    .FirstOrDefault(inv => inv.ProductNameId == f.ProductNameId 
+                    .FirstOrDefault(inv => inv.ProductNameId == f.ProductNameId
                     && inv.ProductTypeId == f.ProductTypeId
                     && inv.PackageType == f.PackageType
                     && inv.FactoryNameId == f.FactoryNameId);

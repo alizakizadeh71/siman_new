@@ -1,9 +1,5 @@
 ﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
 
-@{
-    Layout = "~/Views/Shared/_Layouts/_SiteForPrint.cshtml";
-}
-
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
@@ -388,7 +384,8 @@
         <div class="container no-print" style="margin-top: 20px; margin-bottom: 40px;">
             <div class="invoice" style="text-align: right; background: #eef2f3; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                 <h5 style="color: #2c3e50; margin-bottom: 15px; border-bottom: 2px solid #ccc; padding-bottom: 10px;">بخش تایید مالی سفارش</h5>
-                <form action="/Administrator/Request/ApproveFinancial" method="post">
+
+                <form action="/Administrator/Request/ApproveFinancial" method="post" onsubmit="return validateApprovalForm(this);">
                     <input type="hidden" name="id" value="@Model.Id" />
 
                     <!-- دراپ داون انتخاب باربری -->
@@ -396,7 +393,7 @@
                         <label for="CarrierId" style="display: block; margin-bottom: 8px; font-weight: bold; color: #333;">انتخاب باربری (الزامی):</label>
                         @if (ViewBag.CarrierList != null)
                         {
-                            @Html.DropDownList("CarrierId", (System.Web.Mvc.SelectList)ViewBag.CarrierList, "--- لطفا یک باربری انتخاب کنید ---", new { @class = "custom-dropdown", required = "required" })
+                            @Html.DropDownList("CarrierId", (System.Web.Mvc.SelectList)ViewBag.CarrierList, "--- لطفا یک باربری انتخاب کنید ---", new { @class = "custom-dropdown", id = "CarrierId", required = "required" })
                         }
                         else
                         {
@@ -411,7 +408,7 @@
                         <textarea name="description" id="description" rows="3" style="width: 100%; max-width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 6px; font-family: 'Vazir', tahoma;" placeholder="اگر توضیحاتی برای این تایید مالی دارید، اینجا وارد کنید..."></textarea>
                     </div>
 
-                    <button type="submit" onclick="return confirm('آیا از تایید مالی این فاکتور و ارجاع آن به باربری انتخابی اطمینان دارید؟');" style="background-color: #28a745; color: white; padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; font-family: 'Vazir', tahoma; font-weight: bold; transition: background 0.2s;">
+                    <button type="submit" style="background-color: #28a745; color: white; padding: 12px 25px; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; font-family: 'Vazir', tahoma; font-weight: bold; transition: background 0.2s;">
                         ✓ تایید مالی و ارسال به کارتابل باربری
                     </button>
                 </form>
@@ -419,7 +416,22 @@
         </div>
     }
 
+    <!-- اسکریپت اعتبارسنجی انتخاب باربری -->
+    <script>
+        function validateApprovalForm(form) {
+            var carrierSelect = document.getElementById("CarrierId");
 
+            // چک کردن اینکه آیا دراپ داون وجود دارد و مقداری انتخاب شده است یا خیر
+            if (!carrierSelect || carrierSelect.value === "" || carrierSelect.value === "00000000-0000-0000-0000-000000000000") {
+                alert("لطفاً ابتدا یک باربری را انتخاب کنید.");
+                if (carrierSelect) carrierSelect.focus();
+                return false; // جلوگیری از ارسال فرم
+            }
+
+            // اگر انتخاب شده بود، حالا پیغام تاییدیه را نمایش بده
+            return confirm('آیا از تایید مالی این فاکتور و ارجاع آن به باربری انتخابی اطمینان دارید؟');
+        }
+    </script>
 
 </body>
 </html>

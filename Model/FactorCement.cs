@@ -170,6 +170,11 @@ namespace Models
         #endregion
         public string BuyerMobile { get; set; }
 
+        #region ManualBuyerName
+        [System.ComponentModel.DataAnnotations.Display(Name = "نام خریدار (دستی)")]
+        public string ManualBuyerName { get; set; }
+        #endregion
+
         #region Address
         [System.ComponentModel.DataAnnotations.Display
              (ResourceType = typeof(Resources.Model.Cement),
@@ -260,6 +265,11 @@ namespace Models
         #endregion
         public string RemittanceNumber { get; set; }
 
+        public double WalletPaidAmount { get; set; }
+        public double OnlinePaidAmount { get; set; }
+
+        public bool IsManualPreInvoice { get; set; }
+
         public virtual System.Collections.Generic.IList<File> Files { get; set; }
         public virtual System.Collections.Generic.IList<Message> Messages { get; set; }
         public string MahalTahvil { get; set; }
@@ -271,30 +281,37 @@ namespace Models
         [ForeignKey("CarrierId")]
         public virtual User CarrierUser { get; set; }
 
-        [NotMapped]
+
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.DriverName)]
         public string DriverName { get; set; }
 
-        [NotMapped]
+
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.DriverLastName)]
         public string DriverLastName { get; set; }
 
-        [NotMapped]
+
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.DriverMobile)]
         [StringLength(11, ErrorMessage = "شماره موبایل باید 11 رقم باشد")]
         public string DriverMobile { get; set; }
 
-        [NotMapped]
+
         [System.ComponentModel.DataAnnotations.Display
             (ResourceType = typeof(Resources.Model.Request),
             Name = Resources.Model.Strings.RequestKeys.DriverLicensePlate)]
         public string DriverLicensePlate { get; set; }
+        #endregion
+
+        #region BuyerFullName
+        [System.ComponentModel.DataAnnotations.Display
+                    (ResourceType = typeof(Resources.Model.Request),
+                    Name = Resources.Model.Strings.RequestKeys.BuyerFullName)]
+        public string BuyerFullName { get; set; }
         #endregion
     }
 }

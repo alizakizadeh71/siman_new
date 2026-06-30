@@ -42,6 +42,16 @@ namespace Resources.Model.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to: نام و نام خانوادگی
+        /// </summary>
+        public static string BuyerFullName([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
+            if (object.ReferenceEquals(resourceCulture, null)) {
+                return global::Resources.Model.Cement.BuyerFullName;
+            }
+            return global::Resources.Model.Cement.ResourceManager.GetString("BuyerFullName", resourceCulture);
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to: موبایل خریدار
         /// </summary>
         public static string BuyerMobile([System.Runtime.InteropServices.OptionalAttribute()] System.Globalization.CultureInfo resourceCulture) {
@@ -421,6 +431,11 @@ namespace Resources.Model.Strings {
         ///   Provides access to string resource key of value similar to: مبلغ پرداخت درب کارخانه
         /// </summary>
         public const string AmountPaid = "AmountPaid";
+        
+        /// <summary>
+        ///   Provides access to string resource key of value similar to: نام و نام خانوادگی
+        /// </summary>
+        public const string BuyerFullName = "BuyerFullName";
         
         /// <summary>
         ///   Provides access to string resource key of value similar to: موبایل خریدار

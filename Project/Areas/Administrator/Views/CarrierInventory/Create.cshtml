@@ -1,0 +1,178 @@
+﻿@model ViewModels.Areas.Administrator.CarrierInventory.CarrierInventoryViewModel
+
+<script type="text/javascript">
+    function onChangeProductName() {
+        $.ajax({
+            url: '/Administrator/Cement/GetProductType',
+            type: 'post',
+            data: { ProductNameId: $("#ProductNameId").val() },
+            success: function (data) {
+                $("#DivProductTypeId").empty();
+                var select = $("<select class='form-control' onchange='onChangeProductType()' id='ProductTypeId' name='ProductTypeId' data-rel='chosen'>");
+                var option1 = "<option value='00000000-0000-0000-0000-000000000000'>از لیست انتخاب نمایید</option>";
+                select.append(option1);
+                $.each(data, function (i, ProductType) {
+                    var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
+                    if (i == 0) { onChangeProductType(ProductType.Id); }
+                    select.append(option);
+                });
+                $("#DivProductTypeId").append(select);
+                $('#ProductTypeId>option:eq(1)').prop('selected', true);
+            }
+        });
+
+        $.ajax({
+            url: '/Administrator/Cement/GetFactoryName',
+            type: 'post',
+            data: { ProductNameId: $("#ProductNameId").val() },
+            success: function (data) {
+                $("#DivFactoryNameId").empty();
+                var select = $("<select class='form-control' id='FactoryNameId' name='FactoryNameId' data-rel='chosen'>");
+                var option1 = "<option value='00000000-0000-0000-0000-000000000000'>از لیست انتخاب نمایید</option>";
+                select.append(option1);
+                $.each(data, function (i, FactoryName) {
+                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
+                    select.append(option);
+                });
+                $("#DivFactoryNameId").append(select);
+                $('#FactoryNameId>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+
+    function onChangeProductType(ProductTypee) {
+        if (ProductTypee == undefined) { ProductTypee = $("#ProductTypeId").val(); }
+        $.ajax({
+            url: '/Administrator/Cement/GetPackageType',
+            type: 'post',
+            data: { ProductTypeId: ProductTypee },
+            success: function (data) {
+                $("#DivPackageTypeId").empty();
+                var select = $("<select class='form-control' id='PackageTypeId' name='PackageTypeId' data-rel='chosen'>");
+                var option1 = "<option value='00000000-0000-0000-0000-000000000000'>از لیست انتخاب نمایید</option>";
+                select.append(option1);
+                $.each(data, function (i, PackageType) {
+                    var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
+                    select.append(option);
+                });
+                $("#DivPackageTypeId").append(select);
+                $('#PackageTypeId>option:eq(1)').prop('selected', true);
+            }
+        });
+    }
+</script>
+
+<style>
+    .carrier-form .control-label {
+        text-align: right;
+        padding-left: 0;
+        padding-right: 15px;
+        font-weight: bold;
+    }
+
+    .carrier-form .form-group {
+        margin-bottom: 12px;
+    }
+
+    .carrier-form select.form-control,
+    .carrier-form input.form-control {
+        max-width: 300px;
+    }
+</style>
+
+<section class="form-horizontal carrier-form">
+    <br />
+    <div class="panel panel-primary" style="max-width: 750px; margin: 0 auto;">
+        <div class="panel-heading">ثبت موجودی باربری</div>
+        <div class="panel-body">
+
+            @if (ViewBag.PageMessages != null)
+            {
+                <div class="alert alert-info">@ViewBag.PageMessages</div>
+            }
+
+            @using (Html.BeginForm("Create", "CarrierInventory",
+                new { area = "Administrator" }, FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label class="col-md-3 control-label">باربری</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("CarrierId",
+                            ViewData["Carrier"] as SelectList,
+                            "از لیست انتخاب نمایید",
+                            new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">محصول</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("ProductNameId",
+                            ViewData["ProductName"] as SelectList,
+                            "از لیست انتخاب نمایید",
+                            new { @class = "form-control", onchange = "onChangeProductName()" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">نوع محصول</label>
+                    <div id="DivProductTypeId" class="col-md-6">
+                        @Html.DropDownList("ProductTypeId",
+                            ViewData["ProductType"] as SelectList,
+                            "از لیست انتخاب نمایید",
+                            new { @class = "form-control", onchange = "onChangeProductType()" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">بسته‌بندی</label>
+                    <div id="DivPackageTypeId" class="col-md-6">
+                        @Html.DropDownList("PackageTypeId",
+                            ViewData["PackageType"] as SelectList,
+                            "از لیست انتخاب نمایید",
+                            new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">کارخانه</label>
+                    <div id="DivFactoryNameId" class="col-md-6">
+                        @Html.DropDownList("FactoryNameId",
+                            ViewData["FactoryName"] as SelectList,
+                            "از لیست انتخاب نمایید",
+                            new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">موجودی (تن)</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(m => m.InventoryTonnage,
+                            new { @class = "form-control", type = "number", min = "0", step = "0.5" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">باربری پیش‌فرض</label>
+                    <div class="col-md-6" style="padding-top:7px;">
+                        @Html.CheckBoxFor(m => m.IsDefaultCarrier)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-6">
+                        <button type="submit" class="btn btn-primary" style="margin-left:8px; width:130px; height:45px; font-size:15px;">
+                            <span style="float:right;">ثبت</span>
+                            <img style="float:left; margin-top:4px;" src='../../../Content/Icon/Create.png' />
+                        </button>
+                        <a class="btn btn-default" href="/Administrator/CarrierInventory/Index/" style="width:130px; height:45px; font-size:15px; padding-top:10px;">
+                            <span style="float:right;">بازگشت</span>
+                            <img style="float:left; margin-top:4px;" src='../../../Content/Icon/Back.png' />
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+</section>

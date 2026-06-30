@@ -130,6 +130,9 @@ namespace OPS.Areas.Carrier.Controllers
                         Address = current.Address,
                         BuyerMobile = current.BuyerMobile,
                         BuyerName = current.User.FullName,
+                        DriverName = current.DriverName,
+                        DriverMobile = current.DriverMobile,
+                        DriverLicensePlate = current.DriverLicensePlate,
                         Description = current.Description,
                         MahalTahvil = current.MahalTahvil == "Karkhane" ? "درب کارخانه" : current.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ",
                         StringInsertDateTime = current.InsertDateTime != null ? new Infrastructure.Calander(current.InsertDateTime).Persion() : "",
@@ -171,21 +174,21 @@ namespace OPS.Areas.Carrier.Controllers
                 UnitOfWork.Save();
 
                 // بررسی وجود شماره موبایل برای ارسال پیامک
-                if (!string.IsNullOrEmpty(request.BuyerMobile))
-                {
-                    string factorNumber = request.InvoiceNumber.ToString(); // شماره فاکتور
-                    string fullProductName = $"{request.Tonnagedouble.ToString().Replace('.', '/')} تن {request.ProductName?.Name} {request.FactoryName?.Name} {request.PackageType?.Name}".Trim();
+                //if (!string.IsNullOrEmpty(request.BuyerMobile))
+                //{
+                //    string factorNumber = request.InvoiceNumber.ToString(); // شماره فاکتور
+                //    string fullProductName = $"{request.Tonnagedouble.ToString().Replace('.', '/')} تن {request.ProductName?.Name} {request.FactoryName?.Name} {request.PackageType?.Name}".Trim();
 
-                    // ارسال اطلاعات کامل به متد پیامک
-                    Utilities.SMS.SmsUtility.SendLoadedNotification(
-                        request.BuyerMobile,
-                        factorNumber,
-                        fullProductName,
-                        driverName,
-                        driverMobile,
-                        licensePlate
-                    );
-                }
+                //    // ارسال اطلاعات کامل به متد پیامک
+                //    //Utilities.SMS.SmsUtility.SendLoadedNotification(
+                //    //    request.BuyerMobile,
+                //    //    factorNumber,
+                //    //    fullProductName,
+                //    //    driverName,
+                //    //    driverMobile,
+                //    //    licensePlate
+                //    //);
+                //}
 
                 return Json(new { Success = true, Message = "اطلاعات با موفقیت ثبت و پیامک ارسال شد." });
             }

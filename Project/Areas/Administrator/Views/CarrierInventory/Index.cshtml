@@ -1,0 +1,142 @@
+﻿@model ViewModels.Areas.Administrator.CarrierInventory.CarrierInventoryViewModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var varDataSource = new kendo.data.DataSource({
+            pageSize: 10,
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            transport: {
+                read: {
+                    type: "POST",
+                    dataType: "json",
+                    url: "/Administrator/CarrierInventory/GetRequests",
+                }
+            },
+            schema: {
+                data: function (e) { return e.Data; },
+                total: function (e) { return e.Total; }
+            }
+        });
+
+        $("div#grid").kendoGrid({
+            sortable: true,
+            pageable: {
+                info: true,
+                input: true,
+                refresh: true,
+                numeric: true,
+                buttonCount: 5,
+                previousNext: true,
+            },
+            groupable: true,
+            filterable: true,
+            scrollable: false,
+            reorderable: true,
+            navigatable: true,
+            selectable: "multiple row",
+            dataSource: varDataSource,
+            dataBinding: function () {
+                rowNumber = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+            },
+            columns: [
+                {
+                    title: "#",
+                    width: "50px",
+                    template: "#= ++rowNumber #",
+                },
+                {
+                    title: "اقدامات",
+                    locked: true,
+                    width: "120px",
+                    template: function (dataItem) {
+                        var html = '';
+
+                        // حذف
+                        html += '<a href="/Administrator/CarrierInventory/Delete/' + dataItem.Id + '" title="حذف">' +
+                            '<img src="../../../Content/Icon/Delete.png"/></a>';
+
+                        // تعیین پیش فرض
+                        if (dataItem.IsDefaultCarrier === false) {
+                            html += ' <a href="#" onclick="setDefault(\'' + dataItem.Id + '\'); return false;" title="تعیین به عنوان پیش‌فرض">' +
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                                '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' +
+                                '</svg></a>';
+                        }
+
+                        // افزایش موجودی
+                        html += ' <a href="/Administrator/CarrierInventory/IncreaseInventory/' + dataItem.Id + '" title="افزایش موجودی">' +
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                            '<circle cx="12" cy="12" r="10"></circle>' +
+                            '<line x1="12" y1="8" x2="12" y2="16"></line>' +
+                            '<line x1="8" y1="12" x2="16" y2="12"></line>' +
+                            '</svg></a>';
+
+                        return html;
+                    }
+                },
+                { title: "باربری", field: "StringCarrierName", width: "160px" },
+                { title: "محصول", field: "StringProductName", width: "120px" },
+                { title: "نوع محصول", field: "StringProductType", width: "130px" },
+                { title: "بسته‌بندی", field: "StringPackageType", width: "120px" },
+                { title: "کارخانه", field: "StringFactoryName", width: "160px" },
+                { title: "موجودی (تن)", field: "StringInventoryTonnage", width: "130px" },
+                { title: "پیش‌فرض", field: "StringIsDefaultCarrier", width: "110px" },
+                { title: "تاریخ ثبت", field: "StringInsertDateTime", width: "140px" },
+            ]
+        });
+    });
+
+    function setDefault(id) {
+        if (!confirm('آیا این باربری به عنوان پیش‌فرض تعیین شود؟')) return;
+
+        $.ajax({
+            url: '/Administrator/CarrierInventory/SetDefault',
+            type: 'POST',
+            data: { id: id },
+            success: function (result) {
+                if (result.Success) {
+                    $("div#grid").data("kendoGrid").dataSource.read();
+                } else {
+                    alert(result.Message);
+                }
+            },
+            error: function () {
+                alert('خطا در ارتباط با سرور.');
+            }
+        });
+    }
+</script>
+
+<section class="form-horizontal">
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">مدیریت موجودی باربری</div>
+        <div class="col-md-12 panel-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <div style="float:right;width:49%;">
+                        <a class="btn btn-primary" style="float:right;width:160px;"
+                           href="/Administrator/CarrierInventory/Create/">
+                            <span style="float:right;">ثبت موجودی جدید</span>
+                            <img style="float:left;" src='../../../Content/Icon/Create.png' />
+                        </a>
+                    </div>
+                    <div style="float:left;width:49%;">
+                        <a class="btn btn-default" href="/HomeMain/Main/" style="float:left;width:150px;">
+                            <span style="float:right;">بازگشت</span>
+                            <img style="float:left;" src='../../../Content/Icon/Back.png' />
+                        </a>
+                    </div>
+                </div>
+                <br />
+                <div class="row" style="overflow-x:auto;">
+                    <div id="grid" class="k-content k-rtl grid k-grid k-widget k-reorderable" style="width:100%;min-width:1260px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+</section>

@@ -104,6 +104,9 @@ namespace OPS.Controllers
         {
             public readonly string invoiceNumber = "invoiceNumber";
             public readonly string MahalTahvil = "MahalTahvil";
+            public readonly string CarrierId = "CarrierId";
+            public readonly string DriverName = "DriverName";
+            public readonly string DriverMobile = "DriverMobile";
         }
         static readonly ActionParamsClass_Paymentwallet s_params_Paymentwallet = new ActionParamsClass_Paymentwallet();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -146,11 +149,14 @@ namespace OPS.Controllers
     {
         public T4MVC_ZarinpalController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Payment(int invoiceNumber, string MahalTahvil)
+        public override System.Web.Mvc.ActionResult Payment(int invoiceNumber, string MahalTahvil, System.Guid? CarrierId, string DriverName, string DriverMobile)
         {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Payment);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "invoiceNumber", invoiceNumber);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "MahalTahvil", MahalTahvil);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "CarrierId", CarrierId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "DriverName", DriverName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "DriverMobile", DriverMobile);
             return callInfo;
         }
 

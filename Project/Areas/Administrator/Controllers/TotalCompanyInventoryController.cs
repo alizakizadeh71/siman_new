@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using ViewModels.Areas.Administrator.TotalCompanyInventory;
-using ViewModels.Areas.Administrator.Village;
 
 namespace OPS.Areas.Administrator.Controllers
 {

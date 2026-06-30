@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models
 {
-    public  class MarketerTransactions : BaseExtendedEntity
+    public class MarketerTransactions : BaseExtendedEntity
     {
         internal class
             Configuration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<MarketerTransactions>

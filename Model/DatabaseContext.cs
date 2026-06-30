@@ -67,6 +67,7 @@ namespace Models
         public System.Data.Entity.DbSet<walletFactor> walletFactor { get; set; }
         public System.Data.Entity.DbSet<MarketerTransactions> MarketerTransactions { get; set; }
         public DbSet<SiteSetting> WebsiteSettings { get; set; }
+        public DbSet<CarrierInventory> CarrierInventories { get; set; }
 
 
         protected override void OnModelCreating(System.Data.Entity.DbModelBuilder modelBuilder)
@@ -112,6 +113,7 @@ namespace Models
             modelBuilder.Configurations.Add(new FactoryName.Configuration());
             modelBuilder.Configurations.Add(new Tonnage.Configuration());
             modelBuilder.Configurations.Add(new FactorCement.Configuration());
+            modelBuilder.Configurations.Add(new CarrierInventory.Configuration());
 
         }
 

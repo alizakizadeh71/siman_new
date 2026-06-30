@@ -1,7 +1,4 @@
-﻿using Enums;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
-using OPS.Controllers;
+﻿using OPS.Controllers;
 using OPS.ir.shaparak.sadad;
 using System;
 using System.Collections.Generic;
@@ -64,7 +61,7 @@ namespace OPS.Areas.Administrator.Controllers
         [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
         public virtual System.Web.Mvc.ActionResult Search(ViewModels.Areas.Administrator.Request.IndexViewModel viewModel)
         {
-            var varRequest = UnitOfWork.FactorCementRepository.Get();
+            var varRequest = UnitOfWork.FactorCementRepository.Get().Where(x => x.FinalApprove);
 
             if (viewModel == null)
             {
@@ -155,8 +152,26 @@ namespace OPS.Areas.Administrator.Controllers
                         StringFactoryName = current.FactoryName?.Name,
                         StringTonnage = current.Tonnagedouble.ToString(),
                         Address = current.Address,
-                        BuyerMobile = current.BuyerMobile,
+                        BuyerName =
+    !string.IsNullOrEmpty(current.ManualBuyerName)
+        ? current.ManualBuyerName
+        : (current.User != null
+            && !string.IsNullOrEmpty(current.User.FullName)
+            && current.User.FullName != "کاربر مهمان"
+                ? current.User.FullName
+                : (!string.IsNullOrEmpty(current.BuyerFullName)
+                    ? current.BuyerFullName
+                    : "کاربر مهمان")),
+
+                BuyerMobile =
+                            current.User != null
+                            && !string.IsNullOrEmpty(current.User.BuyerMobile)
+                                ? current.User.BuyerMobile
+                                : current.BuyerMobile,
                         Description = current.Description,
+                        DriverName = current.DriverName,
+                        DriverMobile = current.DriverMobile,
+                        DriverLicensePlate = current.DriverLicensePlate,
                         stringFinalApprove = current.FinalApprove == true ? "نهایی شده" : "نهایی نشده",
                         AmountPaid = current.MahalTahvil == "Karkhane" ? current.AmountPaid : current.MahalTahvil == "Mahal" ? (current.DestinationAmountPaid ?? 0) : 0,
                         MahalTahvil = current.MahalTahvil == "Karkhane" ? "درب کارخانه" : current.MahalTahvil == "Mahal" ? "مقصد خریدار" : " - ",
@@ -219,6 +234,28 @@ namespace OPS.Areas.Administrator.Controllers
                 return View(cementViewModel);
             }
         }
+
+        [HttpGet]
+        [Infrastructure.SyncPermission(isPublic: false, role: Enums.Roles.ProvinceExpert00)]
+        public virtual ActionResult DriverInfo(Guid id) // اگر Id از نوع int است، نوع پارامتر را تغییر دهید
+        {
+            // ۱. دریافت اطلاعات از دیتابیس (نام کانتکست دیتابیس خود را قرار دهید)
+            var request = UnitOfWork.FactorCementRepository.GetById(id);
+
+            if (request == null)
+            {
+                return HttpNotFound("درخواست مورد نظر یافت نشد.");
+            }
+
+            // ۲. پاس دادن اطلاعات به View 
+            // نکته: نام ویژگی‌ها (مثل DriverName) را با نام‌های کلاس دیتابیس خود جایگزین کنید
+            ViewBag.DriverName = request.DriverName;
+            ViewBag.DriverPhone = request.DriverMobile;
+            ViewBag.LicensePlate = request.DriverLicensePlate;
+
+            return View();
+        }
+
 
         private void ViewData(ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel)
         {
@@ -453,10 +490,22 @@ namespace OPS.Areas.Administrator.Controllers
         [HttpPost]
         public virtual System.Web.Mvc.ActionResult ApproveFinancial(Guid id, string description, Guid CarrierId)
         {
+            // 1. بررسی خالی نبودن شناسه باربری در سمت سرور
+            if (CarrierId == Guid.Empty)
+            {
+                TempData["ErrorMessage"] = "خطا: انتخاب باربری الزامی است!";
+                // کاربر را به همان صفحه قبلی برمی‌گردانیم
+                if (Request.UrlReferrer != null)
+                {
+                    return Redirect(Request.UrlReferrer.ToString());
+                }
+                return RedirectToAction("Index");
+            }
+
             var request = UnitOfWork.FactorCementRepository.GetById(id);
             if (request != null)
             {
-                // تغییر وضعیت به 2 (تایید مالی شده) یا 3 (در انتظار بارگیری)
+                // تغییر وضعیت به 2 (تایید مالی شده) 
                 request.RequestState = 2;
                 request.Description = description;
 
@@ -469,11 +518,8 @@ namespace OPS.Areas.Administrator.Controllers
                 TempData["SuccessMessage"] = "تایید مالی با موفقیت انجام شد و به باربری ارجاع داده شد.";
             }
 
-            return RedirectToAction("Index"); // یا بازگشت به صفحه مناسب
+            return RedirectToAction("Index");
         }
-
-
-
 
 
         [System.Web.Mvc.HttpPost]

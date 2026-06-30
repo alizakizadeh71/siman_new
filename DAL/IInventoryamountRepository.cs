@@ -11,6 +11,6 @@ namespace DAL
 
         Models.Inventoryamount GetById(Guid Id);
         void Insertdata(Models.Inventoryamount Inventoryamount);
-       List<Inventoryamount> GetByProductId(List<InventoryViewModel> productIdList);
+        List<Inventoryamount> GetByProductId(List<InventoryViewModel> productIdList);
     }
 }

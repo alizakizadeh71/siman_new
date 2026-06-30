@@ -1,7 +1,5 @@
 ﻿@model ViewModels.Areas.Administrator.Cement.CementViewModel
-@{
-    ViewBag.Title = "Home Page";
-}
+@{ ViewBag.Title = "Home Page"; }
 <style>
     .example img {
         width: 100%;
@@ -31,10 +29,38 @@
         margin-top: 40px;
         padding: 50px 20px;
         border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         background-color: #fdfdfd;
         border: 2px solid #ebccd1;
     }
+
+    .carrier-box {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 10px 0 15px 0;
+    }
+
+        .carrier-box .carrier-title {
+            font-weight: bold;
+            color: #fd7e14;
+            margin-bottom: 15px;
+            font-size: 15px;
+            border-bottom: 1px solid #ffe0c4;
+            padding-bottom: 8px;
+        }
+
+        .carrier-box .form-group {
+            margin-bottom: 12px;
+            clear: both;
+            overflow: hidden;
+        }
+
+        .carrier-box label.control-label {
+            text-align: right;
+            padding-top: 8px;
+        }
 </style>
 
 <div class="example">
@@ -42,10 +68,10 @@
 </div>
 <br />
 
-@* بررسی فعال بودن سیستم فروش *@
+
+
 @if (ViewBag.IsPurchaseEnabled != null && !(bool)ViewBag.IsPurchaseEnabled)
 {
-    <!-- نمای زیبا برای زمان توقف فروش -->
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="text-center disabled-purchase-box">
@@ -58,30 +84,32 @@
                 </h2>
             </div>
         </div>
-    </div>
-}
+    </div> }
 else
 {
-    <!-- نمای فرم خرید برای زمان فعال بودن فروش -->
     <div class="row">
         <section id="loginFrom" class="col-md-12 col-md-offset-0 panel panel-info">
+
             @if (ViewBag.DisplaycreditAmount != null)
             {
-                <h4 class="panel-heading" style="text-align:center ; color:forestgreen">@ViewBag.DisplaycreditAmount</h4>
-            }
+                <h4 class="panel-heading" style="text-align:center; color:forestgreen">@ViewBag.DisplaycreditAmount</h4>}
             @if (ViewBag.Message != null)
             {
-                <h4 class="panel-heading" style="text-align:center">@ViewBag.Message</h4>
+                <h4 class="panel-heading" style="text-align:center">@ViewBag.Message</h4>}
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.ErrorMessage
+                </div>
             }
 
             @if (ViewBag.Karkhane != null && ViewBag.Karkhane != string.Empty)
             {
                 using (Html.BeginForm("Payment", "Zarinpal", FormMethod.Post))
                 {
-                    <div style="color:red ; text-align:center ; font-weight:bold" class="panel-body">
-                        <p style="color:black">
-                            لطفا محل تحویل را انتخاب نمایید
-                        </p>
+                    <div style="color:red; text-align:center; font-weight:bold" class="panel-body">
+                        <p style="color:black">لطفا محل تحویل را انتخاب نمایید</p>
                         @Html.RadioButtonFor(model => model.Description, "M", new { @id = "Karkhane", @checked = "checked" })
                         @Html.Raw(ViewBag.Karkhane)
                         <br />
@@ -89,108 +117,77 @@ else
                         {
                             @Html.RadioButtonFor(model => model.Description, "F", new { @onclick = "EnablePayment()", @id = "Mahal" })
                             @Html.Raw(ViewBag.Mahal)
-                            <br />
-                            @Html.Raw(ViewBag.Mahal)
-                        }
+                            <br />}
                     </div>
 
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true)
-                    @Html.Hidden("invoiceNumber", null, new { @class = "form-controle" })
-                    @Html.Hidden("MahalTahvil", null, new { @class = "form-controle" })
-                    <div style="text-align:center; padding-bottom: 15px;">
-                        <input class="btn btn-success" type="submit" id="btnPayment" style="margin-right:7px ; text-align:center" value="پرداخت و دریافت فاکتور" onclick="EnablePayment()" />
-                    </div>
-                }
+                    @Html.Hidden("ProductNameHidden", Model.ProductName) @Html.Hidden("ProductTypeHidden", Model.ProductType) @Html.Hidden("PackageTypeHidden", Model.PackageType) @Html.Hidden("FactoryNameHidden", Model.FactoryName)
+                    @Html.Hidden("invoiceNumber", Model.InvoiceNumber, new { @class = "form-controle" })
+                    <!-- بخش باربری -->
+                    <div class="panel-body" style="border-top: 1px solid #ddd; padding-top: 15px;">
+                        <div class="carrier-box">
+                            <div class="carrier-title">🚛 اطلاعات باربری</div>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">باربری</label>
+                                    <div class="col-md-6">
+                                        <select id="CarrierId" name="CarrierId" class="form-control">
+                                            <option value="">در حال بارگذاری...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-md-6"> <label style="font-weight:normal; cursor:pointer;"> <input type="checkbox" id="ShowDriverFields" onchange="toggleDriverFields()" /> &nbsp;اطلاعات راننده را وارد کنم </label> </div>
+                                </div>
+                                <div id="DriverFieldsSection" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">نام راننده</label>
+                                        <div class="col-md-6"> <input type="text" id="DriverName" name="DriverName" class="form-control" placeholder="نام راننده" /> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">شماره تماس راننده</label>
+                                        <div class="col-md-6"> <input type="text" id="DriverMobile" name="DriverMobile" class="form-control" placeholder="09xxxxxxxxx" onkeypress="return AllowNumbersOnly(event)" /> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> @Html.AntiForgeryToken() @Html.ValidationSummary(true) @Html.Hidden("invoiceNumber", null, new { @class = "form-controle" }) @Html.Hidden("MahalTahvil", null, new { @class = "form-controle" }) <div style="text-align:center; padding-bottom: 15px;"> <input class="btn btn-success" type="submit" id="btnPayment" style="margin-right:7px; text-align:center" value="پرداخت و دریافت فاکتور" onclick="EnablePayment()" /> </div> }
             }
             else if (ViewBag.PageMessages is string && !string.IsNullOrEmpty((string)ViewBag.PageMessages))
-            {
-                <div class="panel panel-info" style="text-align:center">
-                    <div style="color:red ; font-weight:bold" class="panel-body">
-                        @Html.Raw((string)ViewBag.PageMessages)
-                    </div>
-                </div>
-            }
+            { <div class="panel panel-info" style="text-align:center">
+                    <div style="color:red; font-weight:bold" class="panel-body"> @Html.Raw((string)ViewBag.PageMessages) </div>
+                </div>}
 
             @using (Html.BeginForm("Index", "HomeMain", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <hr />
-                @Html.ValidationSummary(true)
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ProductName, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-6">
-                        @Html.DropDownListFor(model => model.ProductName, null,
-                        Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName(); sendFormData(); " })
-                        @Html.ValidationMessageFor(model => model.ProductName)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ProductType, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-6" id="DivProductTypeId">
-                        @Html.DropDownListFor(model => model.ProductType, null,
-                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType(); sendFormData();" })
-                        @Html.ValidationMessageFor(model => model.ProductType)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PackageType, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-6" id="DivPackageTypeId">
-                        @Html.DropDownListFor(model => model.PackageType, null,
-                       Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "sendFormData();" })
-                        @Html.ValidationMessageFor(model => model.PackageType)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-6" id="DivFactoryNameId">
-                        @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "sendFormData();" })
-                        @Html.ValidationMessageFor(model => model.FactoryName)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-6" id="DivTonnageId">
-                        @Html.TextBoxFor(model => model.Tonnage, new { @class = "form-control", onchange = "sendFormData();" })
-                        @Html.ValidationMessageFor(model => model.Tonnage)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-6">
-                        @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" })
-                        @Html.ValidationMessageFor(model => model.BuyerMobile)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Description, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-6">
-                        @Html.TextAreaFor(model => model.Description, new
-                        {
-                            @class = "form-control",
-                        Rows = 4,
-                        Style = "resize: none;"
-                        })
-                        @Html.ValidationMessageFor(model => model.Description)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="text-center">
-                        <input type="submit" value='محاسبه قیمت' class="btn btn-info" />
-                    </div>
-                </div>
-            }
+            {@Html.AntiForgeryToken()
+            <hr /> @Html.ValidationSummary(true) <div class="form-group">
+                @Html.LabelFor(model => model.ProductName, new { @class = "col-md-3 control-label" }) <div class="col-md-6"> @Html.DropDownListFor(model => model.ProductName, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductName(); sendFormData();" }) @Html.ValidationMessageFor(model => model.ProductName) </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductType, new { @class = "col-md-3 control-label" }) <div class="col-md-6" id="DivProductTypeId"> @Html.DropDownListFor(model => model.ProductType, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "onChangeProductType(); sendFormData();" }) @Html.ValidationMessageFor(model => model.ProductType) </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PackageType, new { @class = "col-md-3 control-label" }) <div class="col-md-6" id="DivPackageTypeId"> @Html.DropDownListFor(model => model.PackageType, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "sendFormData();" }) @Html.ValidationMessageFor(model => model.PackageType) </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FactoryName, new { @class = "col-md-3 control-label" }) <div class="col-md-6" id="DivFactoryNameId"> @Html.DropDownListFor(model => model.FactoryName, null, Resources.Caption.SelectAnItem, new { @class = "form-control", @onchange = "sendFormData();" }) @Html.ValidationMessageFor(model => model.FactoryName) </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Tonnage, new { @class = "col-md-3 control-label" }) <div class="col-md-6" id="DivTonnageId"> @Html.TextBoxFor(model => model.Tonnage, new { @class = "form-control", onchange = "sendFormData();" }) @Html.ValidationMessageFor(model => model.Tonnage) </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.BuyerFullName, new { @class = "col-md-3 control-label" }) <div class="col-md-6"> @Html.TextBoxFor(model => model.BuyerFullName, new { @class = "form-control" }) @Html.ValidationMessageFor(model => model.BuyerFullName) </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.BuyerMobile, new { @class = "col-md-3 control-label" }) <div class="col-md-6"> @Html.TextBoxFor(model => model.BuyerMobile, new { @class = "form-control", @onkeypress = "return AllowNumbersOnly(event)" }) @Html.ValidationMessageFor(model => model.BuyerMobile) </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "col-md-3 control-label" }) <div class="col-md-6"> @Html.TextAreaFor(model => model.Description, new { @class = "form-control", Rows = 4, Style = "resize: none;" }) @Html.ValidationMessageFor(model => model.Description) </div>
+            </div>
+            <div class="form-group">
+                <div class="text-center"> <input type="submit" value="محاسبه قیمت" class="btn btn-info" /> </div>
+            </div>}
         </section>
-    </div>
-}
+    </div>}
 
 <hr />
 <div class="row">
@@ -206,9 +203,7 @@ else
                 <h4 style="margin-top:-20px;">راهنما کاربران</h4>
                 <p>...</p>
                 <br />
-                <p>
-                    <a class="btn btn-default" href="/HomeMain/UserGuid">ادامه مطلب ...</a>
-                </p>
+                <p><a class="btn btn-default" href="/HomeMain/UserGuid">ادامه مطلب ...</a></p>
             </div>
         </div>
     </div>
@@ -220,15 +215,15 @@ else
                 <h4 style="margin-top:-20px;">دستورالعمل ها</h4>
                 <p>...</p>
                 <br />
-                <p>
-                    <a class="btn btn-default" href="#">ادامه مطلب ...</a>
-                </p>
+                <p><a class="btn btn-default" href="#">ادامه مطلب ...</a></p>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="thumbnail" style="border: solid; border-width: 4px; border-color: #e1e1e1; box-shadow: 0 4px 2px #777;">
-            <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=340301&amp;Code=15RKvgmjoNFLcmU8pGMk"><img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=340301&amp;Code=15RKvgmjoNFLcmU8pGMk" alt="" style="cursor:pointer" id="15RKvgmjoNFLcmU8pGMk"></a>
+            <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=340301&amp;Code=15RKvgmjoNFLcmU8pGMk">
+                <img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=340301&amp;Code=15RKvgmjoNFLcmU8pGMk" alt="" style="cursor:pointer" id="15RKvgmjoNFLcmU8pGMk">
+            </a>
         </div>
     </div>
 </div>
@@ -242,6 +237,7 @@ else
         });
     }
     vmsblink('.blink');
+
 </script>
 
 <script type="text/javascript">
@@ -252,22 +248,76 @@ else
         }
     }
 
+    function loadCarriersForPayment() {
+        var productNameId = $("#ProductNameHidden").val();
+        var productTypeId = $("#ProductTypeHidden").val();
+        var packageTypeId = $("#PackageTypeHidden").val();
+        var factoryNameId = $("#FactoryNameHidden").val();
+
+        var empty = "00000000-0000-0000-0000-000000000000";
+        if (!productNameId || productNameId === empty) return;
+        if (!productTypeId || productTypeId === empty) return;
+        if (!packageTypeId || packageTypeId === empty) return;
+        if (!factoryNameId || factoryNameId === empty) return;
+
+        $("#CarrierId").empty().append("<option value=''>در حال بارگذاری...</option>");
+
+        $.ajax({
+            url: '/Administrator/PreInvoice/GetCarriersByProduct',
+            type: 'POST',
+            data: {
+                productNameId: productNameId,
+                productTypeId: productTypeId,
+                packageTypeId: packageTypeId,
+                factoryNameId: factoryNameId
+            },
+            success: function (data) {
+                var select = $("#CarrierId");
+                select.empty();
+                if (!data || data.length === 0) {
+                    select.append("<option value=''>باربری برای این محصول تعریف نشده</option>");
+                    return;
+                }
+                select.append("<option value=''>انتخاب باربری</option>");
+                $.each(data, function (i, item) {
+                    var text = item.IsDefault ? "⭐ " + item.Name + " (پیش‌فرض)" : item.Name;
+                    var option = $('<option value="' + item.Id + '">' + text + '</option>');
+                    if (item.IsDefault) {
+                        option.prop('selected', true);
+                    }
+                    select.append(option);
+                });
+            },
+            error: function () {
+                $("#CarrierId").empty().append("<option value=''>خطا در بارگذاری</option>");
+            }
+        });
+    }
+
+    function toggleDriverFields() {
+        if ($("#ShowDriverFields").is(":checked")) {
+            $("#DriverFieldsSection").slideDown(250);
+        } else {
+            $("#DriverFieldsSection").slideUp(250);
+            $("#DriverName").val("");
+            $("#DriverMobile").val("");
+        }
+    }
+
     function onChangeProvince() {
         $.ajax({
             url: '/Administrator/HeadOfFactor/GetCities',
             type: 'post',
-            data: { provinceId: $("#Province").val() },
+            data: {
+                provinceId: $("#Province").val()
+            },
             success: function (data) {
                 $("#DivCityId").empty();
                 var select = $("<select class='form-control' id='City' name='City' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-
+                select.append("<option value='@System.Guid.Empty'>از لیست انتخاب نمایید</option>");
                 $.each(data, function (i, city) {
-                    var option=('<option value="' + city.Id + '"> ' + city.Name + '</option>');
-                    select.append(option);
-                })
-
+                    select.append('<option value="' + city.Id + '"> ' + city.Name + '</option>');
+                });
                 $("#DivCityId").append(select);
                 $('#City>option:eq(1)').prop('selected', true);
                 $("#City").attr("onchange", "onChangecity()");
@@ -279,19 +329,20 @@ else
         $.ajax({
             url: '/Administrator/Cement/GetProductType',
             type: 'post',
-            data: { ProductNameId: $("#ProductName").val() },
+            data: {
+                ProductNameId: $("#ProductName").val()
+            },
             success: function (data) {
                 $("#DivProductTypeId").empty();
-                var select = $("<select class='form-control' onchange = 'onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-
+                var select = $("<select class='form-control' onchange='onChangeProductType()' id='ProductType' name='ProductType' data-rel='chosen'>");
+                select.append("<option value='@System.Guid.Empty'>از لیست انتخاب نمایید</option>");
                 $.each(data, function (i, ProductType) {
                     var option = ('<option value="' + ProductType.Id + '"> ' + ProductType.Name + '</option>');
-                    if (i == 0) { onChangeProductType(ProductType.Id); }
+                    if (i == 0) {
+                        onChangeProductType(ProductType.Id);
+                    }
                     select.append(option);
-                })
-
+                });
                 $("#DivProductTypeId").append(select);
                 $('#ProductType>option:eq(1)').prop('selected', true);
             }
@@ -300,18 +351,16 @@ else
         $.ajax({
             url: '/Administrator/Cement/GetFactoryName',
             type: 'post',
-            data: { ProductNameId: $("#ProductName").val() },
+            data: {
+                ProductNameId: $("#ProductName").val()
+            },
             success: function (data) {
                 $("#DivFactoryNameId").empty();
                 var select = $("<select class='form-control' id='FactoryName' name='FactoryName' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-
+                select.append("<option value='@System.Guid.Empty'>از لیست انتخاب نمایید</option>");
                 $.each(data, function (i, FactoryName) {
-                    var option = ('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
-                    select.append(option);
-                })
-
+                    select.append('<option value="' + FactoryName.Id + '"> ' + FactoryName.Name + '</option>');
+                });
                 $("#DivFactoryNameId").append(select);
                 $('#FactoryName>option:eq(1)').prop('selected', true);
             }
@@ -319,47 +368,48 @@ else
     }
 
     function onChangeProductType(ProductTypee) {
-        if (ProductTypee == undefined) { ProductTypee = $("#ProductType").val(); }
+        if (ProductTypee == undefined) {
+            ProductTypee = $("#ProductType").val();
+        }
         $.ajax({
             url: '/Administrator/Cement/GetPackageType',
             type: 'post',
-            data: { ProductTypeId: ProductTypee },
+            data: {
+                ProductTypeId: ProductTypee
+            },
             success: function (data) {
                 $("#DivPackageTypeId").empty();
-                var select = $("<select class='form-control' onchange = 'onChangePackageType()'  id='PackageType' name='PackageType' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-
+                var select = $("<select class='form-control' onchange='onChangePackageType()' id='PackageType' name='PackageType' data-rel='chosen'>");
+                select.append("<option value='@System.Guid.Empty'>از لیست انتخاب نمایید</option>");
                 $.each(data, function (i, PackageType) {
-                    var option = ('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
-                    select.append(option);
-                })
-
+                    select.append('<option value="' + PackageType.Id + '"> ' + PackageType.Name + '</option>');
+                });
                 $("#DivPackageTypeId").append(select);
                 $('#PackageType>option:eq(1)').prop('selected', true);
-                if (typeof onChangePackageType === "function") { onChangePackageType(); }
+                if (typeof onChangePackageType === "function") {
+                    onChangePackageType();
+                }
             }
         });
     }
 
     function onChangecity() {
-         $.ajax({
+        $.ajax({
             url: '/Administrator/HeadOfFactor/GetVillage',
             type: 'post',
-            data: { cityId: $("#City").val() },
+            data: {
+                cityId: $("#City").val()
+            },
             success: function (data) {
                 $("#DivVillageId").empty();
                 var select = $("<select class='form-control' id='village' name='village' data-rel='chosen'>");
-                var option1 = "<option value='@System.Guid.Empty'>" + "از لیست انتخاب نمایید" + "</option>";
-                select.append(option1);
-
+                select.append("<option value='@System.Guid.Empty'>از لیست انتخاب نمایید</option>");
                 $.each(data, function (i, village) {
-                    var option = ('<option value="' + village.Id + '"> ' + village.Name + '</option>');
-                    select.append(option);
-                })
+                    select.append('<option value="' + village.Id + '"> ' + village.Name + '</option>');
+                });
                 $("#DivVillageId").append(select);
             }
-         });
+        });
     }
 
     function EnablePayment() {
@@ -367,10 +417,17 @@ else
         var Mahal = document.getElementById("Mahal");
         if (Karkhane && Karkhane.checked == true) {
             $("#MahalTahvil").val('Karkhane');
-        }
-        else if (Mahal && Mahal.checked == true) {
+        } else if (Mahal && Mahal.checked == true) {
             $("#MahalTahvil").val('Mahal');
         }
+
+        setTimeout(function () {
+            var btn = document.getElementById("btnPayment");
+            if (btn) {
+                btn.disabled = true;
+                btn.value = "در حال پردازش...";
+            }
+        }, 100);
     }
 
     function copyLink() {
@@ -381,4 +438,11 @@ else
             alert("لینک کپی شد: " + copyText.value);
         }
     }
+
+    $(document).ready(function () {
+        if ($("#CarrierId").length > 0) {
+            loadCarriersForPayment();
+        }
+    });
+
 </script>

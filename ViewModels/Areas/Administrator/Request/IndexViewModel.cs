@@ -119,6 +119,7 @@ namespace ViewModels.Areas.Administrator.Request
         #region اطلاعات باربری (Driver Information)
 
         public string CarrierName { get; set; }
+        public string StringCarrierName { get; set; }
         [Display(ResourceType = typeof(Resources.Model.Request), Name = Resources.Model.Strings.RequestKeys.DriverName)]
         public string DriverName { get; set; }
 

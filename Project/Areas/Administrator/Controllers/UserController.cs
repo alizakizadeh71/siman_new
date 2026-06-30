@@ -1,17 +1,15 @@
 ﻿using ClosedXML.Excel;
+using Models;
+using OPS.Controllers;
 using OPS.GetPostinfoServices;
 using OPS.PersonInfoServices;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Models;
-using OPS.Controllers;
-using Utilities.PersianDate;
-using ViewModels.Areas.Administrator.User;
 using System.Transactions;
+using System.Web.Mvc;
+using ViewModels.Areas.Administrator.User;
 
 namespace OPS.Areas.Administrator.Controllers
 {
@@ -1152,6 +1150,21 @@ namespace OPS.Areas.Administrator.Controllers
                     UnitOfWork.UserRepository.Update(user);
 
                     UnitOfWork.Save();
+
+                    // ── ارسال پیامک شارژ کیف پول ──
+                    long newBalance = user.creditAmount;
+                    long balanceAfter = user.InitialCredit - newBalance;
+                    string remainAmountText = balanceAfter > 0 ? "بدهکار" : balanceAfter < 0 ? "طلبکار" : "تسویه";
+
+                    string chargeAmountFormatted = (rechargewalletUser.ChargeAmount > 0 ? "+" : "")
+                                                 + rechargewalletUser.ChargeAmount.ToString("N0");
+
+                    Utilities.SMS.SmsUtility.SendWalletChargeNotification(
+                        user.BuyerMobile,
+                        user.FullName,
+                        chargeAmountFormatted,
+                        Math.Abs(newBalance).ToString("N0"),
+                        remainAmountText);
                     scope.Complete();
                 }
 

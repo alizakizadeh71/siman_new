@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using DAL;
+﻿using DAL;
 using Models;
-using ViewModels.Areas.Administrator.TotalCompanyInventory;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace OPS.Areas.Markter.Controllers
 {

@@ -31,6 +31,13 @@
         border: 1px solid #ddd;
         border-top: none;
     }
+
+    .container, .body-content {
+        width: 98% !important;
+        max-width: 100% !important;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 </style>
 
 <script type="text/javascript">
@@ -57,12 +64,10 @@
     var isGrid2Loaded = false;
     var isGrid3Loaded = false;
 
-    // 🌟 متغیرهای جدید برای ذخیره زمان آخرین لود هر گرید
-    var lastLoadTime1 = Date.now(); // گرید ۱ در ابتدا لود می‌شود
+    var lastLoadTime1 = Date.now();
     var lastLoadTime2 = 0;
     var lastLoadTime3 = 0;
 
-    // 🌟 زمان انقضای دیتا (مثلاً ۲ دقیقه = 120,000 میلی‌ثانیه)
     var cacheExpirationMs = 2 * 60 * 1000;
 
     $(document).ready(function () {
@@ -70,32 +75,69 @@
         $('#EndDate').datepicker({ dateFormat: 'yy/mm/dd', autoSize: true, showyear: true, changeYear: true });
         $("#SearchPanelHeader").click(function () { $("#SearchPanelBody").toggle(1000); });
 
+        // ستون‌های عمومی که بین هر ۳ جدول مشترک هستند (بدون مشخصات راننده)
         var commonColumns = [
-            { field: "StringInsertDateTime", title: "تاریخ ثبت", width: "100px" },
-            { field: "InvoiceNumber", title: "شماره فاکتور", width: "100px" },
+            { field: "StringInsertDateTime", title: "تاریخ", width: "85px" },
+            { field: "InvoiceNumber", title: "فاکتور", width: "70px" },
             {
-                field: "RequestState", title: "وضعیت بار", width: "130px",
+                field: "Description",
+                title: "توضیحات",
+                attributes: { style: "white-space: normal !important; word-break: break-word; min-width: 150px;" }
+            },
+            { field: "BuyerName", title: "نام مشتری", width: "120px" },
+            { field: "BuyerMobile", title: "موبایل", width: "110px" },
+            {
+                field: "RequestState", title: "وضعیت", width: "100px",
                 template: function (dataItem) {
-                    if (dataItem.RequestState === 2) return "<span class='label label-success' style='font-size:12px;'>تایید مالی شده</span>";
-                    if (dataItem.RequestState === 3) return "<span class='label label-info' style='font-size:12px;'>در جریان ارسال</span>";
-                    if (dataItem.RequestState === 4) return "<span class='label label-primary' style='font-size:12px;'>تحویل داده شده</span>";
-                    return "<span class='label label-default' style='font-size:12px;'>نامشخص</span>";
+                    if (dataItem.RequestState === 2) return "<span class='label label-success' style='font-size:11px;'>تایید مالی شده</span>";
+                    if (dataItem.RequestState === 3) return "<span class='label label-info' style='font-size:11px;'>در جریان ارسال</span>";
+                    if (dataItem.RequestState === 4) return "<span class='label label-primary' style='font-size:11px;'>تحویل داده شده</span>";
+                    return "<span class='label label-default' style='font-size:11px;'>نامشخص</span>";
                 }
             },
-            { field: "Description", title: "توضیحات", width: "200px" },
-            { field: "StringProductName", title: "نام محصول", width: "80px" },
-            { field: "StringProductType", title: "تیپ محصول", width: "80px" }, // 🌟 اضافه شد
-            { field: "StringPackageType", title: "نوع بسته‌بندی", width: "80px" },
-            { field: "StringTonnage", title: "تناژ", width: "80px" },
-            { field: "BuyerName", title: "نام مشتری", width: "150px" },
-            { field: "BuyerMobile", title: "شماره گیرنده", width: "110px" },
-            { field: "StringFactoryName", title: "مبدأ (کارخانه)", width: "100px" },
-            { field: "Address", title: "آدرس مقصد", width: "200px" },
+            { field: "StringTonnage", title: "تناژ", width: "50px" },
+            { field: "StringProductName", title: "محصول", width: "75px" },
+            { field: "StringProductType", title: "تیپ", width: "65px" },
+            { field: "StringFactoryName", title: "کارخانه", width: "85px" },
+            { field: "StringPackageType", title: "بسته‌بندی", width: "75px" },
+            {
+                field: "Address",
+                title: "آدرس",
+                attributes: { style: "white-space: normal !important; word-break: break-word; min-width: 120px;" }
+            }
         ];
 
+        // ستون‌های اختصاصی مربوط به مشخصات راننده (فقط برای جدول ۲ و ۳)
+        var driverColumns = [
+            {
+                field: "DriverName",
+                title: "نام راننده",
+                width: "110px",
+                template: function (dataItem) {
+                    return dataItem.DriverName ? dataItem.DriverName : "<span class='text-muted'>نامشخص</span>";
+                }
+            },
+            {
+                field: "DriverMobile",
+                title: "موبایل راننده",
+                width: "105px",
+                template: function (dataItem) {
+                    return dataItem.DriverMobile ? dataItem.DriverMobile : "<span class='text-muted'>نامشخص</span>";
+                }
+            },
+            {
+                field: "DriverLicensePlate",
+                title: "پلاک خودرو",
+                width: "120px",
+                template: function (dataItem) {
+                    return dataItem.DriverLicensePlate
+                        ? "<span style='font-size: 13px;'>" + dataItem.DriverLicensePlate + "</span>"
+                        : "<span class='text-muted' style='font-size: 12px;'>نامشخص</span>";
+                }
+            }
+        ];
 
-
-        // ------------------ گرید 1 ------------------
+        // ------------------ گرید 1 (بدون ستون راننده) ------------------
         var ds1 = new kendo.data.DataSource({
             pageSize: 10, serverPaging: true, serverSorting: true, serverFiltering: true,
             transport: {
@@ -113,20 +155,17 @@
             pageable: true, sortable: true, scrollable: true, dataSource: ds1,
             dataBinding: function () { rowNumber1 = (this.dataSource.page() - 1) * this.dataSource.pageSize(); },
             columns: [
-                { title: "#", width: "40px", template: function () { return ++rowNumber1; } },
+                { title: "#", width: "35px", template: function () { return ++rowNumber1; } },
                 {
-                    title: "عملیات", width: "130px",
+                    title: "عملیات", width: "60px",
                     template: function (dataItem) {
-                        var str = '<a title="نمایش" style="margin-left:8px;" href="/Carrier/Request/display/' + dataItem.Id + '"><img src="/Content/Icon/display.png" style="width:20px; height:20px;" /></a>';
-                        str += '<a title="تخصیص راننده" style="margin-left:8px;" href="/Carrier/Request/Edit/' + dataItem.Id + '"><img src="/Content/Icon/edit.png" style="width:20px; height:20px;" /></a>';
-                        str += "<a title='تغییر وضعیت به بارگیری شده' href='/Carrier/Request/LoadCargo/" + dataItem.Id + "'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='#5cb85c' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z'/></svg></a>";
-                        return str;
+                        return "<a title='تغییر وضعیت به بارگیری شده' style='margin-right:10px;' href='/Carrier/Request/LoadCargo/" + dataItem.Id + "'><svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='#5cb85c' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z'/></svg></a>";
                     }
                 }
-            ].concat(commonColumns)
+            ].concat(commonColumns) // فقط ستون‌های عمومی متصل می‌شوند
         });
 
-        // ------------------ گرید 2 ------------------
+        // ------------------ گرید 2 (شامل ستون راننده) ------------------
         var ds2 = new kendo.data.DataSource({
             pageSize: 10, serverPaging: true, serverSorting: true, serverFiltering: true,
             transport: {
@@ -145,21 +184,20 @@
             pageable: true, sortable: true, scrollable: true, dataSource: ds2,
             dataBinding: function () { rowNumber2 = (this.dataSource.page() - 1) * this.dataSource.pageSize(); },
             columns: [
-                { title: "#", width: "40px", template: function () { return ++rowNumber2; } },
+                { title: "#", width: "35px", template: function () { return ++rowNumber2; } },
                 {
-                    title: "عملیات", width: "130px",
+                    title: "عملیات", width: "60px",
                     template: function (dataItem) {
-                        var str = '<a title="نمایش" style="margin-left:8px;" href="/Carrier/Request/display/' + dataItem.Id + '"><img src="/Content/Icon/display.png" style="width:20px; height:20px;" /></a>';
                         if (dataItem.RequestState === 3) {
-                            str += "<a title='ثبت تحویل نهایی' style='cursor:pointer;' onclick='setAsDelivered(\"" + dataItem.Id + "\")'><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='#5cb85c' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'/></svg></a>";
+                            return "<a title='ثبت تحویل نهایی' style='cursor:pointer;margin-right:10px;' onclick='setAsDelivered(\"" + dataItem.Id + "\")'><svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='#5cb85c' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'/></svg></a>";
                         }
-                        return str;
+                        return "";
                     }
                 }
-            ].concat(commonColumns)
+            ].concat(driverColumns).concat(commonColumns) // اضافه شدن ستون راننده به گرید ۲
         });
 
-        // ------------------ گرید 3 ------------------
+        // ------------------ گرید 3 (شامل ستون راننده) ------------------
         var ds3 = new kendo.data.DataSource({
             pageSize: 10, serverPaging: true, serverSorting: true, serverFiltering: true,
             transport: {
@@ -178,20 +216,13 @@
             pageable: true, sortable: true, scrollable: true, dataSource: ds3,
             dataBinding: function () { rowNumber3 = (this.dataSource.page() - 1) * this.dataSource.pageSize(); },
             columns: [
-                { title: "#", width: "40px", template: function () { return ++rowNumber3; } },
-                {
-                    title: "عملیات", width: "80px",
-                    template: function (dataItem) {
-                        return '<a title="نمایش جزئیات" href="/Carrier/Request/display/' + dataItem.Id + '"><img src="/Content/Icon/display.png" style="width:20px; height:20px;" /></a>';
-                    }
-                }
-            ].concat(commonColumns)
+                { title: "#", width: "35px", template: function () { return ++rowNumber3; } }
+            ].concat(driverColumns).concat(commonColumns) // اضافه شدن ستون راننده به گرید ۳
         });
 
-        // 🌟 دکمه جستجو: علاوه بر لود گرید، زمان‌ها را هم ریست می‌کند تا دیتای جدید بگیرد
+        // مدیریت لود دکمه جستجو
         $("button#btnSearch").click(function () {
             var now = Date.now();
-
             $("#grid1").data("kendoGrid").dataSource.page(1);
             lastLoadTime1 = now;
 
@@ -212,7 +243,7 @@
             }
         });
 
-        // 🌟 مدیریت تغییر تب با قابلیت چک کردن زمان انقضا
+        // مدیریت تغییر تب با چک کردن کش منقضی شده
         $('.nav-tabs a').on('click', function (e) {
             e.preventDefault();
             var target = $(this).attr("href");
@@ -228,7 +259,6 @@
                 if (target === "#tab1") {
                     var grid1 = $("#grid1").data("kendoGrid");
                     if (grid1) {
-                        // اگر زمان گذشته بود، رفرش کن
                         if (now - lastLoadTime1 > cacheExpirationMs) {
                             grid1.dataSource.read();
                             lastLoadTime1 = now;
@@ -239,7 +269,6 @@
                 else if (target === "#tab2") {
                     var grid2 = $("#grid2").data("kendoGrid");
                     if (grid2) {
-                        // اگر تا حالا لود نشده یا زمان منقضی شده
                         if (!isGrid2Loaded || (now - lastLoadTime2 > cacheExpirationMs)) {
                             grid2.dataSource.read();
                             isGrid2Loaded = true;
@@ -251,7 +280,6 @@
                 else if (target === "#tab3") {
                     var grid3 = $("#grid3").data("kendoGrid");
                     if (grid3) {
-                        // اگر تا حالا لود نشده یا زمان منقضی شده
                         if (!isGrid3Loaded || (now - lastLoadTime3 > cacheExpirationMs)) {
                             grid3.dataSource.read();
                             isGrid3Loaded = true;
@@ -272,7 +300,7 @@
                 if (isSuccess) {
                     if (typeof toastr !== 'undefined') toastr.success(msg); else alert(msg);
                     $("#grid2").data("kendoGrid").dataSource.read();
-                    lastLoadTime2 = Date.now(); // آپدیت زمان لود پس از عملیات
+                    lastLoadTime2 = Date.now();
 
                     if (isGrid3Loaded) {
                         $("#grid3").data("kendoGrid").dataSource.read();
@@ -285,7 +313,6 @@
         }
     }
 </script>
-
 
 <section id="Requests" class="form-horizontal" role="form">
     <br />

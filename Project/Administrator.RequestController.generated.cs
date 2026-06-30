@@ -58,6 +58,12 @@ namespace OPS.Areas.Administrator.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DriverInfo()
+        {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DriverInfo);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult DetailsInvoiceNumber()
         {
             return new T4MVC_ActionResult(Area, Name, ActionNames.DetailsInvoiceNumber);
@@ -130,6 +136,7 @@ namespace OPS.Areas.Administrator.Controllers
             public readonly string GetRequests = "GetRequests";
             public readonly string Search = "Search";
             public readonly string ShowFactor = "ShowFactor";
+            public readonly string DriverInfo = "DriverInfo";
             public readonly string DetailsInvoiceNumber = "DetailsInvoiceNumber";
             public readonly string Display = "Display";
             public readonly string Edit = "Edit";
@@ -148,6 +155,7 @@ namespace OPS.Areas.Administrator.Controllers
             public const string GetRequests = "GetRequests";
             public const string Search = "Search";
             public const string ShowFactor = "ShowFactor";
+            public const string DriverInfo = "DriverInfo";
             public const string DetailsInvoiceNumber = "DetailsInvoiceNumber";
             public const string Display = "Display";
             public const string Edit = "Edit";
@@ -176,6 +184,14 @@ namespace OPS.Areas.Administrator.Controllers
         {
             public readonly string invoicenumber = "invoicenumber";
             public readonly string isPdf = "isPdf";
+        }
+        static readonly ActionParamsClass_DriverInfo s_params_DriverInfo = new ActionParamsClass_DriverInfo();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DriverInfo DriverInfoParams { get { return s_params_DriverInfo; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DriverInfo
+        {
+            public readonly string id = "id";
         }
         static readonly ActionParamsClass_DetailsInvoiceNumber s_params_DetailsInvoiceNumber = new ActionParamsClass_DetailsInvoiceNumber();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -263,6 +279,7 @@ namespace OPS.Areas.Administrator.Controllers
             public class _ViewNamesClass
             {
                 public readonly string display = "display";
+                public readonly string DriverInfo = "DriverInfo";
                 public readonly string Edit = "Edit";
                 public readonly string EditIVO = "EditIVO";
                 public readonly string Incomplete = "Incomplete";
@@ -276,6 +293,7 @@ namespace OPS.Areas.Administrator.Controllers
                 public readonly string UpAmountPaid = "UpAmountPaid";
             }
             public readonly string display = "~/Areas/Administrator/Views/Request/display.cshtml";
+            public readonly string DriverInfo = "~/Areas/Administrator/Views/Request/DriverInfo.cshtml";
             public readonly string Edit = "~/Areas/Administrator/Views/Request/Edit.cshtml";
             public readonly string EditIVO = "~/Areas/Administrator/Views/Request/EditIVO.cshtml";
             public readonly string Incomplete = "~/Areas/Administrator/Views/Request/Incomplete.cshtml";
@@ -319,6 +337,13 @@ namespace OPS.Areas.Administrator.Controllers
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ShowFactor);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "invoicenumber", invoicenumber);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "isPdf", isPdf);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DriverInfo(System.Guid id)
+        {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DriverInfo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 

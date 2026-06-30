@@ -14,7 +14,7 @@
         {
             try
             {
-                //DatabaseContextInitializer.Seed(databaseContext);
+                DatabaseContextInitializer.Seed(databaseContext);
             }
             catch (System.Exception ex)
             {

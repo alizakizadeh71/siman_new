@@ -1,0 +1,647 @@
+﻿@model ViewModels.Areas.Administrator.PreInvoice.CreateViewModel
+
+@{
+    ViewBag.Title = "ایجاد پیش فاکتور";
+}
+
+<style>
+    body {
+        background: #f4f6f9;
+    }
+
+    .preinvoice-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        overflow: hidden;
+        margin-top: 25px;
+        margin-bottom: 30px;
+    }
+
+    .preinvoice-header {
+        background: linear-gradient(45deg,#0d6efd,#0b5ed7);
+        padding: 18px 25px;
+        color: white;
+    }
+
+        .preinvoice-header h3 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+    .preinvoice-body {
+        padding: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .control-label, label {
+        font-weight: bold;
+        margin-bottom: 7px;
+        display: block;
+        color: #444;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        height: 42px;
+        box-shadow: none !important;
+        border: 1px solid #dcdcdc;
+    }
+
+    textarea.form-control {
+        height: auto !important;
+    }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+    }
+
+    .btn-save {
+        background: #198754;
+        color: white;
+        border: none;
+        padding: 10px 28px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+        .btn-save:hover {
+            background: #157347;
+            color: white;
+        }
+
+    .btn-back {
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .section-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #0d6efd;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eeeeee;
+        padding-bottom: 8px;
+    }
+
+    .section-title-carrier {
+        font-size: 16px;
+        font-weight: bold;
+        color: #fd7e14;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ffe0c4;
+        padding-bottom: 8px;
+    }
+
+    .carrier-section-box {
+        background: #fff8f2;
+        border: 1px solid #ffe0c4;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .validation-summary-errors {
+        background: #f8d7da;
+        color: #842029;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .field-validation-error {
+        color: #dc3545;
+        font-size: 12px;
+    }
+
+    .alert-custom {
+        border-radius: 8px;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .alert-danger-custom {
+        background: #f8d7da;
+        color: #842029;
+    }
+
+    .alert-success-custom {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .carrier-loading {
+        color: #999;
+        font-style: italic;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="preinvoice-card">
+
+        <div class="preinvoice-header">
+            <h3>
+                <i class="fa fa-file-text-o"></i>
+                ایجاد پیش فاکتور دستی
+            </h3>
+        </div>
+
+        <div class="preinvoice-body">
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert-custom alert-danger-custom">@ViewBag.ErrorMessage</div>
+            }
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert-custom alert-success-custom">@TempData["SuccessMessage"]</div>
+            }
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <!-- اطلاعات محصول -->
+                <div class="section-title">اطلاعات محصول</div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>نام محصول</label>
+                            @Html.DropDownListFor(x => x.ProductName,
+                                (SelectList)ViewData["ProductName"],
+                                "انتخاب کنید",
+                                new { @class = "form-control", onchange = "onChangeProductName()" })
+                            @Html.ValidationMessageFor(x => x.ProductName)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>نوع محصول</label>
+                            <div id="DivProductTypeId">
+                                @Html.DropDownListFor(x => x.ProductType,
+                                    (SelectList)ViewData["ProductType"],
+                                    "انتخاب کنید",
+                                    new { @class = "form-control", onchange = "onChangeProductType()" })
+                            </div>
+                            @Html.ValidationMessageFor(x => x.ProductType)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>نوع بسته بندی</label>
+                            <div id="DivPackageTypeId">
+                                @Html.DropDownListFor(x => x.PackageType,
+                                    (SelectList)ViewData["PackageType"],
+                                    "انتخاب کنید",
+                                    new { @class = "form-control", onchange = "reloadCarriersIfNeeded()" })
+                            </div>
+                            @Html.ValidationMessageFor(x => x.PackageType)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>کارخانه</label>
+                            <div id="DivFactoryNameId">
+                                @Html.DropDownListFor(x => x.FactoryName,
+                                    (SelectList)ViewData["FactoryName"],
+                                    "انتخاب کنید",
+                                    new { @class = "form-control", onchange = "reloadCarriersIfNeeded()" })
+                            </div>
+                            @Html.ValidationMessageFor(x => x.FactoryName)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- اطلاعات خریدار -->
+                <div class="section-title">اطلاعات خریدار</div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>نام خریدار</label>
+                            @Html.TextBoxFor(x => x.BuyerName,
+                                new { @class = "form-control", placeholder = "نام خریدار" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>شماره موبایل</label>
+                            @Html.TextBoxFor(x => x.BuyerMobile,
+                                new { @class = "form-control", placeholder = "09xxxxxxxxx" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>آدرس</label>
+                            @Html.TextAreaFor(x => x.Address,
+                                new { @class = "form-control", rows = 3, placeholder = "آدرس کامل" })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- اطلاعات مالی و ارسال -->
+                <div class="section-title">اطلاعات مالی و ارسال</div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>استان</label>
+                            @Html.DropDownListFor(x => x.Province,
+                                (SelectList)ViewData["Province"],
+                                "انتخاب کنید",
+                                new { @class = "form-control", onchange = "onChangeProvince()" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>شهر</label>
+                            <div id="DivCityId">
+                                @Html.DropDownListFor(x => x.City,
+                                    (SelectList)ViewData["City"],
+                                    "انتخاب کنید",
+                                    new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>محل تحویل</label>
+                            @Html.DropDownListFor(x => x.MahalTahvil,
+                                new List<SelectListItem>()
+                                {
+                                    new SelectListItem() { Text = "درب کارخانه", Value = "Karkhane" },
+                                    new SelectListItem() { Text = "مقصد خریدار", Value = "Mahal" }
+                                },
+                                "انتخاب کنید",
+                                new { @class = "form-control", id = "MahalTahvil", onchange = "onChangeMahalTahvil()" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>تناژ</label>
+                            <div id="DivTonnageId">
+                                @Html.TextBoxFor(x => x.Tonnage,
+                                    new { @class = "form-control", placeholder = "مثال : 12.5", type = "number", step = "0.01", min = "0" })
+                            </div>
+                            @Html.ValidationMessageFor(x => x.Tonnage)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>مبلغ</label>
+                            @Html.TextBoxFor(x => x.AmountPaid,
+                                new { @class = "form-control", placeholder = "مبلغ", type = "number", min = "0" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>توضیحات</label>
+                            @Html.TextAreaFor(x => x.Description,
+                                new { @class = "form-control", rows = 4, placeholder = "توضیحات تکمیلی" })
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CarrierSection">
+                    <div class="carrier-section-box">
+                        <div class="section-title-carrier">
+                            <i class="fa fa-truck"></i>
+                            اطلاعات باربری
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>باربری</label>
+                                    <select id="CarrierId" name="CarrierId"
+                                            class="form-control"
+                                            onchange="onChangeCarrier()">
+                                        <option value="">ابتدا محصول را انتخاب کنید</option>
+                                    </select>
+                                    <span id="CarrierLoadingMsg" class="carrier-loading" style="display:none;">
+                                        در حال بارگذاری باربری‌ها...
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" style="padding-top: 35px;">
+                                <div class="form-group">
+                                    <label style="display:inline-flex; align-items:center; gap:8px; cursor:pointer;">
+                                        <input type="checkbox" id="ShowDriverInfo"
+                                               onchange="toggleDriverInfo()"
+                                               style="width:18px; height:18px; cursor:pointer;" />
+                                        <span>ثبت اطلاعات راننده</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- اطلاعات راننده — با چک باکس نمایش داده میشه -->
+                        <div id="DriverInfoSection" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>نام راننده</label>
+                                        @Html.TextBoxFor(x => x.DriverName,
+                                            new { @class = "form-control", placeholder = "نام راننده", id = "DriverName" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>نام خانوادگی راننده</label>
+                                        @Html.TextBoxFor(x => x.DriverLastName,
+                                            new { @class = "form-control", placeholder = "نام خانوادگی راننده", id = "DriverLastName" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>موبایل راننده</label>
+                                        @Html.TextBoxFor(x => x.DriverMobile,
+                                            new { @class = "form-control", placeholder = "09xxxxxxxxx", id = "DriverMobile" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>پلاک ماشین</label>
+                                        @Html.TextBoxFor(x => x.DriverLicensePlate,
+                                            new { @class = "form-control", placeholder = "مثال: 12ب345-ایران22", id = "DriverLicensePlate" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="text-left">
+                    <a href="@Url.Action("Index", "PreInvoice")" class="btn btn-default btn-back">
+                        <i class="fa fa-arrow-right"></i>
+                        بازگشت
+                    </a>
+                    <button type="submit" class="btn btn-save">
+                        <i class="fa fa-save"></i>
+                        ثبت پیش فاکتور
+                    </button>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        // محل تحویل تغییر کرد
+        function onChangeMahalTahvil() {
+            loadCarriers();
+        }
+
+        function clearCarrierFields() {
+            $("#CarrierId").empty().append("<option value=''>ابتدا محصول را انتخاب کنید</option>");
+            $("#DriverName").val("");
+            $("#DriverLastName").val("");
+            $("#DriverMobile").val("");
+            $("#DriverLicensePlate").val("");
+        }
+
+        // بارگذاری باربری‌ها بر اساس محصول انتخاب‌شده
+        function loadCarriers() {
+            var productNameId = $("#ProductName").val();
+            var productTypeId = $("#ProductType").val();
+            var packageTypeId = $("#PackageType").val();
+            var factoryNameId = $("#FactoryName").val();
+
+            if (!productNameId || !productTypeId || !packageTypeId || !factoryNameId) {
+                $("#CarrierId").empty()
+                    .append("<option value=''>ابتدا محصول را کامل انتخاب کنید</option>");
+                return;
+            }
+
+            // نمایش loading
+            $("#CarrierId").empty().append("<option value=''>در حال بارگذاری...</option>");
+            $("#CarrierLoadingMsg").show();
+
+            $.ajax({
+                url: '/Administrator/PreInvoice/GetCarriersByProduct',
+                type: 'POST',
+                data: {
+                    productNameId: productNameId,
+                    productTypeId: productTypeId,
+                    packageTypeId: packageTypeId,
+                    factoryNameId: factoryNameId
+                },
+                success: function (data) {
+                    $("#CarrierLoadingMsg").hide();
+                    var select = $("#CarrierId");
+                    select.empty();
+
+                    if (!data || data.length === 0) {
+                        select.append("<option value=''>باربری برای این محصول تعریف نشده</option>");
+                        return;
+                    }
+
+                    select.append("<option value=''>انتخاب باربری</option>");
+
+                    var defaultId = null;
+
+                    $.each(data, function (i, item) {
+                        var text = item.IsDefault
+                            ? "⭐ " + item.Name + " (پیش‌فرض)"
+                            : item.Name;
+
+                        var option = $('<option value="' + item.Id + '">' + text + '</option>');
+
+                        if (item.IsDefault) {
+                            option.prop('selected', true);
+                            defaultId = item.Id;
+                        }
+
+                        select.append(option);
+                    });
+
+                    // اگر پیش‌فرض داشت، اطلاعاتش رو خودکار بگیر
+                    if (defaultId) {
+                        onChangeCarrier(defaultId);
+                    }
+                },
+                error: function () {
+                    $("#CarrierLoadingMsg").hide();
+                    $("#CarrierId").empty()
+                        .append("<option value=''>خطا در بارگذاری باربری‌ها</option>");
+                }
+            });
+        }
+
+        // وقتی باربری تغییر کرد
+        function onChangeCarrier(carrierId) {
+            if (!carrierId) carrierId = $("#CarrierId").val();
+            if (!carrierId) return;
+
+            $.ajax({
+                url: '/Administrator/PreInvoice/GetCarrierInfo',
+                type: 'POST',
+                data: { carrierId: carrierId },
+                success: function (res) {
+                    if (res.success) {
+                        if (res.BuyerMobile) {
+                            $("#DriverMobile").val(res.BuyerMobile);
+                        }
+                    }
+                }
+            });
+        }
+
+        // reload باربری اگر محل تحویل مقصد انتخاب شده
+        function reloadCarriersIfNeeded() {
+                setTimeout(loadCarriers, 400);
+        }
+
+        function onChangeProvince() {
+            var provinceId = $("#Province").val();
+            $.ajax({
+                url: '/Administrator/HeadOfFactor/GetCities',
+                type: 'POST',
+                data: { provinceId: provinceId },
+                success: function (data) {
+                    $("#DivCityId").empty();
+                    var select = $("<select class='form-control' id='City' name='City'></select>");
+                    select.append("<option value=''>انتخاب کنید</option>");
+                    $.each(data, function (i, city) {
+                        select.append('<option value="' + city.Id + '">' + city.Name + '</option>');
+                    });
+                    $("#DivCityId").append(select);
+                }
+            });
+        }
+
+        function onChangeProductName() {
+            var productNameId = $("#ProductName").val();
+
+            $.ajax({
+                url: '/Administrator/Cement/GetProductType',
+                type: 'POST',
+                data: { ProductNameId: productNameId },
+                success: function (data) {
+                    $("#DivProductTypeId").empty();
+                    var select = $("<select class='form-control' onchange='onChangeProductType()' id='ProductType' name='ProductType'></select>");
+                    select.append("<option value=''>انتخاب کنید</option>");
+                    $.each(data, function (i, item) {
+                        select.append('<option value="' + item.Id + '">' + item.Name + '</option>');
+                    });
+                    $("#DivProductTypeId").append(select);
+                    updatePrice();
+                    reloadCarriersIfNeeded();
+                }
+            });
+
+            $.ajax({
+                url: '/Administrator/Cement/GetFactoryName',
+                type: 'POST',
+                data: { ProductNameId: productNameId },
+                success: function (data) {
+                    $("#DivFactoryNameId").empty();
+                    var select = $("<select class='form-control' id='FactoryName' name='FactoryName' onchange='reloadCarriersIfNeeded()'></select>");
+                    select.append("<option value=''>انتخاب کنید</option>");
+                    $.each(data, function (i, item) {
+                        select.append('<option value="' + item.Id + '">' + item.Name + '</option>');
+                    });
+                    $("#DivFactoryNameId").append(select);
+                    updatePrice();
+                    reloadCarriersIfNeeded();
+                }
+            });
+
+            updatePrice();
+        }
+
+        function onChangeProductType(productTypeId) {
+            if (!productTypeId) productTypeId = $("#ProductType").val();
+
+            $.ajax({
+                url: '/Administrator/Cement/GetPackageType',
+                type: 'POST',
+                data: { ProductTypeId: productTypeId },
+                success: function (data) {
+                    $("#DivPackageTypeId").empty();
+                    var select = $("<select class='form-control' id='PackageType' name='PackageType' onchange='reloadCarriersIfNeeded()'></select>");
+                    select.append("<option value=''>انتخاب کنید</option>");
+                    $.each(data, function (i, item) {
+                        select.append('<option value="' + item.Id + '">' + item.Name + '</option>');
+                    });
+                    $("#DivPackageTypeId").append(select);
+                    updatePrice();
+                    reloadCarriersIfNeeded();
+                }
+            });
+
+            updatePrice();
+        }
+
+        function updatePrice() {
+            var data = {
+                productNameId: $("#ProductName").val(),
+                productTypeId: $("#ProductType").val(),
+                packageTypeId: $("#PackageType").val(),
+                factoryNameId: $("#FactoryName").val(),
+                tonnage: $("#Tonnage").val()
+            };
+
+            if (!data.productNameId || !data.productTypeId ||
+                !data.packageTypeId || !data.factoryNameId || !data.tonnage) return;
+
+            $.ajax({
+                url: '/Administrator/PreInvoice/GetLivePriceCalc',
+                type: 'POST',
+                data: data,
+                success: function (res) {
+                    $("#AmountPaid").val(res && res.amount ? res.amount : 0);
+                }
+            });
+        }
+
+        $(document).on("input", "#Tonnage", function () {
+            updatePrice();
+        });
+
+        function toggleDriverInfo() {
+            if ($("#ShowDriverInfo").is(":checked")) {
+                $("#DriverInfoSection").slideDown(200);
+            } else {
+                $("#DriverInfoSection").slideUp(200);
+                // پاک کردن فیلدها وقتی تیک برداشته میشه
+                $("#DriverName").val("");
+                $("#DriverLastName").val("");
+                $("#DriverMobile").val("");
+                $("#DriverLicensePlate").val("");
+            }
+        }
+
+    </script>
+}

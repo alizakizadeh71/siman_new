@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using DAL;
+﻿using DAL;
 using OPS.Controllers;
 using PagedList;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using ViewModels.Areas.Administrator.User;
 
 namespace OPS.Areas.Administrator.Controllers

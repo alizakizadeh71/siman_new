@@ -15,19 +15,27 @@
         border-radius: 4px;
     }
 
-    /* یکسان‌سازی دقیق ارتفاع سطرها بین بخش ثابت و متحرک */
-    .k-grid tbody tr {
-        height: 45px !important; /* ارتفاع ثابت برای تمام سطرها */
+    /* حذف ارتفاع ثابت برای جلوگیری از تداخل با متن‌های طولانی */
+    .k-grid td {
+        white-space: nowrap; /* پیش فرض nowrap برای همه */
+        text-overflow: ellipsis;
+        vertical-align: middle !important;
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
     }
 
-    .k-grid td {
-        white-space: nowrap !important;
-        text-overflow: ellipsis !important;
-        vertical-align: middle !important; /* وسط‌چین کردن عمودی همه سلول‌ها */
-        padding-top: 5px !important;
-        padding-bottom: 5px !important;
+    /* تنظیمات هدر برای جلوگیری از سه نقطه شدن */
+    .k-grid-header .k-header {
+        white-space: normal !important;
+        text-align: center !important;
+        vertical-align: middle !important;
     }
+
+        .k-grid-header .k-header .k-link {
+            padding-left: 15px !important;
+        }
 </style>
+
 
 <script type="text/javascript">
 
@@ -66,7 +74,6 @@
             Province: $("select#Province").val(),
             City: $("select#City").val(),
             stringFinalApprove: $("select#stringFinalApprove").val(),
-            // === فیلد وضعیت درخواست به جستجو اضافه شد ===
             RequestState: $("select#RequestState").val(),
             Tonnage: $("input#Tonnage").val() || $("select#Tonnage").val(),
             StartDate: $("input#StartDate").val(),
@@ -136,12 +143,12 @@
             columns:
                 [
                     {
-                        hidden: false, locked: true, lockable: true, width: "40px", title: "#",
+                        hidden: false, width: "40px", title: "#",
                         attributes: { style: "text-align: center; vertical-align: middle;" },
                         template: function (dataItem) { return ++rowNumber; }
                     },
                     {
-                        title: "عملیات", hidden: false, locked: true, lockable: true, width: "220px",
+                        title: "عملیات", hidden: false, width: "220px",
                         attributes: { style: "text-align: center; vertical-align: middle;" },
                         template: function (dataItem) {
                             var strTemplate = "";
@@ -151,6 +158,15 @@
 
                             strTemplate += '<a data-toggle="tooltip" data-placement="top" title="ویرایش" href="/Administrator/Request/Edit/' + dataItem.Id + '">';
                             strTemplate += '<img src="/Content/Icon/edit.png" style="width: 20px; height: 20px; vertical-align: middle;" /></a>';
+
+                            if (dataItem.RequestState === 3 || dataItem.RequestState === 4) {
+                                // مسیر به اکشن متد DriverInfo اشاره دارد
+                                var driverInfoUrl = '/Administrator/Request/DriverInfo/' + dataItem.Id;
+
+                                strTemplate += '<a class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="اطلاعات راننده" href="' + driverInfoUrl + '" style="margin-right:8px; padding: 2px 6px;">';
+                                // آیکون کامیون (SVG)
+                                strTemplate += '<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg></a>';
+                            }
 
                             strTemplate += '&nbsp;&nbsp;&nbsp;';
 
@@ -172,38 +188,38 @@
                             return strTemplate;
                         }
                     },
-                    { field: "InvoiceNumber", title: "شماره فاکتور", width: "120px" },
-                    // === نمایش RequestState در گرید با لیبل‌های رنگی ===
+                    { field: "StringInsertDateTime", title: "تاریخ", width: "100px" },
+                    { field: "InvoiceNumber", title: "فاکتور", width: "100px" },
                     {
-                        field: "RequestState",
-                        title: "وضعیت درخواست",
-                        width: "150px",
+                        field: "BuyerName", title: "نام مشتری", width: "130px",
                         template: function (dataItem) {
-                            if (dataItem.RequestState === 1) return "<span class='label label-warning' style='font-size:12px;'>تایید مالی نشده</span>";
-                            if (dataItem.RequestState === 2) return "<span class='label label-success' style='font-size:12px;'>تایید مالی شده</span>";
-                            if (dataItem.RequestState === 3) return "<span class='label label-info' style='font-size:12px;'>در جریان ارسال</span>";
-                            if (dataItem.RequestState === 4) return "<span class='label label-primary' style='font-size:12px;'>تحویل داده شده</span>";
-                            // می‌توانید وضعیت‌های دیگر را هم اینجا اضافه کنید
-                            return "<span class='label label-default' style='font-size:12px;'>وضعیت " + dataItem.RequestState + "</span>";
+                            if (dataItem.BuyerName && dataItem.BuyerName.toLowerCase() === "guest") {
+                                return "مهمان";
+                            }
+                            return dataItem.BuyerName ? dataItem.BuyerName : "";
                         }
                     },
-                    { field: "stringFinalApprove", title: "تایید نهایی", width: "120px" },
-                    { field: "StringProductName", title: "نام محصول", width: "120px" },
-                    { field: "StringProductType", title: "نوع محصول", width: "120px" },
-                    { field: "StringPackageType", title: "نوع بسته بندی", width: "120px" },
-                    { field: "StringFactoryName", title: "کارخانه", width: "150px" },
-                    { field: "StringTonnage", title: "تن", width: "80px" },
+                    { field: "BuyerMobile", title: "موبایل", width: "115px" },
                     {
-                        field: "AmountPaid", title: "مبلغ پرداختی", width: "120px",
+                        field: "AmountPaid", title: "مبلغ پرداختی", width: "140px",
                         template: "#= AmountPaid ? Comma(AmountPaid) : '0' #"
                     },
-                    { field: "BuyerMobile", title: "شماره خریدار", width: "120px" },
-                    { field: "Address", title: "آدرس", width: "200px" },
-                    { field: "Description", title: "توضیحات", width: "150px" },
                     {
-                        field: "CarrierName",
-                        title: "باربری",
-                        width: "150px",
+                        field: "RequestState", title: "وضعیت", width: "110px",
+                        template: function (dataItem) {
+                            if (dataItem.RequestState === 1) return "<span class='label label-warning' style='font-size:11px;'>تایید مالی نشده</span>";
+                            if (dataItem.RequestState === 2) return "<span class='label label-success' style='font-size:11px;'>تایید مالی شده</span>";
+                            if (dataItem.RequestState === 3) return "<span class='label label-info' style='font-size:11px;'>در جریان ارسال</span>";
+                            if (dataItem.RequestState === 4) return "<span class='label label-primary' style='font-size:11px;'>تحویل داده شده</span>";
+                            return "<span class='label label-default' style='font-size:11px;'>نامشخص</span>";
+                        }
+                    },
+                    { field: "StringTonnage", title: "تناژ", width: "90px" },
+                    { field: "StringProductType", title: "تیپ (نوع محصول)", width: "160px" },
+                    { field: "StringPackageType", title: "بسته‌بندی", width: "110px" },
+                    { field: "StringFactoryName", title: "کارخانه", width: "110px" },
+                    {
+                        field: "CarrierName", title: "باربری", width: "100px",
                         template: function (dataItem) {
                             if (dataItem.CarrierName === "بدون باربری" || !dataItem.CarrierName) {
                                 return "<span class='text-muted'>ثبت نشده</span>";
@@ -211,8 +227,53 @@
                             return "<span style='font-weight:bold; color:#2c3e50;'>" + dataItem.CarrierName + "</span>";
                         }
                     },
-                    { field: "MahalTahvil", title: "محل تحویل", width: "150px" },
-                    { field: "StringInsertDateTime", title: "تاریخ ثبت", width: "120px" }
+                    {
+                        field: "DriverName",
+                        title: "نام راننده",
+                        width: "120px",
+                        template: function (dataItem) {
+                            // فقط برای وضعیت ۳ و ۴ نمایش داده شود
+                            if (dataItem.RequestState === 3 || dataItem.RequestState === 4) {
+                                return dataItem.DriverName ? dataItem.DriverName : "<span class='text-muted'>نامشخص</span>";
+                            }
+                            return "<span class='text-muted'>-</span>";
+                        }
+                    },
+                    {
+                        field: "DriverMobile",
+                        title: "موبایل راننده",
+                        width: "110px",
+                        template: function (dataItem) {
+                            if (dataItem.RequestState === 3 || dataItem.RequestState === 4) {
+                                return dataItem.DriverMobile ? dataItem.DriverMobile : "<span class='text-muted'>نامشخص</span>";
+                            }
+                            return "<span class='text-muted'>-</span>";
+                        }
+                    },
+                    {
+                        field: "DriverLicensePlate",
+                        title: "پلاک خودرو",
+                        width: "120px",
+                        template: function (dataItem) {
+                            if (dataItem.RequestState === 3 || dataItem.RequestState === 4) {
+                                // اضافه شدن استایل اندازه فونت به پلاک اصلی و پلاک نامشخص
+                                return dataItem.DriverLicensePlate
+                                    ? "<span style='font-size: 13px;'>" + dataItem.DriverLicensePlate + "</span>"
+                                    : "<span class='text-muted' style='font-size: 13px;'>نامشخص</span>";
+                            }
+                            return "<span class='text-muted' style='font-size: 11px;'>-</span>";
+                        }
+                    },
+                    { field: "MahalTahvil", title: "محل تحویل", width: "120px" },
+                    {
+                        field: "Address", title: "آدرس", width: "120px",
+                        attributes: { style: "white-space: normal !important; word-break: break-word; min-width: 120px;" }
+                    },
+                    {
+                        field: "Description", title: "توضیحات", width: "140px",
+                        attributes: { style: "white-space: normal !important; word-break: break-word; min-width: 140px;" }
+                    },
+                    { field: "StringProductName", title: "محصول", width: "100px" },
                 ]
         });
 
@@ -220,8 +281,10 @@
             var varGrid = $('div#grid').data("kendoGrid");
             varGrid.dataSource.page(1);
         });
-    })
+    });
 </script>
+
+
 
 <section id="Requests" class="form-horizontal" role="form">
 

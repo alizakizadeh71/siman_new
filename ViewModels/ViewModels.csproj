@@ -84,6 +84,7 @@
     <Compile Include="Areas\Administrator\Bank\DetailViewModel.cs" />
     <Compile Include="Areas\Administrator\Bank\EditViewModel.cs" />
     <Compile Include="Areas\Administrator\Bank\IndexViewModel.cs" />
+    <Compile Include="Areas\Administrator\CarrierInventory\CarrierInventoryViewModel.cs" />
     <Compile Include="Areas\Administrator\Cement\CementViewModel.cs" />
     <Compile Include="Areas\Administrator\CentralBank\bankTransactionViewModel.cs" />
     <Compile Include="Areas\Administrator\Certain\CreateViewModel.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Areas\Administrator\IncomeRow\IndexViewModel.cs" />
     <Compile Include="Areas\Administrator\Inventoryamount\InventoryamountViewModel.cs" />
     <Compile Include="Areas\Administrator\Inventoryamount\InventoryViewModel.cs" />
+    <Compile Include="Areas\Administrator\PreInvoice\CreateViewModel.cs" />
     <Compile Include="Areas\Administrator\PurchaseSetting\SiteSettingViewModel.cs" />
     <Compile Include="Areas\Administrator\ReportGenerator\ReportColumnInfo.cs" />
     <Compile Include="Areas\Administrator\ReportGenerator\ReportingResult.cs" />

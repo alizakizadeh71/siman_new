@@ -284,6 +284,20 @@ namespace ViewModels.Areas.Administrator.Cement
         [System.ComponentModel.DataAnnotations.Display(Name = "وضعیت درخواست")]
         public int RequestState { get; set; }
         #endregion
+        // این کد را در داخل کلاس CementViewModel قرار دهید
+        #region CarrierId
+        [System.ComponentModel.DataAnnotations.Display(Name = "باربری")]
+        public Guid? CarrierId { get; set; }
+        #endregion
+
+
+        #region BuyerFullName
+        [System.ComponentModel.DataAnnotations.Display
+        (ResourceType = typeof(Resources.Model.Cement),
+            Name = Resources.Model.Strings.CementKeys.BuyerFullName)] // دقت کنید کلید BuyerFullName باید در فایل Resources شما موجود باشد
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        #endregion
+        public string BuyerFullName { get; set; }
 
 
     }

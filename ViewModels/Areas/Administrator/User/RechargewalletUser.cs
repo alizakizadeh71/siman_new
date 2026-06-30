@@ -29,6 +29,6 @@ namespace ViewModels.Areas.Administrator.User
 
         public int PageNumber { get; set; }
         public Guid TransactionId { get; set; }
-        
+
     }
 }

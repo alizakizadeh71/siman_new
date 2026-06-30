@@ -1,0 +1,56 @@
+﻿@model ViewModels.Areas.Administrator.CarrierInventory.CarrierInventoryViewModel
+
+<section class="form-horizontal">
+    <br />
+    <div class="panel panel-danger">
+        <div class="panel-heading">حذف موجودی باربری</div>
+        <div class="panel-body">
+
+            <div class="alert alert-warning">آیا از حذف این رکورد اطمینان دارید؟</div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">باربری</label>
+                <div class="col-md-4">
+                    <p class="form-control-static">@Model.StringCarrierName</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">محصول</label>
+                <div class="col-md-4">
+                    <p class="form-control-static">@Model.StringProductName</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">موجودی (تن)</label>
+                <div class="col-md-4">
+                    <p class="form-control-static">@Model.StringInventoryTonnage</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">پیش‌فرض</label>
+                <div class="col-md-4">
+                    <p class="form-control-static">@Model.StringIsDefaultCarrier</p>
+                </div>
+            </div>
+
+            @using (Html.BeginForm("Delete", "CarrierInventory",
+                new { area = "Administrator" }, FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-4">
+                        <button type="submit" class="btn btn-danger">
+                            <span style="float:right;">تأیید حذف</span>
+                            <img style="float:left;" src='../../../Content/Icon/Delete.png' />
+                        </button>
+                        <a class="btn btn-default" href="/Administrator/CarrierInventory/Index/">
+                            <span style="float:right;">بازگشت</span>
+                            <img style="float:left;" src='../../../Content/Icon/Back.png' />
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="panel-footer"></div>
+    </div>
+</section>

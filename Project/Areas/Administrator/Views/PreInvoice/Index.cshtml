@@ -1,0 +1,456 @@
+﻿@model ViewModels.Areas.Administrator.Request.IndexViewModel
+@using Utilities.PersianDate
+
+@{
+    string strTitle = "لیست پیش‌ فاکتورهای دستی";
+}
+
+<style>
+    input#CompanyName {
+        color: gray;
+        padding: 6px 12px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+    }
+
+    .k-grid td {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        vertical-align: middle !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .k-grid-header .k-header {
+        white-space: normal !important;
+        text-align: center !important;
+        vertical-align: middle !important;
+        font-weight: bold;
+    }
+
+        .k-grid-header .k-header .k-link {
+            padding-left: 15px !important;
+        }
+
+    .top-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .btn-create {
+        background: linear-gradient(135deg,#28a745,#1e7e34);
+        border: none;
+        color: white !important;
+        font-weight: bold;
+        padding: 9px 18px;
+        border-radius: 8px;
+        transition: .2s;
+    }
+
+        .btn-create:hover {
+            transform: translateY(-1px);
+        }
+
+    .btn-back {
+        padding: 9px 18px;
+        border-radius: 8px;
+    }
+
+    .panel-heading {
+        font-weight: bold;
+    }
+
+    .action-btn {
+        border: none;
+        padding: 5px 10px !important;
+        border-radius: 8px;
+        font-size: 12px !important;
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        transition: all .2s ease;
+        margin-left: 3px;
+        cursor: pointer;
+    }
+
+    .approve-btn {
+        background: linear-gradient(135deg,#28a745,#1e7e34);
+        color: white;
+    }
+
+        .approve-btn:hover {
+            background: linear-gradient(135deg,#34ce57,#28a745);
+            transform: translateY(-1px);
+        }
+
+    .reject-btn {
+        background: linear-gradient(135deg,#dc3545,#b52a37);
+        color: white;
+    }
+
+        .reject-btn:hover {
+            background: linear-gradient(135deg,#ff4d5e,#dc3545);
+            transform: translateY(-1px);
+        }
+
+    .factor-btn {
+        background: linear-gradient(135deg,#007bff,#0056b3);
+        color: white !important;
+        border: none;
+        border-radius: 8px;
+        padding: 5px 10px;
+        font-size: 12px;
+        font-weight: bold;
+        text-decoration: none !important;
+        transition: .2s;
+        display: inline-flex;
+        align-items: center;
+    }
+
+        .factor-btn:hover {
+            background: linear-gradient(135deg,#1f8fff,#007bff);
+            color: white !important;
+        }
+
+    /* گرید پر عرض */
+    #grid-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    #grid {
+        min-width: 1600px;
+        width: 100%;
+    }
+</style>
+
+<script type="text/javascript">
+
+    function AllowNumbersOnly(e) {
+        var code = (e.which) ? e.which : e.keyCode;
+        if (code > 31 && (code < 48 || code > 57)) {
+            e.preventDefault();
+        }
+    }
+
+    $(document).on('click', 'a.btn-blank', function (e) {
+        e.preventDefault();
+        window.open($(this).attr('href'), '_blank');
+    });
+
+    function Comma(Num) {
+        if (!Num) return Num;
+        Num = Num.toString().replace(/,/g, '');
+        var parts = Num.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join('.');
+    }
+
+    function getSearchParameters() {
+        return {
+            AmountPaid: $("input#AmountPaid").val(),
+            InvoiceNumber: $("input#InvoiceNumber").val(),
+            BuyerMobile: $("input#BuyerMobile").val(),
+            ProductName: $("select#ProductName").val(),
+            ProductType: $("select#ProductType").val(),
+            PackageType: $("select#PackageType").val(),
+            FactoryName: $("select#FactoryName").val(),
+            Province: $("select#Province").val(),
+            City: $("select#City").val(),
+            Tonnage: $("input#Tonnage").val(),
+            StartDate: $("input#StartDate").val(),
+            EndDate: $("input#EndDate").val(),
+            FromAmount: $("#FromAmount").val() ? $("#FromAmount").val().replace(/,/g, '') : "",
+            ToAmount: $("#ToAmount").val() ? $("#ToAmount").val().replace(/,/g, '') : ""
+        };
+    }
+
+    var rowNumber = 0;
+
+    $(document).ready(function () {
+
+        $('#StartDate, #EndDate').datepicker({
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            showyear: true,
+            changeYear: true
+        });
+
+        $("#SearchPanelHeader").click(function () {
+            $("#SearchPanelBody").toggle(400);
+        });
+
+        var varDataSource = new kendo.data.DataSource({
+            pageSize: 10,
+            serverPaging: true,
+            serverSorting: true,
+            serverFiltering: true,
+            transport: {
+                read: {
+                    type: "POST",
+                    dataType: "json",
+                    url: "/Administrator/PreInvoice/Search",
+                    data: getSearchParameters
+                }
+            },
+            requestStart: function () { $("button#btnSearch").hide(); },
+            requestEnd: function () { $("button#btnSearch").show(); },
+            schema: {
+                data: function (e) { return e.Data; },
+                total: function (e) { return e.Total; }
+            }
+        });
+
+        $("div#grid").kendoGrid({
+
+            sortable: { mode: "multiple", allowUnsort: true },
+
+            pageable: {
+                info: true,
+                input: true,
+                refresh: true,
+                numeric: true,
+                buttonCount: 5,
+                previousNext: true,
+                pageSizes: [5, 10, 25, 50, 100],
+                messages: { morePages: "صفحات بیشتر", page: "شماره صفحه" }
+            },
+
+            scrollable: true,
+            reorderable: true,
+
+            dataSource: varDataSource,
+
+            dataBinding: function () {
+                rowNumber = (this.dataSource.page() - 1) * this.dataSource.pageSize();
+            },
+
+            columns: [
+                {
+                    width: "50px",
+                    title: "#",
+                    attributes: { style: "text-align:center;" },
+                    template: function () { return ++rowNumber; }
+                },
+
+                {
+                    title: "عملیات",
+                    width: "300px",
+                    attributes: { style: "text-align:center; white-space:nowrap;" },
+                    template: function (dataItem) {
+                        var html = "";
+
+                        html += '<a data-toggle="tooltip" title="نمایش" style="margin-left:4px;" ' +
+                            'href="/Administrator/Request/display/' + dataItem.Id + '">' +
+                            '<img src="/Content/Icon/display.png" style="width:20px;" /></a>';
+
+                        html += '<a data-toggle="tooltip" title="ویرایش" style="margin-left:4px;" ' +
+                            'href="/Administrator/PreInvoice/Edit/' + dataItem.Id + '">' +
+                            '<img src="/Content/Icon/edit.png" style="width:20px;" /></a>';
+
+                        html += '<button onclick="finalApprove(\'' + dataItem.Id + '\')" ' +
+                            'class="action-btn approve-btn">' +
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
+                            '<path d="M20 6L9 17l-5-5"></path></svg> تایید</button>';
+
+                        html += '<button onclick="rejectInvoice(\'' + dataItem.Id + '\')" ' +
+                            'class="action-btn reject-btn">' +
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
+                            '<line x1="18" y1="6" x2="6" y2="18"></line>' +
+                            '<line x1="6" y1="6" x2="18" y2="18"></line></svg> رد</button>';
+
+                        if (dataItem.InvoiceNumber) {
+                            html += '&nbsp;<a class="factor-btn btn-blank" ' +
+                                'href="/Administrator/Request/ShowFactor?invoicenumber=' + dataItem.InvoiceNumber + '">' +
+                                'فاکتور</a>';
+                        }
+
+                        return html;
+                    }
+                },
+
+                {
+                    field: "InvoiceNumber",
+                    title: "شماره فاکتور",
+                    width: "120px",
+                    attributes: { style: "text-align:center; font-weight:bold; color:blue;" },
+                    template: function (dataItem) {
+                        return '<span style="color:\\#0d6efd; font-weight:bold;">' + (dataItem.InvoiceNumber || '') + '</span>';
+                    }
+                },
+
+                {
+                    field: "StringInsertDateTime",
+                    title: "تاریخ",
+                    width: "120px",
+                    attributes: { style: "text-align:center;" }
+                },
+
+                {
+                    field: "BuyerName",
+                    title: "نام مشتری",
+                    width: "150px",
+                    template: "#= BuyerName == 'guest' ? 'مهمان' : (BuyerName || '-') #"
+                },
+
+                {
+                    field: "BuyerMobile",
+                    title: "موبایل",
+                    width: "130px",
+                    attributes: { style: "text-align:center;" }
+                },
+
+                {
+                    field: "StringProductType",
+                    title: "نوع محصول",
+                    width: "160px"
+                },
+
+                {
+                    field: "StringFactoryName",
+                    title: "کارخانه",
+                    width: "160px"
+                },
+
+                {
+                    field: "StringTonnage",
+                    title: "تناژ (تن)",
+                    width: "110px",
+                    attributes: { style: "text-align:center;" }
+                },
+
+                {
+                    field: "MahalTahvil",
+                    title: "محل تحویل",
+                    width: "140px",
+                    attributes: { style: "text-align:center;" },
+                    template: function (dataItem) {
+                        if (dataItem.MahalTahvil === "درب کارخانه")
+                            return '<span style="color:#198754;font-weight:bold;">🏭 درب کارخانه</span>';
+                        if (dataItem.MahalTahvil === "مقصد خریدار")
+                            return '<span style="color:#0d6efd;font-weight:bold;">🚚 مقصد خریدار</span>';
+                        return dataItem.MahalTahvil || "-";
+                    }
+                },
+
+                {
+                    field: "StringCarrierName",
+                    title: "باربری",
+                    width: "150px",
+                    template: function (dataItem) {
+                        if (!dataItem.StringCarrierName || dataItem.StringCarrierName === "-")
+                            return '<span style="color:#bbb;">-</span>';
+                        return '<span style="color:#fd7e14;font-weight:bold;">🚛 ' + dataItem.StringCarrierName + '</span>';
+                    }
+                },
+
+                {
+                    field: "AmountPaid",
+                    title: "مبلغ (ریال)",
+                    width: "150px",
+                    attributes: { style: "text-align:center;" },
+                    template: "#= AmountPaid ? Comma(AmountPaid) : '0' #"
+                },
+
+                {
+                    field: "Description",
+                    title: "توضیحات",
+                    width: "180px",
+                    template: "#= Description || '-' #"
+                }
+            ]
+        });
+
+        $("button#btnSearch").click(function () {
+            $('div#grid').data("kendoGrid").dataSource.page(1);
+        });
+    });
+
+    function finalApprove(id) {
+        if (confirm("آیا از تایید نهایی این پیش‌فاکتور اطمینان دارید؟")) {
+            $.ajax({
+                type: "POST",
+                url: "/Administrator/PreInvoice/FinalApproveInvoice",
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        $('div#grid').data("kendoGrid").dataSource.read();
+                    } else {
+                        alert("خطا : " + response.message);
+                    }
+                },
+                error: function () { alert("خطا در ارتباط با سرور"); }
+            });
+        }
+    }
+
+    function rejectInvoice(id) {
+        if (confirm("آیا از رد این پیش‌فاکتور اطمینان دارید؟")) {
+            $.ajax({
+                type: "POST",
+                url: "/Administrator/PreInvoice/RejectInvoice",
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        $('div#grid').data("kendoGrid").dataSource.read();
+                    } else {
+                        alert("خطا : " + response.message);
+                    }
+                },
+                error: function () { alert("خطا در ارتباط با سرور"); }
+            });
+        }
+    }
+
+</script>
+
+<section id="Requests" class="form-horizontal" role="form">
+
+    <div class="panel panel-info">
+        <div class="panel-heading" style="cursor:pointer;" id="SearchPanelHeader">
+            جستجو (کلیک کنید)
+        </div>
+        <div class="col-md-12 panel-body" id="SearchPanelBody" style="display:none;">
+            <!-- فرم جستجو -->
+        </div>
+    </div>
+
+    <br />
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">@strTitle</div>
+
+        <div class="col-md-12 panel-body">
+
+            <div class="top-buttons">
+                <div>
+                    <a href="@Url.Action("Create", "PreInvoice")" class="btn btn-success btn-create">
+                        <i class="fa fa-plus"></i>
+                        ثبت پیش‌فاکتور جدید
+                    </a>
+                </div>
+                <div>
+                    <a class="btn btn-default btn-back" href="/HomeMain/Main/">
+                        <i class="fa fa-arrow-right"></i>
+                        بازگشت به کارتابل
+                    </a>
+                </div>
+            </div>
+
+            <div id="grid-wrapper">
+                <div data-role="grid"
+                     id="grid"
+                     class="k-content k-rtl grid k-grid k-widget k-reorderable">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>

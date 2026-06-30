@@ -27,7 +27,13 @@
                     <div class="row">
                         <!-- ردیف 1 -->
                         <div class="row mb-3">
-                            <a class="btn btn-primary col-md-3 col-sm-12 col-xs-12" href="/Administrator/Request/Index/" style="padding-top:20px; margin-top:10px;">
+                            <a class="btn btn-primary col-md-3 col-sm-12 col-xs-12" href="/Administrator/PreInvoice/Index/" style="padding-top:20px; margin-top:10px;">
+                                <span style="float:right;">پیش فاکتور</span>
+                                <svg style="float:left; margin-top:-10px; width: 48px; height: 48px; color: white;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                            </a>
+                            <a class="btn btn-primary col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/Request/Index/" style="padding-top:20px; margin-top:10px;">
                                 <span style="float:right;">@Resources.Action.Request</span>
                                 <img style="float:left; margin-top:-5px;" src="../../../Content/Icon/Request.png" />
                             </a>
@@ -35,15 +41,15 @@
                                 <span style="float:right;">ثبت قیمت</span>
                                 <img style="float:left; margin-top:-5px;" src="../../../Content/Icon/Report.png" />
                             </a>
-                            <a class="btn btn-danger col-md-3 col-sm-12 col-xs-12" href="/Administrator/Financial/DestinationIndex/" style="padding-top:20px; margin-top:10px;">
-                                <span style="float:right;">ثبت قیمت کرایه تا مقصد</span>
-                                <img style="float:left; margin-top:-5px;" src="../../../Content/Icon/Report.png" />
-                            </a>
                         </div>
 
                         <!-- ردیف 2 -->
                         <div class="row mb-3">
-                            <a class="btn btn-warning col-md-3 col-sm-12 col-xs-12" href="/Administrator/User/Index/" style="padding-top:20px; margin-top:10px; height:100px;">
+                            <a class="btn btn-danger col-md-3 col-sm-12 col-xs-12" href="/Administrator/Financial/DestinationIndex/" style="padding-top:20px; margin-top:10px;">
+                                <span style="float:right;">ثبت قیمت کرایه تا مقصد</span>
+                                <img style="float:left; margin-top:-5px;" src="../../../Content/Icon/Report.png" />
+                            </a>
+                            <a class="btn btn-warning col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/User/Index/" style="padding-top:20px; margin-top:10px; height:100px;">
                                 <span style="float:right;">@Resources.Action.UserManagment</span>
                                 <img style="float:left; margin-top:-12px;" src="../../../Content/Icon/UserSetting.png" />
                             </a>
@@ -51,15 +57,15 @@
                                 <span style="float:right;">استان‌های تحت پوشش</span>
                                 <img style="float:left; margin-top:-12px; width:64px; height:64px;" src="../../../Content/Icon/map.png" />
                             </a>
-                            <a class="btn btn-info col-md-3 col-sm-12 col-xs-12" href="/Administrator/City/Index/" style="padding-top:20px; margin-top:10px;">
-                                <span style="float:right;">شهرستان‌های تحت پوشش</span>
-                                <img style="float:left; margin-top:-12px; width:64px; height:64px;" src="../../../Content/Icon/map.png" />
-                            </a>
                         </div>
 
                         <!-- ردیف 3 -->
                         <div class="row mb-3">
-                            <a class="btn btn-info col-md-3 col-sm-12 col-xs-12" href="/Administrator/Village/Index/" style="padding-top:20px; margin-top:10px;">
+                            <a class="btn btn-info col-md-3 col-sm-12 col-xs-12" href="/Administrator/City/Index/" style="padding-top:20px; margin-top:10px;">
+                                <span style="float:right;">شهرستان‌های تحت پوشش</span>
+                                <img style="float:left; margin-top:-12px; width:64px; height:64px;" src="../../../Content/Icon/map.png" />
+                            </a>
+                            <a class="btn btn-info col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/Village/Index/" style="padding-top:20px; margin-top:10px;">
                                 <span style="float:right;">افزودن دهستان</span>
                                 <img style="float:left; margin-top:-12px; width:64px; height:64px;" src="../../../Content/Icon/map.png" />
                             </a>
@@ -70,6 +76,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="jumbotron" style="margin-top: 0; min-height: 200px;">
                     <div class="row">
                         <!-- ردیف 4 -->
@@ -82,7 +89,7 @@
                                 <span style="float:right;">ثبت نوع کالا</span>
                                 <img style="float:left; margin-top:-5px;" src="../../../Content/Icon/Report.png" />
                             </a>
-                            <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/PackageType/Index/" style="padding-top:20px; margin-top:10px;">
+                            <a class="btn btn-success col-md-3 col-sm-12 col-xs-12 col-md-offset-1" href="/Administrator/PackageType/Index/" style="padding-top:20px; margin-top:10px;">
                                 <span style="float:right;">ثبت نوع بسته‌بندی</span>
                                 <img style="float:left; margin-top:-5px;" src="../../../Content/Icon/Report.png" />
                             </a>
@@ -120,18 +127,28 @@
                             </a>
                         </div>
 
+                        <!-- ردیف 7 -->
+                        <div class="row mb-3">
+                            <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/CarrierInventory/Index/" style="padding-top:20px; margin-top:10px;">
+                                <span style="float:right;">مدیریت موجودی باربری</span>
+                                <img style="float:left; margin-top:-5px;" src="../../../Content/Icon/Report.png" />
+                            </a>
+                        </div>
+
                         @*<div class="row mb-3">
-                                <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/Sms/Send/" style="padding-top:20px; margin-top:10px;">
-                                    <span style="float:right;">ارسال پیامک به کاربران</span>
-                                    <img style="float:left; margin-top:-5px; width: 50px; height : 50px" src="../../../Content/Icon/sms.png" />
-                                </a>
-                            </div>*@
+            <a class="btn btn-success col-md-3 col-sm-12 col-xs-12" href="/Administrator/Sms/Send/" style="padding-top:20px; margin-top:10px;">
+                <span style="float:right;">ارسال پیامک به کاربران</span>
+                <img style="float:left; margin-top:-5px; width: 50px; height : 50px" src="../../../Content/Icon/sms.png" />
+            </a>
+        </div>*@
                     </div>
                 </div>
                 break;
             }
     }
 }
+
+
 
 @{
     switch (Infrastructure.Sessions.AuthenticatedUser.Role)

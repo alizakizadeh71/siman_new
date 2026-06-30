@@ -51,6 +51,8 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.AccountNumberManageController AccountNumberManage = new OPS.Areas.Administrator.Controllers.T4MVC_AccountNumberManageController();
         public OPS.Areas.Administrator.Controllers.BankAccountController BankAccount = new OPS.Areas.Administrator.Controllers.T4MVC_BankAccountController();
         public OPS.Areas.Administrator.Controllers.BankController Bank = new OPS.Areas.Administrator.Controllers.T4MVC_BankController();
+        public OPS.Areas.Administrator.Controllers.CarrierInventoryController CarrierInventory = new OPS.Areas.Administrator.Controllers.T4MVC_CarrierInventoryController();
+        public OPS.Areas.Administrator.Controllers.CementController Cement = new OPS.Areas.Administrator.Controllers.T4MVC_CementController();
         public OPS.Areas.Administrator.Controllers.CertainController Certain = new OPS.Areas.Administrator.Controllers.T4MVC_CertainController();
         public OPS.Areas.Administrator.Controllers.CityController City = new OPS.Areas.Administrator.Controllers.T4MVC_CityController();
         public OPS.Areas.Administrator.Controllers.CurrencyUnitController CurrencyUnit = new OPS.Areas.Administrator.Controllers.T4MVC_CurrencyUnitController();
@@ -58,10 +60,12 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.FactoryNameController FactoryName = new OPS.Areas.Administrator.Controllers.T4MVC_FactoryNameController();
         public OPS.Areas.Administrator.Controllers.FinancialController Financial = new OPS.Areas.Administrator.Controllers.T4MVC_FinancialController();
         public OPS.Areas.Administrator.Controllers.HeadLineController HeadLine = new OPS.Areas.Administrator.Controllers.T4MVC_HeadLineController();
+        public OPS.Areas.Administrator.Controllers.HeadOfFactorController HeadOfFactor = new OPS.Areas.Administrator.Controllers.T4MVC_HeadOfFactorController();
         public OPS.Areas.Administrator.Controllers.IncomeRowController IncomeRow = new OPS.Areas.Administrator.Controllers.T4MVC_IncomeRowController();
         public OPS.Areas.Administrator.Controllers.InventoryamountController Inventoryamount = new OPS.Areas.Administrator.Controllers.T4MVC_InventoryamountController();
         public OPS.Areas.Administrator.Controllers.NewsController News = new OPS.Areas.Administrator.Controllers.T4MVC_NewsController();
         public OPS.Areas.Administrator.Controllers.PackageTypeController PackageType = new OPS.Areas.Administrator.Controllers.T4MVC_PackageTypeController();
+        public OPS.Areas.Administrator.Controllers.PreInvoiceController PreInvoice = new OPS.Areas.Administrator.Controllers.T4MVC_PreInvoiceController();
         public OPS.Areas.Administrator.Controllers.ProductNameController ProductName = new OPS.Areas.Administrator.Controllers.T4MVC_ProductNameController();
         public OPS.Areas.Administrator.Controllers.ProductTypeController ProductType = new OPS.Areas.Administrator.Controllers.T4MVC_ProductTypeController();
         public OPS.Areas.Administrator.Controllers.ProvinceController Province = new OPS.Areas.Administrator.Controllers.T4MVC_ProvinceController();
@@ -78,7 +82,6 @@ namespace T4MVC
         public OPS.Areas.Administrator.Controllers.VillageController Village = new OPS.Areas.Administrator.Controllers.T4MVC_VillageController();
         public T4MVC.Administrator.CentralBankController CentralBank = new T4MVC.Administrator.CentralBankController();
         public T4MVC.Administrator.DetailOfFactorController DetailOfFactor = new T4MVC.Administrator.DetailOfFactorController();
-        public T4MVC.Administrator.HeadOfFactorController HeadOfFactor = new T4MVC.Administrator.HeadOfFactorController();
         public T4MVC.Administrator.SharedController Shared = new T4MVC.Administrator.SharedController();
     }
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

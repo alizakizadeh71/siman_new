@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "اطلاعات راننده و ناوگان";
+}
+
+<section class="form-horizontal" role="form" style="margin-top:20px;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">اطلاعات راننده و ناوگان</h3>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive col-md-6 col-md-offset-3">
+                <table class="table table-bordered table-striped table-hover">
+                    <tbody>
+                        <tr>
+                            <td style="width: 30%;"><strong>نام راننده:</strong></td>
+                            <td class="text-primary">@(ViewBag.DriverName ?? "ثبت نشده")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>شماره تماس:</strong></td>
+                            <td><span style="direction:ltr; display:inline-block;">@(ViewBag.DriverPhone ?? "ثبت نشده")</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>شماره پلاک:</strong></td>
+                            <td>@(ViewBag.LicensePlate ?? "ثبت نشده")</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <div class="text-center">
+                    <a href="/Administrator/Request/Index" class="btn btn-default">
+                        <img style="float:left; margin-left:5px;" src='/Content/Icon/Back.png' width="20" />
+                        بازگشت به لیست
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

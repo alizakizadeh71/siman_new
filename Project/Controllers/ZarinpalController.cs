@@ -1,19 +1,18 @@
 ﻿//using Microsoft.AspNetCore.Mvc;
 //using Microsoft.AspNetCore.WebUtilities;
 //using Microsoft.Extensions.Logging;
+using Models;
 using Newtonsoft.Json.Linq;
 using OPS.CBINasimService;
 using OPS.ir.shaparak.sadad;
 using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.ServiceModel;
 using System.Web.Mvc;
-using Models;
-using Utilities.PersianDate;
+using ViewModels.Areas.Administrator.Cement;
 using ViewModels.Areas.Administrator.ZarinPal;
 
 namespace OPS.Controllers
@@ -24,352 +23,325 @@ namespace OPS.Controllers
         PGServiceClient oIPGServices = new PGServiceClient();
         //string testamount = "10017";
 
-        public virtual ActionResult Payment(int invoiceNumber, string MahalTahvil)
+        public virtual ActionResult Payment(int invoiceNumber, string MahalTahvil, Guid? CarrierId, string DriverName, string DriverMobile)
         {
             try
             {
-                var oFactorCement = UnitOfWork.FactorCementRepository.GetByinvoicenumber(invoiceNumber).FirstOrDefault();
-                var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
-                oFactorCement.MahalTahvil = MahalTahvil;
-                var Tonnage = oFactorCement.Tonnagedouble;
-                var InventoryTonnage = UnitOfWork.InventoryamountRepository.Get()
-                    .Where(x => x.IsDeleted == false && x.IsActived != false)
-                    .Where(x => x.ProductNameId == oFactorCement.ProductNameId)
-                    .Where(x => x.ProductTypeId == oFactorCement.ProductTypeId)
-                    .Where(x => x.PackageTypeId == oFactorCement.PackageTypeId)
-                    .Where(x => x.FactoryNameId == oFactorCement.FactoryNameId)
+                string carrierName = "نامشخص";
+                string carrierMobile = "";
+
+                var factor = UnitOfWork.FactorCementRepository
+                    .GetByinvoicenumber(invoiceNumber)
                     .FirstOrDefault();
-                UnitOfWork.FactorCementRepository.Update(oFactorCement);
 
-                string merchant = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
-                string amount = string.Empty;
-                if (oFactorCement.MahalTahvil == "Karkhane")
+                if (factor == null)
+                    return HttpNotFound();
+
+                if (factor.FinalApprove || factor.ref_id > 0 || factor.Authority != null)
+                    return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = factor.InvoiceNumber });
+
+                var lastInvoice = Session["LastInvoiceNumber"];
+                if (lastInvoice == null || (int)lastInvoice != invoiceNumber)
+                    return RedirectToAction("Index", "HomeMain");
+
+                Session.Remove("LastInvoiceNumber");
+
+                var user = UnitOfWork.UserRepository.GetById(factor.UserId);
+                factor.MahalTahvil = MahalTahvil;
+
+                // ── باربری ──
+                if (CarrierId.HasValue && CarrierId.Value != Guid.Empty)
                 {
-                    if (oFactorCement.AmountPaid > user.creditAmount && user.UserName != "Guest")
-                    {
-                        amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
-                    }
-                    else if (user.UserName == "Guest")
-                    {
-                        amount = oFactorCement.AmountPaid.ToString();
-                    }
-                    else if (oFactorCement.AmountPaid <= user.creditAmount && user.UserName != "Guest")
-                    {
-                        user.creditAmount = Convert.ToInt64(user.creditAmount - oFactorCement.AmountPaid);
-                        UnitOfWork.UserRepository.Update(user);
-                        oFactorCement.FinalApprove = true;
+                    var carrierInventory = UnitOfWork.CarrierInventoryRepository
+                        .GetByProduct(factor.ProductNameId, factor.ProductTypeId, factor.PackageTypeId, factor.FactoryNameId)
+                        .FirstOrDefault(x => x.CarrierId == CarrierId.Value);
 
-                        if (user.ReferredByCode != null)
+                    if (carrierInventory == null || carrierInventory.InventoryTonnage < factor.Tonnagedouble)
+                    {
+                        TempData["Error"] = "موجودی باربری انتخاب شده کافی نیست. لطفاً باربری دیگری انتخاب کنید.";
+                        return RedirectToAction("Index", "HomeMain", new
                         {
-                            var Marketer = UnitOfWork.UserRepository.GetUserByMarketingCode(user.ReferredByCode);
-                            if (Marketer != null)
-                            {
-                                #region region Create Marketer Transaction
-                                var commission = (int)(oFactorCement.AmountPaid * 0.007);
-
-                                var transaction = new MarketerTransactions
-                                {
-                                    Id = Guid.NewGuid(),
-                                    MarketingCode = int.Parse(Marketer.MarketingCode),
-                                    ReferredCode = int.Parse(user.ReferredByCode),
-                                    ProductNameId = oFactorCement.ProductNameId,
-                                    ProductTypeId = oFactorCement.ProductTypeId,
-                                    PackageType = oFactorCement.PackageType,
-                                    FactoryName = oFactorCement.FactoryName,
-                                    Tonnagedouble = oFactorCement.Tonnagedouble,
-                                    CommissionAmount = commission,
-                                    InsertDateTime = DateTime.Now
-                                };
-
-                                UnitOfWork.MarketerTransactionsRepository.Insertdata(transaction);
-                                #endregion
-
-
-                                Marketer.creditAmount += commission;
-                            }
-                        }
-                        InventoryTonnage.Inventorytonnage = InventoryTonnage.Inventorytonnage - Tonnage;
-                        UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
-                        UnitOfWork.FactorCementRepository.Update(oFactorCement);
-                        UnitOfWork.Save();
-                        PaymentSMS(user.BuyerMobile, oFactorCement);
-                        // Redirect به صفحه مقصد
-                        return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = oFactorCement.InvoiceNumber });
+                            productId = factor.ProductNameId,
+                            typeId = factor.ProductTypeId,
+                            packageId = factor.PackageTypeId,
+                            factoryId = factor.FactoryNameId
+                        });
                     }
-                    //amount = oFactorCement.AmountPaid.ToString();
+
+                    factor.CarrierId = CarrierId;
+
+                    var carrierUser = UnitOfWork.UserRepository.GetById(CarrierId.Value);
+                    if (carrierUser != null && carrierUser.Role.Code == (int)Enums.Roles.Carrier)
+                    {
+                        carrierName = carrierUser.FullName;
+                        carrierMobile = carrierUser.BuyerMobile;
+                    }
                 }
-                else if (oFactorCement.MahalTahvil == "Mahal")
+
+                if (!string.IsNullOrEmpty(DriverName)) factor.DriverName = DriverName;
+                if (!string.IsNullOrEmpty(DriverMobile)) factor.DriverMobile = DriverMobile;
+
+                // ── موجودی انبار ──
+                var inventory = UnitOfWork.InventoryamountRepository.Get()
+                    .FirstOrDefault(x =>
+                        !x.IsDeleted &&
+                        x.IsActived != false &&
+                        x.ProductNameId == factor.ProductNameId &&
+                        x.ProductTypeId == factor.ProductTypeId &&
+                        x.PackageTypeId == factor.PackageTypeId &&
+                        x.FactoryNameId == factor.FactoryNameId);
+
+                // ── محاسبه مبلغ ──
+                long walletUsed = Math.Min(user.creditAmount, Convert.ToInt64(factor.AmountPaid));
+                long gatewayAmount = Convert.ToInt64(factor.AmountPaid) - walletUsed;
+
+                user.creditAmount -= walletUsed;
+                factor.WalletPaidAmount = walletUsed;
+                factor.OnlinePaidAmount = gatewayAmount;
+                factor.FinalApprove = (gatewayAmount == 0);
+
+                UnitOfWork.UserRepository.Update(user);
+                UnitOfWork.FactorCementRepository.Update(factor);
+                UnitOfWork.Save();
+
+                // ── اطلاعات مشترک پیامک ──
+                string fullProductName = BuildProductName(factor, includesTonnage: true);
+                string buyerMobile = !string.IsNullOrEmpty(user.BuyerMobile) ? user.BuyerMobile : factor.BuyerMobile;
+                string buyerName = (!string.IsNullOrEmpty(user.FullName) && user.FullName != "کاربر مهمان")
+                                     ? user.FullName : factor.BuyerFullName;
+
+                bool isGuest = user.FullName == "کاربر مهمان" || user.FullName == "میهمان";
+                long balance = isGuest ? 0 : user.InitialCredit - user.creditAmount;
+                string remainAmount = isGuest ? null : Math.Abs(balance).ToString("N0");
+                string remainStatus = isGuest ? null : (balance > 0 ? "بدهکار" : balance < 0 ? "طلبکار" : "تسویه");
+
+                // ── پرداخت کامل با کیف پول ──
+                if (gatewayAmount == 0)
                 {
-                    if (oFactorCement.AmountPaid > user.creditAmount || user.UserName != "Guest")
-                    {
-                        amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
-                        user.creditAmount = 0;
-                        UnitOfWork.UserRepository.Update(user);
-                        UnitOfWork.Save();
-                    }
-                    else if (user.UserName != "Guest")
-                    {
-                        user.creditAmount = Convert.ToInt32(user.creditAmount - oFactorCement.AmountPaid);
-                        UnitOfWork.UserRepository.Update(user);
-                        oFactorCement.FinalApprove = true;
-                        UnitOfWork.FactorCementRepository.Update(oFactorCement);
-                        UnitOfWork.Save();
-                        // Redirect به صفحه مقصد
-                        return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = oFactorCement.InvoiceNumber });
-                    }
+                    if (inventory != null) inventory.Inventorytonnage -= factor.Tonnagedouble;
+                    UnitOfWork.InventoryamountRepository.Update(inventory);
+
+                    // ✅ کاهش موجودی باربری
+                    DeductCarrierInventory(factor);
+
+                    CreateMarketerTransaction(factor, user);
+                    UnitOfWork.Save();
+
+                    SendOrderSMS(buyerMobile, buyerName, factor, fullProductName, remainAmount, remainStatus, carrierName, carrierMobile);
+
+                    return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = factor.InvoiceNumber });
                 }
-                string authority;
-                string description = oFactorCement.ProductName.Name + " - " + oFactorCement.PackageType.Name + " - " + oFactorCement.FactoryName.Name + " - " + oFactorCement.Tonnagedouble;
-                string callbackurl = "https://masalehpakhsh.com/Zarinpal/VerifyPayment";
-                string mobile = oFactorCement.BuyerMobile;
-                // اگر در حالت تست هستیم (یعنی روی لوکال یا با دیباگر اجرا می‌کنیم)
+
+                // ── حالت دیباگ ──
                 if (System.Diagnostics.Debugger.IsAttached)
                 {
-                    // شبیه‌سازی پاسخ زرین‌پال بدون اتصال واقعی
-                    string fakeAuthority = "TEST_AUTH_" + Guid.NewGuid().ToString("N").Substring(0, 8);
-                    oFactorCement.Authority = fakeAuthority;
-                    oFactorCement.FinalApprove = true;
-                    UnitOfWork.FactorCementRepository.Update(oFactorCement);
+                    factor.ref_id = 123456789;
+                    factor.card_pan = "1234-****-****-5678";
+                    factor.Bankcode = 100;
+                    factor.AmountPaidDate = DateTime.Now;
+                    factor.FinalApprove = true;
+
+                    if (inventory != null) inventory.Inventorytonnage -= factor.Tonnagedouble;
+                    UnitOfWork.InventoryamountRepository.Update(inventory);
+
+                    // ✅ کاهش موجودی باربری
+                    DeductCarrierInventory(factor);
+
+                    UnitOfWork.FactorCementRepository.Update(factor);
+                    CreateMarketerTransaction(factor, user);
                     UnitOfWork.Save();
 
-                    // کاهش موجودی انبار
-                    if (InventoryTonnage != null)
-                    {
-                        InventoryTonnage.Inventorytonnage -= Tonnage;
-                        UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
-                    }
+                    SendOrderSMS(buyerMobile, buyerName, factor, fullProductName, remainAmount, remainStatus, carrierName, carrierMobile);
 
-                    // در صورت داشتن معرف، پورسانت بده
-                    if (user.ReferredByCode != null)
-                    {
-                        var marketer = UnitOfWork.UserRepository.GetUserByMarketingCode(user.ReferredByCode);
-                        if (marketer != null)
-                        {
-                            var commission = (int)(oFactorCement.AmountPaid * 0.007);
-                            var transaction = new MarketerTransactions
-                            {
-                                Id = Guid.NewGuid(),
-                                MarketingCode = int.Parse(marketer.MarketingCode),
-                                ReferredCode = int.Parse(user.ReferredByCode),
-                                ProductNameId = oFactorCement.ProductNameId,
-                                ProductTypeId = oFactorCement.ProductTypeId,
-                                PackageType = oFactorCement.PackageType,
-                                FactoryName = oFactorCement.FactoryName,
-                                Tonnagedouble = oFactorCement.Tonnagedouble,
-                                CommissionAmount = commission,
-                                InsertDateTime = DateTime.Now
-                            };
-                            UnitOfWork.MarketerTransactionsRepository.Insertdata(transaction);
-                            marketer.creditAmount += commission;
-                        }
-                    }
-
-                    UnitOfWork.Save();
-
-                    // ارسال پیامک پرداخت موفق تستی
-                    PaymentSMS(mobile, oFactorCement);
-
-                    // هدایت کاربر به صفحه نمایش فاکتور مثل حالت واقعی
-                    return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = oFactorCement.InvoiceNumber });
+                    return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = factor.InvoiceNumber });
                 }
 
+                // ── درگاه پرداخت ──
+                string description = $"{factor.ProductName.Name} - {factor.PackageType.Name} - {factor.FactoryName.Name} - {factor.Tonnagedouble}";
+                string callback = "https://masalehpakhsh.com/Zarinpal/VerifyPayment";
 
-                ViewModels.Areas.Administrator.ZarinPal.RequestParameters Parameters = new ViewModels.Areas.Administrator.ZarinPal.RequestParameters(merchant, amount, description, callbackurl, mobile, "ali_animax@yahoo.com");
+                var requestObj = new ViewModels.Areas.Administrator.ZarinPal.RequestParameters(
+                    "d9c07ec3-6934-41f3-b6d4-a7eecedf3114",
+                    gatewayAmount.ToString(),
+                    description,
+                    callback,
+                    factor.BuyerMobile,
+                    "ali_animax@yahoo.com"
+                );
 
                 var client = new RestClient(URLs.requestUrl);
-
-                Method method = Method.Post;
-
-                var request = new RestRequest("", method);
-
+                var request = new RestRequest("", Method.Post);
                 request.AddHeader("accept", "application/json");
-
                 request.AddHeader("content-type", "application/json");
+                request.AddJsonBody(requestObj);
 
-                request.AddJsonBody(Parameters);
+                var response = client.Execute(request);
+                var jo = JObject.Parse(response.Content);
 
-                var requestresponse = client.ExecuteAsync(request);
-
-                JObject jo = JObject.Parse(requestresponse.Result.Content); /// "authority": "A00000000000000000000000000433573885"
-
-                string errorscode = jo["errors"].ToString();
-
-                JObject jodata = JObject.Parse(requestresponse.Result.Content);
-
-                string dataauth = jodata["data"].ToString();
-
-
-                if (dataauth != "[]")
+                if (jo["data"] != null && jo["data"].HasValues)
                 {
-
-
-                    authority = jodata["data"]["authority"].ToString();
-
-                    oFactorCement.Authority = authority;
-                    UnitOfWork.FactorCementRepository.Update(oFactorCement);
+                    factor.Authority = jo["data"]["authority"].ToString();
+                    UnitOfWork.FactorCementRepository.Update(factor);
                     UnitOfWork.Save();
-
-                    string gatewayUrl = URLs.gateWayUrl + authority;
-
-                    return Redirect(gatewayUrl);
-
-                }
-                else
-                {
-                    return null;
-                }
-            }
-
-            catch (Exception ex)
-            {
-                //    throw new Exception(ex.Message);
-            }
-            return null;
-        }
-
-        public virtual ActionResult VerifyPayment()
-        {
-            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
-            try
-            {
-                VerifyParameters parameters = new VerifyParameters();
-                string authority = string.Empty;
-                string Status = string.Empty;
-                if (HttpContext.Request.QueryString["Authority"] != "")
-                {
-                    authority = HttpContext.Request.QueryString["Authority"];
-                    Status = HttpContext.Request.QueryString["Status"];
-                }
-                var oFactorCement = UnitOfWork.FactorCementRepository.GetByAuthority(authority).FirstOrDefault();
-
-                if (oFactorCement.FinalApprove) /// اگر دفعه دوم وارد این صفحه شد تایید نهایی بوده و وارد این بخش شود
-                {
-                    cementViewModel = ConvertCementViewModel(oFactorCement);
-                    return View(cementViewModel);
+                    return Redirect(URLs.gateWayUrl + factor.Authority);
                 }
 
-                parameters.authority = oFactorCement.Authority;
-                if (oFactorCement.MahalTahvil == "Karkhane")
-                {
-                    var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
-                    parameters.amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
-                }
-                else if (oFactorCement.MahalTahvil == "Mahal")
-                {
-                    parameters.amount = oFactorCement.DestinationAmountPaid.ToString();
-                }
-                parameters.merchant_id = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
-
-
-                //if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
-                //{
-                //    parameters.amount = testamount;
-                //}
-
-                var client = new RestClient(URLs.verifyUrl);
-                Method method = Method.Post;
-                var request = new RestRequest("", method);
-
-                request.AddHeader("accept", "application/json");
-
-                request.AddHeader("content-type", "application/json");
-                request.AddJsonBody(parameters);
-
-                var response = client.ExecuteAsync(request);
-
-
-                JObject jodata = JObject.Parse(response.Result.Content);
-
-                string data = jodata["data"].ToString();
-
-                JObject jo = JObject.Parse(response.Result.Content);
-
-                string errors = jo["errors"].ToString();
-
-                if (data != "[]")
-                {
-                    string refid = jodata["data"]["ref_id"].ToString();
-                    string card_pan = jodata["data"]["card_pan"].ToString();
-                    string code = jodata["data"]["code"].ToString();
-
-                    oFactorCement.ref_id = Convert.ToInt64(refid);
-                    oFactorCement.card_pan = card_pan;
-                    oFactorCement.Bankcode = Convert.ToInt32(code);
-                    oFactorCement.AmountPaidDate = DateTime.Now;
-                    oFactorCement.Address = cementViewModel.Address;
-                    UnitOfWork.FactorCementRepository.Update(oFactorCement);
-                    UnitOfWork.Save();
-
-                    ViewBag.code = refid;
-                    if (Status == "OK") /// اگر با موفقییت پرداخت شده بود
-                    {
-                        oFactorCement.FinalApprove = true;
-                        var InventoryTonnage = UnitOfWork.InventoryamountRepository.Get()
-                        .Where(x => x.IsDeleted == false && x.IsActived != false)
-                        .Where(x => x.ProductNameId == oFactorCement.ProductNameId)
-                        .Where(x => x.ProductTypeId == oFactorCement.ProductTypeId)
-                        .Where(x => x.PackageTypeId == oFactorCement.PackageTypeId)
-                        .Where(x => x.FactoryNameId == oFactorCement.FactoryNameId)
-                        .FirstOrDefault();
-
-                        var Tonnage = oFactorCement.Tonnagedouble;
-
-                        InventoryTonnage.Inventorytonnage = InventoryTonnage.Inventorytonnage - Tonnage;
-                        UnitOfWork.InventoryamountRepository.Update(InventoryTonnage);
-                        UnitOfWork.Save();
-
-                        var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
-                        if (user.ReferredByCode != null)
-                        {
-                            var Marketer = UnitOfWork.UserRepository.GetUserByMarketingCode(user.ReferredByCode);
-                            if (Marketer != null)
-                            {
-                                #region region Create Marketer Transaction
-                                var commission = (int)(oFactorCement.AmountPaid * 0.007);
-
-                                var transaction = new MarketerTransactions
-                                {
-                                    Id = Guid.NewGuid(),
-                                    MarketingCode = int.Parse(Marketer.MarketingCode),
-                                    ReferredCode = int.Parse(user.ReferredByCode),
-                                    ProductNameId = oFactorCement.ProductNameId,
-                                    ProductTypeId = oFactorCement.ProductTypeId,
-                                    PackageType = oFactorCement.PackageType,
-                                    FactoryName = oFactorCement.FactoryName,
-                                    Tonnagedouble = oFactorCement.Tonnagedouble,
-                                    CommissionAmount = commission,
-                                    InsertDateTime = DateTime.Now
-                                };
-
-                                UnitOfWork.MarketerTransactionsRepository.Insertdata(transaction);
-                                #endregion
-
-
-                                Marketer.creditAmount += commission;
-                            }
-                        }
-                        //string amount = Convert.ToString(oFactorCement.AmountPaid - user.creditAmount);
-                        //user.AmountOfTonnagePurchased = int.Parse(oFactorCement.Tonnage.Code);
-                        //user.creditAmount += (user.AmountOfTonnagePurchased / 50) * 10000000;
-                        UnitOfWork.UserRepository.Update(user);
-                        UnitOfWork.Save();
-                        string mobile = oFactorCement.BuyerMobile;
-                        PaymentSMS(mobile, oFactorCement);
-                        cementViewModel = ConvertCementViewModel(oFactorCement);
-                    }
-                }
-                else if (errors != "[]")
-                {
-                    string errorscode = jo["errors"]["code"].ToString();
-                    TempData["NotFoundMessage"] = "خطا در پرداخت، کد خطا: " + errorscode;
-                    //return BadRequest($"error code {errorscode}");
-                }
+                return null;
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            return View(cementViewModel);
+        }
+
+        public virtual ActionResult VerifyPayment()
+        {
+            try
+            {
+                string authority = Request.QueryString["Authority"];
+                string status = Request.QueryString["Status"];
+
+                var factor = UnitOfWork.FactorCementRepository.GetByAuthority(authority).FirstOrDefault();
+                if (factor == null) return View(new CementViewModel());
+
+                if (factor.FinalApprove)
+                    return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = factor.InvoiceNumber });
+
+                var user = UnitOfWork.UserRepository.GetById(factor.UserId);
+
+                // ── تایید درگاه ──
+                var parameters = new VerifyParameters
+                {
+                    authority = factor.Authority,
+                    merchant_id = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114",
+                    amount = factor.OnlinePaidAmount.ToString()
+                };
+
+                var client = new RestClient(URLs.verifyUrl);
+                var request = new RestRequest("", Method.Post);
+                request.AddHeader("accept", "application/json");
+                request.AddHeader("content-type", "application/json");
+                request.AddJsonBody(parameters);
+
+                var jo = JObject.Parse(client.Execute(request).Content);
+
+                if (jo["data"] == null || status != "OK")
+                    return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = factor.InvoiceNumber });
+
+                // ── اطلاعات باربری ──
+                string carrierName = "ثبت نشده";
+                string carrierMobile = "";
+
+                if (factor.CarrierId.HasValue && factor.CarrierId.Value != Guid.Empty)
+                {
+                    var carrierUser = UnitOfWork.UserRepository.GetById(factor.CarrierId.Value);
+                    if (carrierUser != null && carrierUser.Role.Code == (int)Enums.Roles.Carrier)
+                    {
+                        carrierName = carrierUser.FullName;
+                        carrierMobile = carrierUser.BuyerMobile;
+                    }
+
+                    // ✅ کاهش موجودی باربری
+                    DeductCarrierInventory(factor);
+                }
+
+                // ── ثبت اطلاعات پرداخت ──
+                factor.ref_id = Convert.ToInt64(jo["data"]["ref_id"]);
+                factor.card_pan = jo["data"]["card_pan"].ToString();
+                factor.Bankcode = Convert.ToInt32(jo["data"]["code"]);
+                factor.AmountPaidDate = DateTime.Now;
+                factor.FinalApprove = true;
+
+                // ── کاهش موجودی انبار اصلی ──
+                var inventory = UnitOfWork.InventoryamountRepository.Get()
+                    .FirstOrDefault(x =>
+                        x.ProductNameId == factor.ProductNameId &&
+                        x.ProductTypeId == factor.ProductTypeId &&
+                        x.PackageTypeId == factor.PackageTypeId &&
+                        x.FactoryNameId == factor.FactoryNameId);
+
+                if (inventory != null)
+                {
+                    inventory.Inventorytonnage -= factor.Tonnagedouble;
+                    UnitOfWork.InventoryamountRepository.Update(inventory);
+                }
+
+                CreateMarketerTransaction(factor, user);
+                UnitOfWork.FactorCementRepository.Update(factor);
+                UnitOfWork.Save();
+
+                // ── ارسال پیامک ──
+                string fullProductName = BuildProductName(factor, includesTonnage: true);
+                string buyerMobile = !string.IsNullOrEmpty(user.BuyerMobile) ? user.BuyerMobile : factor.BuyerMobile;
+                string buyerName = (!string.IsNullOrEmpty(user.FullName) && user.FullName != "میهمان")
+                                     ? user.FullName : factor.BuyerFullName;
+
+                bool isGuest = user.FullName == "کاربر مهمان" || user.FullName == "میهمان";
+
+                if (isGuest)
+                {
+                    Utilities.SMS.SmsUtility.SendGuestLoadedNotification(
+                        buyerMobile,
+                        buyerName,
+                        factor.InvoiceNumber.ToString(),
+                        fullProductName,
+                        factor.AmountPaid.ToString("N0"),
+                        carrierName,
+                        carrierMobile);
+                }
+                else
+                {
+                    long balance = user.InitialCredit - user.creditAmount;
+                    string remainAmount = Math.Abs(balance).ToString("N0");
+                    string remainStatus = balance > 0 ? "بدهکار" : balance < 0 ? "طلبکار" : "تسویه";
+
+                    Utilities.SMS.SmsUtility.SendLoadedNotification(
+                        buyerMobile,
+                        buyerName,
+                        factor.InvoiceNumber.ToString(),
+                        fullProductName,
+                        factor.AmountPaid.ToString("N0"),
+                        remainAmount,
+                        remainStatus,
+                        carrierName,
+                        carrierMobile);
+                }
+
+                // ── پیامک به باربری ──
+                if (!string.IsNullOrEmpty(carrierMobile))
+                {
+                    bool hasDriver = !string.IsNullOrEmpty(factor.DriverName) || !string.IsNullOrEmpty(factor.DriverMobile);
+
+                    if (hasDriver)
+                    {
+                        Utilities.SMS.SmsUtility.SendCarrierNotificationWithDriver(
+                            carrierMobile,
+                            carrierName,
+                            factor.InvoiceNumber.ToString(),
+                            fullProductName,
+                            buyerName,
+                            buyerMobile,
+                            factor.DriverName ?? "",
+                            factor.DriverMobile ?? "");
+                    }
+                    else
+                    {
+                        Utilities.SMS.SmsUtility.SendCarrierNotification(
+                            carrierMobile,
+                            carrierName,
+                            factor.InvoiceNumber.ToString(),
+                            fullProductName,
+                            buyerName,
+                            buyerMobile);
+                    }
+                }
+
+                return RedirectToAction("ShowFactor", "HomeMain", new { invoicenumber = factor.InvoiceNumber });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("خطا در تایید پرداخت: " + ex.Message);
+            }
         }
 
         public static ViewModels.Areas.Administrator.Cement.CementViewModel ConvertCementViewModel(Models.FactorCement oFactorCement)
@@ -398,158 +370,116 @@ namespace OPS.Controllers
         }
         public virtual ActionResult Paymentwallet(int Chargeamount, int invoiceNumber)
         {
-            var oFactorCement = UnitOfWork.walletFactorRepository.GetByinvoicenumber(invoiceNumber).FirstOrDefault();
-            var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
-            string authority;
-            string description = "شارژ کیف پول" + "-" + user.UserName;
-            string callbackurl = "https://masalehpakhsh.com/Zarinpal/VerifyPaymentWallet";
-            string merchant = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
-            string mobile = oFactorCement.BuyerMobile;
-        //    PaymentSMSWallet(mobile, oFactorCement);
-            if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
-            {
-                callbackurl = "http://localhost:6066/Zarinpal/VerifyPaymentWallet";
-            }
-
-            ViewModels.Areas.Administrator.ZarinPal.RequestParameters Parameters = new ViewModels.Areas.Administrator.ZarinPal.RequestParameters(merchant, Chargeamount.ToString(), description, callbackurl, user.BuyerMobile, "ali_animax@yahoo.com");
-
-            var client = new RestClient(URLs.requestUrl);
-
-            Method method = Method.Post;
-
-            var request = new RestRequest("", method);
-
-            request.AddHeader("accept", "application/json");
-
-            request.AddHeader("content-type", "application/json");
-
-            request.AddJsonBody(Parameters);
-
-            var requestresponse = client.ExecuteAsync(request);
-
-            JObject jo = JObject.Parse(requestresponse.Result.Content); /// "authority": "A00000000000000000000000000433573885"
-
-            string errorscode = jo["errors"].ToString();
-
-            JObject jodata = JObject.Parse(requestresponse.Result.Content);
-
-            string dataauth = jodata["data"].ToString();
-
-
-            if (dataauth != "[]")
-            {
-
-
-                authority = jodata["data"]["authority"].ToString();
-
-                oFactorCement.Authority = authority;
-                UnitOfWork.walletFactorRepository.Update(oFactorCement);
-                UnitOfWork.Save();
-
-                string gatewayUrl = URLs.gateWayUrl + authority;
-
-                return Redirect(gatewayUrl);
-
-            }
-            else
-            {
-                return null;
-            }
-
-        }
-
-        public virtual ActionResult VerifyPaymentWallet()
-        {
-            ViewModels.Areas.Administrator.Cement.CementViewModel cementViewModel = new ViewModels.Areas.Administrator.Cement.CementViewModel();
             try
             {
-                VerifyParameters parameters = new VerifyParameters();
-                string authority = string.Empty;
-                string Status = string.Empty;
-                if (HttpContext.Request.QueryString["Authority"] != "")
-                {
-                    authority = HttpContext.Request.QueryString["Authority"];
-                    Status = HttpContext.Request.QueryString["Status"];
-                }
-                var oFactorCement = UnitOfWork.walletFactorRepository.GetByAuthority(authority).FirstOrDefault();
+                var wallet = UnitOfWork.walletFactorRepository
+                    .GetByinvoicenumber(invoiceNumber)
+                    .FirstOrDefault();
 
-                if (oFactorCement.FinalApprove) /// اگر دفعه دوم وارد این صفحه شد تایید نهایی بوده و وارد این بخش شود
-                {
-                    cementViewModel = ConvertCementViewModel(oFactorCement);
-                    return View(cementViewModel);
-                }
+                if (wallet == null) return HttpNotFound();
 
-                parameters.authority = oFactorCement.Authority;
-                parameters.merchant_id = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114";
+                var user = UnitOfWork.UserRepository.GetById(wallet.UserId);
 
-                if (System.Diagnostics.Debugger.IsAttached) //برای اینکه در لوکال اجرا شود
-                {
-                    parameters.amount = oFactorCement.Chargeamount.ToString();
-                }
-                else
-                {
-                    parameters.amount = oFactorCement.Chargeamount.ToString();
-                }
+                string callback = System.Diagnostics.Debugger.IsAttached
+                    ? "http://localhost:6066/Zarinpal/VerifyPaymentWallet"
+                    : "https://masalehpakhsh.com/Zarinpal/VerifyPaymentWallet";
 
-                var client = new RestClient(URLs.verifyUrl);
-                Method method = Method.Post;
-                var request = new RestRequest("", method);
+                var req = new ViewModels.Areas.Administrator.ZarinPal.RequestParameters(
+                    "d9c07ec3-6934-41f3-b6d4-a7eecedf3114",
+                    Chargeamount.ToString(),
+                    "شارژ کیف پول - " + user.UserName,
+                    callback,
+                    user.BuyerMobile,
+                    "ali_animax@yahoo.com"
+                );
+
+                var client = new RestClient(URLs.requestUrl);
+                var request = new RestRequest("", Method.Post);
 
                 request.AddHeader("accept", "application/json");
-
                 request.AddHeader("content-type", "application/json");
-                request.AddJsonBody(parameters);
+                request.AddJsonBody(req);
 
-                var response = client.ExecuteAsync(request);
+                var response = client.Execute(request);
+                var jo = JObject.Parse(response.Content);
 
+                if (jo["data"] == null) return null;
 
-                JObject jodata = JObject.Parse(response.Result.Content);
+                wallet.Authority = jo["data"]["authority"].ToString();
 
-                string data = jodata["data"].ToString();
+                UnitOfWork.walletFactorRepository.Update(wallet);
+                UnitOfWork.Save();
 
-                JObject jo = JObject.Parse(response.Result.Content);
-
-                string errors = jo["errors"].ToString();
-
-                if (data != "[]")
-                {
-                    string refid = jodata["data"]["ref_id"].ToString();
-                    string card_pan = jodata["data"]["card_pan"].ToString();
-                    string code = jodata["data"]["code"].ToString();
-
-                    oFactorCement.ref_id = Convert.ToInt64(refid);
-                    oFactorCement.card_pan = card_pan;
-                    oFactorCement.Bankcode = Convert.ToInt32(code);
-                    oFactorCement.AmountPaidDate = DateTime.Now;
-                    UnitOfWork.walletFactorRepository.Update(oFactorCement);
-                    UnitOfWork.Save();
-
-                    ViewBag.code = refid;
-                    if (Status == "OK") /// اگر با موفقییت پرداخت شده بود
-                    {
-                        oFactorCement.FinalApprove = true;
-                        UnitOfWork.walletFactorRepository.Update(oFactorCement);
-                        var user = UnitOfWork.UserRepository.GetById(oFactorCement.UserId);
-                        user.creditAmount += oFactorCement.Chargeamount;
-                        UnitOfWork.UserRepository.Update(user);
-                        UnitOfWork.Save();
-                        string mobile = oFactorCement.BuyerMobile;
-                        PaymentSMSWallet(mobile, oFactorCement);
-                        cementViewModel = ConvertCementViewModel(oFactorCement);
-                    }
-                }
-                else if (errors != "[]")
-                {
-                    string errorscode = jo["errors"]["code"].ToString();
-                    TempData["NotFoundMessage"] = "خطا در پرداخت، کد خطا: " + errorscode;
-                    //return BadRequest($"error code {errorscode}");
-                }
+                return Redirect(URLs.gateWayUrl + wallet.Authority);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            return View(cementViewModel);
+        }
+
+        public virtual ActionResult VerifyPaymentWallet()
+        {
+            var vm = new CementViewModel();
+
+            try
+            {
+                string authority = Request.QueryString["Authority"];
+                string status = Request.QueryString["Status"];
+
+                var wallet = UnitOfWork.walletFactorRepository
+                    .GetByAuthority(authority)
+                    .FirstOrDefault();
+
+                if (wallet == null) return View(vm);
+
+                if (wallet.FinalApprove)
+                    return View(ConvertCementViewModel(wallet));
+
+                var user = UnitOfWork.UserRepository.GetById(wallet.UserId);
+
+                var parameters = new VerifyParameters
+                {
+                    authority = wallet.Authority,
+                    merchant_id = "d9c07ec3-6934-41f3-b6d4-a7eecedf3114",
+                    amount = wallet.Chargeamount.ToString()
+                };
+
+                var client = new RestClient(URLs.verifyUrl);
+                var request = new RestRequest("", Method.Post);
+
+                request.AddHeader("accept", "application/json");
+                request.AddHeader("content-type", "application/json");
+                request.AddJsonBody(parameters);
+
+                var response = client.Execute(request);
+                var jo = JObject.Parse(response.Content);
+
+                if (jo["data"] != null && status == "OK")
+                {
+                    wallet.ref_id = Convert.ToInt64(jo["data"]["ref_id"]);
+                    wallet.card_pan = jo["data"]["card_pan"].ToString();
+                    wallet.Bankcode = Convert.ToInt32(jo["data"]["code"]);
+                    wallet.AmountPaidDate = DateTime.Now;
+                    wallet.FinalApprove = true;
+
+                    user.creditAmount += wallet.Chargeamount;
+
+                    UnitOfWork.UserRepository.Update(user);
+                    UnitOfWork.walletFactorRepository.Update(wallet);
+                    UnitOfWork.Save();
+
+                    PaymentSMSWallet(user.BuyerMobile, wallet);
+
+                    vm = ConvertCementViewModel(wallet);
+                }
+
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public static ViewModels.Areas.Administrator.Cement.CementViewModel ConvertCementViewModel(Models.walletFactor oFactorCement)
@@ -655,8 +585,6 @@ namespace OPS.Controllers
         }
 
 
-
-
         public void PaymentSMSWallet(string phoneNumber, Models.walletFactor factor)
         {
             try
@@ -729,11 +657,11 @@ namespace OPS.Controllers
                     var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
 
                     // ایجاد کلاینت SOAP
-                     var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
+                    var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
 
                     // ارسال پیامک
-                     var result = soapClient.SendByBaseNumber(username, password, text, to, bodyId);
-                     Console.WriteLine($"پیامک با موفقیت ارسال شد. نتیجه: {result}");
+                    var result = soapClient.SendByBaseNumber(username, password, text, to, bodyId);
+                    Console.WriteLine($"پیامک با موفقیت ارسال شد. نتیجه: {result}");
                 }
             }
             catch (Exception ex)
@@ -744,7 +672,7 @@ namespace OPS.Controllers
 
         public bool SendSMSdebtor(string[] phoneNumbers)
         {
-            
+
             try
             {
                 const string username = "989926932699";
@@ -761,7 +689,7 @@ namespace OPS.Controllers
                 };
                 var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
                 var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
-                var result = soapClient.SendSimpleSMS(username, password,phoneNumbers,from,text,isFlash);
+                var result = soapClient.SendSimpleSMS(username, password, phoneNumbers, from, text, isFlash);
 
                 // بازگرداندن نتیجه به صورت جاوا اسکریپت
                 return true;
@@ -781,7 +709,7 @@ namespace OPS.Controllers
                 const string password = "#57PD";
                 const string linksite = "https://masalehpakhsh.com/HomeMain/GetLivePrice";
 
-                string[] texts = { messageText , linksite };
+                string[] texts = { messageText, linksite };
 
                 var binding = new BasicHttpBinding
                 {
@@ -807,37 +735,130 @@ namespace OPS.Controllers
             }
         }
 
+        private void CreateMarketerTransaction(FactorCement factor, User user)
+        {
+            if (user.ReferredByCode == null) return;
 
+            var marketer = UnitOfWork.UserRepository
+                .GetUserByMarketingCode(user.ReferredByCode);
 
-        //public bool SendSMSPrice(string[] phoneNumbers)
-        //{
+            if (marketer == null) return;
 
-        //    try
-        //    {
-        //        const string username = "989926932699";
-        //        const string password = "#57PD";
-        //        const string from = "50002710032699";
-        //        const string text = "تست";
-        //        const bool isFlash = false;
-        //        var binding = new BasicHttpBinding
-        //        {
-        //            Security = new BasicHttpSecurity
-        //            {
-        //                Mode = BasicHttpSecurityMode.Transport
-        //            }
-        //        };
-        //        var endpoint = new EndpointAddress("https://api.payamak-panel.com/post/Send.asmx");
-        //        var soapClient = new MelipayamakService.SendSoapClient(binding, endpoint);
-        //        var result = soapClient.SendSimpleSMS(username, password, phoneNumbers, from, text, isFlash);
+            var commission = (int)(factor.AmountPaid * 0.007);
 
-        //        // بازگرداندن نتیجه به صورت جاوا اسکریپت
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // بازگرداندن خطا به صورت جاوا اسکریپت
-        //        return false;
-        //    }
-        //}
+            var transaction = new MarketerTransactions
+            {
+                Id = Guid.NewGuid(),
+                MarketingCode = int.Parse(marketer.MarketingCode),
+                ReferredCode = int.Parse(user.ReferredByCode),
+                ProductNameId = factor.ProductNameId,
+                ProductTypeId = factor.ProductTypeId,
+                PackageType = factor.PackageType,
+                FactoryName = factor.FactoryName,
+                Tonnagedouble = factor.Tonnagedouble,
+                CommissionAmount = commission,
+                InsertDateTime = DateTime.Now
+            };
+
+            UnitOfWork.MarketerTransactionsRepository.Insertdata(transaction);
+
+            marketer.creditAmount += commission;
+        }
+
+        private string BuildProductName(Models.FactorCement factor, bool includesTonnage = false)
+        {
+            string productName = UnitOfWork.ProductNameRepository.GetById(factor.ProductNameId)?.Name ?? "";
+            string productType = UnitOfWork.ProductTypeRepository.GetById(factor.ProductTypeId)?.Name ?? "";
+            string packageType = UnitOfWork.PackageTypeRepository.GetById(factor.PackageTypeId)?.Name ?? "";
+            string factoryName = UnitOfWork.FactoryNameRepository.GetById(factor.FactoryNameId)?.Name ?? "";
+
+            string name = includesTonnage
+                ? $"{factor.Tonnagedouble} تن {factoryName} {productType} {packageType}"
+                : $"{productName} {productType} {packageType} {factoryName}";
+
+            return string.IsNullOrWhiteSpace(name.Trim()) ? "محصول" : name.Trim();
+        }
+        private void SendOrderSMS(
+            string buyerMobile, string buyerName,
+            Models.FactorCement factor, string fullProductName,
+            string remainAmount, string remainStatus,
+            string carrierName, string carrierMobile)
+        {
+            bool isGuest = string.IsNullOrEmpty(remainAmount);
+
+            // ── پیامک به مشتری ──
+            if (isGuest)
+            {
+                Utilities.SMS.SmsUtility.SendGuestLoadedNotification(
+                    buyerMobile,
+                    buyerName,
+                    factor.InvoiceNumber.ToString(),
+                    fullProductName,
+                    factor.AmountPaid.ToString("N0"),
+                    carrierName,
+                    carrierMobile);
+            }
+            else
+            {
+                Utilities.SMS.SmsUtility.SendLoadedNotification(
+                    buyerMobile,
+                    buyerName,
+                    factor.InvoiceNumber.ToString(),
+                    fullProductName,
+                    factor.AmountPaid.ToString("N0"),
+                    remainAmount,
+                    remainStatus,
+                    carrierName,
+                    carrierMobile);
+            }
+
+            // ── پیامک به باربری ──
+            if (string.IsNullOrEmpty(carrierMobile)) return;
+
+            bool hasDriver = !string.IsNullOrEmpty(factor.DriverName) || !string.IsNullOrEmpty(factor.DriverMobile);
+
+            if (hasDriver)
+            {
+                Utilities.SMS.SmsUtility.SendCarrierNotificationWithDriver(
+                    carrierMobile,
+                    carrierName,
+                    factor.InvoiceNumber.ToString(),
+                    fullProductName,
+                    buyerName,
+                    buyerMobile,
+                    factor.DriverName ?? "",
+                    factor.DriverMobile ?? "");
+            }
+            else
+            {
+                Utilities.SMS.SmsUtility.SendCarrierNotification(
+                    carrierMobile,
+                    carrierName,
+                    factor.InvoiceNumber.ToString(),
+                    fullProductName,
+                    buyerName,
+                    buyerMobile);
+            }
+        }
+
+        /// <summary>
+        /// کاهش موجودی باربری پس از تأیید پرداخت
+        /// </summary>
+        private void DeductCarrierInventory(Models.FactorCement factor)
+        {
+            if (!factor.CarrierId.HasValue || factor.CarrierId.Value == Guid.Empty)
+                return;
+
+            var carrierInventory = UnitOfWork.CarrierInventoryRepository
+                .GetByProduct(factor.ProductNameId, factor.ProductTypeId, factor.PackageTypeId, factor.FactoryNameId)
+                .FirstOrDefault(x => x.CarrierId == factor.CarrierId);
+
+            if (carrierInventory != null)
+            {
+                carrierInventory.InventoryTonnage -= factor.Tonnagedouble;
+                carrierInventory.UpdateDateTime = DateTime.Now;
+                UnitOfWork.CarrierInventoryRepository.Update(carrierInventory);
+            }
+        }
     }
 }
